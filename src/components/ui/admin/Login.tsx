@@ -36,6 +36,7 @@ export function LoginForm() {
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log("로그인 데이터:", data);
     alert("로그인 액션");
   };
 
