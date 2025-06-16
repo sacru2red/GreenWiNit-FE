@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "npm run build && wrangler pages dev"
+    "preview": "npm run build && wrangler pages dev",
+    "deploy": "npm run build && wrangler pages deploy",
+		"cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
