@@ -1,55 +1,53 @@
-import BottomNavigation from "@/components/common/BottomNav";
-import { Card, CardAction, CardContent } from "@/components/ui/card";
+import BottomNavigation from '@/components/common/BottomNav'
+import { Card, CardAction, CardContent } from '@/components/ui/card'
 
 function MyPage() {
   const cardItems = [
     {
-      title: "SNS",
+      title: 'SNS',
       items: [
-        { title: "인스타그램", url: "" },
-        { title: "블로그", url: "" },
+        { title: '인스타그램', url: '' },
+        { title: '블로그', url: '' },
       ],
     },
     {
-      title: "고객센터",
+      title: '고객센터',
       items: [
-        { title: "1:1문의", url: "" },
-        { title: "FAQ", url: "" },
+        { title: '1:1문의', url: '' },
+        { title: 'FAQ', url: '' },
       ],
     },
     {
-      title: "환경설정",
+      title: '환경설정',
       items: [
-        { title: "약관 및 정책", url: "" },
-        { title: "회원정보수정", url: "" },
-        { title: "회원탈퇴", url: "" },
-        { title: "로그아웃", url: "" },
+        { title: '약관 및 정책', url: '' },
+        { title: '회원정보수정', url: '' },
+        { title: '회원탈퇴', url: '' },
+        { title: '로그아웃', url: '' },
       ],
     },
-  ];
+  ]
 
   return (
-    <div className="bg-[#F5F9F7] w-full h-full overflow-y-auto">
-      <div className="bg-white w-full h-[48px] flex items-center justify-center py-8">
-        <span className="text-black text-[24px] font-bold">마이페이지</span>
+    <div className="h-full w-full overflow-y-auto bg-[#F5F9F7]">
+      <div className="flex h-[48px] w-full items-center justify-center bg-white py-8">
+        <span className="text-[24px] font-bold text-black">마이페이지</span>
       </div>
       <div className="felx flex-col overflow-y-auto pb-40">
         {cardItems.map((cardItem) => {
           return (
-            <Card className="w-[343px] bg-white h-fit rounded-[16px] shadow-lg mx-auto mt-6 p-0">
+            <Card className="mx-auto mt-6 h-fit w-[343px] rounded-[16px] bg-white p-0 shadow-lg">
               <CardContent className="flex flex-col">
-                <div className="flex flex-row items-center justify-center w-full p-[16px] font-bold">
+                <div className="flex w-full flex-row items-center justify-center p-[16px] font-bold">
                   {cardItem.title}
                 </div>
                 {cardItem.items.map((item, itemIndex) => {
                   return (
                     <CardAction
                       key={itemIndex}
-                      className="flex flex-row items-center w-full border-t-[1px] border-t-[9E9E9E] p-[16px]"
+                      className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-[16px]"
                     >
-                      <span className="text-[#404040] text-[16px]">
-                        {item.title}
-                      </span>
+                      <span className="text-[16px] text-[#404040]">{item.title}</span>
                       <svg
                         width="20"
                         height="20"
@@ -58,24 +56,20 @@ function MyPage() {
                         xmlns="http://www.w3.org/2000/svg"
                         className="ml-auto"
                       >
-                        <path
-                          d="M8 4L14 10L8 16"
-                          stroke="#9E9E9E"
-                          stroke-width="2"
-                        />
+                        <path d="M8 4L14 10L8 16" stroke="#9E9E9E" stroke-width="2" />
                       </svg>
                     </CardAction>
-                  );
+                  )
                 })}
               </CardContent>
             </Card>
-          );
+          )
         })}
       </div>
 
       <BottomNavigation />
     </div>
-  );
+  )
 }
 
-export default MyPage;
+export default MyPage
