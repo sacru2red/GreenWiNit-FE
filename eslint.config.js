@@ -9,6 +9,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
   reactHooks.configs['recommended-latest'],
+  reactRefresh.configs.vite,
   { ignores: ['dist'] },
   {
     extends: [],
@@ -16,12 +17,6 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
-    },
-    plugins: {
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
   eslintConfigPrettier,
