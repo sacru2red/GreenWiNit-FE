@@ -10,9 +10,8 @@ export default tseslint.config(
   tseslint.configs.recommended,
   reactHooks.configs['recommended-latest'],
   reactRefresh.configs.vite,
-  { ignores: ['dist'] },
   {
-    extends: [],
+    ignores: ['dist'],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
