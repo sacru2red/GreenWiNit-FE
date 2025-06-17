@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,33 +12,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: "아이디는 2글자 이상입니다.",
+    message: '아이디는 2글자 이상입니다.',
   }),
   password: z.string().min(6, {
-    message: "비밀번호는 6글자 이상입니다.",
+    message: '비밀번호는 6글자 이상입니다.',
   }),
-});
+})
 
 export function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
-  });
+  })
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("로그인 데이터:", data);
-    alert("로그인 액션");
-  };
+    console.log('로그인 데이터:', data)
+    alert('로그인 액션')
+  }
 
   return (
     <Card className="w-md">
@@ -80,5 +80,5 @@ export function LoginForm() {
         </Form>
       </CardContent>
     </Card>
-  );
+  )
 }
