@@ -8,6 +8,7 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat'
 export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.recommended,
+  reactHooks.configs['recommended-latest'],
   { ignores: ['dist'] },
   {
     extends: [],
@@ -17,11 +18,9 @@ export default tseslint.config(
       globals: globals.browser,
     },
     plugins: {
-      'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
