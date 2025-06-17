@@ -38,6 +38,10 @@ const FormField = <
   )
 }
 
+/**
+ * @MEMO 이전에 useFormField를 내보낸 적이 있으나, 아무데서도 사용하지 않았기 때문에 내보내기를 중단했음.
+ * 내보내는 경우에 react-refresh/only-export-components룰을 위배하므로, 별도의 hooks 파일로 분리할 필요있음
+ */
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
@@ -138,13 +142,4 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
-export {
-  useFormField,
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  FormField,
-}
+export { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField }
