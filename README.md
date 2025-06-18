@@ -1,21 +1,90 @@
-# React + TypeScript + Vite
+# 🌿 GreenWiNit - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GreenWiNit은 웹 기반의 환경 챌린지형 커뮤니티 플랫폼입니다. 일상 속에서 시민들이 쉽고 자발적으로 환경 보호 활동에 참여하고, 이를 공유하며 서로에게 동기를 부여할 수 있도록 설계된 서비스입니다.
 
-While this project uses React, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+## 🌍 프로젝트 개요
 
-## Deploy Your Own
+- **프로젝트명**: GreenWiNit
+- **팀명**: 노크
+- **기획 목적**:
+  - 누구나 쉽게 환경 보호 활동에 참여할 수 있는 온라인 플랫폼 제공
+  - 챌린지 참여와 포인트 리워드 시스템을 통한 지속가능한 참여 유도
+  - 오프라인 환경 캠페인과 연계하여 실질적인 사회적 실천 확산
+- **참여 사업명**: 2025년 서울 청년 기획봉사단
+- **사업 기간**: 2025.04.17 ~ 2025.08.31
 
-Deploy your own Vite project with Vercel.
+## ✨ 주요 기능
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite-react&template=vite-react)
+- **환경 챌린지 참여 (개인/팀 단위)**
+- **챌린지 인증 및 후기 등록**
+- **포인트 적립 및 리워드 교환 상점**
+- **환경 정보 공유 및 커뮤니티 기능**
+- **관리자 기능 (챌린지/회원/포인트 관리 등)**
+- **SNS 및 오프라인 활동과 연계한 참여 유도**
 
-_Live Example: https://vite-react-example.vercel.app_
+## 🖥️ 기술 스택
 
-### Deploying From Your Terminal
+| 기술 스택                       |
+| ------------------------------- |
+| React, TypeScript, Tailwind CSS |
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+## 📁 프로젝트 구조 (예시)
 
-```shell
-$ vercel
+```bash
+src/
+├── assets/
+├── components/
+├── pages/
+├── hooks/ (*)
+├── store/ (*)
+├── api/ (*)
+└── utils/ (*)
 ```
+
+## 🚀 시작하기
+
+```bash
+# 1. 클론
+git clone https://github.com/GreenWiNit/GreenWiNit-FE.git
+
+# 2. 패키지 설치
+cd GreenWiNit-FE
+npm install
+
+# 3. 개발 서버 실행
+npm run dev
+```
+
+## 🏁 기능 요약
+
+- 유저앱
+
+| 기능       | 설명                                                              |
+| ---------- | ----------------------------------------------------------------- |
+| 챌린지     | 플로깅, 분리배출, 텀블러 사용 등 다양한 환경 행동 참여            |
+| 포인트     | 챌린지 인증 시 포인트 적립, 굿즈 교환 가능                        |
+| 커뮤니티   | 정보 공유 탭을 통해 환경 관련 콘텐츠를 자유롭게 등록 및 열람 가능 |
+| 마이페이지 | 챌린지 참여 내역, 포인트 내역, 리워드 신청 등 개인 활동 관리      |
+
+- 관리자 앱
+
+| 기능     | 설명                                                 |
+| -------- | ---------------------------------------------------- |
+| 대시보드 | 회원/챌린지/상품/포인트 관리, 인증 확인 등 기능 포함 |
+
+## 📸 스크린샷
+
+> UI 디자인과 서비스 흐름은 [기획 문서 내 스토리보드](https://drive.google.com/drive/folders/1ckVrO9g0TXSAOO1PLG8CZ7DQKOHHny4E?usp=drive_link)와 참고 바랍니다.
+
+## 🤝 기여 방법
+
+1. 브랜치를 생성합니다.
+2. 기능을 개발하거나 수정합니다.
+3. 커밋 메시지를 명확하게 작성합니다.
+4. Pull Request를 요청합니다.
+
+---
+
+# Deploy
+
+`cloudflare pages`로 배포되고 있습니다.
