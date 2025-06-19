@@ -2,6 +2,8 @@
 
 ### Volta 설치하기
 
+- volta를 설치하기 전에 설치된 Node.js를 제거하는 것을 권장합니다.
+
 [문서 따르기](https://docs.volta.sh/guide/getting-started#windows-installation)
 
 ```bash
