@@ -1,4 +1,14 @@
-## 🚀 시작하기
+## 🚀 개발 방법
+
+### Volta 설치하기
+
+[문서 따르기](https://docs.volta.sh/guide/getting-started#windows-installation)
+
+```bash
+winget install Volta.Volta
+```
+
+### 개발서버 시작하기
 
 ```bash
 # 1. 클론
@@ -20,5 +30,9 @@ npm run dev
 4. Pull Request를 요청합니다.
 
 ## PR / Merge 정책
+
+- 작성이 필요합니다.
+
+## 코딩 규칙, 가이드라인
 
 - 작성이 필요합니다.
