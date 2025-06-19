@@ -41,20 +41,6 @@ src/
 └── utils/ (*)
 ```
 
-## 🚀 시작하기
-
-```bash
-# 1. 클론
-git clone https://github.com/GreenWiNit/GreenWiNit-FE.git
-
-# 2. 패키지 설치
-cd GreenWiNit-FE
-npm install
-
-# 3. 개발 서버 실행
-npm run dev
-```
-
 ## 🏁 기능 요약
 
 - 유저앱
@@ -72,16 +58,7 @@ npm run dev
 | -------- | ---------------------------------------------------- |
 | 대시보드 | 회원/챌린지/상품/포인트 관리, 인증 확인 등 기능 포함 |
 
-## 📸 스크린샷
-
-> UI 디자인과 서비스 흐름은 [기획 문서 내 스토리보드](https://drive.google.com/drive/folders/1ckVrO9g0TXSAOO1PLG8CZ7DQKOHHny4E?usp=drive_link)와 참고 바랍니다.
-
-## 🤝 기여 방법
-
-1. 브랜치를 생성합니다.
-2. 기능을 개발하거나 수정합니다.
-3. 커밋 메시지를 명확하게 작성합니다.
-4. Pull Request를 요청합니다.
+UI 디자인과 서비스 흐름은 [기획 문서 내 스토리보드](https://drive.google.com/drive/folders/1ckVrO9g0TXSAOO1PLG8CZ7DQKOHHny4E?usp=drive_link)와 참고 바랍니다.
 
 ---
 
