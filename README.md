@@ -28,7 +28,7 @@ GreenWiNit은 웹 기반의 환경 챌린지형 커뮤니티 플랫폼입니다.
 | ------------------------------- |
 | React, TypeScript, Tailwind CSS |
 
-## 📁 프로젝트 구조 (예시)
+## 📁 프로젝트 구조
 
 ```bash
 src/
@@ -59,6 +59,12 @@ src/
 | 대시보드 | 회원/챌린지/상품/포인트 관리, 인증 확인 등 기능 포함 |
 
 UI 디자인과 서비스 흐름은 [기획 문서 내 스토리보드](https://drive.google.com/drive/folders/1ckVrO9g0TXSAOO1PLG8CZ7DQKOHHny4E?usp=drive_link)와 참고 바랍니다.
+
+---
+
+# 개발
+
+CONTRIBUTING.md 문서를 참고하세요.
 
 ---
 
