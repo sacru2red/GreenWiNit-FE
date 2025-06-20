@@ -29,6 +29,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background-color: red;
 }
 
 body {
@@ -36,6 +37,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: orange;
 }
 
 h1 {
