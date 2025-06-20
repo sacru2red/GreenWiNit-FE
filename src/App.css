@@ -1,5 +1,7 @@
 #root {
   max-width: 1280px;
+  height: 100vh;
+  width: 100vw;
   margin: 0 auto;
   padding: 0rem;
   text-align: center;
@@ -83,6 +85,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+}
+@theme {
+  --color-mountain_meadow: #0fba7e;
+  --color-mountain_meadow-0: #FF5F9F7;
+  --color-mountain_meadow-100: #c0f9e7;
+  --color-mountain_meadow-200: #93f4d6;
+  --color-mountain_meadow-300: #5decc2;
+  --color-mountain_meadow-400: #35e5ad;
+  --color-mountain_meadow-500: #0fba7e;
+  --color-mountain_meadow-600: #0c9b69;
+  --color-mountain_meadow-700: #097953;
+  --color-mountain_meadow-800: #065a3f;
+
+  --color-light-gray: #757575;
 }
 
 :root {
