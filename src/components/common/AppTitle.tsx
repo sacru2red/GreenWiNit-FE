@@ -7,10 +7,15 @@ const appTitleVariants = cva('font-jalnan !text-4xl text-mountain_meadow', {
   defaultVariants: {},
 })
 
-type AppTitleProps = VariantProps<typeof appTitleVariants>
+type AppTitleProps = VariantProps<typeof appTitleVariants> &
+  React.HTMLAttributes<HTMLHeadingElement>
 
-const AppTitle = ({ ...props }: AppTitleProps) => {
-  return <h1 className={cn(appTitleVariants(props))}>Greenwinit</h1>
+const AppTitle = ({ className, ...props }: AppTitleProps) => {
+  return (
+    <h1 {...props} className={cn(appTitleVariants(className), className)}>
+      <img src="/img/logo-title.png" alt="Greenwinit" className="w-[20vw]" />
+    </h1>
+  )
 }
 
 export default AppTitle

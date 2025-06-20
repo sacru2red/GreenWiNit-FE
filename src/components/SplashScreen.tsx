@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import AppTitle from './common/AppTitle'
-import SubTitle from './common/SubTitle'
+import HeaderSectionMiddle from './common/HeaderSectionMiddle'
 
 const SplashScreen = () => {
   const [showImages, setShowImages] = useState(false)
@@ -25,14 +24,7 @@ const SplashScreen = () => {
           }`}
         />
       </div>
-      <div
-        className={`absolute top-[320px] flex w-full flex-col items-center justify-center gap-1 transition-all delay-250 duration-1000 ${
-          showImages ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}
-      >
-        <AppTitle />
-        <SubTitle />
-      </div>
+      <HeaderSectionMiddle initalPosition={!showImages} />
     </div>
   )
 }

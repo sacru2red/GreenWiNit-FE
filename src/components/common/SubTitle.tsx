@@ -6,10 +6,14 @@ const subTitleVariants = cva('text-base text-light-gray', {
   defaultVariants: {},
 })
 
-type SubTitleProps = VariantProps<typeof subTitleVariants>
+type SubTitleProps = VariantProps<typeof subTitleVariants> & React.HTMLAttributes<HTMLSpanElement>
 
-const SubTitle = ({ ...props }: SubTitleProps) => {
-  return <span className={cn(subTitleVariants(props))}>함께 이기는 환경 챌린지</span>
+const SubTitle = ({ className, ...props }: SubTitleProps) => {
+  return (
+    <span {...props} className={cn(subTitleVariants(className), className)}>
+      함께 이기는 환경 챌린지
+    </span>
+  )
 }
 
 export default SubTitle
