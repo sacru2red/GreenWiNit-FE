@@ -1,3 +1,4 @@
+import AppTitle from '@/components/common/AppTitle'
 import BottomNavigation from '@/components/common/BottomNav'
 import { useUserStore } from '@/store/userStore'
 import { Fragment } from 'react'
@@ -16,11 +17,11 @@ function Main() {
 
   return (
     <div className="flex h-full w-full flex-col bg-[#F5F9F7]">
-      <div className="flex h-[48px] w-full items-center justify-center bg-white">
-        <span className="font-jalnan text-[24px] text-[#0FBA7E]">Greenwinit</span>
+      <div className="flex h-12 w-full items-center justify-center bg-white">
+        <AppTitle className="!text-3xl" />
       </div>
       <div className="m-2 mt-6 flex flex-row items-center gap-2 rounded-[16px] bg-white p-4 shadow-lg">
-        <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/user-default-profile.png')] bg-size-[57px_67px] bg-center bg-no-repeat" />
+        <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-size-[50px] bg-no-repeat [background-position-x:22px] [background-position-y:center]" />
         <div className="flex flex-1 flex-col items-center justify-center gap-2">
           {user == null ? (
             <Fragment>

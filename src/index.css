@@ -1,5 +1,16 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
+@font-face {
+  font-family: 'Greenwinit-logo';
+  /**
+   * https://github.com/googlefonts/geologica/blob/main/fonts/ttf/Geologica-ExtraBoldItalic.ttf
+   * and transform ttf to woff2
+   */
+  src: url('/Geologica-ExtraBoldItalic.woff2') format('woff2');
+  /* 로고가 다른 폰트로 보여지만 좋지 않기 때문에 숨김처리 */
+  font-display: block;
+}
+
 :root {
   /* @MEMO Pretendard 만큼 수트라는 폰트도 꽤 괜찮다고 들었습니다. https://sun.fo/suit/ */
   font-family: Pretendard, Roboto, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
