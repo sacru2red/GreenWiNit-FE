@@ -21,7 +21,7 @@ function Main() {
         <AppTitle className="!text-3xl" />
       </div>
       <div className="m-2 mt-6 flex flex-row items-center gap-2 rounded-[16px] bg-white p-4 shadow-lg">
-        <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-center bg-no-repeat" />
+        <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-size-[50px] bg-no-repeat [background-position-x:22px] [background-position-y:center]" />
         <div className="flex flex-1 flex-col items-center justify-center gap-2">
           {user == null ? (
             <Fragment>
