@@ -1,5 +1,4 @@
-import AppTitle from '@/components/common/AppTitle'
-import SubTitle from '@/components/common/SubTitle'
+import HeaderSectionMiddle from '@/components/common/HeaderSectionMiddle'
 import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
 import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
@@ -17,11 +16,8 @@ function Login() {
 
   return (
     <div className="relative flex w-full flex-1 flex-col items-center justify-start gap-12">
-      <div className="flex flex-col items-center justify-center gap-1 pt-[320px]">
-        <AppTitle />
-        <SubTitle />
-      </div>
-      <div className="flex w-full flex-col items-center justify-center gap-4 p-12">
+      <HeaderSectionMiddle />
+      <div className="absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
         <KakaoWideButton onClick={processLogin} />
         <GoogleWideButton onClick={processLogin} />
         <NaverWideButton onClick={processLogin} />
