@@ -8,6 +8,8 @@ function Main() {
   const logout = useUserStore((s) => s.logout)
   const navigate = useNavigate()
 
+  console.log('user', user)
+
   const handleLoginClick = () => {
     navigate('/login')
   }
@@ -47,7 +49,7 @@ function Main() {
         <button className="h-full w-full">팀</button>
       </div>
       <div className="flex w-full flex-col pt-6">
-        <div className="mx-auto flex w-[334px] flex-row gap-1">
+        <div className="flex w-[334px] flex-row gap-1">
           <span className="text-[20px] font-bold text-[#404040]">개인 챌린지</span>
           <img src="/icons/infocircle.svg" />
         </div>
