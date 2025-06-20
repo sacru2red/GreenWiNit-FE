@@ -1,52 +1,15 @@
 import AppTitle from '@/components/common/AppTitle'
 import BottomNavigation from '@/components/common/BottomNav'
-import { useUserStore } from '@/store/userStore'
-import { Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
+import UserCard from '@/components/home-screen/UserCard'
 
 function Main() {
-  const user = useUserStore((s) => s.user)
-  const logout = useUserStore((s) => s.logout)
-  const navigate = useNavigate()
-
-  console.log('user', user)
-
-  const handleLoginClick = () => {
-    navigate('/login')
-  }
-
   return (
     <div className="flex h-full w-full flex-col bg-[#F5F9F7]">
       <div className="flex h-12 w-full items-center justify-center bg-white">
         <AppTitle className="!text-3xl" />
       </div>
       <div className="mt-5 p-4">
-        <div className="flex flex-row items-center gap-8 rounded-[16px] bg-white p-6 shadow-lg">
-          <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-size-[50px] bg-no-repeat [background-position-x:22px] [background-position-y:center]" />
-          <div className="flex flex-1 flex-col items-start justify-center gap-2">
-            {user == null ? (
-              <Fragment>
-                <p className="font-bold">로그인이 필요합니다.</p>
-                <button className="bg-transparent" onClick={handleLoginClick}>
-                  로그인
-                </button>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <p className="w-[80%] text-start text-base leading-[2]">
-                  <span className="text-xl font-bold">{user.name}님</span>
-                  <button className="ml-4 bg-transparent" onClick={logout}>
-                    로그아웃
-                  </button>
-                  <br />
-                  <p className="leading-[1.5] break-keep">
-                    환경 챌린지에 참여하고 포인트를 모아보세요
-                  </p>
-                </p>
-              </Fragment>
-            )}
-          </div>
-        </div>
+        <UserCard />
         <button className="!bg-mountain_meadow mt-6 w-full rounded-lg p-4 text-base font-bold text-white">
           참여 챌린지
         </button>
