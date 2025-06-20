@@ -14,7 +14,7 @@ const NaverWideButton = (props: NaverWideButtonProps) => {
       )}
     >
       <img src="/img/naver.png" alt="네이버로그인" width={30} className="absolute left-3" />
-      <span>네이버 계정으로 로그인</span>
+      <span className="text-white">네이버 계정으로 로그인</span>
     </button>
   )
 }
