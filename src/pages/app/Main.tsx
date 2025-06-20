@@ -17,8 +17,8 @@ function Main() {
 
   return (
     <div className="flex h-full w-full flex-col bg-[#F5F9F7]">
-      <div className="flex h-[48px] w-full items-center justify-center bg-white">
-        <AppTitle className="[&_img]:w-[10vw]" />
+      <div className="flex h-12 w-full items-center justify-center bg-white">
+        <AppTitle className="!text-3xl" />
       </div>
       <div className="m-2 mt-6 flex flex-row items-center gap-2 rounded-[16px] bg-white p-4 shadow-lg">
         <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-center bg-no-repeat" />

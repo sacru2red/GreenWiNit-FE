@@ -181,3 +181,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: 'Greenwinit-logo';
+  /**
+   * https://github.com/googlefonts/geologica/blob/main/fonts/ttf/Geologica-ExtraBoldItalic.ttf
+   * and transform ttf to woff2
+   */
+  src: url('/Geologica-ExtraBoldItalic.woff2') format('woff2');
+}
