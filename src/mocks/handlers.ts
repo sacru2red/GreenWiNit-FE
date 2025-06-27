@@ -51,6 +51,12 @@ export const handlers = [
     }
 
     const foundUser = apiServerMockingStore.getState().users[0]
+    if (foundUser == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found user',
+      })
+    }
 
     return HttpResponse.json({
       point: foundUser.point,
@@ -62,5 +68,9 @@ export const handlers = [
         nextLevelExp: foundUser.level.nextLevelExp,
       },
     } satisfies UserStatus)
+  }),
+
+  http.get('/api/v1/challenges', () => {
+    return HttpResponse.json(apiServerMockingStore.getState().challenges)
   }),
 ]

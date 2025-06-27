@@ -4,12 +4,14 @@ import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
 import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
 import { useUserStore } from '@/store/userStore'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function Login() {
   const navigate = useNavigate()
   const login = useUserStore((state) => state.login)
   const logout = useUserStore((state) => state.logout)
+  const [params] = useSearchParams()
+  const redirectTo = params.get('redirect')
 
   const processLogin = (oAuthToken: string) => {
     usersApi
@@ -27,7 +29,7 @@ function Login() {
         throw err
       })
       .then(() => {
-        return navigate('/')
+        return navigate(redirectTo ?? '/')
       })
   }
 
