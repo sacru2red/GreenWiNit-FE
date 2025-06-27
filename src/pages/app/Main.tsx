@@ -1,8 +1,23 @@
 import AppTitle from '@/components/common/AppTitle'
 import BottomNavigation from '@/components/common/BottomNav'
 import UserCard from '@/components/home-screen/UserCard'
+import { useUserStore } from '@/store/userStore'
+import { useNavigate } from 'react-router-dom'
 
 function Main() {
+  const user = useUserStore((s) => s.user)
+  const navigate = useNavigate()
+
+  const handleClickJoinedChallengeButton = () => {
+    if (user == null) {
+      // @TODO: add toggle dialog
+      return
+    }
+
+    // @TODO: add joined-challenge page
+    navigate('/joined-challenge')
+  }
+
   return (
     <div className="flex h-full w-full flex-col bg-[#F5F9F7]">
       <div className="flex h-12 w-full items-center justify-center bg-white">
@@ -10,7 +25,10 @@ function Main() {
       </div>
       <div className="mt-5 p-4">
         <UserCard />
-        <button className="!bg-mountain_meadow mt-6 w-full rounded-lg p-4 text-base font-bold text-white">
+        <button
+          onClick={handleClickJoinedChallengeButton}
+          className="!bg-mountain_meadow mt-6 w-full rounded-lg p-4 text-base font-bold text-white"
+        >
           참여 챌린지
         </button>
       </div>

@@ -8,15 +8,20 @@ const UserCard = () => {
   const logout = useUserStore((s) => s.logout)
   const navigate = useNavigate()
 
-  console.log('user', user)
-
   const handleLoginClick = () => {
     navigate('/login')
   }
 
-  const { data: userStatus } = useUserStatus()
+  const handleLogoutClick = () => {
+    fetch('/api/logout', {
+      method: 'POST',
+      credentials: 'include',
+    }).finally(() => {
+      logout()
+    })
+  }
 
-  console.log('userStatus', userStatus)
+  const { data: userStatus } = useUserStatus()
 
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white shadow-lg">
@@ -34,7 +39,7 @@ const UserCard = () => {
             <Fragment>
               <p className="w-[80%] text-start text-base leading-[2]">
                 <span className="text-xl font-bold">{user.name}님</span>
-                <button className="ml-4 bg-transparent" onClick={logout}>
+                <button className="ml-4 bg-transparent" onClick={handleLogoutClick}>
                   로그아웃
                 </button>
                 <br />

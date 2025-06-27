@@ -30,6 +30,16 @@ export const handlers = [
     })
   }),
 
+  http.post('/api/logout', async () => {
+    return new HttpResponse('ok', {
+      status: 200,
+      statusText: 'OK',
+      headers: {
+        'set-cookie': 'authToken=;',
+      },
+    })
+  }),
+
   http.get('/api/v1/users/me/status', ({ cookies }) => {
     const authToken = cookies['authToken']
 
