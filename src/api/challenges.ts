@@ -5,6 +5,10 @@ export const challengesApi = {
     const response = await fetch('/api/v1/challenges')
     return response.json() as Promise<Challenge[]>
   },
+  getJoinedChallengesMine: async () => {
+    const response = await fetch('/api/v1/challenges/user/me/joined')
+    return response.json() as Promise<Challenge[]>
+  },
 }
 
 export interface Challenge {
@@ -18,10 +22,15 @@ export interface Challenge {
   status: 0 | 1 | 2
   statusKo: '모집중' | '진행중' | '종료'
   thumbnailUrl: string
+  participants: {
+    id: string
+    name: string
+  }[]
 }
 
 const challengesKey = createQueryKeys('challenges', {
   list: () => ['list'] as const,
+  listJoinedMine: () => ['list/joined/mine'] as const,
 })
 
 export const challengesQueryKeys = challengesKey

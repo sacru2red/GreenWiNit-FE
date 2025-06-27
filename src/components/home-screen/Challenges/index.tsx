@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Tab from '@/components/home-screen/Challenges/Tab'
 import { TabProps } from '@/components/home-screen/Challenges/type'
 import { useChallenges } from '@/hooks/useChallenges'
-import Challenge from './Challenge'
+import Challenge from '@/components/common/Challenge'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')

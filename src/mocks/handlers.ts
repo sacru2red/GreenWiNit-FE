@@ -73,4 +73,29 @@ export const handlers = [
   http.get('/api/v1/challenges', () => {
     return HttpResponse.json(apiServerMockingStore.getState().challenges)
   }),
+
+  http.get('/api/v1/challenges/user/me/joined', ({ cookies }) => {
+    const authToken = cookies['authToken']
+
+    if (authToken == null || authToken == '') {
+      return new HttpResponse(null, {
+        status: 401,
+        statusText: 'Unauthorized: not valid authToken',
+      })
+    }
+
+    const foundUser = apiServerMockingStore.getState().users[0]
+    if (foundUser == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found user',
+      })
+    }
+
+    return HttpResponse.json(
+      apiServerMockingStore
+        .getState()
+        .challenges.filter((c) => c.participants.some((p) => p.id === foundUser.id)),
+    )
+  }),
 ]

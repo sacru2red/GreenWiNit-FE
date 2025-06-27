@@ -8,6 +8,7 @@ import { useState } from 'react'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import Challenges from '@/components/home-screen/Challenges'
+import PageContainer from '@/components/common/PageContainer'
 
 function Main() {
   const user = useUserStore((s) => s.user)
@@ -24,7 +25,7 @@ function Main() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col bg-[#F5F9F7]">
+    <PageContainer>
       <div className="flex h-24 w-full items-center justify-center bg-white">
         <AppTitle className="!text-3xl" />
       </div>
@@ -64,7 +65,7 @@ function Main() {
       </div>
       <Challenges />
       <BottomNavigation />
-    </div>
+    </PageContainer>
   )
 }
 

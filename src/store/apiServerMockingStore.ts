@@ -1,3 +1,4 @@
+import { Challenge } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
@@ -15,18 +16,7 @@ interface ApiServerMockingState {
       nextLevelExp: number
     }
   }>
-  challenges: Array<{
-    id: string
-    type: 0 | 1
-    typeKo: '개인' | '팀'
-    name: string
-    description: string
-    startAt: string
-    endAt: string
-    status: 0 | 1 | 2
-    statusKo: '모집중' | '진행중' | '종료'
-    thumbnailUrl: string
-  }>
+  challenges: Challenge[]
 }
 
 export const apiServerMockingStore = create<ApiServerMockingState>()(
@@ -61,6 +51,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/661/300/200.jpg?hmac=zVBnVXYPtDskXZnJWjGoYK2R3XwvZJ5ez3ObA07jFSU',
+            participants: [],
           },
           {
             id: '2',
@@ -74,6 +65,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/1065/300/200.jpg?hmac=znixKcDX1Ou6rY0EYrczUpfu64rFKBrkiHlNKBhx2Kw',
+            participants: [],
           },
           {
             id: '3',
@@ -87,6 +79,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/626/300/200.jpg?hmac=CV2IH1nRl4I_gBb9i-gy8QzKwxWYuzHXNvPe251LTAo',
+            participants: [{ id: '1', name: 'John Doe' }],
           },
         ],
       }),

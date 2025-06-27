@@ -1,4 +1,5 @@
 import BottomNavigation from '@/components/common/BottomNav'
+import PageContainer from '@/components/common/PageContainer'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
 
 function MyPage() {
@@ -29,7 +30,7 @@ function MyPage() {
   ]
 
   return (
-    <div className="h-full w-full overflow-y-auto bg-[#F5F9F7]">
+    <PageContainer>
       <div className="flex h-[48px] w-full items-center justify-center bg-white py-8">
         <span className="text-[24px] font-bold text-black">마이페이지</span>
       </div>
@@ -66,9 +67,8 @@ function MyPage() {
           )
         })}
       </div>
-
       <BottomNavigation />
-    </div>
+    </PageContainer>
   )
 }
 

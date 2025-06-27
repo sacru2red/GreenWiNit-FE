@@ -12,7 +12,7 @@ const Challenge = ({ challenge, onClick }: ChallengeProps) => {
   return (
     <div
       className={cn(
-        'h-fit max-w-[240px] min-w-[160px] flex-1 flex-col rounded bg-white shadow-lg',
+        'h-fit max-w-[240px] min-w-[160px] flex-1 flex-col overflow-hidden rounded-xl bg-white shadow-lg',
         onClick ? 'cursor-pointer' : '',
       )}
       onClick={onClick}
