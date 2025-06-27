@@ -5,7 +5,7 @@ import Admin from './pages/Admin.tsx'
 import './index.css'
 
 async function enableMocking() {
-  if (import.meta.env.PROD) {
+  if (import.meta.env.MODE === 'production') {
     return
   }
 
