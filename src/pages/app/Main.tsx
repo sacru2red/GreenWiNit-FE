@@ -20,8 +20,7 @@ function Main() {
       return
     }
 
-    // @TODO: add joined-challenge page
-    navigate('/joined-challenge')
+    navigate('/joined-challenges')
   }
 
   return (
@@ -55,7 +54,7 @@ function Main() {
               </button>
               <button
                 className="bg-mountain_meadow w-full rounded-lg p-2 text-white"
-                onClick={() => navigate('/login?redirect=/joined-challenge')}
+                onClick={() => navigate('/login?redirect=/joined-challenges')}
               >
                 확인
               </button>

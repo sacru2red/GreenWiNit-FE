@@ -8,6 +8,7 @@ import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
+import JoinedChallenges from './pages/app/joined-challenges'
 
 const queryClient = new QueryClient()
 
@@ -32,6 +33,7 @@ function App() {
                 <SplashScreen />
               ) : (
                 <Routes>
+                  <Route path="/joined-challenges" element={<JoinedChallenges />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/my" element={<MyPage />} />
                   <Route path="*" element={<Main />} />
