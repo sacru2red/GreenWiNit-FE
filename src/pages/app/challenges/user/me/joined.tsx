@@ -44,7 +44,11 @@ const JoinedChallenges = () => {
           {filteredChallenges?.length ? (
             <div className="flex-start flex w-full flex-row flex-wrap gap-4">
               {filteredChallenges.map((challenge) => (
-                <Challenge key={challenge.id} challenge={challenge} />
+                <Challenge
+                  key={challenge.id}
+                  challenge={challenge}
+                  onClick={() => navigate(`/challenges/detail/${challenge.id}`)}
+                />
               ))}
             </div>
           ) : (

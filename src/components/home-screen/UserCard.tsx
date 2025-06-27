@@ -2,6 +2,7 @@ import { useUserStatus } from '@/hooks/useUserStatus'
 import { useUserStore } from '@/store/userStore'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
+import LogoIcon from '../common/LogoIcon'
 
 const UserCard = () => {
   const user = useUserStore((s) => s.user)
@@ -26,7 +27,7 @@ const UserCard = () => {
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white shadow-lg">
       <div className="flex w-full flex-row gap-8 p-6">
-        <div className="h-[92px] w-[92px] rounded-full border-2 border-gray-300 bg-[url('/img/logo-icon.png')] bg-cover bg-size-[50px] bg-no-repeat [background-position-x:22px] [background-position-y:center]" />
+        <LogoIcon />
         <div className="flex flex-1 flex-col items-start justify-center gap-2">
           {user == null ? (
             <Fragment>

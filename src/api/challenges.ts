@@ -9,6 +9,10 @@ export const challengesApi = {
     const response = await fetch('/api/v1/challenges/user/me/joined')
     return response.json() as Promise<Challenge[]>
   },
+  getChallengeDetail: async (id: string | undefined) => {
+    const response = await fetch(`/api/v1/challenges/${id}`)
+    return response.json() as Promise<Challenge>
+  },
 }
 
 export interface Challenge {
@@ -31,6 +35,7 @@ export interface Challenge {
 const challengesKey = createQueryKeys('challenges', {
   list: () => ['list'] as const,
   listJoinedMine: () => ['list/joined/mine'] as const,
+  detail: (id: string | undefined) => ['detail', id] as const,
 })
 
 export const challengesQueryKeys = challengesKey

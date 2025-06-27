@@ -98,4 +98,17 @@ export const handlers = [
         .challenges.filter((c) => c.participants.some((p) => p.id === foundUser.id)),
     )
   }),
+
+  http.get('/api/v1/challenges/:id', ({ params }) => {
+    const id = params['id']
+    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+
+    return HttpResponse.json(challenge)
+  }),
 ]
