@@ -47,9 +47,15 @@ const JoinedChallenges = () => {
                 <Challenge
                   key={challenge.id}
                   challenge={challenge}
-                  // 개인 챌린지는 인증페이지 (submit)으로 이동
                   // 팀 챌린지는 팀 선택페이지로 이동
-                  onClick={() => navigate(`/challenges/detail/${challenge.id}`)}
+                  onClick={() => {
+                    if (challenge.type === 0) {
+                      navigate(`/challenges/submit/${challenge.id}`)
+                    } else {
+                      // @TODO fix it
+                      navigate(`/challenges/team/select/${challenge.id}`)
+                    }
+                  }}
                 />
               ))}
             </div>

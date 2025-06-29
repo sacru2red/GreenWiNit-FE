@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const pageHeaderSectionVariants = cva(
-  'bg-white relative flex flex-row items-center justify-center h-12',
+  'bg-white relative flex flex-row items-center justify-center h-12 border-b border-b-[F0F0F0]',
   {
     variants: {},
     defaultVariants: {},
