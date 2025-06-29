@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import Challenges from '@/components/home-screen/Challenges'
 import PageContainer from '@/components/common/PageContainer'
+import { Button } from '@/components/ui/button'
 
 function Main() {
   const user = useUserStore((s) => s.user)
@@ -31,12 +32,9 @@ function Main() {
       </div>
       <div className="mt-5 p-4">
         <UserCard />
-        <button
-          onClick={handleClickJoinedChallengeButton}
-          className="!bg-mountain_meadow mt-6 w-full rounded-lg p-4 text-base font-bold text-white"
-        >
+        <Button onClick={handleClickJoinedChallengeButton} className="mt-6">
           참여 챌린지
-        </button>
+        </Button>
         <Dialog
           open={isWarnNotLoggedInDialogOpen}
           onClose={() => setIsWarnNotLoggedInDialogOpen(false)}

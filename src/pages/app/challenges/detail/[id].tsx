@@ -8,6 +8,7 @@ import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import LogoIcon from '@/components/common/LogoIcon'
 import BottomNavigation from '@/components/common/BottomNav'
 import dayjs from 'dayjs'
+import { Button } from '@/components/ui/button'
 
 const ChallengeDetail = () => {
   const params = useParams<{ id: string }>()
@@ -73,6 +74,8 @@ const ChallengeDetail = () => {
             </div>
           </div>
         </div>
+        {/* @TODO attach click event handler */}
+        <Button className="mt-auto">챌린지 참여하기</Button>
       </div>
       <BottomNavigation />
     </PageContainer>
