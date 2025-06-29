@@ -27,7 +27,7 @@ const UserCard = () => {
   return (
     <div className="flex flex-col items-center rounded-2xl bg-white shadow-lg">
       <div className="flex w-full flex-row gap-8 p-6">
-        <LogoIcon />
+        <LogoIcon size="large" />
         <div className="flex flex-1 flex-col items-start justify-center gap-2">
           {user == null ? (
             <Fragment>

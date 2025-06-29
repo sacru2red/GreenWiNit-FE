@@ -20,7 +20,12 @@ export interface Challenge {
   type: 0 | 1
   typeKo: '개인' | '팀'
   name: string
+  /**
+   * @deprecated
+   * howToJoin하고 description 중 하나만 사용할 수도 있음..
+   */
   description: string
+  howToJoin: string
   startAt: string
   endAt: string
   status: 0 | 1 | 2
@@ -30,6 +35,7 @@ export interface Challenge {
     id: string
     name: string
   }[]
+  point: number
 }
 
 const challengesKey = createQueryKeys('challenges', {

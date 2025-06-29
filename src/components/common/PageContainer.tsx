@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const pageContainerVariants = cva('flex h-full w-full flex-col bg-[#F5F9F7]', {
+const pageContainerVariants = cva('flex h-full w-full flex-col bg-card', {
   variants: {},
   defaultVariants: {},
 })
