@@ -9,7 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-mountain_meadow w-full rounded-lg p-4 text-base font-bold text-white',
+        default:
+          'bg-mountain_meadow rounded-lg p-4 text-base font-bold text-white border-transparent',
         admin: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
@@ -19,6 +20,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
         disabled: 'text-white bg-[#c0c0c0] !cursor-not-allowed',
+        cancel: 'border-mountain_meadow rounded-lg border bg-white p-4',
       },
       size: {
         default: 'p-4',
@@ -26,6 +28,7 @@ const buttonVariants = cva(
         sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',
+        flex: 'flex flex-[1]',
       },
     },
     defaultVariants: {

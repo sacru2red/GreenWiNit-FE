@@ -2,6 +2,9 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+/**
+ * https://ui.shadcn.com/docs/components/input
+ */
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
     <input

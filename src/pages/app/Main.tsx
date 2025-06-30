@@ -30,9 +30,9 @@ function Main() {
       <div className="flex h-24 w-full items-center justify-center bg-white">
         <AppTitle className="!text-3xl" />
       </div>
-      <div className="mt-5 p-4">
+      <div className="mt-5 flex flex-col p-4">
         <UserCard />
-        <Button onClick={handleClickJoinedChallengeButton} className="mt-6">
+        <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
           참여 챌린지
         </Button>
         <Dialog
@@ -45,18 +45,19 @@ function Main() {
               챌린지에 참여할 수 있어요.
             </DialogContentText>
             <div className="mt-6 flex flex-row gap-6">
-              <button
-                className="border-mountain_meadow w-full rounded-lg border bg-white p-2"
+              <Button
+                variant="cancel"
+                size="flex"
                 onClick={() => setIsWarnNotLoggedInDialogOpen(false)}
               >
                 취소
-              </button>
-              <button
-                className="bg-mountain_meadow w-full rounded-lg p-2 text-white"
+              </Button>
+              <Button
+                size="flex"
                 onClick={() => navigate('/login?redirect=/challenges/user/me/joined')}
               >
                 확인
-              </button>
+              </Button>
             </div>
           </DialogContent>
         </Dialog>

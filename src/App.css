@@ -105,6 +105,8 @@
   --color-card-base: #555555;
 
   --color-light-gray: #757575;
+  --color-lighter-gray: #808080;
+  --color-lighter-gray-border: #e0e0e0;
 }
 
 :root {
