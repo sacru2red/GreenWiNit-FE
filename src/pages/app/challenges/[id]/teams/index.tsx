@@ -57,7 +57,7 @@ const ChallengesTeam = () => {
           <Button size="flex" onClick={() => navigate(`./join`)}>
             <AssignmentTurnedInOutlinedIcon />팀 선택하기
           </Button>
-          <Button size="flex">
+          <Button size="flex" onClick={() => navigate(`./enroll`)}>
             <GroupsIcon />팀 등록하기
           </Button>
         </div>

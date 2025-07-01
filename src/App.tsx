@@ -16,6 +16,7 @@ import { useMessageStore } from './store/messageStore'
 import ChallengesTeam from './pages/app/challenges/[id]/teams'
 import JoinTeam from './pages/app/challenges/[id]/teams/join'
 import TeamDetail from './pages/app/challenges/[id]/teams/[id]'
+import TeamEnroll from './pages/app/challenges/[id]/teams/enroll'
 
 const queryClient = new QueryClient()
 
@@ -51,6 +52,7 @@ function App() {
                   <Route path="/challenges/:id/teams" element={<ChallengesTeam />} />
                   <Route path="/challenges/:id/teams/join" element={<JoinTeam />} />
                   <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
+                  <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/my" element={<MyPage />} />
                   <Route path="*" element={<Main />} />
