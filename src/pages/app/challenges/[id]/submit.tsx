@@ -4,7 +4,7 @@ import PageTitle from '@/components/common/PageTitle'
 import Required from '@/components/common/Required'
 import { Input, Textarea } from '@/components/ui/input'
 import BackIcon from '@mui/icons-material/ChevronLeft'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import PlusIcon from '@mui/icons-material/Add'
 import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -43,14 +43,28 @@ const ChallengeSubmit = () => {
     },
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
+  const params = useParams<{ id: string }>()
+  const id = params.id
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     console.log(data)
     console.log('state', f.formState)
+    const { title, date, image, review } = data
+    if (date == null) {
+      throw new Error('date is required')
+    }
+    if (image == null) {
+      throw new Error('image is required')
+    }
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('date', date.toISOString())
+    formData.append('image', image)
+    formData.append('review', review)
 
-    fetch('/api/v1/challenges/submit', {
+    fetch(`/api/v1/challenges/${id}/submit`, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: formData,
     }).then(() => {
       setOpenConfirmDialog(true)
     })

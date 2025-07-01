@@ -41,12 +41,7 @@ const Challenges = () => {
                 key={challenge.id}
                 challenge={challenge}
                 onClick={() => {
-                  if (challenge.type === 0) {
-                    navigate(`/challenges/detail/${challenge.id}`)
-                    return
-                  }
-
-                  // @TODO: 팀 챌린지 클릭시 이벤트 처리
+                  navigate(`/challenges/${challenge.id}/detail`)
                 }}
               />
             ))}

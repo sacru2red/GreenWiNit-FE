@@ -117,7 +117,7 @@ export const handlers = [
     return HttpResponse.json(challenge)
   }),
 
-  http.post('/api/v1/challenges/submit', async () => {
+  http.post('/api/v1/challenges/:id/submit', async () => {
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',

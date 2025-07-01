@@ -9,8 +9,8 @@ import { cn } from './lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import JoinedChallenges from './pages/app/challenges/user/me/joined'
-import ChallengeDetail from './pages/app/challenges/detail/[id]'
-import ChallengeSubmit from './pages/app/challenges/submit/[id]'
+import ChallengeDetail from './pages/app/challenges/[id]/detail'
+import ChallengeSubmit from './pages/app/challenges/[id]/submit'
 import Snackbar from '@mui/material/Snackbar'
 import { useMessageStore } from './store/messageStore'
 
@@ -43,8 +43,8 @@ function App() {
               ) : (
                 <Routes>
                   <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
-                  <Route path="/challenges/detail/:id" element={<ChallengeDetail />} />
-                  <Route path="/challenges/submit/:id" element={<ChallengeSubmit />} />
+                  <Route path="/challenges/:id/detail" element={<ChallengeDetail />} />
+                  <Route path="/challenges/:id/submit" element={<ChallengeSubmit />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/my" element={<MyPage />} />
                   <Route path="*" element={<Main />} />

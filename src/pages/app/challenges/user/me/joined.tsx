@@ -50,7 +50,7 @@ const JoinedChallenges = () => {
                   // 팀 챌린지는 팀 선택페이지로 이동
                   onClick={() => {
                     if (challenge.type === 0) {
-                      navigate(`/challenges/submit/${challenge.id}`)
+                      navigate(`/challenges/${challenge.id}/submit`)
                     } else {
                       // @TODO fix it
                       navigate(`/challenges/team/select/${challenge.id}`)

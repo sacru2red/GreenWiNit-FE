@@ -53,7 +53,7 @@ const ChallengeDetail = () => {
           <LogoIcon size="small" className="border-none bg-transparent bg-size-[20px]" />
           <h2 className="text-xl font-bold">{challenge?.name}</h2>
         </div>
-        <div className="flex w-full flex-1 flex-col gap-4 rounded-xl bg-white p-4">
+        <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
           <img
             src={challenge?.thumbnailUrl}
             alt={challenge?.name}
