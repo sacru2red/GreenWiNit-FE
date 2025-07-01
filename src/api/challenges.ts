@@ -31,6 +31,19 @@ export const challengesApi = {
     const response = await fetch(`/api/v1/challenges/${id}/teams/me/joined`)
     return response.json() as Promise<Team[]>
   },
+  joinTeam: async (id: string | undefined, teamId: string | undefined) => {
+    if (id == null || teamId == null) {
+      throw new Error('id or teamId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${id}/teams/${teamId}/join`, {
+      method: 'POST',
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export type Challenge = {
@@ -83,6 +96,7 @@ export interface Team {
     roadnameCode: string
     zonecode: string
     detailAddress: string
+    sigungu: string
   }
   description: string
   maxMemberCount: number

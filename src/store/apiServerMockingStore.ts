@@ -7,9 +7,10 @@ interface ApiServerMockingState {
   users: User[]
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
+  joinTeam: (teamId: string, user: User) => void
 }
 
-const ME = {
+export const ME = {
   id: '1',
   name: 'John Doe',
   email: 'john.doe@example.com',
@@ -141,6 +142,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
                   roadnameCode: '3179025',
                   zonecode: '13529',
                   detailAddress: '101동 203호',
+                  sigungu: '성남시 분당구',
                 },
                 description: '팀 1 설명',
                 maxMemberCount: 10,
@@ -157,6 +159,20 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
           set((state) => ({
             challenges: state.challenges.map((c) =>
               c.id === challengeId ? { ...c, joinUserIds: [...c.joinUserIds, user.id] } : c,
+            ),
+          }))
+        },
+        joinTeam: (teamId: string, user: User) => {
+          set((state) => ({
+            challenges: state.challenges.map((c) =>
+              c.type === 1 && c.teams.some((t) => t.id === teamId)
+                ? {
+                    ...c,
+                    teams: c.teams.map((t) =>
+                      t.id === teamId ? { ...t, users: [...t.users, user] } : t,
+                    ),
+                  }
+                : c,
             ),
           }))
         },

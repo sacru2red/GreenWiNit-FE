@@ -20,7 +20,7 @@ const ChallengeDetail = () => {
   const id = params.id
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
-  const { showMessage: setMessage } = useMessageStore()
+  const { showMessage } = useMessageStore()
   const queryClient = useQueryClient()
 
   const { data: challenge } = useChallenge(id)
@@ -35,7 +35,7 @@ const ChallengeDetail = () => {
     },
     onError(error) {
       console.error(error)
-      setMessage(error.message)
+      showMessage(error.message)
     },
   })
 
