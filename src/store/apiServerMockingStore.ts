@@ -41,7 +41,8 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/661/300/200.jpg?hmac=zVBnVXYPtDskXZnJWjGoYK2R3XwvZJ5ez3ObA07jFSU',
-            participants: [],
+            participationRecords: [],
+            joinUserIds: [],
             howToJoin: '자전거를 타고 출발하세요.',
             point: 100,
           },
@@ -57,7 +58,8 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/1065/300/200.jpg?hmac=znixKcDX1Ou6rY0EYrczUpfu64rFKBrkiHlNKBhx2Kw',
-            participants: [],
+            teams: [],
+            joinUserIds: [],
             howToJoin: '다같이 모여 자전거를 타고 출발하세요.',
             point: 200,
           },
@@ -73,7 +75,28 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/626/300/200.jpg?hmac=CV2IH1nRl4I_gBb9i-gy8QzKwxWYuzHXNvPe251LTAo',
-            participants: [{ id: '1', name: 'John Doe' }],
+            participationRecords: [
+              {
+                id: '1',
+                date: '2025-07-01',
+                users: [
+                  {
+                    id: '1',
+                    name: 'John Doe',
+                    email: 'john.doe@example.com',
+                    point: 1500,
+                    challengeCount: 35,
+                    level: {
+                      name: 'Silver',
+                      code: 2,
+                      exp: 2300,
+                      nextLevelExp: 3000,
+                    },
+                  },
+                ],
+              },
+            ],
+            joinUserIds: ['1'],
             howToJoin: '비닐 대신 에코백을 사용하세요.',
             point: 300,
           },
@@ -89,7 +112,8 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             statusKo: '모집중',
             thumbnailUrl:
               'https://fastly.picsum.photos/id/170/300/200.jpg?hmac=N5CTF48skNY31DQfN6Wpg-EQTD2YzHwFrh2tQRLkgyQ',
-            participants: [],
+            participationRecords: [],
+            joinUserIds: [],
             howToJoin: '플로깅을 하세요.',
             point: 300,
           },
@@ -97,13 +121,15 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
         joinChallenge: (challengeId: string, user: User) => {
           set((state) => ({
             challenges: state.challenges.map((c) =>
-              c.id === challengeId ? { ...c, participants: [...c.participants, user] } : c,
+              c.id === challengeId && c.type === 0
+                ? { ...c, joinUserIds: [...c.joinUserIds, user.id] }
+                : c,
             ),
           }))
         },
       }),
       {
-        name: 'user',
+        name: 'apiServerMockingStore',
       },
     ),
   ),

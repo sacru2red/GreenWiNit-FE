@@ -1,3 +1,4 @@
+import { type User } from '@/store/userStore'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const challengesApi = {
@@ -25,10 +26,8 @@ export const challengesApi = {
   },
 }
 
-export interface Challenge {
+export type Challenge = {
   id: string
-  type: 0 | 1
-  typeKo: '개인' | '팀'
   name: string
   /**
    * @deprecated
@@ -41,11 +40,31 @@ export interface Challenge {
   status: 0 | 1 | 2
   statusKo: '모집중' | '진행중' | '종료'
   thumbnailUrl: string
-  participants: {
-    id: string
-    name: string
-  }[]
   point: number
+  joinUserIds: string[]
+} & (
+  | {
+      type: 0
+      typeKo: '개인'
+      // 참여기록
+      participationRecords: ParticipationRecord[]
+    }
+  | {
+      type: 1
+      typeKo: '팀'
+      teams: Array<{
+        id: string
+        name: string
+        // 참여기록
+        participationRecords: ParticipationRecord[]
+      }>
+    }
+)
+
+interface ParticipationRecord {
+  id: string
+  date: string
+  users: User[]
 }
 
 const challengesKey = createQueryKeys('challenges', {

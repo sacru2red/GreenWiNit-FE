@@ -10,6 +10,8 @@ const ChallengesTeam = () => {
   const id = params.id
   const { data: challenge } = useChallenge(id)
 
+  // challenge.
+
   return (
     <PageContainer>
       <PageHeaderSection>

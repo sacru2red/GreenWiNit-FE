@@ -100,7 +100,13 @@ export const handlers = [
     return HttpResponse.json(
       apiServerMockingStore
         .getState()
-        .challenges.filter((c) => c.participants.some((p) => p.id === foundUser.id)),
+        .challenges.filter((c) =>
+          c.type === 0
+            ? c.participationRecords.some((p) => p.users.some((u) => u.id === foundUser.id))
+            : c.teams.some((t) =>
+                t.participationRecords.some((p) => p.users.some((u) => u.id === foundUser.id)),
+              ),
+        ),
     )
   }),
 
@@ -140,7 +146,7 @@ export const handlers = [
     }
 
     const apiServerMockingStoreState = apiServerMockingStore.getState()
-    const { challenges, joinChallenge: join } = apiServerMockingStoreState
+    const { challenges, joinChallenge } = apiServerMockingStoreState
     const challenge = challenges.find((c) => c.id === id)
     if (challenge == null) {
       return new HttpResponse(null, {
@@ -148,9 +154,17 @@ export const handlers = [
         statusText: 'Not Found: not found challenge',
       })
     }
+    if (challenge.type !== 0) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: cannot join team challenge (only individual challenge)',
+      })
+    }
 
-    const participants = challenge.participants
-    const joinedAlready = participants.some((p) => p.id === foundUser.id)
+    const participationRecords = challenge.participationRecords
+    const joinedAlready = participationRecords.some((p) =>
+      p.users.some((u) => u.id === foundUser.id),
+    )
     if (joinedAlready) {
       return new HttpResponse(null, {
         status: 400,
@@ -158,7 +172,7 @@ export const handlers = [
       })
     }
 
-    join(id, foundUser)
+    joinChallenge(id, foundUser)
 
     return new HttpResponse('ok', {
       status: 200,
