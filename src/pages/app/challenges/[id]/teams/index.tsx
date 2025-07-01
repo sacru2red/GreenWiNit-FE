@@ -38,6 +38,9 @@ const ChallengesTeam = () => {
         {joinedTeams?.length ? (
           <div className="flex flex-col gap-4">
             {joinedTeams.map((team) => (
+              // @TODO B01_007 슬라이드에서 비활성화 기준을 체크하고,
+              // mock 서버에서 비활성화 여부를 추가해야 합니다.
+              // 그리고 TeamCard 컴포넌트에서 비활성화 여부를 체크해서 비활성화 상태일 때는 비활성화 상태로 표시해야 합니다.
               <TeamCard key={team.id} team={team} />
             ))}
           </div>

@@ -135,6 +135,32 @@ export const handlers = [
     return HttpResponse.json(joinedTeams)
   }),
 
+  http.get('/api/v1/challenges/:challengeId/teams/:teamId', ({ params }) => {
+    const challengeId = params['challengeId']
+    const teamId = params['teamId']
+    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === challengeId)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    if (challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: this challenge is not team challenge',
+      })
+    }
+    const team = challenge.teams.find((t) => t.id === teamId)
+    if (team == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found team',
+      })
+    }
+    return HttpResponse.json(team)
+  }),
+
   http.post('/api/v1/challenges/:id/submit', async () => {
     return new HttpResponse('ok', {
       status: 200,

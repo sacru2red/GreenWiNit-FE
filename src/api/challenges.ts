@@ -44,6 +44,13 @@ export const challengesApi = {
     }
     return
   },
+  getChallengesTeam: async (challengeId: string | undefined, teamId: string | undefined) => {
+    if (challengeId == null || teamId == null) {
+      throw new Error('challengeId or teamId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${challengeId}/teams/${teamId}`)
+    return response.json() as Promise<Team>
+  },
 }
 
 export type Challenge = {
@@ -108,6 +115,8 @@ const challengesKey = createQueryKeys('challenges', {
   list: () => ['list'] as const,
   listJoinedMine: () => ['list/joined/mine'] as const,
   detail: (id: string | undefined) => ['detail', id] as const,
+  team: (challengeId: string | undefined, teamId: string | undefined) =>
+    ['team', challengeId, teamId] as const,
 })
 
 export const challengesQueryKeys = challengesKey
