@@ -9,25 +9,25 @@ interface ApiServerMockingState {
   joinChallenge: (challengeId: string, user: User) => void
 }
 
+const ME = {
+  id: '1',
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  point: 1500,
+  challengeCount: 35,
+  level: {
+    name: 'Silver',
+    code: 2,
+    exp: 2300,
+    nextLevelExp: 3000,
+  },
+} satisfies User
+
 export const apiServerMockingStore = create<ApiServerMockingState>()(
   devtools(
     persist(
       (set) => ({
-        users: [
-          {
-            id: '1',
-            name: 'John Doe',
-            email: 'john.doe@example.com',
-            point: 1500,
-            challengeCount: 35,
-            level: {
-              name: 'Silver',
-              code: 2,
-              exp: 2300,
-              nextLevelExp: 3000,
-            },
-          },
-        ],
+        users: [ME],
         challenges: [
           {
             id: '1',
@@ -117,13 +117,46 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             howToJoin: '플로깅을 하세요.',
             point: 300,
           },
+          {
+            id: '5',
+            type: 1,
+            typeKo: '팀',
+            name: '팀 참여하기 테스트',
+            description: '팀 참여하기 테스트 챌린지',
+            startAt: '2025-08-01',
+            endAt: '2025-08-31',
+            status: 0,
+            statusKo: '모집중',
+            thumbnailUrl:
+              'https://fastly.picsum.photos/id/535/300/200.jpg?hmac=-vf_P6g5M_OnP4JRh2lbjlkmkEm7CgcjtHZvJfRshEE',
+            teams: [
+              {
+                id: '1',
+                name: '참여중인 팀의 이름',
+                date: '2025-08-01',
+                startAt: '2025-08-01',
+                endAt: '2025-08-31',
+                address: {
+                  roadAddress: '경기 성남시 분당구 판교역로 166',
+                  roadnameCode: '3179025',
+                  zonecode: '13529',
+                  detailAddress: '101동 203호',
+                },
+                description: '팀 1 설명',
+                maxMemberCount: 10,
+                openChatUrl: 'https://open.kakao.com/o/1234567890',
+                users: [ME],
+              },
+            ],
+            joinUserIds: ['1'],
+            howToJoin: '',
+            point: 200,
+          },
         ],
         joinChallenge: (challengeId: string, user: User) => {
           set((state) => ({
             challenges: state.challenges.map((c) =>
-              c.id === challengeId && c.type === 0
-                ? { ...c, joinUserIds: [...c.joinUserIds, user.id] }
-                : c,
+              c.id === challengeId ? { ...c, joinUserIds: [...c.joinUserIds, user.id] } : c,
             ),
           }))
         },

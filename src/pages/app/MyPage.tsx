@@ -48,7 +48,7 @@ function MyPage() {
                       key={itemIndex}
                       className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-[16px]"
                     >
-                      <span className="text-[16px] text-[#404040]">{item.title}</span>
+                      <span className="text-title-smaller text-[16px]">{item.title}</span>
                       <svg
                         width="20"
                         height="20"

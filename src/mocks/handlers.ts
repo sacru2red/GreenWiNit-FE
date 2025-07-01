@@ -100,13 +100,7 @@ export const handlers = [
     return HttpResponse.json(
       apiServerMockingStore
         .getState()
-        .challenges.filter((c) =>
-          c.type === 0
-            ? c.participationRecords.some((p) => p.users.some((u) => u.id === foundUser.id))
-            : c.teams.some((t) =>
-                t.participationRecords.some((p) => p.users.some((u) => u.id === foundUser.id)),
-              ),
-        ),
+        .challenges.filter((c) => c.joinUserIds.includes(foundUser.id)),
     )
   }),
 
@@ -121,6 +115,40 @@ export const handlers = [
     }
 
     return HttpResponse.json(challenge)
+  }),
+
+  http.get('/api/v1/challenges/:id/teams/me/joined', ({ cookies, params }) => {
+    const id = params['id']
+    if (id == null || typeof id !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid id',
+      })
+    }
+    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    if (challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: cannot join team challenge (only team challenge)',
+      })
+    }
+
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const teams = challenge.teams
+    const joinedTeams = teams.filter((t) => t.users.some((u) => u.id === foundUser.id))
+
+    return HttpResponse.json(joinedTeams)
   }),
 
   http.post('/api/v1/challenges/:id/submit', async () => {
@@ -148,24 +176,14 @@ export const handlers = [
     const apiServerMockingStoreState = apiServerMockingStore.getState()
     const { challenges, joinChallenge } = apiServerMockingStoreState
     const challenge = challenges.find((c) => c.id === id)
+
     if (challenge == null) {
       return new HttpResponse(null, {
         status: 404,
         statusText: 'Not Found: not found challenge',
       })
     }
-    if (challenge.type !== 0) {
-      return new HttpResponse(null, {
-        status: 500,
-        statusText: 'Internal Server Error: cannot join team challenge (only individual challenge)',
-      })
-    }
-
-    const participationRecords = challenge.participationRecords
-    const joinedAlready = participationRecords.some((p) =>
-      p.users.some((u) => u.id === foundUser.id),
-    )
-    if (joinedAlready) {
+    if (challenge.joinUserIds.includes(foundUser.id)) {
       return new HttpResponse(null, {
         status: 400,
         statusText: 'Bad Request: already joined',

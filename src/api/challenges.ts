@@ -24,6 +24,13 @@ export const challengesApi = {
     }
     return
   },
+  getJoinedTeamsMine: async (id: string | undefined) => {
+    if (id == null) {
+      throw new Error('id is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${id}/teams/me/joined`)
+    return response.json() as Promise<Team[]>
+  },
 }
 
 export type Challenge = {
@@ -52,18 +59,34 @@ export type Challenge = {
   | {
       type: 1
       typeKo: '팀'
-      teams: Array<{
-        id: string
-        name: string
-        // 참여기록
-        participationRecords: ParticipationRecord[]
-      }>
+      teams: Team[]
     }
 )
 
 interface ParticipationRecord {
   id: string
   date: string
+  users: User[]
+}
+
+export interface Team {
+  id: string
+  name: string
+  date: string
+  startAt: string
+  endAt: string
+  /**
+   * https://postcode.map.daum.net/guide
+   */
+  address: {
+    roadAddress: string
+    roadnameCode: string
+    zonecode: string
+    detailAddress: string
+  }
+  description: string
+  maxMemberCount: number
+  openChatUrl: string
   users: User[]
 }
 

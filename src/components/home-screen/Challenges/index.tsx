@@ -23,7 +23,7 @@ const Challenges = () => {
       <Tab tab={tab} setTab={setTab} />
       <div className="flex h-0 w-full flex-[1_1_auto] flex-col p-4 pt-8">
         <div className="flex flex-row items-center gap-1">
-          <span className="text-xl font-bold text-[#404040]">{`${tab === 'individual' ? '개인' : '팀'} 챌린지`}</span>
+          <span className="text-title-smaller text-xl font-bold">{`${tab === 'individual' ? '개인' : '팀'} 챌린지`}</span>
           <Tooltip>
             <TooltipTrigger asChild>
               <InfoOutlineIcon htmlColor={MOUNTAIN_MEADOW} />
