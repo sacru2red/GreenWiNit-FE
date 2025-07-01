@@ -91,7 +91,7 @@
 }
 @theme {
   --color-mountain_meadow: #0fba7e;
-  --color-mountain_meadow-0: #FF5F9F7;
+  --color-mountain_meadow-0: #f5f9f7;
   --color-mountain_meadow-100: #c0f9e7;
   --color-mountain_meadow-200: #93f4d6;
   --color-mountain_meadow-300: #5decc2;
@@ -117,8 +117,8 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
