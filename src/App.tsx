@@ -11,17 +11,24 @@ import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/st
 import JoinedChallenges from './pages/app/challenges/user/me/joined'
 import ChallengeDetail from './pages/app/challenges/detail/[id]'
 import ChallengeSubmit from './pages/app/challenges/submit/[id]'
+import Snackbar from '@mui/material/Snackbar'
+import { useMessageStore } from './store/messageStore'
 
 const queryClient = new QueryClient()
 
 function App() {
   const [showSplashScreen, setShowSplashScreen] = useState(true)
+  const { opened, message, hideMessage } = useMessageStore()
 
   useEffect(() => {
     setTimeout(() => {
       setShowSplashScreen(false)
     }, 1500)
   }, [])
+
+  const handleClick = () => {
+    hideMessage()
+  }
 
   return (
     <Fragment>
@@ -45,6 +52,13 @@ function App() {
               )}
             </div>
           </div>
+          <Snackbar
+            open={opened}
+            autoHideDuration={3000}
+            onClose={handleClick}
+            message={message}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          />
         </MuiThemeProvider>
       </QueryClientProvider>
     </Fragment>

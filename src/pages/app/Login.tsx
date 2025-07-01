@@ -17,11 +17,7 @@ function Login() {
     usersApi
       .login({ oAuthToken })
       .then((res) => {
-        if (res.status !== 200) {
-          throw new Error('Login failed')
-        }
-
-        return login()
+        return login(res)
       })
       .catch((err) => {
         console.error('Login failed', err)

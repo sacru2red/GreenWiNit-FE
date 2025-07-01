@@ -3,21 +3,39 @@ import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcon from '@mui/icons-material/ChevronLeft'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import LogoIcon from '@/components/common/LogoIcon'
 import BottomNavigation from '@/components/common/BottomNav'
 import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import { useState } from 'react'
+import { useMessageStore } from '@/store/messageStore'
 
 const ChallengeDetail = () => {
   const params = useParams<{ id: string }>()
   const id = params.id
   const navigate = useNavigate()
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
+  const { showMessage: setMessage } = useMessageStore()
 
   const { data: challenge } = useQuery({
     queryKey: challengesQueryKeys.detail(id).queryKey,
     queryFn: () => challengesApi.getChallengeDetail(id),
+  })
+
+  const { mutate: joinChallenge } = useMutation({
+    mutationFn: (pId: string) => challengesApi.joinChallenge(pId),
+    onSuccess: () => {
+      setOpenSuccessDialog(true)
+    },
+    onError(error) {
+      console.error(error)
+      setMessage(error.message)
+    },
   })
 
   return (
@@ -74,10 +92,36 @@ const ChallengeDetail = () => {
             </div>
           </div>
         </div>
-        {/* @TODO attach click event handler */}
-        <Button className="mt-auto">챌린지 참여하기</Button>
+        <Button
+          className="mt-auto"
+          onClick={() => {
+            if (id == null) {
+              return
+            }
+            joinChallenge(id)
+          }}
+        >
+          챌린지 참여하기
+        </Button>
       </div>
       <BottomNavigation />
+      <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)}>
+        <DialogContent className="flex flex-col gap-3">
+          <DialogContentText className="text-border text-center !text-lg !text-black">
+            챌린지 참여 완료
+          </DialogContentText>
+          <DialogContentText className="text-border !text-light-gray text-center !text-sm">
+            [홈] -&gt; [참여 챌린지]에서
+            <br />
+            챌린지를 인증해보세요!
+          </DialogContentText>
+          <div className="flex w-full flex-row justify-center">
+            <Button className="px-8" onClick={() => navigate('/challenges/user/me/joined')}>
+              확인
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </PageContainer>
   )
 }

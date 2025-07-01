@@ -1,9 +1,11 @@
 import BottomNavigationMui from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function BottomNavigation() {
   const [value, setValue] = useState(0)
+  const navigate = useNavigate()
 
   return (
     <BottomNavigationMui
@@ -24,6 +26,7 @@ function BottomNavigation() {
         sx={{ paddingTop: '4px' }}
         icon={<img src="/icons/home.svg" />}
         label="홈"
+        onClick={() => navigate('/')}
       />
       <BottomNavigationAction
         sx={{ paddingTop: '4px' }}

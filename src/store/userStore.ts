@@ -1,23 +1,33 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-interface UserState {
-  user: null | {
-    id: string
+export interface User {
+  id: string
+  name: string
+  email: string
+  point: number
+  challengeCount: number
+  level: {
     name: string
-    email: string
+    code: number
+    exp: number
+    nextLevelExp: number
   }
-  login: () => void
+}
+
+interface UserStoreState {
+  user: null | User
+  login: (user: User) => void
   logout: () => void
 }
 
-export const useUserStore = create<UserState>()(
+export const useUserStore = create<UserStoreState>()(
   devtools(
     persist(
       (set) => ({
         user: null,
-        login: () => {
-          set({ user: { id: '1', name: 'John Doe', email: 'john.doe@example.com' } })
+        login: (user: User) => {
+          set({ user })
         },
         logout: () => {
           set({ user: null })

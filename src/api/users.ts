@@ -1,3 +1,4 @@
+import { User } from '@/store/userStore'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
@@ -9,7 +10,7 @@ export const usersApi = {
     return await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({ oAuthToken }),
-    })
+    }).then((res) => res.json() as Promise<User>)
   },
 }
 

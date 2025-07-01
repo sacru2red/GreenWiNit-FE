@@ -1,6 +1,7 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { UserStatus } from '@/api/users'
 import { apiServerMockingStore } from '@/store/apiServerMockingStore'
+import { User } from '@/store/userStore'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [
@@ -12,13 +13,28 @@ export const handlers = [
     console.log('oAuthToken', oAuthToken)
 
     if (oAuthToken == 'ok-this-is-valid-oAuth-token') {
-      return new HttpResponse('ok', {
-        status: 200,
-        statusText: 'OK',
-        headers: {
-          'set-cookie': 'authToken=abc-123',
+      return new HttpResponse(
+        JSON.stringify({
+          id: '1',
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          point: 1500,
+          challengeCount: 35,
+          level: {
+            name: 'Silver',
+            code: 2,
+            exp: 2300,
+            nextLevelExp: 3000,
+          },
+        } satisfies User),
+        {
+          status: 200,
+          statusText: 'OK',
+          headers: {
+            'set-cookie': 'authToken=abc-123',
+          },
         },
-      })
+      )
     }
 
     return new HttpResponse(null, {
@@ -41,22 +57,11 @@ export const handlers = [
   }),
 
   http.get('/api/v1/users/me/status', ({ cookies }) => {
-    const authToken = cookies['authToken']
-
-    if (authToken == null || authToken == '') {
-      return new HttpResponse(null, {
-        status: 401,
-        statusText: 'Unauthorized: not valid authToken',
-      })
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
     }
-
-    const foundUser = apiServerMockingStore.getState().users[0]
-    if (foundUser == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found user',
-      })
-    }
+    const foundUser = foundUserOrException
 
     return HttpResponse.json({
       point: foundUser.point,
@@ -118,4 +123,67 @@ export const handlers = [
       statusText: 'OK',
     })
   }),
+
+  http.post('/api/v1/challenges/:id/join', async ({ params, cookies }) => {
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const id = params['id']
+    if (id == null || typeof id !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid id',
+      })
+    }
+
+    const apiServerMockingStoreState = apiServerMockingStore.getState()
+    const { challenges, joinChallenge: join } = apiServerMockingStoreState
+    const challenge = challenges.find((c) => c.id === id)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+
+    const participants = challenge.participants
+    const joinedAlready = participants.some((p) => p.id === foundUser.id)
+    if (joinedAlready) {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: already joined',
+      })
+    }
+
+    join(id, foundUser)
+
+    return new HttpResponse('ok', {
+      status: 200,
+      statusText: 'OK',
+    })
+  }),
 ]
+
+const getUserFromCookie = (cookies: Record<string, string>) => {
+  const authToken = cookies['authToken']
+
+  if (authToken == null || authToken == '') {
+    return new HttpResponse(null, {
+      status: 401,
+      statusText: 'Unauthorized: not valid authToken',
+    })
+  }
+
+  const foundUser = apiServerMockingStore.getState().users[0]
+  if (foundUser == null) {
+    return new HttpResponse(null, {
+      status: 404,
+      statusText: 'Not Found: not found user',
+    })
+  }
+
+  return foundUser
+}

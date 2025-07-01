@@ -13,6 +13,16 @@ export const challengesApi = {
     const response = await fetch(`/api/v1/challenges/${id}`)
     return response.json() as Promise<Challenge>
   },
+  joinChallenge: async (id: string) => {
+    const response = await fetch(`/api/v1/challenges/${id}/join`, {
+      method: 'POST',
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export interface Challenge {

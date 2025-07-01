@@ -1,28 +1,18 @@
 import { Challenge } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { User } from './userStore'
 
 interface ApiServerMockingState {
-  users: Array<{
-    id: string
-    name: string
-    email: string
-    point: number
-    challengeCount: number
-    level: {
-      name: string
-      code: number
-      exp: number
-      nextLevelExp: number
-    }
-  }>
+  users: User[]
   challenges: Challenge[]
+  joinChallenge: (challengeId: string, user: User) => void
 }
 
 export const apiServerMockingStore = create<ApiServerMockingState>()(
   devtools(
     persist(
-      (_set) => ({
+      (set) => ({
         users: [
           {
             id: '1',
@@ -88,6 +78,13 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             point: 300,
           },
         ],
+        joinChallenge: (challengeId: string, user: User) => {
+          set((state) => ({
+            challenges: state.challenges.map((c) =>
+              c.id === challengeId ? { ...c, participants: [...c.participants, user] } : c,
+            ),
+          }))
+        },
       }),
       {
         name: 'user',
