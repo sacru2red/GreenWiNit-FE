@@ -6,8 +6,8 @@ const logoIconVariants = cva(
   {
     variants: {
       size: {
-        small: 'h-[20px] w-[20px]',
-        medium: 'h-[46px] w-[46px]',
+        small: 'h-[20px] w-[20px] bg-contain',
+        medium: 'h-[46px] w-[46px] bg-contain',
         large: 'h-[92px] w-[92px]',
       },
     },

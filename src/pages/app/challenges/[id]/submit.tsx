@@ -3,7 +3,6 @@ import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import Required from '@/components/common/Required'
 import { Input, Textarea } from '@/components/ui/input'
-import BackIcon from '@mui/icons-material/ChevronLeft'
 import { useNavigate, useParams } from 'react-router-dom'
 import PlusIcon from '@mui/icons-material/Add'
 import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
@@ -47,8 +46,6 @@ const ChallengeSubmit = () => {
   const id = params.id
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    console.log(data)
-    console.log('state', f.formState)
     const { title, date, image, review } = data
     if (date == null) {
       throw new Error('date is required')
@@ -73,11 +70,7 @@ const ChallengeSubmit = () => {
   return (
     <PageContainer>
       <PageHeaderSection>
-        <BackIcon
-          className="absolute left-4 cursor-pointer"
-          fontSize="large"
-          onClick={() => navigate(-1)}
-        />
+        <PageHeaderSection.BackIcon />
         <PageTitle>개인 챌린지 인증</PageTitle>
       </PageHeaderSection>
       <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4 p-4">

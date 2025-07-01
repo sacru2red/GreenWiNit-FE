@@ -2,10 +2,8 @@ import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import { useNavigate, useParams } from 'react-router-dom'
-import BackIcon from '@mui/icons-material/ChevronLeft'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import LogoIcon from '@/components/common/LogoIcon'
 import BottomNavigation from '@/components/common/BottomNav'
 import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
@@ -14,6 +12,8 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useState } from 'react'
 import { useMessageStore } from '@/store/messageStore'
+import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
+import useChallenge from '@/hooks/useChallenge'
 
 const ChallengeDetail = () => {
   const params = useParams<{ id: string }>()
@@ -21,16 +21,17 @@ const ChallengeDetail = () => {
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
   const { showMessage: setMessage } = useMessageStore()
+  const queryClient = useQueryClient()
 
-  const { data: challenge } = useQuery({
-    queryKey: challengesQueryKeys.detail(id).queryKey,
-    queryFn: () => challengesApi.getChallengeDetail(id),
-  })
+  const { data: challenge } = useChallenge(id)
 
   const { mutate: joinChallenge } = useMutation({
     mutationFn: (pId: string) => challengesApi.joinChallenge(pId),
     onSuccess: () => {
       setOpenSuccessDialog(true)
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.detail(id).queryKey,
+      })
     },
     onError(error) {
       console.error(error)
@@ -41,18 +42,11 @@ const ChallengeDetail = () => {
   return (
     <PageContainer>
       <PageHeaderSection>
-        <BackIcon
-          className="absolute left-4 cursor-pointer"
-          fontSize="large"
-          onClick={() => navigate(-1)}
-        />
+        <PageHeaderSection.BackIcon />
         <PageTitle>{`${challenge?.typeKo} 챌린지 상세보기`}</PageTitle>
       </PageHeaderSection>
       <div className="flex flex-1 flex-col gap-4 p-4">
-        <div className="flex flex-row items-center justify-start gap-1.5">
-          <LogoIcon size="small" className="border-none bg-transparent bg-size-[20px]" />
-          <h2 className="text-xl font-bold">{challenge?.name}</h2>
-        </div>
+        <ChallengeTitle title={challenge?.name} />
         <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
           <img
             src={challenge?.thumbnailUrl}

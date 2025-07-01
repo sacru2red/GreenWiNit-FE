@@ -5,7 +5,6 @@ import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import { cn } from '@/lib/utils'
-import BackIcon from '@mui/icons-material/ChevronLeft'
 import { useQuery } from '@tanstack/react-query'
 import { cva, VariantProps } from 'class-variance-authority'
 import { useState } from 'react'
@@ -24,11 +23,7 @@ const JoinedChallenges = () => {
   return (
     <PageContainer>
       <PageHeaderSection>
-        <BackIcon
-          className="absolute left-4 cursor-pointer"
-          fontSize="large"
-          onClick={() => navigate(-1)}
-        />
+        <PageHeaderSection.BackIcon />
         <PageTitle>참여 챌린지</PageTitle>
       </PageHeaderSection>
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -53,7 +48,7 @@ const JoinedChallenges = () => {
                       navigate(`/challenges/${challenge.id}/submit`)
                     } else {
                       // @TODO fix it
-                      navigate(`/challenges/team/select/${challenge.id}`)
+                      navigate(`/challenges/${challenge.id}/team/select`)
                     }
                   }}
                 />

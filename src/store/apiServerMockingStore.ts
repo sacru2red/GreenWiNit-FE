@@ -77,6 +77,22 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             howToJoin: '비닐 대신 에코백을 사용하세요.',
             point: 300,
           },
+          {
+            id: '4',
+            type: 0,
+            typeKo: '개인',
+            name: '우리동네 플로깅',
+            description: '우리동네 플로깅 챌린지',
+            startAt: '2025-07-01',
+            endAt: '2025-07-31',
+            status: 0,
+            statusKo: '모집중',
+            thumbnailUrl:
+              'https://fastly.picsum.photos/id/170/300/200.jpg?hmac=N5CTF48skNY31DQfN6Wpg-EQTD2YzHwFrh2tQRLkgyQ',
+            participants: [],
+            howToJoin: '플로깅을 하세요.',
+            point: 300,
+          },
         ],
         joinChallenge: (challengeId: string, user: User) => {
           set((state) => ({

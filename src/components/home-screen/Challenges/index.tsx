@@ -7,12 +7,16 @@ import { useNavigate } from 'react-router-dom'
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline'
 import { MOUNTAIN_MEADOW } from '@/constant/styles'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import useIsLoggedIn from '@/hooks/useIsLoggedIn'
+import WarnNotLoggedIn from '../WarnNotLoggedIn'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')
   const tabToType = tab === 'individual' ? 0 : 1
   const { data: challenges } = useChallenges()
   const navigate = useNavigate()
+  const isLoggedIn = useIsLoggedIn()
+  const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
 
   return (
     <div className="flex h-full flex-col">
@@ -41,12 +45,20 @@ const Challenges = () => {
                 key={challenge.id}
                 challenge={challenge}
                 onClick={() => {
+                  if (!isLoggedIn) {
+                    setIsWarnNotLoggedInDialogOpen(true)
+                    return
+                  }
                   navigate(`/challenges/${challenge.id}/detail`)
                 }}
               />
             ))}
         </div>
       </div>
+      <WarnNotLoggedIn
+        isOpen={isWarnNotLoggedInDialogOpen}
+        onClose={() => setIsWarnNotLoggedInDialogOpen(false)}
+      />
     </div>
   )
 }
