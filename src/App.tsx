@@ -13,8 +13,8 @@ import ChallengeDetail from './pages/app/challenges/[id]/detail'
 import ChallengeSubmit from './pages/app/challenges/[id]/submit'
 import Snackbar from '@mui/material/Snackbar'
 import { useMessageStore } from './store/messageStore'
-import ChallengesTeam from './pages/app/challenges/[id]/team'
-import JoinTeam from './pages/app/challenges/[id]/team/join'
+import ChallengesTeam from './pages/app/challenges/[id]/teams'
+import JoinTeam from './pages/app/challenges/[id]/teams/join'
 
 const queryClient = new QueryClient()
 
@@ -47,8 +47,8 @@ function App() {
                   <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
                   <Route path="/challenges/:id/detail" element={<ChallengeDetail />} />
                   <Route path="/challenges/:id/submit" element={<ChallengeSubmit />} />
-                  <Route path="/challenges/:id/team" element={<ChallengesTeam />} />
-                  <Route path="/challenges/:id/team/join" element={<JoinTeam />} />
+                  <Route path="/challenges/:id/teams" element={<ChallengesTeam />} />
+                  <Route path="/challenges/:id/teams/join" element={<JoinTeam />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/my" element={<MyPage />} />
                   <Route path="*" element={<Main />} />
