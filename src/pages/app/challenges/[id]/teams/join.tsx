@@ -7,8 +7,8 @@ import useChallenge from '@/hooks/useChallenge'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const JoinTeam = () => {
-  const params = useParams<{ id: string }>()
-  const challengeId = params.id
+  const params = useParams<{ challengeId: string }>()
+  const challengeId = params.challengeId
 
   const { data: challenge } = useChallenge(challengeId)
   const navigate = useNavigate()

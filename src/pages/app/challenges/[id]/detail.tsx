@@ -16,21 +16,21 @@ import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
 import useChallenge from '@/hooks/useChallenge'
 
 const ChallengeDetail = () => {
-  const params = useParams<{ id: string }>()
-  const id = params.id
+  const params = useParams<{ challengeId: string }>()
+  const challengeId = params.challengeId
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
   const { showMessage } = useMessageStore()
   const queryClient = useQueryClient()
 
-  const { data: challenge } = useChallenge(id)
+  const { data: challenge } = useChallenge(challengeId)
 
   const { mutate: joinChallenge } = useMutation({
     mutationFn: (pId: string) => challengesApi.joinChallenge(pId),
     onSuccess: () => {
       setOpenSuccessDialog(true)
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.detail(id).queryKey,
+        queryKey: challengesQueryKeys.detail(challengeId).queryKey,
       })
     },
     onError(error) {
@@ -89,10 +89,10 @@ const ChallengeDetail = () => {
         <Button
           className="mt-auto"
           onClick={() => {
-            if (id == null) {
+            if (challengeId == null) {
               return
             }
-            joinChallenge(id)
+            joinChallenge(challengeId)
           }}
         >
           챌린지 참여하기

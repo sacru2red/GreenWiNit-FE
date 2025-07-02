@@ -42,8 +42,8 @@ const ChallengeSubmit = () => {
     },
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
-  const params = useParams<{ id: string }>()
-  const id = params.id
+  const params = useParams<{ challengeId: string }>()
+  const challengeId = params.challengeId
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     const { title, date, image, review } = data
@@ -59,7 +59,7 @@ const ChallengeSubmit = () => {
     formData.append('image', image)
     formData.append('review', review)
 
-    fetch(`/api/v1/challenges/${id}/submit`, {
+    fetch(`/api/v1/challenges/${challengeId}/submit`, {
       method: 'POST',
       body: formData,
     }).then(() => {

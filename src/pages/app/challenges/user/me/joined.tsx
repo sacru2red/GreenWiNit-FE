@@ -46,7 +46,7 @@ const JoinedChallenges = () => {
                     if (challenge.type === 0) {
                       navigate(`/challenges/${challenge.id}/submit`)
                     } else {
-                      navigate(`/challenges/${challenge.id}/team`)
+                      navigate(`/challenges/${challenge.id}/teams`)
                     }
                   }}
                 />

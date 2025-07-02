@@ -13,17 +13,17 @@ import BottomNavigation from '@/components/common/BottomNav'
 import TeamCard from '@/components/common/challenges/TeamCard'
 
 const ChallengesTeam = () => {
-  const params = useParams<{ id: string }>()
-  const id = params.id
-  const { data: challenge } = useChallenge(id)
+  const params = useParams<{ challengeId: string }>()
+  const challengeId = params.challengeId
+  const { data: challenge } = useChallenge(challengeId)
   const navigate = useNavigate()
 
   const { data: joinedTeams } = useQuery({
-    queryKey: ['joinedTeams', id],
-    queryFn: () => challengesApi.getJoinedTeamsMine(id),
+    queryKey: ['joinedTeams', challengeId],
+    queryFn: () => challengesApi.getJoinedTeamsMine(challengeId),
   })
 
-  if (id == null || challenge == null || challenge.type !== 1) {
+  if (challengeId == null || challenge == null || challenge.type !== 1) {
     return <div>Service Unavailable</div>
   }
 

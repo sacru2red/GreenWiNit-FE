@@ -47,10 +47,10 @@ function App() {
               ) : (
                 <Routes>
                   <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
-                  <Route path="/challenges/:id/detail" element={<ChallengeDetail />} />
-                  <Route path="/challenges/:id/submit" element={<ChallengeSubmit />} />
-                  <Route path="/challenges/:id/teams" element={<ChallengesTeam />} />
-                  <Route path="/challenges/:id/teams/join" element={<JoinTeam />} />
+                  <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
+                  <Route path="/challenges/:challengeId/submit" element={<ChallengeSubmit />} />
+                  <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
+                  <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
                   <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
                   <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
                   <Route path="/login" element={<Login />} />
