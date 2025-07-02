@@ -1,11 +1,10 @@
-import * as React from 'react'
-
+import { ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 /**
  * https://ui.shadcn.com/docs/components/input
  */
-function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
+function Input({ className, type, ...props }: ComponentProps<'input'>) {
   return (
     <input
       type={type}
@@ -21,7 +20,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   )
 }
 
-function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
+function Textarea({ className, ...props }: ComponentProps<'textarea'>) {
   return (
     <textarea
       className={cn(

@@ -2,7 +2,8 @@ import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import Required from '@/components/common/Required'
-import { Input, Textarea } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/input'
+import Input from '@/components/common/form/Input'
 import { useNavigate, useParams } from 'react-router-dom'
 import PlusIcon from '@mui/icons-material/Add'
 import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
@@ -68,7 +69,7 @@ const ChallengeSubmit = () => {
   }
 
   return (
-    <PageContainer>
+    <PageContainer bg="form">
       <PageHeaderSection>
         <PageHeaderSection.BackIcon />
         <PageTitle>개인 챌린지 인증</PageTitle>
@@ -104,6 +105,7 @@ const ChallengeSubmit = () => {
                   wrapperClassName="w-full"
                   dateFormat="yyyy.MM.dd"
                   dateFormatCalendar="yyyy년 M월"
+                  placeholderText="0000.00.00"
                 />
               </div>
             )}

@@ -1,16 +1,23 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const pageContainerVariants = cva('flex h-full w-full flex-col bg-card', {
-  variants: {},
-  defaultVariants: {},
+const pageContainerVariants = cva('flex h-full w-full flex-col', {
+  variants: {
+    bg: {
+      theme: 'bg-card',
+      form: 'bg-white',
+    },
+  },
+  defaultVariants: {
+    bg: 'theme',
+  },
 })
 
 type PageContainerProps = VariantProps<typeof pageContainerVariants> &
   React.HTMLAttributes<HTMLDivElement>
 
-const PageContainer = ({ className, ...props }: PageContainerProps) => {
-  return <div {...props} className={cn(pageContainerVariants(className), className)}></div>
+const PageContainer = ({ className, bg, ...props }: PageContainerProps) => {
+  return <div {...props} className={cn(pageContainerVariants({ bg }), className)}></div>
 }
 
 export default PageContainer
