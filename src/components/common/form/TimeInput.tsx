@@ -28,7 +28,7 @@ const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
           <MultiSectionDigitalClock
             timeSteps={{ hours: 1, minutes: 1 }}
             views={['hours', 'minutes']}
-            className="[&_ul]:inline-flex [&_ul]:flex-1 [&_ul]:flex-col"
+            className="[&_ul]:scrollbar-stable [&_ul]:inline-flex [&_ul]:flex-1 [&_ul]:flex-col [&_ul]:items-center"
             value={innerValue}
             onChange={(newValue) => {
               if (newValue == null) {
