@@ -19,13 +19,14 @@ type DatePickerSingleProps = ComponentProps<typeof ReactDatePickerLib> & {
 const DatePickerSingle = (props: DatePickerSingleProps) => {
   return (
     <ReactDatePickerLib
+      placeholderText="YYYY-MM-DD"
+      dateFormat="yyyy-MM-dd"
       {...props}
       customInput={<Input className="!px-4 !py-3 !pl-[40px]" />}
       icon={<CalendarMonthOutlinedIcon className="top-[12px] left-[8px] cursor-pointer !p-0" />}
       showIcon
       toggleCalendarOnIconClick
       wrapperClassName={cn('w-full', props.wrapperClassName)}
-      dateFormat="yyyy.MM.dd"
       dateFormatCalendar="yyyy년 M월"
     />
   )

@@ -12,7 +12,9 @@ export const challengesApi = {
   },
   getChallengeDetail: async (id: string | undefined) => {
     const response = await fetch(`/api/v1/challenges/${id}`)
-    return response.json() as Promise<Challenge>
+    return response.json() as Promise<
+      Omit<Challenge, 'teams'> & { teams: Array<Team & { isJoinAllowed?: boolean }> }
+    >
   },
   joinChallenge: async (id: string) => {
     const response = await fetch(`/api/v1/challenges/${id}/join`, {
@@ -47,7 +49,7 @@ export const challengesApi = {
       throw new Error('id is required')
     }
     const response = await fetch(`/api/v1/challenges/${id}/teams/me/joined`)
-    return response.json() as Promise<Team[]>
+    return response.json() as Promise<Array<Team & { isJoinAllowed?: boolean }>>
   },
   joinTeam: async (id: string | undefined, teamId: string | undefined) => {
     if (id == null || teamId == null) {

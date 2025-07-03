@@ -27,7 +27,7 @@ const JoinedChallenges = () => {
         <PageHeaderSection.BackIcon />
         <PageTitle>참여 챌린지</PageTitle>
       </PageHeaderSection>
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      <div className="flex w-full flex-1 flex-col gap-4 p-4">
         <div className="flex w-fit flex-row items-center justify-center rounded-xl border bg-gray-200">
           <ChallengeTypeSwitch on={challengeType === 0} onClick={() => setChallengeType(0)}>
             개인
@@ -36,7 +36,7 @@ const JoinedChallenges = () => {
             팀
           </ChallengeTypeSwitch>
         </div>
-        <div className="flex flex-row items-start justify-start">
+        <div className="flex h-full flex-row items-start justify-start">
           {filteredChallenges?.length ? (
             <Carousel className="w-full">
               <CarouselContent className="-ml-4 items-start justify-start">
@@ -57,7 +57,7 @@ const JoinedChallenges = () => {
               </CarouselContent>
             </Carousel>
           ) : (
-            <p className="text-center whitespace-pre-line">
+            <p className="w-full self-center text-center text-xl whitespace-pre-line">
               {`[홈]-[${challengeType === 0 ? '개인' : '팀'} 챌린지]에서\n새로운 챌린지에 참여해주세요.`}
             </p>
           )}

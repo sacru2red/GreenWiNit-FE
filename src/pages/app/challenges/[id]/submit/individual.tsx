@@ -79,7 +79,6 @@ const ChallengeSubmitIndividual = () => {
                 <DatePickerSingle
                   selected={field.value}
                   onChange={(date) => field.onChange(date == null ? null : new Date(date))}
-                  placeholderText="0000.00.00"
                 />
               </div>
             )}

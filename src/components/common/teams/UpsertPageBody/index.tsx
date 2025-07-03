@@ -50,11 +50,7 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
           render={({ field }) => (
             /* wrapping for removing gap */
             <div className="w-full">
-              <DatePickerSingle
-                {...omit(field, ['value'])}
-                selected={field.value}
-                placeholderText="내용을 입력해주세요."
-              />
+              <DatePickerSingle {...omit(field, ['value'])} selected={field.value} />
             </div>
           )}
         />

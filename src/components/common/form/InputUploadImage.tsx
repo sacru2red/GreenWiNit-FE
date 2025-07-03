@@ -24,7 +24,7 @@ const InputUploadImage = (
     <div
       className={cn(
         'flex min-h-[15vh] w-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl',
-        imageBlob == null ? 'bg-[#f0f0f0] p-4' : 'max-h-[20vh]',
+        imageBlob == null ? 'bg-[#f0f0f0] p-8' : 'max-h-[20vh]',
       )}
       onClick={() => inputRef.current?.click()}
     >

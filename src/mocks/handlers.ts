@@ -112,7 +112,12 @@ export const handlers = [
     if (challenge.type === 1) {
       return HttpResponse.json({
         ...challenge,
-        teams: challenge.teams.filter((t) => !t.isDeleted),
+        teams: challenge.teams
+          .filter((t) => !t.isDeleted)
+          .map((t) => ({
+            ...t,
+            isJoinAllowed: t.users.length < t.maxMemberCount,
+          })),
       })
     }
 
@@ -151,6 +156,10 @@ export const handlers = [
     const joinedTeams = teams
       .filter((t) => t.users.some((u) => u.id === foundUser.id))
       .filter((t) => !t.isDeleted)
+      .map((t) => ({
+        ...t,
+        isJoinAllowed: t.users.length < t.maxMemberCount,
+      }))
 
     return HttpResponse.json(joinedTeams)
   }),
