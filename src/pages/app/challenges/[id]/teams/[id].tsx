@@ -101,7 +101,7 @@ const TeamDetail = () => {
             오픈채팅방을 통해 이야기를 나눠요.
           </DialogContentText>
           <div className="flex w-full flex-row justify-center">
-            <Button className="px-8" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
+            <Button size="sm" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
               확인
             </Button>
           </div>

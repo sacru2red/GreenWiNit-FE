@@ -2,24 +2,20 @@ import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import Required from '@/components/common/Required'
-import { Textarea } from '@/components/ui/input'
+import Textarea from '@/components/common/form/Textarea'
 import Input from '@/components/common/form/Input'
 import { useNavigate, useParams } from 'react-router-dom'
 import PlusIcon from '@mui/icons-material/Add'
 import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker'
+import DatePickerSingle from '@/components/common/form/DatePickerSingle'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { cn } from '@/lib/utils'
-import { ko } from 'date-fns/locale/ko'
 import { omit } from 'es-toolkit'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-
-registerLocale('ko', ko)
-setDefaultLocale('ko')
 
 interface FormState {
   title: string
@@ -92,19 +88,11 @@ const ChallengeSubmit = () => {
             name="date"
             rules={{ required: true }}
             render={({ field }) => (
-              /* wrapping for removeing gap */
+              /* wrapping for removing gap */
               <div className="w-full">
-                <DatePicker
+                <DatePickerSingle
                   selected={field.value}
                   onChange={(date) => field.onChange(date == null ? null : new Date(date))}
-                  className={cn(
-                    'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-                    'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-                    'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-                  )}
-                  wrapperClassName="w-full"
-                  dateFormat="yyyy.MM.dd"
-                  dateFormatCalendar="yyyy년 M월"
                   placeholderText="0000.00.00"
                 />
               </div>
@@ -153,13 +141,13 @@ const ChallengeSubmit = () => {
           </DialogContentText>
           <DialogContentText className="text-border !text-light-gray text-center !text-sm">
             당신의 실천이
-            <br />더 나은 지구를 만듭니다 :
+            <br />더 나은 지구를 만듭니다 :)
           </DialogContentText>
           <DialogContentText className="text-border !text-lighter-gray text-center !text-sm">
             * 관리자 확인 후, 포인트가 적립됩니다.
           </DialogContentText>
           <div className="flex w-full flex-row justify-center">
-            <Button className="px-8" onClick={() => navigate('/challenges/user/me/joined')}>
+            <Button size="sm" onClick={() => navigate('/challenges/user/me/joined')}>
               확인
             </Button>
           </div>

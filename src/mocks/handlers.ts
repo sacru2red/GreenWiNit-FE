@@ -1,4 +1,5 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
+import { Team } from '@/api/challenges'
 import { UserStatus } from '@/api/users'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
@@ -253,6 +254,69 @@ export const handlers = [
       })
     }
     joinTeam(teamId, foundUser)
+
+    return new HttpResponse('ok', {
+      status: 200,
+      statusText: 'OK',
+    })
+  }),
+
+  http.post('/api/v1/challenges/:challengeId/teams', async ({ params, cookies, request }) => {
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const challengeId = params['challengeId']
+    if (challengeId == null || typeof challengeId !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid id',
+      })
+    }
+
+    const apiServerMockingStoreState = apiServerMockingStore.getState()
+    const { challenges, enrollTeam } = apiServerMockingStoreState
+    const challenge = challenges.find((c) => c.id === challengeId)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    if (challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: this challenge is not team challenge',
+      })
+    }
+
+    const team = await request.json()
+    if (team == null) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: not valid team',
+      })
+    }
+    if (
+      typeof team !== 'object' ||
+      team['name'] == null ||
+      team['date'] == null ||
+      team['startAt'] == null ||
+      team['endAt'] == null ||
+      team['address'] == null ||
+      team['description'] == null ||
+      team['maxMemberCount'] == null ||
+      team['openChatUrl'] == null
+    ) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: not valid team',
+      })
+    }
+    const typedTeam = team as Omit<Team, 'users' | 'id'>
+    enrollTeam(challengeId, typedTeam, foundUser)
 
     return new HttpResponse('ok', {
       status: 200,

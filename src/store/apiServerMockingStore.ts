@@ -1,13 +1,15 @@
-import { Challenge } from '@/api/challenges'
+import { Challenge, Team } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { User } from './userStore'
+import { v4 } from 'uuid'
 
 interface ApiServerMockingState {
   users: User[]
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
   joinTeam: (teamId: string, user: User) => void
+  enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => void
 }
 
 export const ME = {
@@ -172,6 +174,21 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
                     teams: c.teams.map((t) =>
                       t.id === teamId ? { ...t, users: [...t.users, user] } : t,
                     ),
+                  }
+                : c,
+            ),
+          }))
+        },
+        enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => {
+          set((state) => ({
+            challenges: state.challenges.map((c) =>
+              c.id === challengeId && c.type === 1
+                ? {
+                    ...c,
+                    teams: [
+                      ...c.teams,
+                      { ...team, id: v4(), users: [{ ...user, isLeader: true }] },
+                    ],
                   }
                 : c,
             ),

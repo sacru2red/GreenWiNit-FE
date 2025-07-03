@@ -51,6 +51,20 @@ export const challengesApi = {
     const response = await fetch(`/api/v1/challenges/${challengeId}/teams/${teamId}`)
     return response.json() as Promise<Team>
   },
+  enrollTeam: async (challengeId: string | undefined, team: Omit<Team, 'users' | 'id'>) => {
+    if (challengeId == null) {
+      throw new Error('challengeId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${challengeId}/teams`, {
+      method: 'POST',
+      body: JSON.stringify(team),
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export type Challenge = {
@@ -108,7 +122,11 @@ export interface Team {
   description: string
   maxMemberCount: number
   openChatUrl: string
-  users: User[]
+  users: Array<
+    User & {
+      isLeader?: boolean
+    }
+  >
 }
 
 const challengesKey = createQueryKeys('challenges', {
