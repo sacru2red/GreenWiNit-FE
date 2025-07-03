@@ -51,6 +51,42 @@ export const challengesApi = {
     const response = await fetch(`/api/v1/challenges/${challengeId}/teams/${teamId}`)
     return response.json() as Promise<Team>
   },
+  enrollTeam: async (challengeId: string | undefined, team: Omit<Team, 'users' | 'id'>) => {
+    if (challengeId == null) {
+      throw new Error('challengeId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${challengeId}/teams`, {
+      method: 'POST',
+      body: JSON.stringify(team),
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
+  deleteTeam: async (teamId: string | undefined) => {
+    if (teamId == null) {
+      throw new Error('teamId is required')
+    }
+    const response = await fetch(`/api/v1/teams/${teamId}`, { method: 'DELETE' })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return response.json() as Promise<{ challenge: Challenge }>
+  },
+  modifyTeam: async (team: Omit<Team, 'users'>) => {
+    const response = await fetch(`/api/v1/teams/${team.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(team),
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export type Challenge = {
@@ -108,7 +144,12 @@ export interface Team {
   description: string
   maxMemberCount: number
   openChatUrl: string
-  users: User[]
+  users: Array<
+    User & {
+      isLeader?: boolean
+    }
+  >
+  isDeleted?: boolean
 }
 
 const challengesKey = createQueryKeys('challenges', {

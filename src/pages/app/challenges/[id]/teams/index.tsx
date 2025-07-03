@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined'
 import GroupsIcon from '@mui/icons-material/Groups'
 import BottomNavigation from '@/components/common/BottomNav'
-import TeamCard from '@/components/common/challenges/TeamCard'
+import TeamCard from '@/components/common/teams/TeamCard'
 
 const ChallengesTeam = () => {
   const params = useParams<{ challengeId: string }>()
@@ -41,7 +41,9 @@ const ChallengesTeam = () => {
               // @TODO B01_007 슬라이드에서 비활성화 기준을 체크하고,
               // mock 서버에서 비활성화 여부를 추가해야 합니다.
               // 그리고 TeamCard 컴포넌트에서 비활성화 여부를 체크해서 비활성화 상태일 때는 비활성화 상태로 표시해야 합니다.
-              <TeamCard key={team.id} team={team} />
+              <button key={team.id} onClick={() => navigate(`./${team.id}/joined`)}>
+                <TeamCard team={team} />
+              </button>
             ))}
           </div>
         ) : (

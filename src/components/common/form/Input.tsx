@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { ComponentProps } from 'react'
 
-const inputVariants = cva('h-[1ln] py-2', {
+const inputVariants = cva('h-auto min-h-[1lh] py-3 px-4', {
   variants: {},
   defaultVariants: {},
 })

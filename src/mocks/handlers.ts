@@ -1,4 +1,5 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
+import { Team } from '@/api/challenges'
 import { UserStatus } from '@/api/users'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
@@ -60,7 +61,17 @@ export const handlers = [
   }),
 
   http.get('/api/v1/challenges', () => {
-    return HttpResponse.json(apiServerMockingStore.getState().challenges)
+    return HttpResponse.json(
+      apiServerMockingStore.getState().challenges.map((c) => {
+        if (c.type !== 1) {
+          return c
+        }
+        return {
+          ...c,
+          teams: c.teams.filter((t) => !t.isDeleted),
+        }
+      }),
+    )
   }),
 
   http.get('/api/v1/challenges/user/me/joined', ({ cookies }) => {
@@ -98,6 +109,13 @@ export const handlers = [
       })
     }
 
+    if (challenge.type === 1) {
+      return HttpResponse.json({
+        ...challenge,
+        teams: challenge.teams.filter((t) => !t.isDeleted),
+      })
+    }
+
     return HttpResponse.json(challenge)
   }),
 
@@ -130,7 +148,9 @@ export const handlers = [
     const foundUser = foundUserOrException
 
     const teams = challenge.teams
-    const joinedTeams = teams.filter((t) => t.users.some((u) => u.id === foundUser.id))
+    const joinedTeams = teams
+      .filter((t) => t.users.some((u) => u.id === foundUser.id))
+      .filter((t) => !t.isDeleted)
 
     return HttpResponse.json(joinedTeams)
   }),
@@ -153,6 +173,12 @@ export const handlers = [
     }
     const team = challenge.teams.find((t) => t.id === teamId)
     if (team == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found team',
+      })
+    }
+    if (team.isDeleted) {
       return new HttpResponse(null, {
         status: 404,
         statusText: 'Not Found: not found team',
@@ -240,7 +266,7 @@ export const handlers = [
       })
     }
     const team = challenge.teams.find((t) => t.id === teamId)
-    if (team == null) {
+    if (team == null || team.isDeleted) {
       return new HttpResponse(null, {
         status: 404,
         statusText: 'Not Found: not found team',
@@ -258,6 +284,184 @@ export const handlers = [
       status: 200,
       statusText: 'OK',
     })
+  }),
+
+  http.post('/api/v1/challenges/:challengeId/teams', async ({ params, cookies, request }) => {
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const challengeId = params['challengeId']
+    if (challengeId == null || typeof challengeId !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid id',
+      })
+    }
+
+    const apiServerMockingStoreState = apiServerMockingStore.getState()
+    const { challenges, enrollTeam } = apiServerMockingStoreState
+    const challenge = challenges.find((c) => c.id === challengeId)
+    if (challenge == null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    if (challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: this challenge is not team challenge',
+      })
+    }
+
+    const team = await request.json()
+    if (team == null) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: not valid team',
+      })
+    }
+    if (
+      typeof team !== 'object' ||
+      team['name'] == null ||
+      team['date'] == null ||
+      team['startAt'] == null ||
+      team['endAt'] == null ||
+      team['address'] == null ||
+      team['description'] == null ||
+      team['maxMemberCount'] == null ||
+      team['openChatUrl'] == null
+    ) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: not valid team',
+      })
+    }
+    const typedTeam = team as Omit<Team, 'users' | 'id'>
+    enrollTeam(challengeId, typedTeam, foundUser)
+
+    return new HttpResponse('ok', {
+      status: 200,
+      statusText: 'OK',
+    })
+  }),
+
+  http.put('/api/v1/teams/:teamId', async ({ params, cookies, request }) => {
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const teamId = params['teamId']
+    if (teamId == null || typeof teamId !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid teamId',
+      })
+    }
+
+    const apiServerMockingStoreState = apiServerMockingStore.getState()
+    const { challenges, modifyTeam } = apiServerMockingStoreState
+    const challenge = challenges.find((c) => c.type === 1 && c.teams.some((t) => t.id === teamId))
+    if (challenge == null || challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    const foundTeam = challenge.teams.find((t) => t.id === teamId)
+    if (foundTeam == null || foundTeam.isDeleted) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found team',
+      })
+    }
+    const teamLeader = foundTeam.users.find((u) => u.isLeader)
+    if (teamLeader == null || teamLeader.id !== foundUser.id) {
+      return new HttpResponse(null, {
+        status: 403,
+        statusText: 'Forbidden: not allowed to delete team',
+      })
+    }
+
+    const payloadTeam = await request.json()
+    if (
+      payloadTeam == null ||
+      typeof payloadTeam !== 'object' ||
+      payloadTeam['name'] == null ||
+      payloadTeam['date'] == null ||
+      payloadTeam['startAt'] == null ||
+      payloadTeam['endAt'] == null ||
+      payloadTeam['address'] == null ||
+      payloadTeam['description'] == null ||
+      payloadTeam['maxMemberCount'] == null ||
+      payloadTeam['openChatUrl'] == null
+    ) {
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: 'Internal Server Error: not valid team',
+      })
+    }
+    modifyTeam(payloadTeam as Omit<Team, 'users'>)
+
+    return new HttpResponse('ok', {
+      status: 200,
+      statusText: 'OK',
+    })
+  }),
+
+  http.delete('/api/v1/teams/:teamId', async ({ cookies, params }) => {
+    const foundUserOrException = getUserFromCookie(cookies)
+    if (foundUserOrException instanceof HttpResponse) {
+      return foundUserOrException
+    }
+    const foundUser = foundUserOrException
+
+    const teamId = params['teamId']
+    if (teamId == null || typeof teamId !== 'string') {
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: 'Bad Request: not valid teamId',
+      })
+    }
+    const apiServerMockingStoreState = apiServerMockingStore.getState()
+    const { challenges, deleteTeam } = apiServerMockingStoreState
+    const challenge = challenges.find((c) => c.type === 1 && c.teams.some((t) => t.id === teamId))
+    if (challenge == null || challenge.type !== 1) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found challenge',
+      })
+    }
+    const team = challenge.teams.find((t) => t.id === teamId)
+    if (team == null || team.isDeleted) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found team',
+      })
+    }
+    const teamLeader = team.users.find((u) => u.isLeader)
+    if (teamLeader == null || teamLeader.id !== foundUser.id) {
+      return new HttpResponse(null, {
+        status: 403,
+        statusText: 'Forbidden: not allowed to delete team',
+      })
+    }
+    deleteTeam(teamId)
+
+    return new HttpResponse(
+      JSON.stringify({
+        challenge,
+      }),
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
   }),
 ]
 

@@ -1,8 +1,11 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import LogoIcon from '@/components/common/LogoIcon'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
+import Description from '@/components/common/teams/Description'
+import MemberCount from '@/components/common/teams/MemberCount'
+import Overview from '@/components/common/teams/Overview'
+import PropertyList from '@/components/common/teams/PropertyList'
 import { Button } from '@/components/ui/button'
 import useChallengesTeam from '@/hooks/useChallengesTeam'
 import { useMessageStore } from '@/store/messageStore'
@@ -52,38 +55,11 @@ const TeamDetail = () => {
         <PageHeaderSection.BackIcon />
         <PageTitle>팀 정보</PageTitle>
       </PageHeaderSection>
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-col items-center gap-2">
-          <LogoIcon size="large" className="border-1 bg-white" />
-          <span className="text-mountain_meadow-700 text-2xl font-bold">{team.name}</span>
-        </div>
-      </div>
+      <Overview team={team} />
       <div className="flex flex-1 flex-col gap-4 bg-white p-4">
-        <div className="flex flex-col gap-1">
-          <span className="text-title-smaller text-lg">현재 팀원</span>
-          <span className="text-mountain_meadow-700 text-xl font-bold">{`${team.users.length}명`}</span>
-        </div>
-        <div className="flex flex-col items-start gap-2">
-          <span className="text-title-smaller text-lg font-bold">소개 및 목표</span>
-          <p>{team.description}</p>
-        </div>
-        <div className="bg-mountain_meadow-0 flex flex-col items-start gap-2 rounded-lg p-4">
-          <span className="text-mountain_meadow-700 text-lg font-bold">날짜</span>
-          <p>{`${team.date}`}</p>
-          <span className="text-mountain_meadow-700 text-lg font-bold">시간</span>
-          <p>{`${team.startAt} ~ ${team.endAt}`}</p>
-          <span className="text-mountain_meadow-700 text-lg font-bold">장소</span>
-          <p>{`${team.address.roadAddress}`}</p>
-          <span className="text-mountain_meadow-700 text-lg font-bold">채팅방</span>
-          <a href={team.openChatUrl} target="_blank" rel="noopener noreferrer">
-            {`${team.openChatUrl}`}
-          </a>
-        </div>
-        <p className="text-lighter-gray text-center text-sm">
-          * 같은 날짜에는 하나의 챌린지를 두번 이상 참여할 수 없어요!
-          <br />
-          다른 챌린지에 도전해보세요.
-        </p>
+        <MemberCount team={team} />
+        <Description team={team} />
+        <PropertyList team={team} />
         <div className="mt-auto flex w-full">
           <Button size="flex" onClick={() => joinTeam()}>
             팀 가입신청
@@ -101,7 +77,7 @@ const TeamDetail = () => {
             오픈채팅방을 통해 이야기를 나눠요.
           </DialogContentText>
           <div className="flex w-full flex-row justify-center">
-            <Button className="px-8" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
+            <Button size="sm" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
               확인
             </Button>
           </div>

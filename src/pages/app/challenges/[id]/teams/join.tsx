@@ -1,5 +1,5 @@
 import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import TeamCard from '@/components/common/challenges/TeamCard'
+import TeamCard from '@/components/common/teams/TeamCard'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
@@ -19,7 +19,7 @@ const JoinTeam = () => {
         <PageHeaderSection.BackIcon />
         <PageTitle>팀 선택하기</PageTitle>
       </PageHeaderSection>
-      <div className="flex flex-1 flex-col gap-4 p-6">
+      <div className="flex flex-1 flex-col gap-4 p-4">
         <ChallengeTitle title={challenge?.name} />
         <div className="flex flex-1 flex-col gap-4">
           {challenge?.type === 1 &&

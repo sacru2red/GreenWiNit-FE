@@ -110,7 +110,7 @@ const ChallengeDetail = () => {
             챌린지를 인증해보세요!
           </DialogContentText>
           <div className="flex w-full flex-row justify-center">
-            <Button className="px-8" onClick={() => navigate('/challenges/user/me/joined')}>
+            <Button size="sm" onClick={() => navigate('/challenges/user/me/joined')}>
               확인
             </Button>
           </div>
