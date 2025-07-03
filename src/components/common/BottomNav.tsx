@@ -23,7 +23,7 @@ function BottomNavigation() {
       setLastClickTime(now)
       if (newCount >= 3) {
         localStorage.clear()
-        window.location.reload()
+        window.location.href = '/'
       }
     } else {
       // 1초 이상이면 카운트 리셋
