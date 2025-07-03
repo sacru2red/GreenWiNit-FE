@@ -9,6 +9,7 @@ import { MOUNTAIN_MEADOW } from '@/constant/styles'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
 import WarnNotLoggedIn from '../WarnNotLoggedIn'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')
@@ -36,24 +37,26 @@ const Challenges = () => {
             </TooltipContent>
           </Tooltip>
         </div>
-        {/* @TODO: 실수로 y축 스크롤 적용함 다시 x축으로 변경작업 필요 */}
-        <div className="mt-4 flex flex-[1_1_auto] flex-row flex-wrap gap-4 overflow-y-auto">
-          {challenges
-            ?.filter((c) => c.type === tabToType)
-            .map((challenge) => (
-              <Challenge
-                key={challenge.id}
-                challenge={challenge}
-                onClick={() => {
-                  if (!isLoggedIn) {
-                    setIsWarnNotLoggedInDialogOpen(true)
-                    return
-                  }
-                  navigate(`/challenges/${challenge.id}/detail`)
-                }}
-              />
-            ))}
-        </div>
+        <Carousel className="mt-4">
+          <CarouselContent className="-ml-4">
+            {challenges
+              ?.filter((c) => c.type === tabToType)
+              .map((challenge) => (
+                <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
+                  <Challenge
+                    challenge={challenge}
+                    onClick={() => {
+                      if (!isLoggedIn) {
+                        setIsWarnNotLoggedInDialogOpen(true)
+                        return
+                      }
+                      navigate(`/challenges/${challenge.id}/detail`)
+                    }}
+                  />
+                </CarouselItem>
+              ))}
+          </CarouselContent>
+        </Carousel>
       </div>
       <WarnNotLoggedIn
         isOpen={isWarnNotLoggedInDialogOpen}

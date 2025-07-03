@@ -4,6 +4,7 @@ import Challenge from '@/components/common/Challenge'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -35,23 +36,26 @@ const JoinedChallenges = () => {
             팀
           </ChallengeTypeSwitch>
         </div>
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-start justify-start">
           {filteredChallenges?.length ? (
-            <div className="flex-start flex w-full flex-row flex-wrap gap-4">
-              {filteredChallenges.map((challenge) => (
-                <Challenge
-                  key={challenge.id}
-                  challenge={challenge}
-                  onClick={() => {
-                    if (challenge.type === 0) {
-                      navigate(`/challenges/${challenge.id}/submit/individual`)
-                    } else {
-                      navigate(`/challenges/${challenge.id}/teams`)
-                    }
-                  }}
-                />
-              ))}
-            </div>
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-4 items-start justify-start">
+                {filteredChallenges.map((challenge) => (
+                  <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
+                    <Challenge
+                      challenge={challenge}
+                      onClick={() => {
+                        if (challenge.type === 0) {
+                          navigate(`/challenges/${challenge.id}/submit/individual`)
+                        } else {
+                          navigate(`/challenges/${challenge.id}/teams`)
+                        }
+                      }}
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           ) : (
             <p className="text-center whitespace-pre-line">
               {`[홈]-[${challengeType === 0 ? '개인' : '팀'} 챌린지]에서\n새로운 챌린지에 참여해주세요.`}
