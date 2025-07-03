@@ -1,8 +1,10 @@
-import * as React from 'react'
-
+import { ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
-function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
+/**
+ * https://ui.shadcn.com/docs/components/input
+ */
+function Input({ className, type, ...props }: ComponentProps<'input'>) {
   return (
     <input
       type={type}
