@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import JoinedChallenges from './pages/app/challenges/user/me/joined'
 import ChallengeDetail from './pages/app/challenges/[id]/detail'
-import ChallengeSubmit from './pages/app/challenges/[id]/submit'
+import ChallengeSubmitIndividual from './pages/app/challenges/[id]/submit/individual'
 import Snackbar from '@mui/material/Snackbar'
 import { useMessageStore } from './store/messageStore'
 import ChallengesTeam from './pages/app/challenges/[id]/teams'
@@ -21,6 +21,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
+import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
 
 const queryClient = new QueryClient()
 
@@ -53,7 +54,14 @@ function App() {
                   <Routes>
                     <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
                     <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
-                    <Route path="/challenges/:challengeId/submit" element={<ChallengeSubmit />} />
+                    <Route
+                      path="/challenges/:challengeId/submit/individual"
+                      element={<ChallengeSubmitIndividual />}
+                    />
+                    <Route
+                      path="/challenges/:challengeId/submit/teams/:teamId"
+                      element={<ChallengeSubmitTeam />}
+                    />
                     <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
                     <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
                     <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />

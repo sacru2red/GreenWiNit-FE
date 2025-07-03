@@ -44,7 +44,7 @@ const JoinedChallenges = () => {
                   challenge={challenge}
                   onClick={() => {
                     if (challenge.type === 0) {
-                      navigate(`/challenges/${challenge.id}/submit`)
+                      navigate(`/challenges/${challenge.id}/submit/individual`)
                     } else {
                       navigate(`/challenges/${challenge.id}/teams`)
                     }

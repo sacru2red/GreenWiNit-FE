@@ -3,11 +3,11 @@ import Input from '@/components/common/form/Input'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerSingle from '@/components/common/form/DatePickerSingle'
 import { omit } from 'es-toolkit'
-import { cn } from '@/lib/utils'
 import TimeInput from '@/components/common/form/TimeInput'
 import AddressInput from '@/components/common/form/AddressInput'
 import { Button } from '@/components/ui/button'
 import { FormState, UpsertPageBodyProps } from './types'
+import Row from '@/components/common/form/Row'
 
 const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) => {
   const { register, handleSubmit, control, formState } = useForm<FormState>({
@@ -147,10 +147,6 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
       </div>
     </form>
   )
-}
-
-const Row = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  return <div className={cn('flex w-full flex-col items-start gap-1', className)}>{children}</div>
 }
 
 export default UpsertPageBody

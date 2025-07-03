@@ -24,6 +24,24 @@ export const challengesApi = {
     }
     return
   },
+  submitTeamChallenge: async (
+    challengeId: string | undefined,
+    teamId: string | undefined,
+    body: FormData,
+  ) => {
+    if (challengeId == null || teamId == null) {
+      throw new Error('challengeId or teamId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${challengeId}/submit/team/${teamId}`, {
+      method: 'POST',
+      body,
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
   getJoinedTeamsMine: async (id: string | undefined) => {
     if (id == null) {
       throw new Error('id is required')

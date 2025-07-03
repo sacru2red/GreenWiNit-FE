@@ -43,8 +43,10 @@ const ManageTeam = () => {
         <Description team={team} />
         <PropertyList team={team} />
         <div className="mt-auto flex w-full">
-          {/* @TODO attach click event handler to move page */}
-          <Button size="flex" onClick={() => navigate(`/challenges/${challengeId}/submit`)}>
+          <Button
+            size="flex"
+            onClick={() => navigate(`/challenges/${challengeId}/submit/teams/${teamId}`)}
+          >
             챌린지 인증하기
           </Button>
         </div>
