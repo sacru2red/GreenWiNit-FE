@@ -14,6 +14,7 @@ import { FormState } from '@/components/submit-screen/type'
 import ImageRow from '@/components/submit-screen/ImageRow'
 import ReviewRow from '@/components/submit-screen/ReviewRow'
 import DoneDialog from '@/components/submit-screen/DoneDialog'
+import { challengesApi } from '@/api/challenges'
 
 const ChallengeSubmitIndividual = () => {
   const f = useForm<FormState>({
@@ -42,10 +43,7 @@ const ChallengeSubmitIndividual = () => {
     formData.append('image', image)
     formData.append('review', review)
 
-    fetch(`/api/v1/challenges/${challengeId}/submit`, {
-      method: 'POST',
-      body: formData,
-    }).then(() => {
+    challengesApi.submitIndividualChallenge(challengeId, formData).then(() => {
       setOpenConfirmDialog(true)
     })
   }

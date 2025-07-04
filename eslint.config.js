@@ -30,6 +30,19 @@ export default tseslint.config(
           ignoreRestSiblings: true,
         },
       ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'CallExpression[callee.name="fetch"]',
+          message: 'fetch 호출은 /src/api 디렉토리 내에서만 허용됩니다. API 모듈을 사용해주세요.',
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/api/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': 'off',
     },
   },
   eslintConfigPrettier,
