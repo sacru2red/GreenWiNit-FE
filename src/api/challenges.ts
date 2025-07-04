@@ -107,6 +107,20 @@ export const challengesApi = {
     }
     return
   },
+  submitIndividualChallenge: async (challengeId: string | undefined, body: FormData) => {
+    if (challengeId == null) {
+      throw new Error('challengeId is required')
+    }
+    const response = await fetch(`/api/v1/challenges/${challengeId}/submit`, {
+      method: 'POST',
+      body,
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export type Challenge = {

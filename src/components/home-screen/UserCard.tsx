@@ -3,6 +3,7 @@ import { useUserStore } from '@/store/userStore'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LogoIcon from '../common/LogoIcon'
+import { usersApi } from '@/api/users'
 
 const UserCard = () => {
   const user = useUserStore((s) => s.user)
@@ -14,10 +15,7 @@ const UserCard = () => {
   }
 
   const handleLogoutClick = () => {
-    fetch('/api/logout', {
-      method: 'POST',
-      credentials: 'include',
-    }).finally(() => {
+    usersApi.logout().finally(() => {
       logout()
     })
   }

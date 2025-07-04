@@ -12,6 +12,17 @@ export const usersApi = {
       body: JSON.stringify({ oAuthToken }),
     }).then((res) => res.json() as Promise<User>)
   },
+  logout: async () => {
+    const response = await fetch('/api/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    return
+  },
 }
 
 export interface UserStatus {
