@@ -1,7 +1,7 @@
 import { challengesApi, challengesQueryKeys, Team } from '@/api/challenges'
 import LogoIcon from '../LogoIcon'
 import { useUserStore } from '@/store/userStore'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { useMutation, useQueryClient } from '@tanstack/react-query'

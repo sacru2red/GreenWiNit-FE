@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button'
 import useChallenge from '@/hooks/useChallenge'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
-import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined'
-import GroupsIcon from '@mui/icons-material/Groups'
+import { SquareCheckBig } from 'lucide-react'
+import { Users as GroupsIcon } from 'lucide-react'
 import BottomNavigation from '@/components/common/BottomNav'
 import TeamCard from '@/components/common/teams/TeamCard'
 
@@ -52,7 +52,7 @@ const ChallengesTeam = () => {
         )}
         <div className="mt-auto flex w-full gap-2">
           <Button size="flex" onClick={() => navigate(`./join`)}>
-            <AssignmentTurnedInOutlinedIcon />팀 선택하기
+            <SquareCheckBig />팀 선택하기
           </Button>
           <Button size="flex" onClick={() => navigate(`./enroll`)}>
             <GroupsIcon />팀 등록하기
