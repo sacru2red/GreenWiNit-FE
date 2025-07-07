@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
 import WarnNotLoggedIn from '../WarnNotLoggedIn'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { cn } from '@/lib/utils'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')
@@ -17,6 +18,7 @@ const Challenges = () => {
   const navigate = useNavigate()
   const isLoggedIn = useIsLoggedIn()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
+  const filteredChallenges = challenges?.filter((c) => c.type === tabToType)
 
   return (
     <div className="flex h-full flex-col">
@@ -37,23 +39,21 @@ const Challenges = () => {
           </Tooltip>
         </div>
         <Carousel className="mt-4">
-          <CarouselContent className="-ml-4">
-            {challenges
-              ?.filter((c) => c.type === tabToType)
-              .map((challenge) => (
-                <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
-                  <Challenge
-                    challenge={challenge}
-                    onClick={() => {
-                      if (!isLoggedIn) {
-                        setIsWarnNotLoggedInDialogOpen(true)
-                        return
-                      }
-                      navigate(`/challenges/${challenge.id}/detail`)
-                    }}
-                  />
-                </CarouselItem>
-              ))}
+          <CarouselContent className={cn('-ml-4', 'max-w-[200px]')}>
+            {filteredChallenges?.map((challenge) => (
+              <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
+                <Challenge
+                  challenge={challenge}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      setIsWarnNotLoggedInDialogOpen(true)
+                      return
+                    }
+                    navigate(`/challenges/${challenge.id}/detail`)
+                  }}
+                />
+              </CarouselItem>
+            ))}
           </CarouselContent>
         </Carousel>
       </div>
