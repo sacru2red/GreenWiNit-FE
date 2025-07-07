@@ -7,7 +7,6 @@ import { Fragment, useEffect, useState } from 'react'
 import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import JoinedChallenges from './pages/app/challenges/user/me/joined'
 import ChallengeDetail from './pages/app/challenges/[id]/detail'
 import ChallengeSubmitIndividual from './pages/app/challenges/[id]/submit/individual'
@@ -34,71 +33,54 @@ function App() {
   return (
     <Fragment>
       <QueryClientProvider client={queryClient}>
-        <MuiThemeProvider theme={muiTheme}>
-          <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
-            <div
-              className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
-            >
-              {showSplashScreen ? (
-                <SplashScreen />
-              ) : (
-                <Routes>
-                  <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
-                  <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
-                  <Route
-                    path="/challenges/:challengeId/submit/individual"
-                    element={<ChallengeSubmitIndividual />}
-                  />
-                  <Route
-                    path="/challenges/:challengeId/submit/teams/:teamId"
-                    element={<ChallengeSubmitTeam />}
-                  />
-                  <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
-                  <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
-                  <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
-                  <Route
-                    path="/challenges/:challengeId/teams/:teamId/joined"
-                    element={<ManageTeam />}
-                  />
-                  <Route
-                    path="/challenges/:challengeId/teams/:teamId/modify"
-                    element={<TeamModify />}
-                  />
-                  <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/my" element={<MyPage />} />
-                  <Route path="*" element={<Main />} />
-                </Routes>
-              )}
-            </div>
+        <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
+          <div
+            className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
+          >
+            {showSplashScreen ? (
+              <SplashScreen />
+            ) : (
+              <Routes>
+                <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
+                <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
+                <Route
+                  path="/challenges/:challengeId/submit/individual"
+                  element={<ChallengeSubmitIndividual />}
+                />
+                <Route
+                  path="/challenges/:challengeId/submit/teams/:teamId"
+                  element={<ChallengeSubmitTeam />}
+                />
+                <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
+                <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
+                <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
+                <Route
+                  path="/challenges/:challengeId/teams/:teamId/joined"
+                  element={<ManageTeam />}
+                />
+                <Route
+                  path="/challenges/:challengeId/teams/:teamId/modify"
+                  element={<TeamModify />}
+                />
+                <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/my" element={<MyPage />} />
+                <Route path="*" element={<Main />} />
+              </Routes>
+            )}
           </div>
-          {/* <Snackbar
+        </div>
+        {/* <Snackbar
             open={opened}
             autoHideDuration={3000}
             onClose={handleClick}
             message={message}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           /> */}
-          <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
-        </MuiThemeProvider>
+        <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
       </QueryClientProvider>
     </Fragment>
   )
 }
-
-const muiTheme = createTheme({
-  typography: {
-    fontFamily: [
-      'Pretendard',
-      'Roboto',
-      'Inter',
-      'system-ui',
-      'Avenir',
-      'Helvetica',
-      'Arial',
-      'sans-serif',
-    ].join(','),
-  },
-})
 
 export default App
