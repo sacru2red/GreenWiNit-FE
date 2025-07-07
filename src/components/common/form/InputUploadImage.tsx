@@ -1,4 +1,4 @@
-import PlusIcon from '@mui/icons-material/Add'
+import { Plus as PlusIcon } from 'lucide-react'
 import { ForwardedRef, Fragment, useEffect, useRef } from 'react'
 import { omit } from 'es-toolkit'
 import { cn } from '@/lib/utils'
@@ -31,7 +31,7 @@ const InputUploadImage = (
       {imageBlob == null ? (
         <Fragment>
           <div className="rounded-full border-[2px] border-[#3A9B6E] p-2">
-            <PlusIcon htmlColor="#3A9B6E" />
+            <PlusIcon className="text-[#3A9B6E]" />
           </div>
           <span className="text-bold text-[#666666]">이미지를 업로드 해주세요.</span>
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>

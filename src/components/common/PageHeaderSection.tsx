@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import { ChevronLeft as ChevronLeftIcon } from 'lucide-react'
 import { ComponentProps, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 

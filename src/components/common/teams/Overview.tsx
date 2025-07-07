@@ -1,16 +1,13 @@
 import { challengesApi, challengesQueryKeys, Team } from '@/api/challenges'
 import LogoIcon from '../LogoIcon'
 import { useUserStore } from '@/store/userStore'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 
 interface OverviewProps {
@@ -68,16 +65,19 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
       ) : null}
       <LogoIcon size="large" className="border-1 bg-white" />
       <span className="text-mountain_meadow-700 text-2xl font-bold">{team.name}</span>
-      <Dialog open={showConfirmDeletingDialog} onClose={() => setShowConfirmDeletingDialog(false)}>
-        <DialogTitle textAlign="center">팀 삭제</DialogTitle>
+      <Dialog
+        open={showConfirmDeletingDialog}
+        onOpenChange={() => setShowConfirmDeletingDialog(false)}
+      >
+        <DialogTitle>팀 삭제</DialogTitle>
         <DialogContent className="flex flex-col gap-6">
-          <DialogContentText className="text-center !text-sm">
+          <DialogDescription className="text-center !text-sm">
             팀을 삭제하시겠습니까?
             <br />
             팀 삭제시, 기존 다른 팀원의
             <br />
             [나의 팀] 목록에서도 삭제됩니다.
-          </DialogContentText>
+          </DialogDescription>
           <div className="flex gap-2">
             <Button size="sm" variant="cancel" onClick={() => setShowConfirmDeletingDialog(false)}>
               취소

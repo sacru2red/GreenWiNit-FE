@@ -5,12 +5,10 @@ import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useMessageStore } from '@/store/messageStore'
+import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
+import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/UpsertPageBody/types'
 
@@ -19,7 +17,6 @@ const TeamEnroll = () => {
   const challengeId = params.challengeId
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { showMessage } = useMessageStore()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   const { mutate: enrollTeam } = useMutation({
@@ -37,7 +34,7 @@ const TeamEnroll = () => {
     },
     onError(error) {
       console.error(error)
-      showMessage(error.message)
+      toast.error(error.message)
     },
   })
 
@@ -52,16 +49,16 @@ const TeamEnroll = () => {
         <PageTitle>팀 등록하기</PageTitle>
       </PageHeaderSection>
       <UpsertPageBody mode="enroll" onSubmit={onSubmit} />
-      <Dialog open={showConfirmDialog} onClose={() => setShowConfirmDialog(false)}>
+      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="flex flex-col gap-4">
-          <DialogContentText className="text-border text-bold text-center !text-xl !text-black">
+          <DialogDescription className="text-border text-bold text-center !text-xl !text-black">
             팀 등록 완료
-          </DialogContentText>
-          <DialogContentText className="text-border !text-title-smaller text-center !text-sm">
+          </DialogDescription>
+          <DialogDescription className="text-border !text-title-smaller text-center !text-sm">
             [홈] -&gt; [나의 챌린지]에서 확인하세요!
             <br />
             오픈 채팅방을 통해 이야기를 나눠요.
-          </DialogContentText>
+          </DialogDescription>
           <div className="flex w-full flex-row justify-center">
             <Button size="sm" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
               확인

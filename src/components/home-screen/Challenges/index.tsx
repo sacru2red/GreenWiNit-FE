@@ -4,8 +4,7 @@ import { TabProps } from '@/components/home-screen/Challenges/type'
 import { useChallenges } from '@/hooks/useChallenges'
 import Challenge from '@/components/common/Challenge'
 import { useNavigate } from 'react-router-dom'
-import InfoOutlineIcon from '@mui/icons-material/InfoOutline'
-import { MOUNTAIN_MEADOW } from '@/constant/styles'
+import { Info as InfoOutlineIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
 import WarnNotLoggedIn from '../WarnNotLoggedIn'
@@ -27,7 +26,7 @@ const Challenges = () => {
           <span className="text-title-smaller text-xl font-bold">{`${tab === 'individual' ? '개인' : '팀'} 챌린지`}</span>
           <Tooltip>
             <TooltipTrigger asChild>
-              <InfoOutlineIcon htmlColor={MOUNTAIN_MEADOW} />
+              <InfoOutlineIcon className="text-mountain_meadow" />
             </TooltipTrigger>
             <TooltipContent className="p-4 shadow-xl">
               <p className="text-center">
@@ -60,7 +59,7 @@ const Challenges = () => {
       </div>
       <WarnNotLoggedIn
         isOpen={isWarnNotLoggedInDialogOpen}
-        onClose={() => setIsWarnNotLoggedInDialogOpen(false)}
+        onOpenChange={setIsWarnNotLoggedInDialogOpen}
       />
     </div>
   )

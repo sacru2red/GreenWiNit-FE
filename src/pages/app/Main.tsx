@@ -35,7 +35,7 @@ function Main() {
         </Button>
         <WarnNotLoggedIn
           isOpen={isWarnNotLoggedInDialogOpen}
-          onClose={() => setIsWarnNotLoggedInDialogOpen(false)}
+          onOpenChange={setIsWarnNotLoggedInDialogOpen}
           redirectUrl="/challenges/user/me/joined"
         />
       </div>

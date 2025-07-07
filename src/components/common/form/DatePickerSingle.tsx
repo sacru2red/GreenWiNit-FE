@@ -2,7 +2,7 @@ import ReactDatePickerLib, { registerLocale, setDefaultLocale } from 'react-date
 import { ko } from 'date-fns/locale/ko'
 import Input from './Input'
 import { ComponentProps } from 'react'
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined'
+import { CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 registerLocale('ko', ko)
@@ -23,7 +23,7 @@ const DatePickerSingle = (props: DatePickerSingleProps) => {
       dateFormat="yyyy-MM-dd"
       {...props}
       customInput={<Input className="!px-4 !py-3 !pl-[40px]" />}
-      icon={<CalendarMonthOutlinedIcon className="top-[12px] left-[8px] cursor-pointer !p-0" />}
+      icon={<CalendarDays className="top-[8px] left-[8px] cursor-pointer" />}
       showIcon
       toggleCalendarOnIconClick
       wrapperClassName={cn('w-full', props.wrapperClassName)}

@@ -1,33 +1,31 @@
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
+import { Dialog, DialogContent, DialogDescription, DialogFooter } from '../ui/dialog'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
 
 interface WarnNotLoggedInProps {
   isOpen: boolean
-  onClose: () => void
+  onOpenChange(open: boolean): void
   redirectUrl?: string
 }
 
-const WarnNotLoggedIn = ({ isOpen, onClose, redirectUrl }: WarnNotLoggedInProps) => {
+const WarnNotLoggedIn = ({ isOpen, onOpenChange, redirectUrl }: WarnNotLoggedInProps) => {
   const navigate = useNavigate()
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogContentText className="text-center !text-black">
+        <DialogDescription className="text-center text-black">
           로그인 후<br />
           챌린지에 참여할 수 있어요.
-        </DialogContentText>
-        <div className="mt-6 flex flex-row gap-6">
-          <Button variant="cancel" size="flex" onClick={onClose}>
+        </DialogDescription>
+        <DialogFooter className="flex flex-row gap-6 sm:justify-center">
+          <Button variant="cancel" size="flex" onClick={() => onOpenChange(false)}>
             취소
           </Button>
           <Button size="flex" onClick={() => navigate(`/login?redirect=${redirectUrl ?? '/'}`)}>
             확인
           </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
