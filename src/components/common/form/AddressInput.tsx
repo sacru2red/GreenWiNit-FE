@@ -1,8 +1,7 @@
 import { ComponentProps, Fragment, useRef, useState } from 'react'
 import DaumPostcodeEmbed from 'react-daum-postcode'
 import Input from './Input'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
+import { Dialog, DialogContent } from '../../ui/dialog'
 
 type AddressState = null | {
   roadAddress: string
@@ -81,7 +80,7 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
           ref={detailAddressRef}
         />
       </div>
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
         <DialogContent className="min-w-[400px]">
           <DaumPostcodeEmbed {...restProps} onComplete={onComplete} autoClose={false} />
         </DialogContent>

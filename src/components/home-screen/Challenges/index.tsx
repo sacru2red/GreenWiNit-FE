@@ -60,7 +60,7 @@ const Challenges = () => {
       </div>
       <WarnNotLoggedIn
         isOpen={isWarnNotLoggedInDialogOpen}
-        onClose={() => setIsWarnNotLoggedInDialogOpen(false)}
+        onOpenChange={setIsWarnNotLoggedInDialogOpen}
       />
     </div>
   )

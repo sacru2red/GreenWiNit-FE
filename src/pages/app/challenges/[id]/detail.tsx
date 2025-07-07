@@ -7,9 +7,7 @@ import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import BottomNavigation from '@/components/common/BottomNav'
 import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
+import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
@@ -98,16 +96,16 @@ const ChallengeDetail = () => {
         </Button>
       </div>
       <BottomNavigation />
-      <Dialog open={openSuccessDialog} onClose={() => setOpenSuccessDialog(false)}>
+      <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
         <DialogContent className="flex flex-col gap-3">
-          <DialogContentText className="text-border text-center !text-lg !text-black">
+          <DialogDescription className="text-border text-center !text-lg !text-black">
             챌린지 참여 완료
-          </DialogContentText>
-          <DialogContentText className="text-border !text-light-gray text-center !text-sm">
+          </DialogDescription>
+          <DialogDescription className="text-border !text-light-gray text-center !text-sm">
             [홈] -&gt; [참여 챌린지]에서
             <br />
             챌린지를 인증해보세요!
-          </DialogContentText>
+          </DialogDescription>
           <div className="flex w-full flex-row justify-center">
             <Button size="sm" onClick={() => navigate('/challenges/user/me/joined')}>
               확인

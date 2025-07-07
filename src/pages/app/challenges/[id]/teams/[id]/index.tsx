@@ -9,9 +9,7 @@ import PropertyList from '@/components/common/teams/PropertyList'
 import { Button } from '@/components/ui/button'
 import useChallengesTeam from '@/hooks/useChallengesTeam'
 import { toast } from 'sonner'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
+import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -65,16 +63,16 @@ const TeamDetail = () => {
           </Button>
         </div>
       </div>
-      <Dialog open={openConfirmDialog} onClose={() => setOpenConfirmDialog(false)}>
+      <Dialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog}>
         <DialogContent className="flex flex-col gap-3">
-          <DialogContentText className="text-border text-center !text-lg !text-black">
+          <DialogDescription className="text-border text-center !text-lg !text-black">
             팀 가입 완료
-          </DialogContentText>
-          <DialogContentText className="text-border !text-light-gray text-center !text-sm">
+          </DialogDescription>
+          <DialogDescription className="text-border !text-light-gray text-center !text-sm">
             [홈] -&gt; [참여 챌린지]에서 확인하세요!
             <br />
             오픈채팅방을 통해 이야기를 나눠요.
-          </DialogContentText>
+          </DialogDescription>
           <div className="flex w-full flex-row justify-center">
             <Button size="sm" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
               확인

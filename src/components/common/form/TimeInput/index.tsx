@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { ComponentProps, Fragment, useState } from 'react'
 import Input from '../Input'
 import dayjs from 'dayjs'
@@ -28,8 +27,8 @@ const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
       />
       <Dialog
         open={openDialog}
-        onClose={() => {
-          setOpenDialog(false)
+        onOpenChange={(open) => {
+          setOpenDialog(open)
           setInnerValue(null)
         }}
       >

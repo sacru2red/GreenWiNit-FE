@@ -97,7 +97,7 @@ const ChallengeSubmitIndividual = () => {
           제출하기
         </Button>
       </form>
-      <DoneDialog open={openConfirmDialog} onClose={setOpenConfirmDialog} />
+      <DoneDialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog} />
     </PageContainer>
   )
 }
