@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useMessageStore } from '@/store/messageStore'
+import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
@@ -19,7 +19,6 @@ const TeamEnroll = () => {
   const challengeId = params.challengeId
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { showMessage } = useMessageStore()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   const { mutate: enrollTeam } = useMutation({
@@ -37,7 +36,7 @@ const TeamEnroll = () => {
     },
     onError(error) {
       console.error(error)
-      showMessage(error.message)
+      toast.error(error.message)
     },
   })
 

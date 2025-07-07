@@ -8,7 +8,7 @@ import Overview from '@/components/common/teams/Overview'
 import PropertyList from '@/components/common/teams/PropertyList'
 import { Button } from '@/components/ui/button'
 import useChallengesTeam from '@/hooks/useChallengesTeam'
-import { useMessageStore } from '@/store/messageStore'
+import { toast } from 'sonner'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
@@ -22,7 +22,6 @@ const TeamDetail = () => {
   const teamId = params.teamId
 
   const queryClient = useQueryClient()
-  const { showMessage } = useMessageStore()
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const navigate = useNavigate()
 
@@ -36,7 +35,7 @@ const TeamDetail = () => {
     },
     onError(error) {
       console.error(error)
-      showMessage(error.message)
+      toast.error(error.message)
     },
   })
 

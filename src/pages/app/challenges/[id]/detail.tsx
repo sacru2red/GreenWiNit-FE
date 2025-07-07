@@ -11,7 +11,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import { useState } from 'react'
-import { useMessageStore } from '@/store/messageStore'
+import { toast } from 'sonner'
 import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
 import useChallenge from '@/hooks/useChallenge'
 
@@ -20,7 +20,6 @@ const ChallengeDetail = () => {
   const challengeId = params.challengeId
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
-  const { showMessage } = useMessageStore()
   const queryClient = useQueryClient()
 
   const { data: challenge } = useChallenge(challengeId)
@@ -35,7 +34,7 @@ const ChallengeDetail = () => {
     },
     onError(error) {
       console.error(error)
-      showMessage(error.message)
+      toast.error(error.message)
     },
   })
 

@@ -4,7 +4,7 @@ import PageTitle from '@/components/common/PageTitle'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useMessageStore } from '@/store/messageStore'
+import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
@@ -19,7 +19,6 @@ const TeamModify = () => {
   const teamId = params.teamId
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { showMessage } = useMessageStore()
   const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
 
   const { mutate: modifyTeam } = useMutation({
@@ -43,7 +42,7 @@ const TeamModify = () => {
     },
     onError(error) {
       console.error(error)
-      showMessage(error.message)
+      toast.error(error.message)
     },
   })
 

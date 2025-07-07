@@ -11,8 +11,6 @@ import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/st
 import JoinedChallenges from './pages/app/challenges/user/me/joined'
 import ChallengeDetail from './pages/app/challenges/[id]/detail'
 import ChallengeSubmitIndividual from './pages/app/challenges/[id]/submit/individual'
-import Snackbar from '@mui/material/Snackbar'
-import { useMessageStore } from './store/messageStore'
 import ChallengesTeam from './pages/app/challenges/[id]/teams'
 import JoinTeam from './pages/app/challenges/[id]/teams/join'
 import TeamDetail from './pages/app/challenges/[id]/teams/[id]'
@@ -20,22 +18,18 @@ import TeamEnroll from './pages/app/challenges/[id]/teams/enroll'
 import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
+import { Toaster } from './components/ui/sonner'
 
 const queryClient = new QueryClient()
 
 function App() {
   const [showSplashScreen, setShowSplashScreen] = useState(true)
-  const { opened, message, hideMessage } = useMessageStore()
 
   useEffect(() => {
     setTimeout(() => {
       setShowSplashScreen(false)
     }, 1500)
   }, [])
-
-  const handleClick = () => {
-    hideMessage()
-  }
 
   return (
     <Fragment>
@@ -78,13 +72,14 @@ function App() {
               )}
             </div>
           </div>
-          <Snackbar
+          {/* <Snackbar
             open={opened}
             autoHideDuration={3000}
             onClose={handleClick}
             message={message}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          />
+          /> */}
+          <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
         </MuiThemeProvider>
       </QueryClientProvider>
     </Fragment>
