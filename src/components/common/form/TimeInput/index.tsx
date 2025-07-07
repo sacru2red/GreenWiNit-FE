@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
-import { MultiSectionDigitalClock } from '@mui/x-date-pickers'
 import { ComponentProps, Fragment, useState } from 'react'
-import Input from './Input'
+import Input from '../Input'
 import dayjs from 'dayjs'
+import TimePicker from './TimePicker'
 
 type TimeInputProps = Omit<ComponentProps<typeof Input>, 'value' | 'onChange'> & {
   value: Date | null
@@ -12,7 +12,7 @@ type TimeInputProps = Omit<ComponentProps<typeof Input>, 'value' | 'onChange'> &
 }
 const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
   const [openDialog, setOpenDialog] = useState(false)
-  const [innerValue, setInnerValue] = useState(value == null ? null : dayjs(value))
+  const [innerValue, setInnerValue] = useState(value == null ? null : value)
 
   return (
     <Fragment>
@@ -25,19 +25,7 @@ const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
       />
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent className="min-w-[300px]">
-          <MultiSectionDigitalClock
-            timeSteps={{ hours: 1, minutes: 1 }}
-            views={['hours', 'minutes']}
-            className="[&_ul]:scrollbar-stable [&_ul]:inline-flex [&_ul]:flex-1 [&_ul]:flex-col [&_ul]:items-center"
-            value={innerValue}
-            onChange={(newValue) => {
-              if (newValue == null) {
-                setInnerValue(dayjs())
-              } else {
-                setInnerValue(dayjs(newValue))
-              }
-            }}
-          />
+          <TimePicker value={innerValue} onChange={setInnerValue} />
           <div className="mt-6 flex flex-row gap-6">
             <Button variant="cancel" size="flex" onClick={() => setOpenDialog(false)}>
               취소
@@ -48,7 +36,7 @@ const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
                 if (innerValue == null) {
                   return
                 }
-                onChange(innerValue.toDate())
+                onChange(innerValue)
                 setOpenDialog(false)
               }}
             >
