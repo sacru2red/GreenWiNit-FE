@@ -104,3 +104,10 @@ button {
   line-height: 2.4rem;
   margin: 0;
 }
+
+/* WheelItem transform styles */
+.wheel-item {
+  transform: translateY(var(--translate-y)) rotateX(var(--rotation)) scale(var(--scale));
+  opacity: var(--opacity);
+  transform-style: preserve-3d;
+}

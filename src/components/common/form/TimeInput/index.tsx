@@ -18,12 +18,21 @@ const TimeInput = ({ value, onChange, ...restProps }: TimeInputProps) => {
     <Fragment>
       <Input
         {...restProps}
-        onClick={() => setOpenDialog(true)}
+        onClick={() => {
+          setOpenDialog(true)
+          setInnerValue(value)
+        }}
         value={value == null ? '' : dayjs(value).format('HH:mm')}
         contentEditable={false}
         readOnly
       />
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog
+        open={openDialog}
+        onClose={() => {
+          setOpenDialog(false)
+          setInnerValue(null)
+        }}
+      >
         <DialogContent className="min-w-[300px]">
           <TimePicker value={innerValue} onChange={setInnerValue} />
           <div className="mt-6 flex flex-row gap-6">
