@@ -111,3 +111,14 @@ button {
   opacity: var(--opacity);
   transform-style: preserve-3d;
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
