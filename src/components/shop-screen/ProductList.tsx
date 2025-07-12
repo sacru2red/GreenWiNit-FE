@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 const shopProducts = [
   {
     id: 1,
@@ -57,17 +59,23 @@ const shopProducts = [
   },
 ]
 
-// const formatPrice = (price: number) => {
-//   return price.toLocaleString('ko-KR');
-// };
-
 const ProductList = () => {
+  const navigate = useNavigate()
+
+  const handleProductClick = (productId: number) => {
+    navigate(`product/${productId}`)
+  }
+
   return (
     <div className="px-[17px] py-[26px]">
       <div className="grid grid-cols-2">
         {shopProducts.map((product) => {
           return (
-            <div key={product.id} className="rounded-[25px] p-[16px] text-left">
+            <div
+              key={product.id}
+              className="cursor-pointer rounded-[25px] p-[16px] text-left"
+              onClick={() => handleProductClick(product.id)}
+            >
               <div className="mb-[8px] min-h-[140px] min-w-[140px] items-center justify-center rounded-[10px] bg-white p-[20px]">
                 <img
                   className="items-center justify-center"
