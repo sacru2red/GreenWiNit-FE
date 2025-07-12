@@ -4,6 +4,7 @@ import Login from './pages/app/Login'
 import Main from './pages/app/Main'
 import MyPage from './pages/app/MyPage'
 import PointShop from './pages/app/PointShop'
+import ProductDetail from './pages/app/products/[id]/detail'
 import { Fragment, useEffect, useState } from 'react'
 import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
@@ -67,6 +68,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/point-shop" element={<PointShop />} />
+                <Route path="/point-shop/product/:productId" element={<ProductDetail />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
