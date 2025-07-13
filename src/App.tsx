@@ -68,7 +68,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/point-shop" element={<PointShop />} />
-                <Route path="/point-shop/product/:productId" element={<ProductDetail />} />
+                <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
