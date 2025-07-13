@@ -2,6 +2,7 @@
 import { Team } from '@/api/challenges'
 import { UserStatus } from '@/api/users'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
+import { productMocking } from '@/store/mocking/productMocking'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [
@@ -478,6 +479,33 @@ export const handlers = [
         statusText: 'OK',
       },
     )
+  }),
+
+  http.get('/api/point-products', () => {
+    const products = productMocking.getState().getProducts()
+
+    if (products === null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found products',
+      })
+    }
+
+    return HttpResponse.json(products)
+  }),
+
+  http.get('/api/point-products/:pointProductId', ({ params }) => {
+    const pointProductId = Number(params['pointProductId'])
+    const product = productMocking.getState().getProduct(pointProductId)
+
+    if (product === null) {
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: 'Not Found: not found product',
+      })
+    }
+
+    return HttpResponse.json(product)
   }),
 ]
 

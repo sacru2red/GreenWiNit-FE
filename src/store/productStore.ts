@@ -15,7 +15,7 @@ interface ProductStore {
   getProductById: (id: string) => Product | undefined
 }
 
-export const useUserStore = create<ProductStore>()(
+export const useProductStore = create<ProductStore>()(
   devtools(
     persist(
       (set, get) => ({
