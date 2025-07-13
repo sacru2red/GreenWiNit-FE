@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw'
 
 export const productHandlers = [
   http.get('/api/v1/point-products', () => {
-    const response = productMocking.getState().products
+    const response = productMocking.getState().getProducts()
     return HttpResponse.json(response)
   }),
 
