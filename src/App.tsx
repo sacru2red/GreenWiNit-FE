@@ -70,12 +70,12 @@ function App() {
                 />
                 <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/mypage/my-points" element={<MyPoints />} />
-                <Route path="/mypage/withdraw" element={<WithDraw />} />
-                <Route path="/mypage/edit-profile" element={<EditProfile />} />
-                <Route path="/mypage/my-challenges" element={<MyChallenges />} />
-                <Route path="/mypage/my-challenges/certify" element={<ChallengeCertify />} />
+                <Route path="/my-page" element={<MyPage />} />
+                <Route path="/my-page/my-points" element={<MyPoints />} />
+                <Route path="/my-page/withdraw" element={<WithDraw />} />
+                <Route path="/my-page/edit-profile" element={<EditProfile />} />
+                <Route path="/my-page/my-challenges" element={<MyChallenges />} />
+                <Route path="/my-page/my-challenges/certify" element={<ChallengeCertify />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="*" element={<Main />} />
               </Routes>

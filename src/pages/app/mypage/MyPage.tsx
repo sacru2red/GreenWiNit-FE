@@ -1,7 +1,6 @@
-import BottomNavigation from '@/components/common/BottomNav'
-import PageContainer from '@/components/common/PageContainer'
 import UserCard from '@/components/common/UserCard'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
+import MyPageLayout from '@/pages/app/mypage/MyPageLayout'
 
 function MyPage() {
   const cardItems = [
@@ -31,11 +30,8 @@ function MyPage() {
   ]
 
   return (
-    <PageContainer>
-      <div className="flex h-[48px] w-full items-center justify-center bg-white py-8">
-        <span className="text-[24px] font-bold text-black">마이페이지</span>
-      </div>
-      <div className="flex flex-col gap-10 overflow-y-auto px-[13px] py-[33px]">
+    <MyPageLayout title="마이페이지" navigationIsExist={true}>
+      <div className="flex flex-col gap-10 px-[13px] py-[33px]">
         <UserCard />
         {cardItems.map((cardItem) => {
           return (
@@ -69,8 +65,7 @@ function MyPage() {
           )
         })}
       </div>
-      <BottomNavigation />
-    </PageContainer>
+    </MyPageLayout>
   )
 }
 
