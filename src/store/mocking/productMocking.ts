@@ -68,20 +68,19 @@ export type Product = {
   sellingStatus: string
 }
 
-interface ProductApiResponse<T> {
+interface ProductApiResponse {
   success: boolean
   message: string
   result: {
     hasNext: boolean
     nextCursor?: number | undefined
-    content: T
+    content: Product[]
   }
 }
 
 interface ProductMockingState {
   products: Product[]
-  getProducts: () => ProductApiResponse<Product[]>
-  getProduct: (productId: number) => ProductApiResponse<Product>
+  getProducts: () => ProductApiResponse
 }
 
 export const productMocking = create<ProductMockingState>()(
@@ -99,33 +98,6 @@ export const productMocking = create<ProductMockingState>()(
               hasNext: false,
               nextCursor: undefined,
               content: products,
-            },
-          }
-        },
-
-        getProduct: (productId: number) => {
-          const { products } = get()
-          const product = products.find((p: Product) => p.pointProductId === productId)
-
-          if (!product) {
-            return {
-              success: false,
-              message: '상품을 찾을 수 없습니다.',
-              result: {
-                hasNext: false,
-                nextCursor: undefined,
-                content: {} as Product,
-              },
-            }
-          }
-
-          return {
-            success: true,
-            message: '특정 상품을 조회 성공하였습니다.',
-            result: {
-              hasNext: true,
-              nextCursor: undefined,
-              content: product,
             },
           }
         },

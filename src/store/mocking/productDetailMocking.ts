@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { Product } from './productMocking'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 
 type ProdcutDetailType = Product & {
   description: string
@@ -90,31 +90,42 @@ export const mockDetailProducts: ProdcutDetailType[] = [
   },
 ]
 
+interface ProductDetailApiResponse {
+  success: boolean
+  message: string
+  result: ProdcutDetailType | null
+}
+
 interface ProdcutDetailStore {
-  currentProductDetail: ProdcutDetailType | null
-  getProductDetail: (productId: number) => ProdcutDetailType | null
+  detailProduct: ProdcutDetailType[]
+  getProductDetail: (productId: number) => ProductDetailApiResponse
 }
 
 export const ProdcutDetailMocking = create<ProdcutDetailStore>()(
   devtools(
-    persist(
-      (set) => ({
-        currentProductDetail: null,
-        getProductDetail: (productId: number) => {
-          const findProduct = mockDetailProducts.find(
-            (product) => product.pointProductId === productId,
-          )
-          if (findProduct) {
-            set({ currentProductDetail: findProduct })
-            return findProduct
+    () => ({
+      detailProduct: mockDetailProducts,
+      getProductDetail: (productId: number): ProductDetailApiResponse => {
+        const findProduct = mockDetailProducts.find(
+          (product) => product.pointProductId === productId,
+        )
+        if (findProduct) {
+          return {
+            success: true,
+            message: '제품 상세정보를 조회 성공하였습니다.',
+            result: findProduct,
           }
+        }
 
-          return null
-        },
-      }),
-      {
-        name: 'product-detail-store',
+        return {
+          success: false,
+          message: '해당 상품을 찾을 수 없습니다.',
+          result: null,
+        }
       },
-    ),
+    }),
+    {
+      name: 'product-detail-store',
+    },
   ),
 )
