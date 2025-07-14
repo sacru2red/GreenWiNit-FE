@@ -2,7 +2,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/app/Login'
 import Main from './pages/app/Main'
-import MyPage from './pages/app/MyPage'
+import MyPage from './pages/app/mypage/MyPage'
 import { Fragment, useEffect, useState } from 'react'
 import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
@@ -18,6 +18,12 @@ import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
 import { Toaster } from './components/ui/sonner'
+import MyPoints from '@/pages/app/mypage/MyPoints'
+import WithDraw from '@/pages/app/mypage/WithDraw'
+import EditProfile from '@/pages/app/mypage/EditProfile'
+import MyChallenges from '@/pages/app/mypage/MyChallenges'
+import ChallengeCertify from '@/pages/app/mypage/ChallengeCertify'
+import FAQ from '@/pages/app/Faq'
 
 const queryClient = new QueryClient()
 
@@ -33,7 +39,7 @@ function App() {
   return (
     <Fragment>
       <QueryClientProvider client={queryClient}>
-        <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
+        <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline-1">
           <div
             className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
           >
@@ -64,7 +70,13 @@ function App() {
                 />
                 <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/my" element={<MyPage />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/mypage/my-points" element={<MyPoints />} />
+                <Route path="/mypage/withdraw" element={<WithDraw />} />
+                <Route path="/mypage/edit-profile" element={<EditProfile />} />
+                <Route path="/mypage/my-challenges" element={<MyChallenges />} />
+                <Route path="/mypage/my-challenges/certify" element={<ChallengeCertify />} />
+                <Route path="/faq" element={<FAQ />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
