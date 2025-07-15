@@ -21,8 +21,8 @@ import { Toaster } from './components/ui/sonner'
 import MyPoints from '@/pages/app/mypage/MyPoints'
 import WithDraw from '@/pages/app/mypage/WithDraw'
 import EditProfile from '@/pages/app/mypage/EditProfile'
-import MyChallenges from '@/pages/app/mypage/MyChallenges'
-import ChallengeCertify from '@/pages/app/mypage/ChallengeCertify'
+import CertifiedChallenges from '@/pages/app/mypage/CertifiedChallenges'
+import CertifiedChallengesDetail from '@/pages/app/mypage/CertifiedChallengesDetail'
 
 const queryClient = new QueryClient()
 
@@ -73,8 +73,11 @@ function App() {
                 <Route path="/my-page/my-points" element={<MyPoints />} />
                 <Route path="/my-page/withdraw" element={<WithDraw />} />
                 <Route path="/my-page/edit-profile" element={<EditProfile />} />
-                <Route path="/my-page/my-challenges" element={<MyChallenges />} />
-                <Route path="/my-page/my-challenges/certify" element={<ChallengeCertify />} />
+                <Route path="/my-page/certified-challenges" element={<CertifiedChallenges />} />
+                <Route
+                  path="/my-page/challenges-certify/:challengeId"
+                  element={<CertifiedChallengesDetail />}
+                />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}

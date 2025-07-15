@@ -1,16 +1,13 @@
-import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import { ChallengeTypeSwitch } from '@/components/ChallengeTypeSwitch'
-import BottomNavigation from '@/components/common/BottomNav'
+import MyPageLayout from '@/pages/app/mypage/MyPageLayout'
 import Challenge from '@/components/common/Challenge'
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { challengesApi, challengesQueryKeys } from '@/api/challenges'
+import { ChallengeTypeSwitch } from '@/components/ChallengeTypeSwitch'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
-const JoinedChallenges = () => {
+function CertifiedChallenges() {
   const [challengeType, setChallengeType] = useState<0 | 1>(0)
   const navigate = useNavigate()
 
@@ -21,11 +18,7 @@ const JoinedChallenges = () => {
   const filteredChallenges = challenges?.filter((c) => c.type === challengeType)
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
-        <PageTitle>참여 챌린지</PageTitle>
-      </PageHeaderSection>
+    <MyPageLayout title="인증 챌린지">
       <div className="flex w-full flex-1 flex-col gap-4 p-4">
         <div className="flex w-fit flex-row items-center justify-center rounded-xl border bg-gray-200">
           <ChallengeTypeSwitch on={challengeType === 0} onClick={() => setChallengeType(0)}>
@@ -43,13 +36,7 @@ const JoinedChallenges = () => {
                   <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
                     <Challenge
                       challenge={challenge}
-                      onClick={() => {
-                        if (challenge.type === 0) {
-                          navigate(`/challenges/${challenge.id}/submit/individual`)
-                        } else {
-                          navigate(`/challenges/${challenge.id}/teams`)
-                        }
-                      }}
+                      onClick={() => navigate(`/my-page/challenges-certify/${challenge.id}`)}
                     />
                   </CarouselItem>
                 ))}
@@ -62,9 +49,8 @@ const JoinedChallenges = () => {
           )}
         </div>
       </div>
-      <BottomNavigation />
-    </PageContainer>
+    </MyPageLayout>
   )
 }
 
-export default JoinedChallenges
+export default CertifiedChallenges
