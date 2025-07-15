@@ -1,5 +1,6 @@
 import useProducts from '@/hooks/useProducts'
 import { useNavigate } from 'react-router-dom'
+import { Product } from '@/store/mocking/productMocking'
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -19,10 +20,10 @@ const ProductList = () => {
   return (
     <div className="px-[17px] py-[26px]">
       <div className="grid grid-cols-2">
-        {products?.map((product, index) => {
+        {products?.map((product: Product, index: number) => {
           return (
             <div
-              key={`${product?.id}-${index}`}
+              key={`${product?.pointProductId}-${index}`}
               className="cursor-pointer rounded-[25px] p-[16px] text-left"
               onClick={() => handleProductClick(product?.pointProductId)}
             >
