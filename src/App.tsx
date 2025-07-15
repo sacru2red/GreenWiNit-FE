@@ -23,7 +23,6 @@ import WithDraw from '@/pages/app/mypage/WithDraw'
 import EditProfile from '@/pages/app/mypage/EditProfile'
 import MyChallenges from '@/pages/app/mypage/MyChallenges'
 import ChallengeCertify from '@/pages/app/mypage/ChallengeCertify'
-import FAQ from '@/pages/app/Faq'
 
 const queryClient = new QueryClient()
 
@@ -76,7 +75,6 @@ function App() {
                 <Route path="/my-page/edit-profile" element={<EditProfile />} />
                 <Route path="/my-page/my-challenges" element={<MyChallenges />} />
                 <Route path="/my-page/my-challenges/certify" element={<ChallengeCertify />} />
-                <Route path="/faq" element={<FAQ />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
