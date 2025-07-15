@@ -1,8 +1,8 @@
-import SubmitEditButton from '@/components/edit-profile-screen/SubmitEditButton'
+import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
 
 function NicknameEditForm() {
   return (
-    <section className="w-full flex-1 px-4 py-6">
+    <section className="w-full flex-1">
       <form action="submit">
         <label htmlFor="current-nickname" className="block">
           <span className="text-secondary-foreground block text-start text-sm">현재 닉네임</span>

@@ -27,8 +27,9 @@ function MyPageLayout({
 
       <main
         className={cn(
-          'relative min-h-[calc(100vh-48px)] w-full overflow-scroll px-4 py-6',
+          'relative flex min-h-[calc(100vh-48px)] w-full flex-col overflow-scroll px-4 py-6',
           background === 'green' ? 'bg-[#E8F5E9]' : 'bg-white',
+          navigationIsExist ? 'min-h-[calc(100vh-125px)]' : 'min-h-[calc(100vh-48px)]',
         )}
       >
         {children}

@@ -13,7 +13,7 @@ function WithDrawCaution() {
           className="border-lighter-gray-border flex size-5 items-center justify-center rounded-sm border"
         >
           {isCautionClicked && (
-            <img src="/icons/ic_check.svg" width={14} height={14} alt="체크 표시" />
+            <img src="/icons/check.svg" width={14} height={14} alt="체크 표시" />
           )}
         </button>
         <span className="text-secondary-foreground flex-1 text-xs">

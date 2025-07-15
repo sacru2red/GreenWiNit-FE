@@ -1,6 +1,6 @@
 import UserCard from '@/components/common/UserCard'
+import MyPageLayout from '@/pages/app/my-page/my-page-layout'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
-import MyPageLayout from '@/pages/app/mypage/MyPageLayout'
 
 function MyPage() {
   const cardItems = [

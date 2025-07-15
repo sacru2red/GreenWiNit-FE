@@ -22,7 +22,7 @@ function ProfileUploader() {
         onClick={handleClick}
         className="absolute right-0 bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md"
       >
-        <img src="/icons/file_upload.svg" alt="사진 업로드" width={32} height={32} />
+        <img src="/icons/camera.svg" alt="사진 업로드" width={32} height={32} />
       </button>
 
       <input

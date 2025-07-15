@@ -1,10 +1,10 @@
-import MyPageLayout from '@/pages/app/mypage/MyPageLayout'
 import Challenge from '@/components/common/Challenge'
+import MyPageLayout from '@/pages/app/my-page/my-page-layout'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import { ChallengeTypeSwitch } from '@/components/ChallengeTypeSwitch'
+import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 
 function CertifiedChallenges() {
@@ -18,7 +18,7 @@ function CertifiedChallenges() {
   const filteredChallenges = challenges?.filter((c) => c.type === challengeType)
 
   return (
-    <MyPageLayout title="인증 챌린지">
+    <MyPageLayout title="인증 챌린지" navigationIsExist={true}>
       <div className="flex w-full flex-1 flex-col gap-4 p-4">
         <div className="flex w-fit flex-row items-center justify-center rounded-xl border bg-gray-200">
           <ChallengeTypeSwitch on={challengeType === 0} onClick={() => setChallengeType(0)}>

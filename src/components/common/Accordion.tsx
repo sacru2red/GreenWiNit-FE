@@ -9,11 +9,11 @@ const Accordion = ({ title, description }: { title: string; description: string 
 
       {isOpen ? (
         <button onClick={() => setIsOpen(true)}>
-          <img src="/icons/arrow_bottom.svg" alt="열기 버튼" width={24} height={24} />
+          <img src="/icons/arrow-bottom.svg" alt="열기 버튼" width={24} height={24} />
         </button>
       ) : (
         <button onClick={() => setIsOpen(false)}>
-          <img src="/icons/arrow_right.svg" alt="열기 버튼" width={24} height={24} />
+          <img src="/icons/arrow-right.svg" alt="열기 버튼" width={24} height={24} />
         </button>
       )}
 

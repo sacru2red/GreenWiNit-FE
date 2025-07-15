@@ -1,5 +1,5 @@
 import Row from '@/components/common/form/Row'
-import MyPageLayout from '@/pages/app/mypage/MyPageLayout'
+import MyPageLayout from '@/pages/app/my-page/my-page-layout'
 
 function CertifiedChallengesDetail() {
   const responseDataMock = {
@@ -10,7 +10,7 @@ function CertifiedChallengesDetail() {
   }
 
   return (
-    <MyPageLayout title="인증 챌린지">
+    <MyPageLayout title="인증 챌린지" navigationIsExist={true}>
       <div className="flex flex-1 flex-col gap-4 p-4">
         <Row>
           <h3>제목</h3>

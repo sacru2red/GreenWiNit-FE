@@ -1,4 +1,4 @@
-import PointsHistoryItem from '@/components/my-page-screen/PointsHistoryItem'
+import PointsHistoryItem from '@/components/my-page-screen/points-history-item'
 import { PointTransaction } from '@/types/potints'
 
 function PointsHistoryList({ list }: { list: PointTransaction[] }) {

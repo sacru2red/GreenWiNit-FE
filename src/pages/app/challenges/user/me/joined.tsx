@@ -1,5 +1,5 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import { ChallengeTypeSwitch } from '@/components/ChallengeTypeSwitch'
+import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import BottomNavigation from '@/components/common/BottomNav'
 import Challenge from '@/components/common/Challenge'
 import PageContainer from '@/components/common/PageContainer'

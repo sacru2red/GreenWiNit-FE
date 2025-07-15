@@ -1,5 +1,5 @@
-import PointsFilterButton from '@/components/my-page-screen/PointsFilterButton'
-import PointsHistoryList from '@/components/my-page-screen/PointsHistoryList'
+import PointsFilterButton from '@/components/my-page-screen/points-filter-button'
+import PointsHistoryList from '@/components/my-page-screen/points-history-list'
 
 function PointHistoryContainer() {
   const list = [
