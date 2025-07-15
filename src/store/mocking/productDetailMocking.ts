@@ -16,7 +16,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 5,
   },
   {
     pointProductId: 2,
@@ -26,7 +26,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '품절',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 3,
   },
   {
     pointProductId: 3,
@@ -36,7 +36,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 12,
   },
   {
     pointProductId: 4,
@@ -46,7 +46,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 11,
   },
   {
     pointProductId: 5,
@@ -56,7 +56,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 2,
   },
   {
     pointProductId: 6,
@@ -66,7 +66,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 5,
   },
   {
     pointProductId: 7,
@@ -76,7 +76,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '품절',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 8,
   },
   {
     pointProductId: 8,
@@ -86,7 +86,7 @@ export const mockDetailProducts: ProdcutDetailType[] = [
     sellingStatus: '교환가능',
     description:
       '친환경 스테인리스 텀블러는 일회용 컵 사용을 줄이고 환경을 보호하는 데 도움이 됩니다.',
-    stockQuantity: 0,
+    stockQuantity: 9,
   },
 ]
 
