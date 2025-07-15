@@ -38,6 +38,9 @@ function BottomNavigation() {
         case 0:
           navigate('/')
           break
+        case 1:
+          navigate('/information-share')
+          break
         default:
           break
       }

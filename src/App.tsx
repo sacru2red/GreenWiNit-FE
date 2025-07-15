@@ -18,6 +18,7 @@ import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
 import { Toaster } from './components/ui/sonner'
+import InformationShare from './pages/app/InformationShare'
 
 const queryClient = new QueryClient()
 
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/my" element={<MyPage />} />
+                <Route path="/information-share" element={<InformationShare />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
