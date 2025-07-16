@@ -4,12 +4,15 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
+import reactPlugin from 'eslint-plugin-react'
 
 export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.strict,
   reactHooks.configs['recommended-latest'],
   reactRefresh.configs.vite,
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
   { ignores: ['dist/**/*'] },
   {
     files: ['**/*.{ts,tsx}'],
