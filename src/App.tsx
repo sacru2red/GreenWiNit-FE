@@ -1,22 +1,22 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
-import Login from './pages/app/Login'
-import Main from './pages/app/Main'
-import MyPage from './pages/app/MyPage'
-import { Fragment, useEffect, useState } from 'react'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import Login from './pages/Login'
+import Main from './pages/Main'
+import MyPage from './pages/MyPage'
+import { useEffect, useState } from 'react'
 import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import JoinedChallenges from './pages/app/challenges/user/me/joined'
-import ChallengeDetail from './pages/app/challenges/[id]/detail'
-import ChallengeSubmitIndividual from './pages/app/challenges/[id]/submit/individual'
-import ChallengesTeam from './pages/app/challenges/[id]/teams'
-import JoinTeam from './pages/app/challenges/[id]/teams/join'
-import TeamDetail from './pages/app/challenges/[id]/teams/[id]'
-import TeamEnroll from './pages/app/challenges/[id]/teams/enroll'
-import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
-import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
-import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
+import JoinedChallenges from './pages/challenges/user/me/joined'
+import ChallengeDetail from './pages/challenges/[id]/detail'
+import ChallengeSubmitIndividual from './pages/challenges/[id]/submit/individual'
+import ChallengesTeam from './pages/challenges/[id]/teams'
+import JoinTeam from './pages/challenges/[id]/teams/join'
+import TeamDetail from './pages/challenges/[id]/teams/[id]'
+import TeamEnroll from './pages/challenges/[id]/teams/enroll'
+import ManageTeam from './pages/challenges/[id]/teams/[id]/joined'
+import TeamModify from './pages/challenges/[id]/teams/[id]/modify'
+import ChallengeSubmitTeam from './pages/challenges/[id]/submit/team/[teamId]'
 import { Toaster } from './components/ui/sonner'
 
 const queryClient = new QueryClient()
@@ -31,7 +31,7 @@ function App() {
   }, [])
 
   return (
-    <Fragment>
+    <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
           <div
@@ -70,16 +70,9 @@ function App() {
             )}
           </div>
         </div>
-        {/* <Snackbar
-            open={opened}
-            autoHideDuration={3000}
-            onClose={handleClick}
-            message={message}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          /> */}
         <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
       </QueryClientProvider>
-    </Fragment>
+    </BrowserRouter>
   )
 }
 
