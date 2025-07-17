@@ -6,10 +6,10 @@ const reasons = [
   { name: 'other-service', content: '다른 서비스를 이용할 예정이에요' },
   { name: 'privacy', content: '개인정보 보호를 위해 탈퇴할게요' },
   { name: 'etc', content: '기타' },
-]
+] as const
 
 function WithDrawReasonForm() {
-  const [selected, setSelected] = useState<string | null>(null)
+  const [selected, setSelected] = useState<(typeof reasons)[number]['name'] | null>(null)
 
   return (
     <section className="flex flex-col gap-4 px-4 py-6">
