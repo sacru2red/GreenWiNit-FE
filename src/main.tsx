@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.tsx'
+import Admin from './pages/Admin.tsx'
 import './index.css'
 
 async function enableMocking() {
@@ -16,5 +18,12 @@ async function enableMocking() {
 
 enableMocking().then(() => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  createRoot(document.getElementById('root')!).render(<App />)
+  createRoot(document.getElementById('root')!).render(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/admin" element={<Admin />}></Route>
+        <Route path="*" element={<App />} />
+      </Routes>
+    </BrowserRouter>,
+  )
 })
