@@ -5,7 +5,7 @@ function PointsHistoryList({ list }: { list: PointTransaction[] }) {
   return (
     <ul className="flex h-full flex-col gap-4">
       {list.map((el) => (
-        <PointsHistoryItem info={el} />
+        <PointsHistoryItem key={el.pointTransactionId} info={el} />
       ))}
     </ul>
   )
