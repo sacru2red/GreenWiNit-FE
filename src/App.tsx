@@ -73,9 +73,9 @@ function App() {
                 <Route path="/my-page/my-points" element={<MyPoints />} />
                 <Route path="/my-page/withdraw" element={<WithDraw />} />
                 <Route path="/my-page/edit-profile" element={<EditProfile />} />
-                <Route path="/my-page/certified-challenges" element={<CertifiedChallenges />} />
+                <Route path="/my-page/challenges/certified" element={<CertifiedChallenges />} />
                 <Route
-                  path="/my-page/challenges-certify/:challengeId"
+                  path="/my-page/challenges/certify/:challengeId"
                   element={<CertifiedChallengesDetail />}
                 />
                 <Route path="*" element={<Main />} />
