@@ -8,7 +8,7 @@ const Accordion = ({ title, description }: { title: string; description: string 
       <span className="flex-1 text-start leading-[18px] font-semibold text-[#424242]">{title}</span>
       {isOpen ? (
         <button onClick={() => setIsOpen(true)}>
-          <img src="/icons/arrow-bottom.svg" alt="열기 버튼" width={24} height={24} />
+          <img src="/icons/arrow-bottom.svg" alt="닫기 버튼" width={24} height={24} />
         </button>
       ) : (
         <button onClick={() => setIsOpen(false)}>
