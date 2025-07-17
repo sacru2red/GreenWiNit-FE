@@ -24,7 +24,6 @@ function ProfileUploader() {
       >
         <img src="/icons/camera.svg" alt="사진 업로드" width={32} height={32} />
       </button>
-
       <input
         type="file"
         accept="image/*"

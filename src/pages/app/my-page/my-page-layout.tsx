@@ -24,7 +24,6 @@ function MyPageLayout({
         <PageHeaderSection.BackIcon />
         <PageTitle>{title}</PageTitle>
       </PageHeaderSection>
-
       <main
         className={cn(
           'relative flex min-h-[calc(100vh-48px)] w-full flex-col overflow-scroll px-4 py-6',
@@ -34,7 +33,6 @@ function MyPageLayout({
       >
         {children}
       </main>
-
       {navigationIsExist && <BottomNavigation />}
     </PageContainer>
   )

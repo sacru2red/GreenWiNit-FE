@@ -14,7 +14,6 @@ function NicknameEditForm() {
             className="text-secondary-foreground mt-2 h-[48px] w-full rounded-sm bg-[#F5F5F5] px-4 py-3 focus:outline-none"
           />
         </label>
-
         <label htmlFor="new-nickname" className="relative mt-6 block">
           <span className="text-secondary-foreground block text-start text-sm">변경할 닉네임</span>
           <input
@@ -28,11 +27,9 @@ function NicknameEditForm() {
             중복 확인
           </button>
         </label>
-
         <span className="text-lighter-gray mt-2 block text-start text-xs">
           2~20자 이내, 특수문자 사용 불가
         </span>
-
         <SubmitEditButton />
       </form>
     </section>
