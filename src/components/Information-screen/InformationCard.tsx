@@ -1,15 +1,35 @@
 import { cn } from '@/lib/utils'
+import { useNavigate } from 'react-router-dom'
 
 type InformationCardProps = {
+  id: number
   categoryName: string
   title: string
   content: string
   thumbnailUrl: string
 }
 
-const InformationCard = ({ categoryName, title, content, thumbnailUrl }: InformationCardProps) => {
+const InformationCard = ({
+  id,
+  categoryName,
+  title,
+  content,
+  thumbnailUrl,
+}: InformationCardProps) => {
+  const navigate = useNavigate()
+
+  const handleClickCard = () => {
+    const cardData = { id, categoryName, title, content, thumbnailUrl }
+    navigate(`/information-share/${id}`, {
+      state: { cardData },
+    })
+  }
+
   return (
-    <div className="m-[16px] flex min-h-[150px] flex-row items-start justify-start overflow-hidden rounded-[25px] border bg-white shadow-md">
+    <div
+      className="m-[16px] flex min-h-[150px] cursor-pointer flex-row items-start justify-start overflow-hidden rounded-[25px] border bg-white shadow-md"
+      onClick={handleClickCard}
+    >
       <div className="h-[180px] w-[180px] flex-shrink-0">
         <img
           className="h-full rounded-l-[25px] bg-green-50 object-cover"

@@ -94,6 +94,7 @@ function InformationShare() {
         {filteredData.map((item) => (
           <InformationCard
             key={item.id}
+            id={item.id}
             categoryName={item.infoCategoryName}
             title={item.title}
             content={item.content}
