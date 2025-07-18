@@ -33,7 +33,7 @@ function FilteredChallengesDisplay() {
                 <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
                   <Challenge
                     challenge={challenge}
-                    onClick={() => navigate(`/my-page/challenges-certify/${challenge.id}`)}
+                    onClick={() => navigate(`/my-page/challenges/certify/:challengeId`)}
                   />
                 </CarouselItem>
               ))}
