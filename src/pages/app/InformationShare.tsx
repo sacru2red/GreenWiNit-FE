@@ -3,7 +3,7 @@ import InformationCard from '@/components/Information-screen/InformationCard'
 import InformationTab, { TabType } from '@/components/Information-screen/InformationTab'
 import { useEffect, useState } from 'react'
 
-type InfoCard = {
+export type InfoCard = {
   id: number
   infoCategoryName: string
   title: string
