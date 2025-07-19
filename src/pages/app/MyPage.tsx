@@ -35,17 +35,17 @@ function MyPage() {
         <span className="text-[24px] font-bold text-black">마이페이지</span>
       </div>
       <div className="felx flex-col overflow-y-auto pb-40">
-        {cardItems.map((cardItem) => {
+        {cardItems.map((cardItem, i) => {
           return (
-            <Card className="mt-6 h-fit rounded-2xl bg-white p-0 shadow-lg">
+            <Card key={i} className="mt-6 h-fit rounded-2xl bg-white p-0 shadow-lg">
               <CardContent className="flex flex-col">
                 <div className="flex w-full flex-row items-center justify-center p-[16px] font-bold">
                   {cardItem.title}
                 </div>
-                {cardItem.items.map((item, itemIndex) => {
+                {cardItem.items.map((item, j) => {
                   return (
                     <CardAction
-                      key={itemIndex}
+                      key={j}
                       className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-[16px]"
                     >
                       <span className="text-title-smaller text-[16px]">{item.title}</span>
@@ -57,7 +57,7 @@ function MyPage() {
                         xmlns="http://www.w3.org/2000/svg"
                         className="ml-auto"
                       >
-                        <path d="M8 4L14 10L8 16" stroke="#9E9E9E" stroke-width="2" />
+                        <path d="M8 4L14 10L8 16" stroke="#9E9E9E" strokeWidth="2" />
                       </svg>
                     </CardAction>
                   )
