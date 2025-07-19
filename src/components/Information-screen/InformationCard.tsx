@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils'
 import { useNavigate } from 'react-router-dom'
+import InformationLabel from './InformationLabel'
 
 type InformationCardProps = {
   id: number
@@ -40,18 +40,9 @@ const InformationCard = ({
         />
       </div>
       <div className="flex flex-col justify-baseline p-[12px]">
-        <div className="flex flex-row items-baseline justify-between gap-2 py-[10px]">
+        <div className="flex flex-row items-center justify-between gap-2 py-[10px]">
           <p className="text-md flex-1 truncate text-start font-bold">{title}</p>
-          <div
-            className={cn(
-              'flex-shrink-0 items-center justify-center rounded-[8px] px-[8px] py-[2px] text-sm',
-              categoryName === '이벤트' && 'bg-green-300 text-green-700',
-              categoryName === '커뮤니티' && 'bg-blue-300 text-blue-700',
-              categoryName === '기타' && 'bg-purple-300 text-purple-700',
-            )}
-          >
-            {categoryName}
-          </div>
+          <InformationLabel categoryName={categoryName} />
         </div>
         <p className="items-start justify-baseline text-start">{content.substring(0, 30)}</p>
       </div>
