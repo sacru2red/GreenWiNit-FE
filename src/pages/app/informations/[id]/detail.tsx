@@ -1,11 +1,15 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import InformationLabel from '@/components/Information-screen/InformationLabel'
+import { useInformation } from '@/hooks/useInformation'
 
 const InformationDetail = () => {
-  const location = useLocation()
   const navigate = useNavigate()
-  const { cardData } = location.state || {}
+  const { informationId } = useParams<{ informationId: string }>()
+  const numericId = informationId ? parseInt(informationId) : undefined
+  const { isLoading, data: cardData } = useInformation(numericId)
+
+  if (isLoading) return <div>로딩 중...</div>
 
   if (!cardData) {
     return <div>데이터를 찾을 수 없습니다.</div>
@@ -26,7 +30,7 @@ const InformationDetail = () => {
       </div>
       <div className="flex flex-row items-center justify-between p-[16px]">
         <div className="text-xl font-bold">{cardData.title}</div>
-        <InformationLabel categoryName={cardData.categoryName} />
+        <InformationLabel categoryName={cardData.infoCategoryName} />
       </div>
       <div className="flex flex-col text-start">
         <p className="border-b-2 px-[16px] pt-[16px] text-xl font-bold text-black">소개</p>

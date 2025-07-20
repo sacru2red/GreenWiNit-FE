@@ -4,13 +4,13 @@ import { createQueryKeys } from '@lukemorales/query-key-factory'
 export const informationsApi = {
   getInformations: async () => {
     const response = await fetch('/api/user/info')
-    const data = response.json() as Promise<InfoCard[]>
+    const data = (await response.json()) as InfoCard[]
     return data
   },
 
   getInformation: async (infoId: number | undefined) => {
     const response = await fetch(`/api/user/info/${infoId}`)
-    const data = response.json() as Promise<InfoCard>
+    const data = (await response.json()) as InfoCard
     return data
   },
 }

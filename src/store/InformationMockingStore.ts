@@ -61,7 +61,7 @@ export const InformationMockingStore = create<InformationMockingStore>()(
 
       getInformations: () => get().informations,
 
-      getInformationById: (id: number) => get().informations.filter((info) => info.id === id),
+      getInformationById: (id: number) => get().informations.find((info) => info.id === id),
 
       setInformations: (informations: InfoCard[]) => set({ informations }),
     }),
