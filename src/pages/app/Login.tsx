@@ -13,8 +13,6 @@ function Login() {
   const [params] = useSearchParams()
   const redirectTo = params.get('redirect')
 
-  throw new Error('test')
-
   const processLogin = (oAuthToken: string) => {
     usersApi
       .login({ oAuthToken })
