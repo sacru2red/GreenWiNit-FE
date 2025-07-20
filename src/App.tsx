@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Login from './pages/app/Login'
 import Main from './pages/app/Main'
 import MyPage from './pages/app/MyPage'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import SplashScreen from './components/SplashScreen'
 import { cn } from './lib/utils'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -19,6 +19,8 @@ import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
 import { Toaster } from './components/ui/sonner'
 import NotFound from './pages/404'
+import InternalServerError from './pages/500'
+import { ErrorBoundary } from 'react-error-boundary'
 
 const queryClient = new QueryClient()
 
@@ -32,7 +34,7 @@ function App() {
   }, [])
 
   return (
-    <Fragment>
+    <ErrorBoundary fallback={<InternalServerError />}>
       <QueryClientProvider client={queryClient}>
         <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
           <div
@@ -67,6 +69,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/" element={<Main />} />
+                <Route path="/404" element={<NotFound />} />
+                <Route path="/500" element={<InternalServerError />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             )}
@@ -81,7 +85,7 @@ function App() {
           /> */}
         <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
       </QueryClientProvider>
-    </Fragment>
+    </ErrorBoundary>
   )
 }
 
