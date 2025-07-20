@@ -30,7 +30,7 @@ const ProductDetailLabel = ({
 
   const handleDownClick = () => {
     if (remainingQuantity > 0) {
-      setIsOpen(!isOpen)
+      setIsOpen((prev) => !prev)
     }
   }
 
@@ -48,11 +48,10 @@ const ProductDetailLabel = ({
       {isButton ? (
         <div className="relative">
           <button
-            className={`flex items-center gap-5 rounded-[5px] px-[10px] py-[5px] ${
-              remainingQuantity === 0
-                ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-                : 'bg-gray-200 hover:bg-gray-300'
-            }`}
+            className={cn('roudned-[5px] flex items-center gap-5 px-[10px] py-[5px]', {
+              'cursor-not-allowed bg-gray-100 text-gray-400': remainingQuantity === 0,
+              'bg-gray-200 hover:bg-gray-300': remainingQuantity > 0,
+            })}
             onClick={handleDownClick}
             disabled={remainingQuantity === 0}
           >
@@ -67,7 +66,13 @@ const ProductDetailLabel = ({
                   <button
                     key={quantity}
                     onClick={() => handleQuantitySelect(quantity)}
-                    className={`transition-color w-full px-3 py-2 text-left text-sm hover:bg-gray-100 ${selectedCount === quantity ? 'bg-gray-200 text-black' : 'bg-gray-400'} `}
+                    className={cn(
+                      'transition-color w-full px-3 py-2 text-left text-sm hover:bg-gray-100',
+                      {
+                        'bg-gray-200 text-black': selectedCount === quantity,
+                        'bg-gray-400': selectedCount !== quantity,
+                      },
+                    )}
                   >
                     {quantity}
                   </button>
