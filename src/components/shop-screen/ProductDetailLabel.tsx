@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 interface ProductDetailLabelProps {
   label: string
-  labelValue: string | number | undefined
+  price: string | number | undefined
   valueClassName?: string
   isButton?: boolean
   remainingQuantity?: number
@@ -14,7 +14,7 @@ interface ProductDetailLabelProps {
 
 const ProductDetailLabel = ({
   label,
-  labelValue,
+  price,
   valueClassName = '',
   isButton = false,
   remainingQuantity = 0,
@@ -77,7 +77,7 @@ const ProductDetailLabel = ({
           )}
         </div>
       ) : (
-        <p className={cn('font-bold', valueClassName)}>{labelValue}p</p>
+        <p className={cn('font-bold', valueClassName)}>{price}p</p>
       )}
     </div>
   )

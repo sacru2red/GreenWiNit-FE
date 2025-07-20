@@ -1,10 +1,10 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export type Product = {
-  pointProductId: number
-  pointProductName: string
+  id: number
+  name: string
   thumbnailUrl: string
-  pointPrice: number
+  price: number
   sellingStatus: string
 }
 

@@ -2,16 +2,12 @@ import { ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 interface ProductDetailHeaderProps {
-  productImgUrl: string | undefined
-  productName: string | undefined
-  productValue: number | undefined
+  imgUrl: string | undefined
+  name: string | undefined
+  price: number | undefined
 }
 
-const ProductDetailHeader = ({
-  productImgUrl,
-  productName,
-  productValue,
-}: ProductDetailHeaderProps) => {
+const ProductDetailHeader = ({ imgUrl, name, price }: ProductDetailHeaderProps) => {
   const navigate = useNavigate()
 
   const handleBackButtonClick = () => {
@@ -25,11 +21,11 @@ const ProductDetailHeader = ({
       </div>
 
       <div className="flex h-[300px] w-full justify-center bg-gray-100 p-[2px]">
-        <img src={productImgUrl} alt="Product" />
+        <img src={imgUrl} alt="Product" />
       </div>
       <div className="px-[16px] py-[8px] text-left font-bold">
-        <p className="text-xl text-black">{productName}</p>
-        <p className="text-2xl text-green-500">{productValue} 포인트</p>
+        <p className="text-xl text-black">{name}</p>
+        <p className="text-2xl text-green-500">{price} 포인트</p>
       </div>
       <hr />
     </div>

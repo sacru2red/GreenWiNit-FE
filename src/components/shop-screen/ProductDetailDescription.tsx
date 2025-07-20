@@ -5,20 +5,20 @@ import ProductDetailLabel from './ProductDetailLabel'
 
 interface ProductDetailProps {
   description: string
-  productValue: number
+  price: number
   remainingQuantity: number
 }
 
 const ProductDetailDescription = ({
   description,
-  productValue,
+  price,
   remainingQuantity,
 }: ProductDetailProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1)
   const { data: userStatus, isLoading } = useUserStatus()
   const navigate = useNavigate()
 
-  const totalValue = productValue * selectedQuantity
+  const totalValue = price * selectedQuantity
 
   const handleExcnagePoint = () => {
     navigate('/buy')
@@ -56,7 +56,7 @@ const ProductDetailDescription = ({
       />
       <ProductDetailLabel
         label="총 보유 포인트"
-        labelValue={(userStatus?.point ?? 0) - productValue * selectedQuantity}
+        labelValue={(userStatus?.point ?? 0) - price * selectedQuantity}
       />
       <hr />
       <p className="px-[10px] pt-[20px] text-sm">
