@@ -19,8 +19,9 @@ const ProductDetailDescription = ({
   const navigate = useNavigate()
 
   const totalValue = price * selectedQuantity
+  const availablePoint = (userStatus?.point ?? 0) - price * selectedQuantity
 
-  const handleExcnagePoint = () => {
+  const handleExchagePoint = () => {
     navigate('/buy')
   }
 
@@ -50,18 +51,16 @@ const ProductDetailDescription = ({
         selectedQuantity={selectedQuantity}
       />
       <ProductDetailLabel label="차감 포인트" point={totalValue} valueClassName="text-red-500" />
-      <ProductDetailLabel
-        label="총 보유 포인트"
-        point={(userStatus?.point ?? 0) - price * selectedQuantity}
-      />
+      <ProductDetailLabel label="총 보유 포인트" point={availablePoint} />
       <hr />
       <p className="px-[10px] pt-[20px] text-sm">
         * 본 리워드는 봉사형 프로젝트 굿즈로 환불 및 교환이 불가능합니다. 제품 불량 및 파손 시에는
         [1:1문의]를 통해 연락주세요.
       </p>
       <button
-        onClick={handleExcnagePoint}
-        className="m-[20px] rounded-[10px] bg-green-500 px-[10px] py-[14px] font-bold text-white"
+        onClick={handleExchagePoint}
+        className="m-[20px] rounded-[10px] bg-green-500 px-[10px] py-[14px] font-bold text-white disabled:!cursor-default disabled:bg-gray-400 disabled:text-gray-600"
+        disabled={availablePoint < 0}
       >
         포인트 교환하기
       </button>
