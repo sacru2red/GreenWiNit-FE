@@ -19,15 +19,15 @@ const ProductDetail = () => {
       <div className="flex flex-col">
         <div>
           <ProductDetailHeader
-            productImgUrl={product?.thumbnailUrl}
-            productName={product?.pointProductName}
-            productValue={product?.pointPrice}
+            imgUrl={product?.thumbnailUrl}
+            name={product?.pointProductName}
+            price={product?.pointPrice}
           />
         </div>
         <div>
           <ProductDetailDescription
             description={product?.description}
-            productValue={product?.pointPrice}
+            price={product?.pointPrice}
             remainingQuantity={product?.stockQuantity}
           />
         </div>

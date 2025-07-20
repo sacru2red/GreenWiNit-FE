@@ -37,26 +37,22 @@ const ProductDetailDescription = ({
       <hr />
       <ProductDetailLabel
         label="사용 가능 포인트"
-        labelValue={userStatus?.point}
+        point={userStatus?.point}
         valueClassName="text-green-500"
       />
       <ProductDetailLabel
         label="수량 선택"
-        labelValue={userStatus?.point}
+        point={userStatus?.point}
         valueClassName="text-green-500"
         isButton={true}
         remainingQuantity={remainingQuantity}
         onQuantityChange={handleQuantityChange}
         selectedQuantity={selectedQuantity}
       />
-      <ProductDetailLabel
-        label="차감 포인트"
-        labelValue={totalValue}
-        valueClassName="text-red-500"
-      />
+      <ProductDetailLabel label="차감 포인트" point={totalValue} valueClassName="text-red-500" />
       <ProductDetailLabel
         label="총 보유 포인트"
-        labelValue={(userStatus?.point ?? 0) - price * selectedQuantity}
+        point={(userStatus?.point ?? 0) - price * selectedQuantity}
       />
       <hr />
       <p className="px-[10px] pt-[20px] text-sm">
