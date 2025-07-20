@@ -50,7 +50,6 @@ function InformationShare() {
         <hr />
         <InformationTab onTabChange={handleTabChange} activeTab={activeTab} />
       </header>
-
       <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {filteredData.map((item) => (
           <InformationCard
@@ -63,7 +62,6 @@ function InformationShare() {
           />
         ))}
       </div>
-
       <footer>
         <BottomNavigation />
       </footer>
