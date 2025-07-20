@@ -17,7 +17,9 @@ export default function NotFound() {
       <p className="text-light-gray">
         입력하신 주소를 확인 후 오류가 계속 발생하는
         <br />
-        경우 고객센터로 문의하시기 바랍니다.
+        <a href="mailto:greenwinit01@gmail.com">메일(greenwinit01@gmail.com)</a>로
+        <br />
+        문의 바랍니다.
       </p>
       <div className="flex w-full flex-row justify-center">
         <Button type="button" onClick={() => navigate('/')} size="flex" className="h-fit max-w-40">
