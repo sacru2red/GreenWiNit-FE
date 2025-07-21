@@ -45,7 +45,7 @@ const info = {
 function ResultNoticeDialog({ isOpen, type, setOpen, onClick }: ResultNoticeDialogProps) {
   if (!(type in info)) return null
   const data = info[type]
-  const title = data.title ?? null
+  const title = data.title
   const description = data.description
   const paragraph = 'paragraph' in data ? data.paragraph : null
 
