@@ -1,4 +1,4 @@
-import FilterButton from '@/components/common/button/FilterButton'
+import FilterButton from '@/components/common/button/filter-button'
 import PointsHistoryFilter from '@/components/my-page-screen/points-history-filter'
 import { Fragment, useState } from 'react'
 

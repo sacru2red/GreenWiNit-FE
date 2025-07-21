@@ -6,11 +6,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/useModalStore'
+import { useModalStore } from '@/store/use-modal-store'
 
 interface ConfirmDialogProps {
   isOpen: boolean
-  type: 'should-login' | 'delete-team' | 'edit-profile' | 'delete-profile'
+  type: 'should-login' | 'delete-team' | 'edit-profile' | 'withdraw'
   setOpen: (isOpen: boolean) => void
   onConfirm: () => void
   closeModal: () => void
@@ -32,7 +32,7 @@ const info = {
     description: '회원정보를\n수정하시겠습니까?',
     showResultMessage: false,
   },
-  'delete-profile': {
+  withdraw: {
     title: '회원 탈퇴',
     description: '회원 탈퇴 시,30일 이내에\n재가입이 불가능합니다.',
     showResultMessage: true,
@@ -47,8 +47,8 @@ function ConfirmDialog({ isOpen, type, setOpen, onConfirm, closeModal }: Confirm
   const submitAndNoticeResult = async () => {
     // api 연결 후에 아래와 비슷한 로직으로 변경될 예정
     // const res = await onConfirm()
-    // if ((res as any).ok) openModal({ group: 'notice', type: 'delete-profile' })
-    openModal({ group: 'notice', type: 'delete-profile' })
+    // if ((res as any).ok) openModal({ group: 'notice', type: 'completed-withdraw' })
+    openModal({ group: 'notice', type: 'completed-withdraw' })
   }
 
   return (

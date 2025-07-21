@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/useModalStore'
+import { useModalStore } from '@/store/use-modal-store'
 
 function WithDrawSubmitButton() {
   const { openModal } = useModalStore.getState()
@@ -11,7 +11,7 @@ function WithDrawSubmitButton() {
   const showConfirmModal = () => {
     openModal({
       group: 'confirm',
-      type: 'delete-profile',
+      type: 'withdraw',
       onConfirm: onSubmit,
     })
   }

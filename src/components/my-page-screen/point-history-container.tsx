@@ -9,7 +9,7 @@ type PointHistoryItem = {
   transactionAt: string // ISO 문자열
 }
 
-const list = [
+const mockList = [
   {
     pointTransactionId: '1L',
     description: '텀블러 사용 챌린지 완료',
@@ -47,7 +47,7 @@ function PointHistoryContainer() {
         <h2 className="text-lg font-bold">포인트 내역</h2>
         <PointsFilterButton />
       </div>
-      <PointsHistoryList list={list} />
+      <PointsHistoryList list={mockList} />
     </section>
   )
 }

@@ -1,6 +1,6 @@
-import ConfirmDialog from '@/components/common/modal/ConfirmDialog'
-import ResultNoticeDialog from '@/components/common/modal/ResultNoticeDialog'
-import { useModalStore } from '@/store/useModalStore'
+import ConfirmDialog from '@/components/common/modal/confirm-dialog'
+import ResultNoticeDialog from '@/components/common/modal/result-notice-dialog'
+import { useModalStore } from '@/store/use-modal-store'
 
 function ModalController() {
   const { isOpen, modal, setOpen, closeModal } = useModalStore()

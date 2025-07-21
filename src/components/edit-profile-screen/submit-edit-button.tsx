@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react'
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/useModalStore'
+import { useModalStore } from '@/store/use-modal-store'
 
 function SubmitEditButton() {
   const { openModal } = useModalStore()
