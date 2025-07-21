@@ -20,14 +20,14 @@ const ProductDetail = () => {
         <div>
           <ProductDetailHeader
             imgUrl={product?.thumbnailUrl}
-            name={product?.pointProductName}
-            price={product?.pointPrice}
+            name={product?.name}
+            price={product?.price}
           />
         </div>
         <div>
           <ProductDetailDescription
             description={product?.description}
-            price={product?.pointPrice}
+            price={product?.price}
             remainingQuantity={product?.stockQuantity}
           />
         </div>
