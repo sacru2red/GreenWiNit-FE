@@ -8,8 +8,6 @@ const ProductDetail = () => {
 
   const { data: product, isLoading } = useProduct(params.pointProductId)
 
-  console.log(product === undefined ? '개발 오류' : product)
-
   if (isLoading) {
     return <div>로딩 중...</div>
   }

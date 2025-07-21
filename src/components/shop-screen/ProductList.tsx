@@ -14,8 +14,6 @@ const ProductList = () => {
     return <div>로딩 중...</div>
   }
 
-  console.log(products)
-
   return (
     <div className="px-[17px] py-[26px]">
       <div className="grid grid-cols-2">
