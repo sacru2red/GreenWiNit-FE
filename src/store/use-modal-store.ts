@@ -6,7 +6,7 @@ type ConfirmModalType =
   | 'edit-profile' // 회원정보를 수정하시겠습니까?
   | 'withdraw' // 회원 탈퇴 시, 30일 이내에 재가입이 불가능합니다.
 
-type NoticeModalType =
+export type NoticeModalType =
   | 'completed-certify-challenge' // 챌린지 인증 완료
   | 'completed-join-challenge' // 챌린지 참여 완료
   | 'completed-select-team' // 팀 선택 완료

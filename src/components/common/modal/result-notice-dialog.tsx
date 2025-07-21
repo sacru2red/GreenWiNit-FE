@@ -6,15 +6,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import type { NoticeModalType } from '@/store/use-modal-store'
 
 interface ResultNoticeDialogProps {
   isOpen: boolean
-  type:
-    | 'completed-certify-challenge'
-    | 'completed-join-challenge'
-    | 'completed-select-team'
-    | 'completed-regist-team'
-    | 'completed-withdraw'
+  type: NoticeModalType
   setOpen: (isOpen: boolean) => void
   onClick: () => void
 }
@@ -41,7 +37,10 @@ const info = {
     title: null,
     description: '회원 탈퇴가\n정상적으로 완료되었습니다.',
   },
-}
+} satisfies Record<
+  NoticeModalType,
+  { title: string | null; description: string; paragraph?: string }
+>
 
 function ResultNoticeDialog({ isOpen, type, setOpen, onClick }: ResultNoticeDialogProps) {
   if (!(type in info)) return null
