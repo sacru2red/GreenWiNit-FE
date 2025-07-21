@@ -20,9 +20,10 @@ const ProductList = () => {
     <div className="px-[17px] py-[26px]">
       <div className="grid grid-cols-2">
         {products?.map((product) => {
+          console.log(product?.id)
           return (
             <div
-              key={`${product?.id}`}
+              key={product?.id}
               className="cursor-pointer rounded-[25px] p-[16px] text-left"
               onClick={() => handleProductClick(product?.id)}
             >

@@ -64,7 +64,6 @@ const ProductDetailLabel = ({
               <div className="absolute top-full right-0 z-20 mt-1 overflow-y-auto bg-gray-500 font-bold text-black">
                 {quantityOptions.map((quantity) => (
                   <button
-                    key={quantity}
                     onClick={() => handleQuantitySelect(quantity)}
                     className={cn(
                       'transition-color w-full px-3 py-2 text-left text-sm hover:bg-gray-100',
