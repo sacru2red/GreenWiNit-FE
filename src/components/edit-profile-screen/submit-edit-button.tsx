@@ -1,9 +1,9 @@
 import { MouseEvent } from 'react'
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/use-modal-store'
+import useOpenModal from '@/hooks/useOpenModal'
 
 function SubmitEditButton() {
-  const { openModal } = useModalStore()
+  const openModal = useOpenModal()
 
   const onSubmit = () => {
     // 회원 정보 수정 API 연결 로직 추가 예정

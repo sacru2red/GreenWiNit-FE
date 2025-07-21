@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/use-modal-store'
+import useOpenModal from '@/hooks/useOpenModal'
 
 interface ConfirmDialogProps {
   isOpen: boolean
@@ -40,7 +40,7 @@ const info = {
 }
 
 function ConfirmDialog({ isOpen, type, setOpen, onConfirm, closeModal }: ConfirmDialogProps) {
-  const { openModal } = useModalStore.getState()
+  const openModal = useOpenModal()
 
   const { title, description, showResultMessage } = info[type]
 

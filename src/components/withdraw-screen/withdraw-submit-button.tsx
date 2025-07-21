@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
-import { useModalStore } from '@/store/use-modal-store'
+import useOpenModal from '@/hooks/useOpenModal'
 
 function WithDrawSubmitButton() {
-  const { openModal } = useModalStore.getState()
+  const openModal = useOpenModal()
 
   const onSubmit = () => {
     // 회원탈퇴 API 연결 로직 추가 예정
