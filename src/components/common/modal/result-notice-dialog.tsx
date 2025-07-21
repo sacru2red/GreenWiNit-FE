@@ -9,30 +9,35 @@ import { Button } from '@/components/ui/button'
 
 interface ResultNoticeDialogProps {
   isOpen: boolean
-  type: 'certify-challenge' | 'join-challenge' | 'select-team' | 'regist-team' | 'delete-profile'
+  type:
+    | 'completed-certify-challenge'
+    | 'completed-join-challenge'
+    | 'completed-select-team'
+    | 'completed-regist-team'
+    | 'completed-withdraw'
   setOpen: (isOpen: boolean) => void
   onClick: () => void
 }
 
 const info = {
-  'certify-challenge': {
+  'completed-certify-challenge': {
     title: '챌린지 인증 완료',
     description: `당신의 실천이\n 더 나은 지구를 만듭니다:)`,
     paragraph: '관리자 확인 후, 포인트가 적립됩니다.',
   },
-  'join-challenge': {
+  'completed-join-challenge': {
     title: '챌린지 참여 완료',
     description: '[홈] -> [참여 챌린지]에서\n챌린지를 인증해보세요!',
   },
-  'select-team': {
+  'completed-select-team': {
     title: '팀 선택 완료',
     description: '[홈] -> [나의 챌린지]에서 확인하세요!\n오픈채팅방을 통해 이야기를 나눠요.',
   },
-  'regist-team': {
+  'completed-regist-team': {
     title: '팀 등록 완료',
     description: '[홈] -> [나의 챌린지]에서 확인하세요!\n오픈채팅방을 통해 이야기를 나눠요.',
   },
-  'delete-profile': {
+  'completed-withdraw': {
     title: null,
     description: '회원 탈퇴가\n정상적으로 완료되었습니다.',
   },
