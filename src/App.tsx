@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Login from './pages/app/Login'
 import Main from './pages/app/Main'
 import MyPage from './pages/app/MyPage'
@@ -35,56 +35,58 @@ function App() {
 
   return (
     <ErrorBoundary fallback={<InternalServerError />}>
-      <QueryClientProvider client={queryClient}>
-        <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
-          <div
-            className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
-          >
-            {showSplashScreen ? (
-              <SplashScreen />
-            ) : (
-              <Routes>
-                <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
-                <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
-                <Route
-                  path="/challenges/:challengeId/submit/individual"
-                  element={<ChallengeSubmitIndividual />}
-                />
-                <Route
-                  path="/challenges/:challengeId/submit/teams/:teamId"
-                  element={<ChallengeSubmitTeam />}
-                />
-                <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
-                <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
-                <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
-                <Route
-                  path="/challenges/:challengeId/teams/:teamId/joined"
-                  element={<ManageTeam />}
-                />
-                <Route
-                  path="/challenges/:challengeId/teams/:teamId/modify"
-                  element={<TeamModify />}
-                />
-                <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/my" element={<MyPage />} />
-                <Route path="/" element={<Main />} />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="/500" element={<InternalServerError />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            )}
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <div className="bg-mountain_meadow-0 outline-mountain_meadow relative aspect-[375/812] h-full justify-self-center outline outline-1">
+            <div
+              className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
+            >
+              {showSplashScreen ? (
+                <SplashScreen />
+              ) : (
+                <Routes>
+                  <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
+                  <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
+                  <Route
+                    path="/challenges/:challengeId/submit/individual"
+                    element={<ChallengeSubmitIndividual />}
+                  />
+                  <Route
+                    path="/challenges/:challengeId/submit/teams/:teamId"
+                    element={<ChallengeSubmitTeam />}
+                  />
+                  <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
+                  <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
+                  <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
+                  <Route
+                    path="/challenges/:challengeId/teams/:teamId/joined"
+                    element={<ManageTeam />}
+                  />
+                  <Route
+                    path="/challenges/:challengeId/teams/:teamId/modify"
+                    element={<TeamModify />}
+                  />
+                  <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/my" element={<MyPage />} />
+                  <Route path="/" element={<Main />} />
+                  <Route path="/404" element={<NotFound />} />
+                  <Route path="/500" element={<InternalServerError />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              )}
+            </div>
           </div>
-        </div>
-        {/* <Snackbar
-            open={opened}
-            autoHideDuration={3000}
-            onClose={handleClick}
-            message={message}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          /> */}
-        <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
-      </QueryClientProvider>
+          {/* <Snackbar
+              open={opened}
+              autoHideDuration={3000}
+              onClose={handleClick}
+              message={message}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            /> */}
+          <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
+        </QueryClientProvider>
+      </BrowserRouter>
     </ErrorBoundary>
   )
 }
