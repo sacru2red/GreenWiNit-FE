@@ -20,6 +20,7 @@ import ManageTeam from './pages/app/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/app/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/app/challenges/[id]/submit/team/[teamId]'
 import { Toaster } from './components/ui/sonner'
+import EnrollAddress from './components/shop-screen/EnrollAddress'
 
 const queryClient = new QueryClient()
 
@@ -69,6 +70,10 @@ function App() {
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/point-shop" element={<PointShop />} />
                 <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
+                <Route
+                  path="/point-shop/product/:pointProductId/enrollAddress"
+                  element={<EnrollAddress />}
+                />
                 <Route path="*" element={<Main />} />
               </Routes>
             )}
