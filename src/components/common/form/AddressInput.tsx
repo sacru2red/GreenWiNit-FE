@@ -3,7 +3,7 @@ import DaumPostcodeEmbed from 'react-daum-postcode'
 import Input from './Input'
 import { Dialog, DialogContent } from '../../ui/dialog'
 
-type AddressState = null | {
+export type AddressState = null | {
   roadAddress: string
   roadnameCode: string
   zonecode: string

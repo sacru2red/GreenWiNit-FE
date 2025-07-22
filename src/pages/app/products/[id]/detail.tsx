@@ -1,3 +1,4 @@
+import DeliveryAddress from '@/components/shop-screen/DeliveryAddress'
 import ProductDetailDescription from '@/components/shop-screen/ProductDetailDescription'
 import ProductDetailFooter from '@/components/shop-screen/ProductDetailFooter'
 import ProductDetailHeader from '@/components/shop-screen/ProductDetailHeader'
@@ -33,7 +34,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="scrollbar-hide flex flex-col overflow-y-scroll">
         <div>
           <ProductDetailHeader
             imgUrl={product?.thumbnailUrl}
@@ -51,6 +52,9 @@ const ProductDetail = () => {
             availablePoint={availablePoint}
             isLoading={isLoading}
           />
+        </div>
+        <div>
+          <DeliveryAddress />
         </div>
         <div>
           <ProductDetailFooter
