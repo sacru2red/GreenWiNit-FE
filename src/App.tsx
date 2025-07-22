@@ -77,13 +77,6 @@ function App() {
               )}
             </div>
           </div>
-          {/* <Snackbar
-              open={opened}
-              autoHideDuration={3000}
-              onClose={handleClick}
-              message={message}
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            /> */}
           <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
         </QueryClientProvider>
       </BrowserRouter>
