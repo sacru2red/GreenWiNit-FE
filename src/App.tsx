@@ -23,7 +23,6 @@ import EditProfile from '@/pages/app/my-page/edit-profile'
 import CertifiedChallenges from '@/pages/app/my-page/certifed-challenges'
 import CertifiedChallengesDetail from '@/pages/app/my-page/certified-challenges-detail'
 import MyPage from '@/pages/app/my-page/my-page'
-import ModalController from '@/components/common/modal/modal-controller'
 
 const queryClient = new QueryClient()
 
@@ -91,7 +90,6 @@ function App() {
             message={message}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           /> */}
-        <ModalController />
         <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
       </QueryClientProvider>
     </Fragment>
