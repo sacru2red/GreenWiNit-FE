@@ -79,7 +79,12 @@ function NicknameEditForm() {
         </form>
       </section>
       {showConfirmModal && (
-        <ConfirmDialog description="회원정보를 수정하시겠습니까?" onConfirm={updateNickname} />
+        <ConfirmDialog
+          isOpen={showConfirmModal}
+          setIsOpen={setShowConfirmModal}
+          description={`회원정보를\n 수정하시겠습니까?`}
+          onConfirm={updateNickname}
+        />
       )}
     </>
   )

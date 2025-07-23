@@ -5,19 +5,25 @@ import {
   DialogFooter,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 type ConfirmDialogProps = {
+  isOpen: boolean
   title?: string
   description: string
   paragraph?: string
+  setIsOpen: (open: boolean) => void
   onConfirm: () => void
 }
 
-function ConfirmDialog({ title, description, paragraph, onConfirm }: ConfirmDialogProps) {
-  const [isOpen, setIsOpen] = useState(true)
-
+function ConfirmDialog({
+  isOpen,
+  title,
+  description,
+  paragraph,
+  setIsOpen,
+  onConfirm,
+}: ConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="h-[200px] w-[228px] gap-0">

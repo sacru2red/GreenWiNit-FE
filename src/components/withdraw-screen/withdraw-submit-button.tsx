@@ -26,13 +26,17 @@ function WithDrawSubmitButton() {
       </div>
       {showConfirmModal && (
         <ConfirmDialog
-          description="회원 탈퇴 시, 30일 이내에 재가입이 불가능합니다."
+          isOpen={showConfirmModal}
+          setIsOpen={setShowConfirmModal}
+          description={`회원 탈퇴 시, 30일 이내에\n재가입이 불가능합니다.`}
           onConfirm={onConfirm}
         />
       )}
       {showNoticeModal && (
         <ResultNoticeDialog
-          description="회원 탈퇴가 정상적으로 완료되었습니다."
+          isOpen={showNoticeModal}
+          setIsOpen={setShowNoticeModal}
+          description={`회원 탈퇴가\n정상적으로 완료되었습니다.`}
           onConfirm={() => setShowNoticeModal(false)}
         />
       )}

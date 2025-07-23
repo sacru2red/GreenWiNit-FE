@@ -5,19 +5,25 @@ import {
   DialogFooter,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 interface NoticeDialogProps {
+  isOpen: boolean
   title?: string
   description: string
   paragraph?: string
+  setIsOpen: (open: boolean) => void
   onConfirm: () => void
 }
 
-function NoticeDialog({ title, description, paragraph, onConfirm }: NoticeDialogProps) {
-  const [isOpen, setIsOpen] = useState(true)
-
+function NoticeDialog({
+  isOpen,
+  title,
+  description,
+  paragraph,
+  setIsOpen,
+  onConfirm,
+}: NoticeDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="h-[200px] w-[228px] gap-0">
