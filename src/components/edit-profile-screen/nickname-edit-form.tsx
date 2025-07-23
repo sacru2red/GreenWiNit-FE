@@ -50,6 +50,7 @@ function NicknameEditForm() {
           </label>
           <div className="mt-2 flex w-full overflow-hidden rounded-md border border-gray-300">
             <input
+              id="new-nickname"
               type="text"
               placeholder="아이디 입력(6~20자)"
               // 중복체크 안되었을 떄에는 keydown 막고, 체크 되었으면 keydown 허용해서 enter 치면 모달 띄우게 할 예정
