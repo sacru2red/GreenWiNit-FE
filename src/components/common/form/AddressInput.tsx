@@ -58,13 +58,14 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
           placeholder="상세 위치 정보를 입력해주세요."
           value={innerValue?.detailAddress}
           onChange={(e) => {
+            const newDetailAddress = e.target.value
             // 도로명 주소를 선택해야 상세 정보 입력가능
             if (innerValue == null) {
               e.preventDefault()
               e.stopPropagation()
               return
             }
-
+            /*
             setInnerValue((prev) => {
               if (prev == null) {
                 return null
@@ -76,6 +77,24 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
               onChange(nextAddressState)
               return nextAddressState
             })
+            */
+            setInnerValue((prev) => {
+              if (prev === null) return null
+              return {
+                ...prev,
+                detailAddress: e.target.value,
+              }
+            })
+
+            setTimeout(() => {
+              if (innerValue) {
+                const nextAddressState: AddressState = {
+                  ...innerValue,
+                  detailAddress: newDetailAddress,
+                }
+                onChange(nextAddressState)
+              }
+            }, 0)
           }}
           ref={detailAddressRef}
         />
