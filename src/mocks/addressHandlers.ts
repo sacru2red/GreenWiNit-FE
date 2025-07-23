@@ -13,7 +13,18 @@ export const addressHandlers = [
 
     const updateResult = addressMocking.getState().updateAddress(body)
 
-    const addressId = updateResult.result?.id ?? 1
+    const addressId = updateResult.result?.id
+
+    if (!addressId) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '수정하고자 하는 배송지 id가 없습니다',
+          result: null,
+        },
+        { status: 404 },
+      )
+    }
 
     const clientResult = updateResult.result
 
