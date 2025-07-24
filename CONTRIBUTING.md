@@ -56,34 +56,4 @@ A2. vscode로 커밋하는 경우 알럿팝업에서 "Open Git Log"나 "Show Com
 
 ### 코딩 규칙, 가이드라인, 개발 컨벤션
 
-#### API 호출 컨벤션
-
-- **fetch 호출은 `/src/api` 디렉토리 내에서만 허용됩니다.**
-- 컴포넌트, 훅, 페이지 등에서는 직접 fetch를 호출하지 말고 API 모듈을 사용하세요.
-- 새로운 API 엔드포인트가 필요한 경우 해당하는 API 파일에 함수를 추가하세요.
-
-**예시:**
-
-```typescript
-// ❌ 잘못된 방법 - 컴포넌트에서 직접 fetch 호출
-const handleSubmit = () => {
-  fetch('/api/v1/challenges/submit', {
-    method: 'POST',
-    body: formData,
-  })
-}
-
-// ✅ 올바른 방법 - API 모듈 사용
-import { challengesApi } from '@/api/challenges'
-
-const handleSubmit = () => {
-  challengesApi.submitChallenge(formData)
-}
-```
-
-**API 파일 구조:**
-
-- `/src/api/challenges.ts` - 챌린지 관련 API
-- `/src/api/users.ts` - 사용자 관련 API
-
-- 현재 특별한 규칙은 없습니다. 의견이 있는 경우에 이슈를 제기해주세요.
+CODING_GUIDELINES.md를 참조해주세요.

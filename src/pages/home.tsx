@@ -1,6 +1,6 @@
 import AppTitle from '@/components/common/AppTitle'
 import BottomNavigation from '@/components/common/BottomNav'
-import UserCard from '@/components/home-screen/UserCard'
+import UserCard from '@/components/common/UserCard'
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
@@ -9,7 +9,7 @@ import PageContainer from '@/components/common/PageContainer'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/WarnNotLoggedIn'
 
-function Main() {
+function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
@@ -45,4 +45,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Home
