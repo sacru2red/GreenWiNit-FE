@@ -26,6 +26,9 @@ import CertifiedChallenges from '@/pages/my-page/certifed-challenges'
 import CertifiedChallengesDetail from '@/pages/my-page/certified-challenges-detail'
 import NotFound from '@/pages/404'
 import './App.css'
+import PointShop from './pages/app/PointShop'
+import ProductDetail from './pages/app/products/[id]/detail'
+import EnrollAddress from './components/shop-screen/EnrollAddress'
 
 const queryClient = new QueryClient()
 
@@ -83,6 +86,12 @@ function App() {
                     path="/my-page/challenges/certify/:challengeId"
                     element={<CertifiedChallengesDetail />}
                   />
+                  <Route path="/point-shop" element={<PointShop />} />
+                <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
+                <Route
+                  path="/point-shop/product/:pointProductId/enrollAddress"
+                  element={<EnrollAddress />}
+                />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/500" element={<InternalServerError />} />
                   <Route path="*" element={<NotFound />} />
