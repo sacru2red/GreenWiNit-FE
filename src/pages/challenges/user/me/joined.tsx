@@ -2,7 +2,7 @@ import BottomNavigation from '@/components/common/BottomNav'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
-import FilteredChallengesDisplay from '@/components/FilteredChallengesDisplay'
+import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
 
 const JoinedChallenges = () => {
   return (

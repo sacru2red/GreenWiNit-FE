@@ -9,7 +9,7 @@ import PageContainer from '@/components/common/PageContainer'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/WarnNotLoggedIn'
 
-function Main() {
+function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
@@ -45,4 +45,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Home

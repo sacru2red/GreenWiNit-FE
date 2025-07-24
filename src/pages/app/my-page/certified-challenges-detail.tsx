@@ -33,7 +33,7 @@ function CertifiedChallengesDetail() {
         </Row>
         <Row>
           <h3>간단한 후기를 남겨주세요.</h3>
-          <div className="min-h-[76px] w-full rounded-[10px] border border-[#c0c0c0] bg-white p-4 text-start">
+          <div className="min-h-20 w-full rounded-[10px] border border-[#c0c0c0] bg-white p-4 text-start">
             <span className="text-secondary-foreground text-sm">{responseDataMock.review}</span>
           </div>
         </Row>

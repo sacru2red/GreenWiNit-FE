@@ -15,9 +15,9 @@ function WithDrawReasonForm() {
     <section className="flex flex-col gap-4 px-4 py-6">
       <h3 className="self-start font-bold">탈퇴 이유를 선택해주세요</h3>
       <ul className="flex flex-col gap-5">
-        {reasons.map((el) => (
-          <li>
-            <label key={el.name} className="flex items-center gap-3">
+        {reasons.map((el, index) => (
+          <li key={index}>
+            <label className="flex items-center gap-3">
               <input
                 className="peer hidden"
                 type="radio"
@@ -35,7 +35,7 @@ function WithDrawReasonForm() {
             </label>
             {el.name === 'etc' && (
               <textarea
-                className="placeholder:text-lighter-gray mt-5 h-[100px] w-full resize-none rounded-md border-1 border-[#DDDDDD] bg-[#f9f9f9] p-3 placeholder:text-sm focus:outline-none"
+                className="placeholder:text-lighter-gray mt-5 h-24 w-full resize-none rounded-md border-1 border-[#DDDDDD] bg-[#f9f9f9] p-3 placeholder:text-sm focus:outline-none"
                 placeholder="기타 이유를 입력해주세요"
               />
             )}

@@ -37,16 +37,16 @@ function MyPage() {
           return (
             <Card key={i} className="h-fit rounded-2xl bg-white p-0 shadow-lg">
               <CardContent className="flex flex-col">
-                <div className="flex w-full flex-row items-center justify-center p-[16px] font-bold">
+                <div className="flex w-full flex-row items-center justify-center p-4 font-bold">
                   {cardItem.title}
                 </div>
                 {cardItem.items.map((item, j) => {
                   return (
                     <CardAction
                       key={j}
-                      className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-[16px]"
+                      className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-4"
                     >
-                      <span className="text-title-smaller text-[16px]">{item.title}</span>
+                      <span className="text-title-smaller text-4">{item.title}</span>
                       <svg
                         width="20"
                         height="20"

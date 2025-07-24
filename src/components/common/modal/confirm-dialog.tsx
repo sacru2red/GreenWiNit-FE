@@ -26,7 +26,7 @@ function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="h-[200px] w-[228px] gap-0">
+      <DialogContent className="gap-6 p-10">
         {title && (
           <DialogTitle className="flex items-center justify-center text-center text-lg font-semibold">
             {title}
