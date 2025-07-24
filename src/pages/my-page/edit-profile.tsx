@@ -1,6 +1,6 @@
-import MyPageLayout from '@/pages/app/my-page/my-page-layout'
 import ProfileUploader from '@/components/common/ProfileUploader'
 import NicknameEditForm from '@/components/edit-profile-screen/nickname-edit-form'
+import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function EditProfile() {
   return (

@@ -15,17 +15,17 @@ import TeamEnroll from './pages/challenges/[id]/teams/enroll'
 import ManageTeam from './pages/challenges/[id]/teams/[id]/joined'
 import TeamModify from './pages/challenges/[id]/teams/[id]/modify'
 import ChallengeSubmitTeam from './pages/challenges/[id]/submit/team/[teamId]'
-import MyPoints from '@/pages/app/my-page/my-points'
-import WithDraw from '@/pages/app/my-page/withdraw'
-import EditProfile from '@/pages/app/my-page/edit-profile'
-import CertifiedChallenges from '@/pages/app/my-page/certifed-challenges'
-import CertifiedChallengesDetail from '@/pages/app/my-page/certified-challenges-detail'
-import Login from '@/pages/Login'
-import MyPage from '@/pages/app/my-page'
-import NotFound from './pages/404'
 import InternalServerError from './pages/500'
+import Home from '@/pages/home'
+import Login from '@/pages/login'
+import MyPage from '@/pages/my-page'
+import MyPoints from '@/pages/my-page/my-points'
+import WithDraw from '@/pages/my-page/withdraw'
+import EditProfile from '@/pages/my-page/edit-profile'
+import CertifiedChallenges from '@/pages/my-page/certifed-challenges'
+import CertifiedChallengesDetail from '@/pages/my-page/certified-challenges-detail'
+import NotFound from '@/pages/404'
 import './App.css'
-import Home from '@/pages/Home'
 
 const queryClient = new QueryClient()
 
@@ -50,6 +50,8 @@ function App() {
                 <SplashScreen />
               ) : (
                 <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
                   <Route path="/challenges/user/me/joined" element={<JoinedChallenges />} />
                   <Route path="/challenges/:challengeId/detail" element={<ChallengeDetail />} />
                   <Route
@@ -72,7 +74,6 @@ function App() {
                     element={<TeamModify />}
                   />
                   <Route path="/challenges/:challengeId/teams/:teamId" element={<TeamDetail />} />
-                  <Route path="/login" element={<Login />} />
                   <Route path="/my-page" element={<MyPage />} />
                   <Route path="/my-page/my-points" element={<MyPoints />} />
                   <Route path="/my-page/withdraw" element={<WithDraw />} />
@@ -82,7 +83,6 @@ function App() {
                     path="/my-page/challenges/certify/:challengeId"
                     element={<CertifiedChallengesDetail />}
                   />
-                  <Route path="/" element={<Home />} />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/500" element={<InternalServerError />} />
                   <Route path="*" element={<NotFound />} />

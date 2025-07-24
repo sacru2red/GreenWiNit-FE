@@ -1,5 +1,5 @@
 import Row from '@/components/common/form/Row'
-import MyPageLayout from '@/pages/app/my-page/my-page-layout'
+import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallengesDetail() {
   const responseDataMock = {

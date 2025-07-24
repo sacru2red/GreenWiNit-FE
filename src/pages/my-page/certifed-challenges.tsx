@@ -1,5 +1,5 @@
-import MyPageLayout from '@/pages/app/my-page/my-page-layout'
 import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
+import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallenges() {
   return (
