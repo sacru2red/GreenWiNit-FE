@@ -86,11 +86,10 @@ interface ProductMockingState {
 export const productMocking = create<ProductMockingState>()(
   devtools(
     persist(
-      (set, get) => ({
+      (_set, get) => ({
         products: mockProducts,
         getProducts: () => {
           const { products } = get()
-          set((state) => state) // eslint 오류 해결
           return {
             success: true,
             message: '상품 조회 성공',
