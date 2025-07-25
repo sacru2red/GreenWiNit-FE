@@ -27,16 +27,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  /* @TODO check why use this color ? */
-  /* color: #646cff; */
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 html,
 body {
   margin: 0;
@@ -110,4 +100,15 @@ button {
   transform: translateY(var(--translate-y)) rotateX(var(--rotation)) scale(var(--scale));
   opacity: var(--opacity);
   transform-style: preserve-3d;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

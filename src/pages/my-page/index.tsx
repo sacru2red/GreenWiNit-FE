@@ -1,6 +1,6 @@
-import BottomNavigation from '@/components/common/BottomNav'
-import PageContainer from '@/components/common/PageContainer'
+import UserCard from '@/components/common/UserCard'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
+import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function MyPage() {
   const cardItems = [
@@ -30,25 +30,23 @@ function MyPage() {
   ]
 
   return (
-    <PageContainer>
-      <div className="flex h-[48px] w-full items-center justify-center bg-white py-8">
-        <span className="text-[24px] font-bold text-black">마이페이지</span>
-      </div>
-      <div className="felx flex-col overflow-y-auto pb-40">
+    <MyPageLayout title="마이페이지" navigationIsExist={true}>
+      <div className="flex flex-col gap-10 px-[13px] py-[33px]">
+        <UserCard />
         {cardItems.map((cardItem, i) => {
           return (
-            <Card key={i} className="mt-6 h-fit rounded-2xl bg-white p-0 shadow-lg">
+            <Card key={i} className="h-fit rounded-2xl bg-white p-0 shadow-lg">
               <CardContent className="flex flex-col">
-                <div className="flex w-full flex-row items-center justify-center p-[16px] font-bold">
+                <div className="flex w-full flex-row items-center justify-center p-4 font-bold">
                   {cardItem.title}
                 </div>
                 {cardItem.items.map((item, j) => {
                   return (
                     <CardAction
                       key={j}
-                      className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-[16px]"
+                      className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-4"
                     >
-                      <span className="text-title-smaller text-[16px]">{item.title}</span>
+                      <span className="text-title-smaller text-4">{item.title}</span>
                       <svg
                         width="20"
                         height="20"
@@ -67,8 +65,7 @@ function MyPage() {
           )
         })}
       </div>
-      <BottomNavigation />
-    </PageContainer>
+    </MyPageLayout>
   )
 }
 

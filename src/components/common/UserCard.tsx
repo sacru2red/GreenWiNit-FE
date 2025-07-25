@@ -62,7 +62,7 @@ const UserCard = () => {
           <span className="text-mountain_meadow font-bold">
             {userStatus == null ? '?' : `${userStatus?.challengeCount}회`}
           </span>
-          <span>참여 챌린지</span>
+          <span>인증 챌린지</span>
         </div>
         <div className="flex flex-col items-center">
           <span className="text-mountain_meadow font-bold">
