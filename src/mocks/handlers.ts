@@ -1,6 +1,6 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
-import { UserStatus } from '@/api/users'
+import { GetMyInfoResponse } from '@/api/users'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 
@@ -49,15 +49,14 @@ export const handlers = [
     const foundUser = foundUserOrException
 
     return HttpResponse.json({
-      point: foundUser.point,
-      challengeCount: foundUser.challengeCount,
-      level: {
-        name: foundUser.level.name,
-        code: foundUser.level.code,
-        exp: foundUser.level.exp,
-        nextLevelExp: foundUser.level.nextLevelExp,
+      success: true,
+      message: '사용자 정보 조회에 성공했습니다.',
+      result: {
+        userTotalPoints: foundUser.point,
+        userChallengeCount: foundUser.challengeCount,
+        userLevel: foundUser.level.code,
       },
-    } satisfies UserStatus)
+    } satisfies GetMyInfoResponse)
   }),
 
   http.get('/api/v1/challenges', () => {
