@@ -4,31 +4,10 @@ import { useNavigate } from 'react-router-dom'
 function BottomNavigation() {
   const [value, setValue] = useState(0)
   const navigate = useNavigate()
-  // 이스터에그: 마이페이지 버튼 빠른 클릭 카운트용
-  const [myPageClickCount, setMyPageClickCount] = useState(0)
-  const [lastClickTime, setLastClickTime] = useState(0)
 
   const handleMyPageClick = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
-    if (import.meta.env.MODE === 'production') {
-      return
-    }
-
-    const now = Date.now()
-    // 1초 이내 연속 클릭
-    if (now - lastClickTime < 1000) {
-      const newCount = myPageClickCount + 1
-      setMyPageClickCount(newCount)
-      setLastClickTime(now)
-      if (newCount >= 3) {
-        localStorage.clear()
-        window.location.href = '/'
-      }
-    } else {
-      // 1초 이상이면 카운트 리셋
-      setMyPageClickCount(1)
-      setLastClickTime(now)
-    }
-  }, [myPageClickCount, lastClickTime])
+    navigate('/my-page')
+  }, [navigate])
 
   const handleItemClick = useCallback(
     (itemValue: number) => {
@@ -37,6 +16,12 @@ function BottomNavigation() {
       switch (itemValue) {
         case 0:
           navigate('/')
+          break
+        case 1:
+          navigate('/information-share')
+          break
+        case 2:
+          navigate('/point-shop')
           break
         default:
           break
