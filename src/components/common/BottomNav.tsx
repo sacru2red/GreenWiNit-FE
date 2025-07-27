@@ -12,6 +12,7 @@ function BottomNavigation() {
     if (import.meta.env.MODE === 'production') {
       return
     }
+
     const now = Date.now()
     // 1초 이내 연속 클릭
     if (now - lastClickTime < 1000) {
@@ -36,6 +37,9 @@ function BottomNavigation() {
       switch (itemValue) {
         case 0:
           navigate('/')
+          break
+        case 1:
+          navigate('/information-share')
           break
         case 2:
           navigate('/point-shop')
@@ -74,6 +78,7 @@ function BottomNavigation() {
     </nav>
   )
 }
+
 const NAV_ITEMS = [
   {
     icon: '/icons/home.svg',

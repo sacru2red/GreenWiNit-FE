@@ -13,11 +13,13 @@ function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
+
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {
       setIsWarnNotLoggedInDialogOpen(true)
       return
     }
+
     navigate('/challenges/user/me/joined')
   }
 
@@ -42,4 +44,5 @@ function Home() {
     </PageContainer>
   )
 }
+
 export default Home

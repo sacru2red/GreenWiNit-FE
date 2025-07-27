@@ -5,6 +5,7 @@ import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
 import { useUserStore } from '@/store/userStore'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
 function Login() {
   const navigate = useNavigate()
   const login = useUserStore((state) => state.login)
@@ -44,4 +45,5 @@ function Login() {
     </div>
   )
 }
+
 export default Login
