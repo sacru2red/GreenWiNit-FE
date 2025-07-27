@@ -19,13 +19,10 @@ export default defineConfig({
             if (id.includes('react-datepicker')) return 'vendor-react-datepicker'
             if (id.includes('date-fns')) return 'vendor-date-fns'
             if (id.includes('@tanstack/react-query')) return 'vendor-tanstack-react-query'
-            if (id.includes('react-router')) return 'vendor-react-router'
             if (id.includes('sonner')) return 'vendor-sonner'
             if (id.includes('react-hook-form')) return 'vendor-react-hook-form'
             if (id.includes('embla-carousel')) return 'vendor-embla-carousel'
             if (id.includes('dayjs')) return 'vendor-dayjs'
-            if (id.includes('react-dom')) return 'vendor-react-dom'
-            if (id.includes('react')) return 'vendor-react'
             return 'vendor'
           }
         },
