@@ -456,7 +456,46 @@ export const handlers = [
       statusText: 'OK',
     })
   }),
+  http.post('/api/images', async ({ request }) => {
+    const url = new URL(request.url)
+    const purpose = url.searchParams.get('purpose')
 
+    const validPurposes = {
+      challenge: 'https://dummyimage.com/600x400/ff4444/ffffff.png&text=Challenge',
+      'challenge-cert': 'https://dummyimage.com/600x400/44ff44/ffffff.png&text=Cert',
+      info: 'https://dummyimage.com/600x400/4444ff/ffffff.png&text=Info',
+      product: 'https://dummyimage.com/600x400/ffbb33/ffffff.png&text=Product',
+      profile: 'https://dummyimage.com/600x400/888888/ffffff.png&text=Profile',
+    }
+
+    const formData = await request.formData()
+    const file = formData.get('file')
+
+    if (!file || !(file instanceof File) || !purpose || !(purpose in validPurposes)) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '유효하지 않은 요청입니다.',
+        },
+        {
+          status: 500,
+          statusText: 'Internal Server Error',
+        },
+      )
+    }
+
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '이미지 업로드에 성공했습니다.',
+        result: validPurposes[purpose as keyof typeof validPurposes],
+      },
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
+  }),
   http.put('/api/v1/teams/:teamId', async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
