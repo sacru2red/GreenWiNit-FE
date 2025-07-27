@@ -29,6 +29,8 @@ import './App.css'
 import PointShop from './pages/app/PointShop'
 import ProductDetail from './pages/app/products/[id]/detail'
 import EnrollAddress from './components/shop-screen/EnrollAddress'
+import InformationShare from './pages/app/InformationShare'
+import InformationDetail from './pages/app/informations/[id]/detail'
 
 const queryClient = new QueryClient()
 
@@ -86,12 +88,14 @@ function App() {
                     path="/my-page/challenges/certify/:challengeId"
                     element={<CertifiedChallengesDetail />}
                   />
+                  <Route path="/information-share" element={<InformationShare />} />
+                  <Route path="/information-share/:informationId" element={<InformationDetail />} />
                   <Route path="/point-shop" element={<PointShop />} />
-                <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
-                <Route
-                  path="/point-shop/product/:pointProductId/enrollAddress"
-                  element={<EnrollAddress />}
-                />
+                  <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
+                  <Route
+                    path="/point-shop/product/:pointProductId/enrollAddress"
+                    element={<EnrollAddress />}
+                  />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/500" element={<InternalServerError />} />
                   <Route path="*" element={<NotFound />} />
