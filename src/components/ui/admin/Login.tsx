@@ -75,7 +75,7 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" variant="admin">
+            <Button type="submit" variant="default">
               로그인
             </Button>
           </form>
