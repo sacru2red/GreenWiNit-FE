@@ -1,4 +1,4 @@
-import { FilterType } from '@/pages/my-page/my-points'
+import { FilterType } from '@/components/my-page-screen/point-history-container'
 import { User } from '@/store/userStore'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 

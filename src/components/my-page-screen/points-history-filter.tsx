@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { FilterType } from '@/pages/my-page/my-points'
+import { FilterType } from '@/components/my-page-screen/point-history-container'
 
 type FilterElement = '전체' | '적립내역' | '교환내역'
 

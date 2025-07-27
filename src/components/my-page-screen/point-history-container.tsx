@@ -1,7 +1,7 @@
 import PointsFilterButton from '@/components/my-page-screen/points-filter-button'
 import PointsHistoryList from '@/components/my-page-screen/points-history-list'
-import { FilterType } from '@/pages/my-page/my-points'
-import { Dispatch, SetStateAction } from 'react'
+import { useUserPointHistory } from '@/hooks/useUserPointHistory'
+import { useState } from 'react'
 
 export type PointHistoryItem = {
   pointTransactionId: string
@@ -10,12 +10,15 @@ export type PointHistoryItem = {
   status: 'EARN' | 'SPEND'
   transactionAt: string // ISO 문자열
 }
-interface PointHistoryContainerProps {
-  list: PointHistoryItem[]
-  setType: Dispatch<SetStateAction<FilterType>>
-}
 
-function PointHistoryContainer({ list, setType }: PointHistoryContainerProps) {
+export type FilterType = 'all' | 'earn' | 'spend'
+
+function PointHistoryContainer() {
+  const [type, setType] = useState<FilterType>('all')
+  const { data: getPointHistoryReponse } = useUserPointHistory(type)
+
+  const list = getPointHistoryReponse?.result.content ?? []
+
   return (
     <section className="flex flex-col gap-4 p-4">
       <div className="flex justify-between">

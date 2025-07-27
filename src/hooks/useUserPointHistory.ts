@@ -1,5 +1,5 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
-import { FilterType } from '@/pages/my-page/my-points'
+import { FilterType } from '@/components/my-page-screen/point-history-container'
 import { useUserStore } from '@/store/userStore'
 import { useQuery } from '@tanstack/react-query'
 

@@ -1,6 +1,6 @@
 import FilterButton from '@/components/common/button/filter-button'
+import { FilterType } from '@/components/my-page-screen/point-history-container'
 import PointsHistoryFilter from '@/components/my-page-screen/points-history-filter'
-import { FilterType } from '@/pages/my-page/my-points'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 
 function PointsFilterButton({ setType }: { setType: Dispatch<SetStateAction<FilterType>> }) {
