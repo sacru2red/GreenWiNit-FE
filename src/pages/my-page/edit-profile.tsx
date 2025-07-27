@@ -1,4 +1,4 @@
-import InputProfileImage from '@/components/common/InputProfileImage'
+import InputProfileImage from '@/components/common/input-profile-image'
 import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 
