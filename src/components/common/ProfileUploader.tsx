@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import LogoIcon from '@/components/common/LogoIcon'
 import { imageApi } from '@/api/image'
 import { cn } from '@/lib/utils'
 
-function ProfileUploader() {
-  const [profileImage, setProfileImage] = useState('')
+interface ProfileUploaderProps {
+  profileImage: string
+  setProfileImage: Dispatch<SetStateAction<string>>
+}
+function ProfileUploader({ profileImage, setProfileImage }: ProfileUploaderProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 
   const handleClick = () => {
