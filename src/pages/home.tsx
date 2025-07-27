@@ -8,27 +8,24 @@ import Challenges from '@/components/home-screen/Challenges'
 import PageContainer from '@/components/common/PageContainer'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/WarnNotLoggedIn'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
 
 function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
-
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {
       setIsWarnNotLoggedInDialogOpen(true)
       return
     }
-
     navigate('/challenges/user/me/joined')
   }
 
   return (
     <PageContainer>
-      <PageHeaderSection>
+      <div className="flex h-24 w-full items-center justify-center bg-white">
         <AppTitle className="!text-3xl" />
-      </PageHeaderSection>
+      </div>
       <div className="mt-5 flex flex-col p-4">
         <UserCard />
         <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
@@ -45,5 +42,4 @@ function Home() {
     </PageContainer>
   )
 }
-
 export default Home

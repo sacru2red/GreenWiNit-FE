@@ -29,7 +29,6 @@ import './App.css'
 import PointShop from './pages/app/PointShop'
 import ProductDetail from './pages/app/products/[id]/detail'
 import EnrollAddress from './components/shop-screen/EnrollAddress'
-import Signup from './pages/signup'
 import InformationShare from './pages/app/InformationShare'
 import InformationDetail from './pages/app/informations/[id]/detail'
 
@@ -99,7 +98,6 @@ function App() {
                   />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/500" element={<InternalServerError />} />
-                  <Route path="/signup" element={<Signup />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               )}
