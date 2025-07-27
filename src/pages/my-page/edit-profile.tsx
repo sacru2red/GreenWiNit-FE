@@ -1,5 +1,5 @@
 import InputProfileImage from '@/components/common/InputProfileImage'
-import NicknameEditForm from '@/components/edit-profile-screen/nickname-edit-form'
+import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function EditProfile() {
