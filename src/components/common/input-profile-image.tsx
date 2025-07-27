@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import LogoIcon from '@/components/common/LogoIcon'
+import { imagesApi } from '@/api/images'
+import { toast } from 'sonner'
 
 interface InputProfileImageProps {
   src: string | null
@@ -7,7 +9,6 @@ interface InputProfileImageProps {
 }
 
 // @TODO call setSrc when upload is done
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function InputProfileImage({ src: prevSource, setSrc }: InputProfileImageProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const source = prevSource ?? null
@@ -24,7 +25,14 @@ function InputProfileImage({ src: prevSource, setSrc }: InputProfileImageProps) 
     const file = e.target.files?.[0]
     if (file) {
       setInnerState({ uploading: true, src: URL.createObjectURL(file) })
-      // @TODO call uploading API
+      imagesApi.uploadImage('profile', file).then((res) => {
+        setInnerState({ uploading: false, src: res.result })
+        if (!res.success) {
+          toast.error(res.message)
+          return
+        }
+        setSrc(res.result)
+      })
     }
   }
 
@@ -37,7 +45,7 @@ function InputProfileImage({ src: prevSource, setSrc }: InputProfileImageProps) 
       >
         <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
           {innerState.src == null ? (
-            <LogoIcon size="large" className="cursor-pointer" onClick={handleClick} />
+            <LogoIcon size="large" className="cursor-pointer" />
           ) : (
             <img
               src={innerState.src}
