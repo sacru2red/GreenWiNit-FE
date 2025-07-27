@@ -1,11 +1,11 @@
 import Required from '@/components/common/Required'
-import { Fragment, useId } from 'react'
+import { ComponentProps, Fragment, useId } from 'react'
 
-interface InputNicknameProps {
+type InputNicknameProps = {
   mode?: 'new' | 'edit'
-}
+} & ComponentProps<'input'>
 
-const InputNickname = ({ mode = 'new' }: InputNicknameProps) => {
+const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
   const id = useId()
 
   const checkNicknameDuplication = () => {
@@ -38,6 +38,7 @@ const InputNickname = ({ mode = 'new' }: InputNicknameProps) => {
           //   if (e.key === 'Enter') e.preventDefault()
           // }}
           className="flex-1 bg-white py-3 text-sm focus:outline-none"
+          {...props}
         />
         <button
           type="button"
