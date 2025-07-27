@@ -40,6 +40,32 @@ export const handlers = [
       },
     })
   }),
+  http.post('/api/auth/withdraw', ({ cookies }) => {
+    const authToken = cookies['authToken']
+
+    if (!authToken) {
+      return HttpResponse.json(
+        {
+          error: 'UNAUTHORIZED',
+          message: '로그인이 필요합니다.',
+        },
+        {
+          status: 401,
+          statusText: 'Unauthorized',
+        },
+      )
+    }
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '회원 탈퇴가 완료되었습니다.',
+      },
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
+  }),
 
   http.get('/api/v1/users/me/status', ({ cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)

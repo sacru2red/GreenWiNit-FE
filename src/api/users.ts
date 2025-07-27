@@ -19,6 +19,12 @@ export const usersApi = {
     const response = await fetch(`/api/v1/users/me/points-history${query}`)
     return response.json() as Promise<GetMyPointsHistoryResponse>
   },
+  postWithdraw: async () => {
+    return await fetch(`/api/auth/withdraw`, {
+      method: 'POST',
+      credentials: 'include',
+    }).then((res) => res.json() as Promise<PostWithdrawReponse>)
+  },
   login: async ({ oAuthToken }: { oAuthToken: string }) => {
     return await fetch('/api/login', {
       method: 'POST',
@@ -74,6 +80,11 @@ export interface GetMyPointsHistoryResponse {
       },
     ]
   }
+}
+
+export interface PostWithdrawReponse {
+  success: boolean
+  message: string
 }
 
 const usersKey = createQueryKeys('users')
