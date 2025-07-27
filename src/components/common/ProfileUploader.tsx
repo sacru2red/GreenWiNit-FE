@@ -15,14 +15,20 @@ function ProfileUploader() {
   // }
 
   return (
-    <div className="relative w-fit">
-      <LogoIcon size="large" className="cursor-pointer" onClick={handleClick} />
+    <div className="flex w-full">
       <button
         type="button"
         onClick={handleClick}
-        className="absolute right-0 bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-md"
+        className="relative flex items-center justify-center rounded-full bg-white shadow-md"
       >
-        <img src="/icons/camera.svg" alt="사진 업로드" width={32} height={32} />
+        <LogoIcon size="large" className="cursor-pointer" onClick={handleClick} />
+        <img
+          src="/icons/camera.svg"
+          alt="사진 업로드"
+          width={24}
+          height={24}
+          className="absolute right-0 bottom-0"
+        />
       </button>
       <input
         type="file"
