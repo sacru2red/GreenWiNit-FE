@@ -1,5 +1,5 @@
-import { FilterType } from '@/components/my-page-screen/point-history-container'
 import { User } from '@/store/userStore'
+import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
@@ -11,7 +11,7 @@ export const usersApi = {
     const response = await fetch('/api/v1/users/me/points')
     return response.json() as Promise<GetMyPointsResponse>
   },
-  getUserPointHistory: async (status: FilterType = 'all') => {
+  getUserPointHistory: async (status: PointFilterType = 'all') => {
     const query = status && status !== 'all' ? `?status=${status}` : ''
     const response = await fetch(`/api/v1/users/me/points-history${query}`)
     return response.json() as Promise<GetMyPointsHistoryResponse>
@@ -67,15 +67,7 @@ export interface GetMyPointsHistoryResponse {
   result: {
     hasNext: boolean
     nextCursor: number
-    content: [
-      {
-        pointTransactionId: string
-        description: string
-        amount: number
-        status: 'EARN' | 'SPEND'
-        transactionAt: string
-      },
-    ]
+    content: PointHistory[]
   }
 }
 
@@ -95,7 +87,7 @@ const userPointsKey = createQueryKeys('me/points', {
 })
 
 const userPointHistoryKey = createQueryKeys('me/point-history', {
-  detail: (userId?: string, status?: FilterType) => [userId, status] as const,
+  detail: (userId?: string, status?: PointFilterType) => [userId, status] as const,
 })
 
 export const usersQueryKeys = mergeQueryKeys(
