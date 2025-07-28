@@ -35,7 +35,14 @@ function MyPage() {
         { title: '약관 및 정책', action: () => navigate('/terms') },
         { title: '회원정보수정', action: () => navigate('/my-page/edit-profile') },
         { title: '회원탈퇴', action: () => navigate('/my-page/withdraw') },
-        { title: '로그아웃', action: logout },
+        {
+          title: '로그아웃',
+          action: () => {
+            localStorage.clear()
+            logout()
+            window.location.href = '/'
+          },
+        },
       ],
     },
   ]
