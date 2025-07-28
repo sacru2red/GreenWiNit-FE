@@ -2,12 +2,9 @@ import { FilterType } from '@/components/my-page-screen/point-history-container'
 import { User } from '@/store/userStore'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
-// 로그인/회원가입 feature issue merge 되고, api 연결하면 사용할 코드 (Written 정준영, 07.26)
-// const apiUrl = import.meta.env['VITE_API_URL']
-
 export const usersApi = {
   getUserStatus: async () => {
-    const response = await fetch('/api/v1/users/me/status') // api 연결 후 -> `${import.meta.env.VITE_API_URL}/api/user/mypage`로 대체
+    const response = await fetch('/api/v1/users/me/status')
     return response.json() as Promise<GetMyInfoResponse>
   },
   getUserPoints: async () => {
