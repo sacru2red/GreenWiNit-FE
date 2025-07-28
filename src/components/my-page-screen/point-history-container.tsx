@@ -5,8 +5,8 @@ import { PointFilterType } from '@/types/points'
 import { useState } from 'react'
 
 function PointHistoryContainer() {
-  const [type, setType] = useState<PointFilterType>('all')
-  const { data: getPointHistoryReponse } = useUserPointHistory(type)
+  const [filterType, setFilterType] = useState<PointFilterType>('all')
+  const { data: getPointHistoryReponse } = useUserPointHistory(filterType)
 
   const list = getPointHistoryReponse?.result.content ?? []
 
@@ -14,7 +14,7 @@ function PointHistoryContainer() {
     <section className="flex flex-col gap-4 p-4">
       <div className="flex justify-between">
         <h2 className="text-lg font-bold">포인트 내역</h2>
-        <PointsFilterButton setType={setType} />
+        <PointsFilterButton setFilterType={setFilterType} />
       </div>
       <PointsHistoryList list={list} />
     </section>
