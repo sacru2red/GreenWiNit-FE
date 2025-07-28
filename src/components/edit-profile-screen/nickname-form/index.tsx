@@ -4,6 +4,10 @@ import { FormEvent, useState } from 'react'
 import CurrentNickname from './current-nickname'
 import InputNickname from './input-nickname'
 
+/**
+ * @TODO 이 컴포넌트 이름 변경하기
+ * why: form을 이 컴포넌트보다 위에서 사용해야 합니다. (+form 태그를 중첩하면 안됩니다.)
+ */
 function NicknameEditForm() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
