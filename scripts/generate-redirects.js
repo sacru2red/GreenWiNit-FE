@@ -16,7 +16,6 @@ if (isStaging) {
 // _redirects 파일이 존재하면 dist 폴더로 복사
 if (redirectsFile && fs.existsSync(redirectsFile)) {
   const distPath = path.join(process.cwd(), 'dist')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const targetPath = path.join(distPath, '_redirects')
 
   // dist 폴더가 존재하는지 확인
@@ -25,7 +24,7 @@ if (redirectsFile && fs.existsSync(redirectsFile)) {
   }
 
   // _redirects 파일 복사
-  // fs.copyFileSync(redirectsFile, targetPath)
+  fs.copyFileSync(redirectsFile, targetPath)
 } else {
   console.log(`${appEnv} 환경에서는 _redirects 파일을 생성하지 않습니다.`)
 }
