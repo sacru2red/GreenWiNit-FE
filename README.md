@@ -71,11 +71,3 @@ CONTRIBUTING.md 문서를 참고하세요.
 # Deploy
 
 `cloudflare pages`로 배포되고 있습니다.
-
-## 빌드 및 배포
-
-### 환경별 빌드
-
-- **개발 환경**: `npm run dev`
-- **스테이징 환경**: `npm run build:staging`
-- **운영 환경**: `npm run build:production`
