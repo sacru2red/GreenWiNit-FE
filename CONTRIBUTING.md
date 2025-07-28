@@ -15,12 +15,15 @@ winget install Volta.Volta
 ```bash
 # 1. 클론
 git clone https://github.com/GreenWiNit/GreenWiNit-FE.git
-
-# 2. 패키지 설치
 cd GreenWiNit-FE
+
+# 2. 환경변수값 설정
+# .env.example 참고하여 .env 파일 생성
+
+# 3. 패키지 설치
 npm install
 
-# 3. 개발 서버 실행
+# 4. 개발 서버 실행
 npm run dev
 ```
 
