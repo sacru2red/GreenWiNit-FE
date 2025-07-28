@@ -43,12 +43,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['scripts/**'],
-    languageOptions: {
-      globals: globals.node,
-    },
-  },
-  {
     files: ['src/api/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-syntax': 'off',
