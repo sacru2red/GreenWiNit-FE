@@ -14,7 +14,7 @@ function MyPoints() {
 
   return (
     <MyPageLayout title="포인트 현황">
-      <LogoAndName name={user?.name ?? '이름없음'} />
+      <LogoAndName name={user?.name} />
       <PointOverview points={getPointsReponse?.result} />
       <PointHistoryContainer />
     </MyPageLayout>
