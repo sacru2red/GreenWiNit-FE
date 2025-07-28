@@ -26,7 +26,6 @@ export const ME = {
     exp: 2300,
     nextLevelExp: 3000,
   },
-  isWithdrawn: false,
 } satisfies User
 
 export const apiServerMockingStore = create<ApiServerMockingState>()(

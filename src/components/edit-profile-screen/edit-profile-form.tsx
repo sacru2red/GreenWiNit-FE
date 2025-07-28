@@ -2,7 +2,6 @@ import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
-import { profile } from 'console'
 import { FormEvent, Fragment, useState } from 'react'
 
 function EditProfileForm() {
@@ -11,7 +10,7 @@ function EditProfileForm() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
   const updateNickname = async () => {
-    if (!profile && !nicknameIsAvailable) return
+    if (!profileImage && !nicknameIsAvailable) return
     // 프로필 수정 api 연결 예정
   }
 
