@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:staging": "tsc -b && vite build --mode staging",
+    "build": "tsc -b && vite build && node scripts/generate-redirects.js",
+    "build:staging": "APP_ENV=staging tsc -b && vite build --mode staging && node scripts/generate-redirects.js",
+    "build:production": "APP_ENV=production tsc -b && vite build --mode production && node scripts/generate-redirects.js",
     "lint": "eslint .",
     "preview": "npm run build && wrangler pages dev",
     "deploy": "npm run build && wrangler pages deploy",
