@@ -1,6 +1,6 @@
+import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
-import ProfileUploader from '@/components/common/ProfileUploader'
-import NicknameEditForm from '@/components/edit-profile-screen/nickname-edit-form'
+import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
 import { profile } from 'console'
 import { FormEvent, Fragment, useState } from 'react'
@@ -25,7 +25,7 @@ function EditProfileForm() {
       <form onSubmit={handleSubmit} className="flex h-full w-full flex-col gap-4">
         <fieldset className="mt-8 flex justify-center">
           <legend className="sr-only">프로필 사진 변경</legend>
-          <ProfileUploader profileImage={profileImage} setProfileImage={setProfileImage} />
+          <InputProfileImage src={profileImage} setSrc={setProfileImage} />
         </fieldset>
         <fieldset>
           <legend className="sr-only">닉네임 수정</legend>
