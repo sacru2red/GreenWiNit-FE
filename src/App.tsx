@@ -32,6 +32,7 @@ import EnrollAddress from './components/shop-screen/EnrollAddress'
 import InformationShare from './pages/app/InformationShare'
 import InformationDetail from './pages/app/informations/[id]/detail'
 import Signup from './pages/signup'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient()
 
@@ -106,6 +107,7 @@ function App() {
             </div>
           </div>
           <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </BrowserRouter>
     </ErrorBoundary>
