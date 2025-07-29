@@ -38,9 +38,7 @@ function MyPage() {
         {
           title: '로그아웃',
           action: () => {
-            localStorage.clear()
             logout()
-            window.location.href = '/'
           },
         },
       ],
