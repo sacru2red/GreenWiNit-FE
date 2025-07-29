@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
         [env.VITE_API_URL]: {
           target: env.API_PROXY_TO,
           changeOrigin: true,
+          rewrite: (path) => path.replace(new RegExp(`^${env.VITE_API_URL}`), ''),
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq) => {
               // pass origin header to target server to avoid CORS error
