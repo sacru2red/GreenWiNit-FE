@@ -2,12 +2,12 @@ import { usersApi } from '@/api/users'
 import UserCard from '@/components/common/UserCard'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { useNavigate } from 'react-router-dom'
 
 function MyPage() {
   const navigate = useNavigate()
-  const logout = useUserStore((s) => s.logout)
+  const logout = userStore((s) => s.logout)
 
   const CARD_ITEMS = [
     {

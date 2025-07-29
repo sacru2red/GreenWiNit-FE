@@ -3,13 +3,13 @@ import HeaderSectionMiddle from '@/components/common/HeaderSectionMiddle'
 import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
 import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function Login() {
   const navigate = useNavigate()
-  const login = useUserStore((state) => state.login)
-  const logout = useUserStore((state) => state.logout)
+  const login = userStore((state) => state.login)
+  const logout = userStore((state) => state.logout)
   const [params] = useSearchParams()
   const redirectTo = params.get('redirect')
 

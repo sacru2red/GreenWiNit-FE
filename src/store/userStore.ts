@@ -31,7 +31,7 @@ interface UserStoreState {
   setAccessToken: (accessToken: string) => void
 }
 
-export const useUserStore = create<UserStoreState>()(
+export const userStore = create<UserStoreState>()(
   devtools(
     persist(
       (set) => ({

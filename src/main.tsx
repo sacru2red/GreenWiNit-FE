@@ -3,7 +3,7 @@ import App from './App.tsx'
 import './index.css'
 import fetchIntercept from 'fetch-intercept'
 import { API_URL } from './constant/network.ts'
-import { useUserStore } from './store/userStore.ts'
+import { userStore } from './store/userStore.ts'
 
 async function enableMocking() {
   if (import.meta.env.MODE === 'production') {
@@ -29,7 +29,7 @@ fetchIntercept.register({
         ...config,
         headers: {
           ...config?.headers,
-          Authorization: `Bearer ${useUserStore.getState().accessToken}`,
+          Authorization: `Bearer ${userStore.getState().accessToken}`,
         },
       }
       console.log('nextConfig', nextConfig)
