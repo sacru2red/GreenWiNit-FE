@@ -10,7 +10,6 @@ interface InputProfileImageProps
   onChange: (src: string | null) => void
 }
 
-// @TODO call setSrc when upload is done
 function InputProfileImage({
   value: prevSource,
   onChange: onChange,
