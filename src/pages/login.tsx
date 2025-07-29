@@ -3,6 +3,7 @@ import HeaderSectionMiddle from '@/components/common/HeaderSectionMiddle'
 import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
 import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
+import { API_SERVER_BASE_PATH } from '@/constant/network'
 import { useUserStore } from '@/store/userStore'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -30,7 +31,10 @@ function Login() {
   }
 
   const processGoogleLogin = () => {
-    window.location.href = 'https://api.greenwinit.store/oauth2/authorization/google'
+    const moveTo = `${API_SERVER_BASE_PATH}/oauth2/authorization/google`
+
+    const href = moveTo.startsWith('/') ? new URL(moveTo, window.location.origin).href : moveTo
+    window.location.href = href
   }
 
   return (
