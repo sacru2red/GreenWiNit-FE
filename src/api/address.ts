@@ -1,5 +1,6 @@
 import { AddressState } from '@/components/common/form/AddressInput'
 import { API_URL } from '@/constant/network'
+import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export type ServerAddressInfo = {
   deliveryAddressId: number
@@ -63,13 +64,32 @@ export const addressApi = {
 
     return serverToClientAddress(data)
   },
-  updateAddress: async (body: Partial<ClientAddressInfo>): Promise<ClientAddressInfo> => {
-    const response = await fetch(`${API_URL}/deliveries/addresses`, {
-      method: 'POST',
+  updateAddress: async (
+    id: number,
+    body: Partial<ClientAddressInfo>,
+  ): Promise<ClientAddressInfo> => {
+    const response = await fetch(`/api/v1/deliveries/addresses/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     })
+
+    if (!response.ok) {
+      throw new Error(`STATUS: ${response.status} ${response.statusText}`)
+    }
+
     const data = await response.json()
+
+    if (!data) {
+      throw new Error('no data')
+    }
 
     return serverToClientAddress(data)
   },
 }
+
+export const addressQuerykey = createQueryKeys('address', {
+  detail: () => ['address'] as const,
+})

@@ -8,15 +8,31 @@ export const addressHandlers = [
     const response = addressMocking.getState().addressInfo
     return HttpResponse.json(response)
   }),
+  http.put(`/api/v1/deliveries/addresses/:deliveryAddressId`, async ({ request, params }) => {
+    const { deliveryAddressId } = params
+    console.log('전체 params:', params) // 전체 params 객체 확인
+    console.log('request.url:', request.url) // 실제 요청 URL 확인
 
-  http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
+    const addressId = deliveryAddressId as string
+
+    if (!deliveryAddressId || isNaN(Number(deliveryAddressId))) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '유효하지 않은 배송지 ID입니다',
+          result: null,
+        },
+        { status: 400 },
+      )
+    }
+
+    const id = parseInt(addressId)
+
     const body = (await request.json()) as Partial<ClientAddressInfo>
 
     const updateResult = addressMocking.getState().updateAddress(body)
 
-    const addressId = updateResult.result?.id
-
-    if (!addressId) {
+    if (!deliveryAddressId) {
       return HttpResponse.json(
         {
           success: false,
@@ -40,7 +56,7 @@ export const addressHandlers = [
       )
     }
 
-    const serverResponse = clientToServerAddress(clientResult, addressId)
+    const serverResponse = clientToServerAddress(clientResult, id)
 
     return HttpResponse.json(serverResponse)
   }),
