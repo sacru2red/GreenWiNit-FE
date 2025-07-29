@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { PointFilterType } from '@/types/points'
+import { useQueryClient } from '@tanstack/react-query'
+import { useUserStore } from '@/store/userStore'
 
 type FilterElement = '전체' | '적립내역' | '교환내역'
 
@@ -13,6 +15,8 @@ interface PointsHistoryFilterProps {
 
 function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistoryFilterProps) {
   const [isChecked, setIsChecked] = useState<FilterElement>('전체')
+  const queryClient = useQueryClient()
+  const userId = useUserStore((s) => s.user?.id)
 
   const handleFilterChange = async (label: FilterElement) => {
     const statusMap: Record<FilterElement, PointFilterType> = {
@@ -21,7 +25,11 @@ function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistory
       교환내역: 'spend',
     }
 
-    setFilterType(statusMap[label])
+    const currentType = statusMap[isChecked]
+    const slectedType = statusMap[label]
+
+    queryClient.invalidateQueries({ queryKey: ['me/points-history', userId, currentType] })
+    setFilterType(slectedType)
     setIsChecked(label)
     setIsOpen(false)
   }
