@@ -2,18 +2,22 @@ import AppTitle from '@/components/common/AppTitle'
 import BottomNavigation from '@/components/common/BottomNav'
 import UserCard from '@/components/common/UserCard'
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import Challenges from '@/components/home-screen/Challenges'
 import PageContainer from '@/components/common/PageContainer'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/WarnNotLoggedIn'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
+import { useUserStore } from '@/store/userStore'
 
 function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const accessToken = searchParams.get('accessToken')
+  const setAccessToken = useUserStore((state) => state.setAccessToken)
 
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {
@@ -23,6 +27,13 @@ function Home() {
 
     navigate('/challenges/user/me/joined')
   }
+
+  useEffect(() => {
+    if (accessToken) {
+      setAccessToken(accessToken)
+      setSearchParams({})
+    }
+  }, [accessToken, setAccessToken, setSearchParams])
 
   return (
     <PageContainer>

@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { ComponentProps, useState } from 'react'
 import LogoIcon from '@/components/common/LogoIcon'
 import { imagesApi } from '@/api/images'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
-interface InputProfileImageProps {
-  src: string | null
-  setSrc: (src: string | null) => void
+interface InputProfileImageProps
+  extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
+  value: string | null
+  onChange: (src: string | null) => void
 }
 
 // @TODO call setSrc when upload is done
-function InputProfileImage({ src: prevSource, setSrc }: InputProfileImageProps) {
+function InputProfileImage({
+  value: prevSource,
+  onChange: onChange,
+  ...restProps
+}: InputProfileImageProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const source = prevSource ?? null
   const [innerState, setInnerState] = useState<{ uploading: boolean; src: string | null }>({
@@ -31,45 +37,44 @@ function InputProfileImage({ src: prevSource, setSrc }: InputProfileImageProps) 
           toast.error(res.message)
           return
         }
-        setSrc(res.result)
+        onChange(res.result)
       })
     }
   }
 
   return (
-    <div className="flex w-full">
-      <button
-        type="button"
-        onClick={handleClick}
-        className="relative flex items-center justify-center rounded-full bg-white shadow-md"
-      >
-        <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
-          {innerState.src == null ? (
-            <LogoIcon size="large" className="cursor-pointer" />
-          ) : (
-            <img
-              src={innerState.src}
-              alt="프로필 이미지"
-              className="h-full w-full object-scale-down"
-            />
-          )}
-        </div>
-        <img
-          src="/icons/camera.svg"
-          alt="사진 업로드"
-          width={24}
-          height={24}
-          className="absolute right-0 bottom-0"
-        />
-      </button>
+    <button
+      type="button"
+      onClick={handleClick}
+      className="relative flex w-fit items-center justify-center rounded-full bg-white shadow-md"
+    >
+      <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
+        {innerState.src == null ? (
+          <LogoIcon size="large" className="cursor-pointer" />
+        ) : (
+          <img
+            src={innerState.src}
+            alt="프로필 이미지"
+            className="h-full w-full object-scale-down"
+          />
+        )}
+      </div>
+      <img
+        src="/icons/camera.svg"
+        alt="사진 업로드"
+        width={24}
+        height={24}
+        className="absolute right-0 bottom-0"
+      />
       <input
         type="file"
         accept="image/*"
         ref={fileInputRef}
         onChange={handleFileChange}
-        className="hidden"
+        {...restProps}
+        className={cn('hidden', restProps.className)}
       />
-    </div>
+    </button>
   )
 }
 

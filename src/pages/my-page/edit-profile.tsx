@@ -17,8 +17,8 @@ function EditProfile() {
     <MyPageLayout title="회원정보수정" background="white">
       <div className="mx-auto mt-[33px]">
         <InputProfileImage
-          src={formState.profileImage}
-          setSrc={(newSrc) => {
+          value={formState.profileImage}
+          onChange={(newSrc) => {
             setFormState({
               ...formState,
               profileImage: newSrc,

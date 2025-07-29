@@ -16,9 +16,19 @@ export interface User {
 }
 
 interface UserStoreState {
+  /**
+   * @deprecated
+   * @TODO remove this
+   */
   user: null | User
+  /**
+   * @deprecated
+   * @TODO remove this
+   */
   login: (user: User) => void
   logout: () => void
+  accessToken: string | null
+  setAccessToken: (accessToken: string) => void
 }
 
 export const useUserStore = create<UserStoreState>()(
@@ -26,11 +36,15 @@ export const useUserStore = create<UserStoreState>()(
     persist(
       (set) => ({
         user: null,
+        accessToken: null,
         login: (user: User) => {
           set({ user })
         },
         logout: () => {
           set({ user: null })
+        },
+        setAccessToken: (accessToken: string) => {
+          set({ accessToken })
         },
       }),
       {

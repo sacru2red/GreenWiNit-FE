@@ -1,6 +1,9 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import fetchIntercept from 'fetch-intercept'
+import { API_URL } from './constant/network.ts'
+import { useUserStore } from './store/userStore.ts'
 
 async function enableMocking() {
   if (import.meta.env.MODE === 'production') {
@@ -17,4 +20,29 @@ async function enableMocking() {
 enableMocking().then(() => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   createRoot(document.getElementById('root')!).render(<App />)
+})
+
+fetchIntercept.register({
+  request: function (url: string, config: RequestInit) {
+    if (url.startsWith(API_URL)) {
+      const nextConfig = {
+        ...config,
+        headers: {
+          ...config?.headers,
+          Authorization: `Bearer ${useUserStore.getState().accessToken}`,
+        },
+      }
+      console.log('nextConfig', nextConfig)
+
+      return [
+        url,
+        {
+          ...nextConfig,
+        },
+      ]
+    }
+
+    // Modify the url or config here
+    return [url, config]
+  },
 })
