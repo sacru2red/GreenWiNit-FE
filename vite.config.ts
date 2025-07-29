@@ -24,8 +24,10 @@ export default defineConfig(({ mode }) => {
           configure: (proxy) => {
             proxy.on('proxyReq', (proxyReq) => {
               // pass origin header to target server to avoid CORS error
-              proxyReq.setHeader('origin', 'https://www.greenwinit.store')
-              proxyReq.setHeader('referer', 'https://www.greenwinit.store')
+              // pass origin header to target server to avoid CORS error
+              // 로컬에서 백엔드까지 구동하는 경우 대소문자 구분하는 경우가 있어서 Origin, Referer로 설정
+              proxyReq.setHeader('Origin', 'http://localhost:5173')
+              proxyReq.setHeader('Referer', 'http://localhost:5173')
             })
           },
         },
