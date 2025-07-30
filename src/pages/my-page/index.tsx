@@ -1,12 +1,14 @@
+import { usersApi } from '@/api/users'
 import UserCard from '@/components/common/UserCard'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
+import { initHistoryAndLocation } from '@/lib/utils'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { useNavigate } from 'react-router-dom'
 
 function MyPage() {
   const navigate = useNavigate()
-  const logout = useUserStore((s) => s.logout)
+  const logout = userStore((s) => s.logout)
 
   const CARD_ITEMS = [
     {
@@ -38,7 +40,9 @@ function MyPage() {
         {
           title: '로그아웃',
           action: () => {
+            void usersApi.logout()
             logout()
+            initHistoryAndLocation()
           },
         },
       ],
@@ -57,23 +61,21 @@ function MyPage() {
                   {el.category}
                 </button>
                 {el.items.map((item, j) => (
-                  <CardAction
-                    key={j}
-                    className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-4"
-                    onClick={item.action}
-                  >
-                    <span className="text-title-smaller text-4">{item.title}</span>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="ml-auto"
-                    >
-                      <path d="M8 4L14 10L8 16" stroke="#9E9E9E" strokeWidth="2" />
-                    </svg>
-                  </CardAction>
+                  <button onClick={item.action} key={j}>
+                    <CardAction className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-4">
+                      <span className="text-title-smaller text-4">{item.title}</span>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="ml-auto"
+                      >
+                        <path d="M8 4L14 10L8 16" stroke="#9E9E9E" strokeWidth="2" />
+                      </svg>
+                    </CardAction>
+                  </button>
                 ))}
               </CardContent>
             </Card>

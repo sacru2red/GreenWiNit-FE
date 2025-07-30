@@ -5,8 +5,9 @@ import LogoIcon from '../common/LogoIcon'
 import { Separator } from '@/components/ui/separator'
 
 const UserCard = () => {
+  const user = userStore((s) => s.user)
+  const logout = userStore((s) => s.logout)
   const navigate = useNavigate()
-  const user = useUserStore((s) => s.user)
 
   const handleLoginClick = () => {
     navigate('/login')

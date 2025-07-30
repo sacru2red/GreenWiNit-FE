@@ -1,3 +1,4 @@
+import { API_URL } from '@/constant/network'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export type ServerProducts = {
@@ -69,14 +70,14 @@ export const mapServerProductsDetailToClient = (
 
 export const productsApi = {
   getProducts: async (): Promise<Products[]> => {
-    const response = await fetch('/api/v1/point-products')
+    const response = await fetch(`${API_URL}/point-products`)
     const data = await response.json()
 
     return mapServerProductsToClient(data.result.content)
   },
 
   getProduct: async (productId: string | undefined): Promise<ProductDetail> => {
-    const response = await fetch(`/api/v1/point-products/${productId}`)
+    const response = await fetch(`${API_URL}/point-products/${productId}`)
     const data = await response.json()
 
     return mapServerProductDetailToClient(data.result)

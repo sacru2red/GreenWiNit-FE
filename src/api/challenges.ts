@@ -1,23 +1,24 @@
+import { API_URL } from '@/constant/network'
 import { type User } from '@/store/userStore'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const challengesApi = {
   getChallenges: async () => {
-    const response = await fetch('/api/v1/challenges')
+    const response = await fetch(`${API_URL}/challenges`)
     return response.json() as Promise<Challenge[]>
   },
   getJoinedChallengesMine: async () => {
-    const response = await fetch('/api/v1/challenges/user/me/joined')
+    const response = await fetch(`${API_URL}/challenges/user/me/joined`)
     return response.json() as Promise<Challenge[]>
   },
   getChallengeDetail: async (id: string | undefined) => {
-    const response = await fetch(`/api/v1/challenges/${id}`)
+    const response = await fetch(`${API_URL}/challenges/${id}`)
     return response.json() as Promise<
       Omit<Challenge, 'teams'> & { teams: Array<Team & { isJoinAllowed?: boolean }> }
     >
   },
   joinChallenge: async (id: string) => {
-    const response = await fetch(`/api/v1/challenges/${id}/join`, {
+    const response = await fetch(`${API_URL}/challenges/${id}/join`, {
       method: 'POST',
     })
 
@@ -34,7 +35,7 @@ export const challengesApi = {
     if (challengeId == null || teamId == null) {
       throw new Error('challengeId or teamId is required')
     }
-    const response = await fetch(`/api/v1/challenges/${challengeId}/submit/team/${teamId}`, {
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/submit/team/${teamId}`, {
       method: 'POST',
       body,
     })
@@ -48,14 +49,14 @@ export const challengesApi = {
     if (id == null) {
       throw new Error('id is required')
     }
-    const response = await fetch(`/api/v1/challenges/${id}/teams/me/joined`)
+    const response = await fetch(`${API_URL}/challenges/${id}/teams/me/joined`)
     return response.json() as Promise<Array<Team & { isJoinAllowed?: boolean }>>
   },
   joinTeam: async (id: string | undefined, teamId: string | undefined) => {
     if (id == null || teamId == null) {
       throw new Error('id or teamId is required')
     }
-    const response = await fetch(`/api/v1/challenges/${id}/teams/${teamId}/join`, {
+    const response = await fetch(`${API_URL}/challenges/${id}/teams/${teamId}/join`, {
       method: 'POST',
     })
 
@@ -68,14 +69,14 @@ export const challengesApi = {
     if (challengeId == null || teamId == null) {
       throw new Error('challengeId or teamId is required')
     }
-    const response = await fetch(`/api/v1/challenges/${challengeId}/teams/${teamId}`)
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams/${teamId}`)
     return response.json() as Promise<Team>
   },
   enrollTeam: async (challengeId: string | undefined, team: Omit<Team, 'users' | 'id'>) => {
     if (challengeId == null) {
       throw new Error('challengeId is required')
     }
-    const response = await fetch(`/api/v1/challenges/${challengeId}/teams`, {
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams`, {
       method: 'POST',
       body: JSON.stringify(team),
     })
@@ -89,7 +90,7 @@ export const challengesApi = {
     if (teamId == null) {
       throw new Error('teamId is required')
     }
-    const response = await fetch(`/api/v1/teams/${teamId}`, { method: 'DELETE' })
+    const response = await fetch(`${API_URL}/teams/${teamId}`, { method: 'DELETE' })
 
     if (!response.ok) {
       throw new Error(response.statusText)
@@ -97,7 +98,7 @@ export const challengesApi = {
     return response.json() as Promise<{ challenge: Challenge }>
   },
   modifyTeam: async (team: Omit<Team, 'users'>) => {
-    const response = await fetch(`/api/v1/teams/${team.id}`, {
+    const response = await fetch(`${API_URL}/teams/${team.id}`, {
       method: 'PUT',
       body: JSON.stringify(team),
     })
@@ -111,7 +112,7 @@ export const challengesApi = {
     if (challengeId == null) {
       throw new Error('challengeId is required')
     }
-    const response = await fetch(`/api/v1/challenges/${challengeId}/submit`, {
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/submit`, {
       method: 'POST',
       body,
     })

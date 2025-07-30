@@ -1,6 +1,6 @@
 import { type Team } from '@/api/challenges'
 import { cn } from '@/lib/utils'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 
 interface TeamCardProps {
   team: Team & { isJoinAllowed?: boolean }
@@ -8,7 +8,7 @@ interface TeamCardProps {
 }
 
 const TeamCard = ({ team, onClick }: TeamCardProps) => {
-  const user = useUserStore((state) => state.user)
+  const user = userStore((state) => state.user)
   const teamLeader = team.users.find((t) => t.isLeader)
 
   return (

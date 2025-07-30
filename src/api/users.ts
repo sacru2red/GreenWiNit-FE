@@ -1,11 +1,13 @@
+import { API_URL } from '@/constant/network'
 import { User } from '@/store/userStore'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
   getUserStatus: async () => {
-    const response = await fetch('/api/v1/users/me/status')
-    return response.json() as Promise<GetMyInfoResponse>
+    // @TODO replace to `await fetch(`${API_URL}/user/mypage`)`
+    const response = await fetch(`${API_URL}/users/me/status`)
+    return response.json() as Promise<UserStatus>
   },
   getUserPoints: async () => {
     const response = await fetch('/api/v1/users/me/points')
@@ -29,15 +31,36 @@ export const usersApi = {
     }).then((res) => res.json() as Promise<User>)
   },
   logout: async () => {
-    const response = await fetch('/api/logout', {
+    const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
-      credentials: 'include',
     })
 
     if (!response.ok) {
       throw new Error(response.statusText)
     }
     return
+  },
+  signup: async ({
+    tempToken,
+    nickname,
+    profileImageUrl,
+  }: {
+    tempToken: string
+    nickname: string
+    profileImageUrl: string
+  }) => {
+    return fetch(`${API_URL}/auth/signup`, {
+      method: 'POST',
+      body: JSON.stringify({ tempToken, nickname, profileImageUrl }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+  withdraw: async () => {
+    return fetch(`${API_URL}/auth/withdraw`, {
+      method: 'POST',
+    })
   },
 }
 

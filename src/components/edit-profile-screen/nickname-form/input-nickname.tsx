@@ -10,10 +10,12 @@ const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
 
   const checkNicknameDuplication = () => {
     // 닉네임 중복 확인 api 연결 예정
+    // https://discord.com/channels/1364946712967381052/1374691697971171460/1399058550902231040
+    // https://discord.com/channels/1364946712967381052/1374691697971171460/1399789554931859549
   }
 
   const labelContent =
-    mode === 'new' ? (
+    mode === 'edit' ? (
       '변경할 닉네임'
     ) : (
       <Fragment>
@@ -28,7 +30,7 @@ const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
       <label htmlFor={id} className="text-secondary-foreground block text-start text-sm">
         {labelContent}
       </label>
-      <div className="focus-within:border-mountain_meadow mt-2 flex w-full justify-between overflow-hidden rounded-md border border-gray-300 px-3 py-1">
+      <div className="focus-within:border-mountain_meadow mt-2 flex w-full justify-between overflow-hidden rounded-md border border-gray-300 bg-white">
         <input
           id={id}
           type="text"
@@ -37,13 +39,13 @@ const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
           // onKeyDown={(e) => {
           //   if (e.key === 'Enter') e.preventDefault()
           // }}
-          className="flex-1 bg-white py-3 text-sm focus:outline-none"
+          className="flex-1 px-3 py-4 text-sm focus:outline-none"
           {...props}
         />
         <button
           type="button"
           onClick={checkNicknameDuplication}
-          className="hover:bg-mountain_meadow rounded-md bg-gray-300 px-8 text-sm text-white"
+          className="hover:bg-mountain_meadow rounded-r-md bg-gray-300 px-8 text-sm text-white"
         >
           중복 확인
         </button>
