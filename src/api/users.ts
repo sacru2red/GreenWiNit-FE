@@ -4,9 +4,8 @@ import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
   getUserStatus: async () => {
-    // @TODO replace it to `${API_URL}/user/mypage`
-    const response = await fetch('/api/v1/users/me/status')
-    await fetch(`${API_URL}/user/mypage`)
+    // @TODO replace to `await fetch(`${API_URL}/user/mypage`)`
+    const response = await fetch(`${API_URL}/users/me/status`)
     return response.json() as Promise<UserStatus>
   },
   login: async ({ oAuthToken }: { oAuthToken: string }) => {

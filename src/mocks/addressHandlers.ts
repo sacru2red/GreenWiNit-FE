@@ -1,14 +1,15 @@
 import { ClientAddressInfo, clientToServerAddress } from '@/api/address'
+import { API_URL } from '@/constant/network'
 import { addressMocking } from '@/store/mocking/addressMocking'
 import { http, HttpResponse } from 'msw'
 
 export const addressHandlers = [
-  http.get('api/v1/deliveries/addresses', () => {
+  http.get(`${API_URL}/deliveries/addresses`, () => {
     const response = addressMocking.getState().addressInfo
     return HttpResponse.json(response)
   }),
 
-  http.post(`api/v1/deliveries/addresses`, async ({ request }) => {
+  http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
     const body = (await request.json()) as Partial<ClientAddressInfo>
 
     const updateResult = addressMocking.getState().updateAddress(body)
