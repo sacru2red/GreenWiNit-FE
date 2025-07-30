@@ -16,20 +16,6 @@ function EditProfile() {
   return (
     <MyPageLayout title="회원정보수정" background="white">
       <EditProfileForm />
-      {/** @TODO remove it
-      <div className="mx-auto mt-[33px]">
-        <InputProfileImage
-          value={formState.profileImage}
-          onChange={(newSrc) => {
-            setFormState({
-              ...formState,
-              profileImage: newSrc,
-            })
-          }}
-        />
-      </div>
-      <NicknameEditForm />
-    **/}
     </MyPageLayout>
   )
 }

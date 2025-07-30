@@ -13,7 +13,9 @@ const UserCard = () => {
   }
 
   const { data } = useUserStatus()
-  const { userChallengeCount = 0, userTotalPoints = 0, userLevel = 0 } = data?.result ?? {}
+  const userChallengeCount = data?.result?.userChallengeCount ?? 0
+  const userTotalPoints = data?.result?.userTotalPoints ?? 0
+  const userLevel = data?.result?.userLevel ?? 0
 
   const CARD_ITEMS = [
     {

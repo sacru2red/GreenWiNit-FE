@@ -1,6 +1,6 @@
 import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
-import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
+import NicknameCheckInput from '@/components/edit-profile-screen/nickname-checkt-input'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
 import { FormEvent, Fragment, useState } from 'react'
 
@@ -28,7 +28,7 @@ function EditProfileForm() {
         </fieldset>
         <fieldset>
           <legend className="sr-only">닉네임 수정</legend>
-          <NicknameEditForm />
+          <NicknameCheckInput />
         </fieldset>
         <fieldset className="mt-auto flex w-full">
           <legend className="sr-only">제출</legend>

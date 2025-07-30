@@ -6,6 +6,7 @@ import { useUserStatus } from '@/hooks/useUserStatus'
 
 function PointShop() {
   const { data: userStatus } = useUserStatus()
+  const userTotalPoints = userStatus?.result?.userTotalPoints ?? 0
 
   return (
     <PageContainer>
@@ -13,10 +14,7 @@ function PointShop() {
         <span className="text-[24px] font-bold text-black">포인트상점</span>
       </div>
       <div className="h-[48]px flex w-full items-center justify-center">
-        <UserStatusbar
-          point={userStatus?.result.userTotalPoints ?? 0}
-          availablePoint={userStatus?.result.userTotalPoints ?? 0}
-        />
+        <UserStatusbar point={userTotalPoints ?? 0} availablePoint={userTotalPoints ?? 0} />
       </div>
       <div className="scrollbar-hide flex flex-1 overflow-y-auto">
         <ProductList />

@@ -5,8 +5,7 @@ import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
   getUserStatus: async () => {
-    // @TODO replace to `await fetch(`${API_URL}/user/mypage`)`
-    const response = await fetch(`${API_URL}/users/me/status`)
+    const response = await fetch(`${API_URL}/user/mypage`)
     return response.json() as Promise<GetMyInfoResponse>
   },
   getUserPoints: async () => {

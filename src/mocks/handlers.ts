@@ -1,6 +1,5 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
-import { GetMyInfoResponse } from '@/api/users'
 import { API_URL } from '@/constant/network'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
@@ -66,25 +65,6 @@ export const handlers = [
         statusText: 'OK',
       },
     )
-  }),
-
-  // @TODO remove it (check getUserStatus)
-  http.get(`${API_URL}/users/me/status`, ({ cookies }) => {
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
-    }
-    const foundUser = foundUserOrException
-
-    return HttpResponse.json({
-      success: true,
-      message: '사용자 정보 조회에 성공했습니다.',
-      result: {
-        userTotalPoints: foundUser.point,
-        userChallengeCount: foundUser.challengeCount,
-        userLevel: foundUser.level.code,
-      },
-    } satisfies GetMyInfoResponse)
   }),
 
   http.get(`${API_URL}/challenges`, () => {
