@@ -1,7 +1,7 @@
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 
 const useIsLoggedIn = () => {
-  const user = useUserStore((s) => s.user)
+  const user = userStore((s) => s.user)
   return user != null
 }
 

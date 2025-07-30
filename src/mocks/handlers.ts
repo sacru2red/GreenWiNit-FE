@@ -1,6 +1,7 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
 import { UserStatus } from '@/api/users'
+import { API_URL } from '@/constant/network'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 
@@ -41,7 +42,8 @@ export const handlers = [
     })
   }),
 
-  http.get('/api/v1/users/me/status', ({ cookies }) => {
+  // @TODO remove it (check getUserStatus)
+  http.get(`${API_URL}/users/me/status`, ({ cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -60,7 +62,7 @@ export const handlers = [
     } satisfies UserStatus)
   }),
 
-  http.get('/api/v1/challenges', () => {
+  http.get(`${API_URL}/challenges`, () => {
     return HttpResponse.json(
       apiServerMockingStore.getState().challenges.map((c) => {
         if (c.type !== 1) {
@@ -74,7 +76,7 @@ export const handlers = [
     )
   }),
 
-  http.get('/api/v1/challenges/user/me/joined', ({ cookies }) => {
+  http.get(`${API_URL}/challenges/user/me/joined`, ({ cookies }) => {
     const authToken = cookies['authToken']
 
     if (authToken == null || authToken == '') {
@@ -99,7 +101,7 @@ export const handlers = [
     )
   }),
 
-  http.get('/api/v1/challenges/:id', ({ params }) => {
+  http.get(`${API_URL}/challenges/:id`, ({ params }) => {
     const id = params['id']
     const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
     if (challenge == null) {
@@ -124,7 +126,7 @@ export const handlers = [
     return HttpResponse.json(challenge)
   }),
 
-  http.get('/api/v1/challenges/:id/teams/me/joined', ({ cookies, params }) => {
+  http.get(`${API_URL}/challenges/:id/teams/me/joined`, ({ cookies, params }) => {
     const id = params['id']
     if (id == null || typeof id !== 'string') {
       return new HttpResponse(null, {
@@ -164,7 +166,7 @@ export const handlers = [
     return HttpResponse.json(joinedTeams)
   }),
 
-  http.get('/api/v1/challenges/:challengeId/teams/:teamId', ({ params }) => {
+  http.get(`${API_URL}/challenges/:challengeId/teams/:teamId`, ({ params }) => {
     const challengeId = params['challengeId']
     const teamId = params['teamId']
     const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === challengeId)
@@ -196,21 +198,21 @@ export const handlers = [
     return HttpResponse.json(team)
   }),
 
-  http.post('/api/v1/challenges/:id/submit', async () => {
+  http.post(`${API_URL}/challenges/:id/submit`, async () => {
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',
     })
   }),
 
-  http.post('/api/v1/challenges/:challengeId/submit/team/:teamId', async () => {
+  http.post(`${API_URL}/challenges/:challengeId/submit/team/:teamId`, async () => {
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',
     })
   }),
 
-  http.post('/api/v1/challenges/:id/join', async ({ params, cookies }) => {
+  http.post(`${API_URL}/challenges/:id/join`, async ({ params, cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -250,7 +252,7 @@ export const handlers = [
     })
   }),
 
-  http.post('/api/v1/challenges/:id/teams/:teamId/join', async ({ params, cookies }) => {
+  http.post(`${API_URL}/challenges/:id/teams/:teamId/join`, async ({ params, cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -302,7 +304,7 @@ export const handlers = [
     })
   }),
 
-  http.post('/api/v1/challenges/:challengeId/teams', async ({ params, cookies, request }) => {
+  http.post(`${API_URL}/challenges/:challengeId/teams`, async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -365,7 +367,7 @@ export const handlers = [
     })
   }),
 
-  http.put('/api/v1/teams/:teamId', async ({ params, cookies, request }) => {
+  http.put(`${API_URL}/teams/:teamId`, async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -430,7 +432,7 @@ export const handlers = [
     })
   }),
 
-  http.delete('/api/v1/teams/:teamId', async ({ cookies, params }) => {
+  http.delete(`${API_URL}/teams/:teamId`, async ({ cookies, params }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException

@@ -1,13 +1,13 @@
 import { useUserStatus } from '@/hooks/useUserStatus'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LogoIcon from '../common/LogoIcon'
 import { usersApi } from '@/api/users'
 
 const UserCard = () => {
-  const user = useUserStore((s) => s.user)
-  const logout = useUserStore((s) => s.logout)
+  const user = userStore((s) => s.user)
+  const logout = userStore((s) => s.logout)
   const navigate = useNavigate()
 
   const handleLoginClick = () => {
