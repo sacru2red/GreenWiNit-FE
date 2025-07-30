@@ -7,7 +7,7 @@ export const usersApi = {
   getUserStatus: async () => {
     // @TODO replace to `await fetch(`${API_URL}/user/mypage`)`
     const response = await fetch(`${API_URL}/users/me/status`)
-    return response.json() as Promise<UserStatus>
+    return response.json() as Promise<GetMyInfoResponse>
   },
   getUserPoints: async () => {
     const response = await fetch('/api/v1/users/me/points')
