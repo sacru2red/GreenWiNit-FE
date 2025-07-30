@@ -1,34 +1,35 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { FilterType } from '@/components/my-page-screen/point-history-container'
+import { PointFilterType } from '@/types/points'
+import { useQueryClient } from '@tanstack/react-query'
+import { useUserStore } from '@/store/userStore'
 
 type FilterElement = '전체' | '적립내역' | '교환내역'
 
 interface PointsHistoryFilterProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  setType: Dispatch<SetStateAction<FilterType>>
+  setFilterType: Dispatch<SetStateAction<PointFilterType>>
 }
 
-function PointsHistoryFilter({ isOpen, setIsOpen, setType }: PointsHistoryFilterProps) {
+function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistoryFilterProps) {
   const [isChecked, setIsChecked] = useState<FilterElement>('전체')
+  const queryClient = useQueryClient()
+  const userId = useUserStore((s) => s.user?.id)
 
   const handleFilterChange = async (label: FilterElement) => {
-    let status = 'all'
-    switch (label) {
-      case '전체':
-        status = 'all'
-        break
-      case '적립내역':
-        status = 'earn'
-        break
-      case '교환내역':
-        status = 'spend'
-        break
+    const statusMap: Record<FilterElement, PointFilterType> = {
+      전체: 'all',
+      적립내역: 'earn',
+      교환내역: 'spend',
     }
 
-    setType(status as FilterType)
+    const currentType = statusMap[isChecked]
+    const slectedType = statusMap[label]
+
+    queryClient.invalidateQueries({ queryKey: ['me/points-history', userId, currentType] })
+    setFilterType(slectedType)
     setIsChecked(label)
     setIsOpen(false)
   }
@@ -41,14 +42,14 @@ function PointsHistoryFilter({ isOpen, setIsOpen, setType }: PointsHistoryFilter
       >
         <div className="flex items-center text-start text-lg font-semibold">필터</div>
         <ul className="flex flex-col">
-          {['전체', '교환내역', '적립내역'].map((label) => (
+          {(['전체', '교환내역', '적립내역'] as const).map((label) => (
             <li key={label} className="flex items-center justify-between">
               <span
                 className={cn(
                   'hover:text-light-gray flex-1 cursor-pointer py-4 text-start text-base',
                   isChecked === label && 'text-mountain_meadow',
                 )}
-                onClick={() => handleFilterChange(label as FilterElement)}
+                onClick={() => handleFilterChange(label)}
               >
                 {label}
               </span>

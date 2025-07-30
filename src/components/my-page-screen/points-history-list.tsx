@@ -1,7 +1,7 @@
-import { PointHistoryItem } from '@/components/my-page-screen/point-history-container'
 import PointsHistoryItem from '@/components/my-page-screen/points-history-item'
+import { PointHistory } from '@/types/points'
 
-function PointsHistoryList({ list }: { list: PointHistoryItem[] }) {
+function PointsHistoryList({ list }: { list: PointHistory[] }) {
   return (
     <ul className="flex h-full flex-col gap-4">
       {list.map((el) => (

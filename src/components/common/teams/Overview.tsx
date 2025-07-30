@@ -1,6 +1,6 @@
 import { challengesApi, challengesQueryKeys, Team } from '@/api/challenges'
 import LogoIcon from '../LogoIcon'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
@@ -20,7 +20,7 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
   const challengeId = params.challengeId
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const user = useUserStore((state) => state.user)
+  const user = userStore((state) => state.user)
   const teamLeader = team.users.find((t) => t.isLeader)
   const isLeader = user?.id === teamLeader?.id
   const [showConfirmDeletingDialog, setShowConfirmDeletingDialog] = useState(false)

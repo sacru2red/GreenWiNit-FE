@@ -1,9 +1,10 @@
-import { Button } from '@/components/ui/button'
+import { Button as OriginalButton } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { ComponentProps } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function InternalServerError() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const isInRouter = useIsInRouter()
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-10">
@@ -15,21 +16,47 @@ export default function InternalServerError() {
         잠시 후 다시 이용해주세요.
       </p>
       <div className="flex w-full flex-row justify-center gap-4">
-        {location.pathname !== '/500' ? (
-          <Button
-            type="button"
-            onClick={() => window.location.reload()}
-            variant="cancel"
-            size="flex"
-            className="h-fit max-w-40"
-          >
-            새로고침
-          </Button>
-        ) : null}
-        <Button type="button" onClick={() => navigate(-1)} size="flex" className="h-fit max-w-40">
-          이전 페이지
-        </Button>
+        {isInRouter ? <InternalServerErrorInRouter /> : <InternalServerErrorWithoutRouter />}
       </div>
     </div>
   )
+}
+
+function useIsInRouter() {
+  try {
+    useNavigate()
+    return true
+  } catch (_) {
+    return false
+  }
+}
+
+const InternalServerErrorWithoutRouter = () => {
+  return (
+    <Button type="button" onClick={() => window.history.go(-1)} size="flex">
+      이전 페이지
+    </Button>
+  )
+}
+
+const InternalServerErrorInRouter = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  return (
+    <div className="flex w-full flex-row justify-center gap-4">
+      {location.pathname !== '/500' ? (
+        <Button type="button" onClick={() => window.location.reload()} variant="cancel" size="flex">
+          새로고침
+        </Button>
+      ) : null}
+      <Button type="button" onClick={() => navigate(-1)} size="flex">
+        이전 페이지
+      </Button>
+    </div>
+  )
+}
+
+const Button = ({ ...props }: ComponentProps<typeof OriginalButton>) => {
+  return <OriginalButton {...props} className={cn('h-fit max-w-40', props.className)} />
 }

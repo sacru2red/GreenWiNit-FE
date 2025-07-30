@@ -5,8 +5,9 @@ import LogoIcon from '../common/LogoIcon'
 import { Separator } from '@/components/ui/separator'
 
 const UserCard = () => {
+  const user = userStore((s) => s.user)
+  const logout = userStore((s) => s.logout)
   const navigate = useNavigate()
-  const user = useUserStore((s) => s.user)
 
   const handleLoginClick = () => {
     navigate('/login')
@@ -49,23 +50,26 @@ const UserCard = () => {
       </div>
       <Separator />
       <div className="flex w-full items-center justify-center gap-8 p-4">
-        {CARD_ITEMS.map((item, i) =>
-          item.href ? (
-            <Link to={item.href} key={i} className="flex flex-col">
+        {CARD_ITEMS.map((item, i) => {
+          const children = (
+            <>
               <span className="text-mountain_meadow text-center text-sm font-bold">
                 {data == null ? '?' : item.content}
               </span>
               <span className="text-secondary-foreground text-sm">{item.title}</span>
+            </>
+          )
+
+          return item.href ? (
+            <Link to={item.href} key={i} className="flex flex-col">
+              {children}
             </Link>
           ) : (
-            <div className="flex flex-col" key={i}>
-              <span className="text-mountain_meadow text-center text-sm font-bold">
-                {data == null ? '?' : item.content}
-              </span>
-              <span className="text-secondary-foreground text-sm">{item.title}</span>
+            <div key={i} className="flex flex-col">
+              {children}
             </div>
-          ),
-        )}
+          )
+        })}
       </div>
     </div>
   )

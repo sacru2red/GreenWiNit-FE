@@ -3,13 +3,13 @@ import HeaderSectionMiddle from '@/components/common/HeaderSectionMiddle'
 import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
 import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
 import NaverWideButton from '@/components/login-screen/NaverWideButton'
-import { useUserStore } from '@/store/userStore'
+import { userStore } from '@/store/userStore'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function Login() {
   const navigate = useNavigate()
-  const login = useUserStore((state) => state.login)
-  const logout = useUserStore((state) => state.logout)
+  const login = userStore((state) => state.login)
+  const logout = userStore((state) => state.logout)
   const [params] = useSearchParams()
   const redirectTo = params.get('redirect')
 
@@ -30,7 +30,17 @@ function Login() {
   }
 
   const processGoogleLogin = () => {
-    window.location.href = 'https://api.greenwinit.store/oauth2/authorization/google'
+    // API_URL이나 API_SERVER_BASE_PATH 사용하면 안됨
+    // 프록시를 통하면 리다이렉션 후 /login?error=auth_failed로 이동됨 (2025-07-30)
+    const moveToBase =
+      import.meta.env.VITE_OAUTH_BASE_URL ??
+      (import.meta.env.MODE === 'staging'
+        ? 'https://staging-api.greenwinit.store'
+        : import.meta.env.MODE === 'production'
+          ? 'https://api.greenwinit.store'
+          : 'https://api.greenwinit.store')
+    const moveTo = `${moveToBase}/oauth2/authorization/google`
+    window.location.replace(moveTo)
   }
 
   return (

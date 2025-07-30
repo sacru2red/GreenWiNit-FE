@@ -1,9 +1,13 @@
 import FilterButton from '@/components/common/button/filter-button'
-import { FilterType } from '@/components/my-page-screen/point-history-container'
 import PointsHistoryFilter from '@/components/my-page-screen/points-history-filter'
+import { PointFilterType } from '@/types/points'
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 
-function PointsFilterButton({ setType }: { setType: Dispatch<SetStateAction<FilterType>> }) {
+function PointsFilterButton({
+  setFilterType,
+}: {
+  setFilterType: Dispatch<SetStateAction<PointFilterType>>
+}) {
   const [isPointsHistoryFilterOpen, setIsPointsHistoryFilterOpen] = useState(false)
 
   const openDialog = () => {
@@ -16,7 +20,7 @@ function PointsFilterButton({ setType }: { setType: Dispatch<SetStateAction<Filt
       <PointsHistoryFilter
         isOpen={isPointsHistoryFilterOpen}
         setIsOpen={setIsPointsHistoryFilterOpen}
-        setType={setType}
+        setFilterType={setFilterType}
       />
     </Fragment>
   )

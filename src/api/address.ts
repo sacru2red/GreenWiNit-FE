@@ -1,4 +1,5 @@
 import { AddressState } from '@/components/common/form/AddressInput'
+import { API_URL } from '@/constant/network'
 
 export type ServerAddressInfo = {
   deliveryAddressId: number
@@ -57,13 +58,13 @@ export const clientToServerAddress = (
 
 export const addressApi = {
   getAddress: async (): Promise<ClientAddressInfo> => {
-    const response = await fetch(`api/v1/deliveries/addresses`)
+    const response = await fetch(`${API_URL}/deliveries/addresses`)
     const data = await response.json()
 
     return serverToClientAddress(data)
   },
   updateAddress: async (body: Partial<ClientAddressInfo>): Promise<ClientAddressInfo> => {
-    const response = await fetch(`api/vi/deliveries/addresses`, {
+    const response = await fetch(`${API_URL}/deliveries/addresses`, {
       method: 'POST',
       body: JSON.stringify(body),
     })

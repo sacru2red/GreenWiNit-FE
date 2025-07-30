@@ -1,7 +1,7 @@
-import { PointHistoryItem } from '@/components/my-page-screen/point-history-container'
 import { cn, formatIsoToDateString } from '@/lib/utils'
+import { PointHistory } from '@/types/points'
 
-function PointsHistoryItem({ info }: { info: PointHistoryItem }) {
+function PointsHistoryItem({ info }: { info: PointHistory }) {
   const formattedAmount = info.status === 'EARN' ? '+' + info.amount : '-' + info.amount
   const formattedCreatedDate = formatIsoToDateString(info.transactionAt)
 

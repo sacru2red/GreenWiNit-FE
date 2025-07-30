@@ -13,6 +13,8 @@ function BottomNavigation() {
       return
     }
 
+    navigate('/my-page')
+
     const now = Date.now()
     // 1초 이내 연속 클릭
     if (now - lastClickTime < 1000) {

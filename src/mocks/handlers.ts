@@ -1,6 +1,8 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
 import { GetMyInfoResponse } from '@/api/users'
+import { UserStatus } from '@/api/users'
+import { API_URL } from '@/constant/network'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 
@@ -40,8 +42,35 @@ export const handlers = [
       },
     })
   }),
+  http.post('/api/auth/withdraw', ({ cookies }) => {
+    const authToken = cookies['authToken']
 
-  http.get('/api/v1/users/me/status', ({ cookies }) => {
+    if (!authToken) {
+      return HttpResponse.json(
+        {
+          error: 'UNAUTHORIZED',
+          message: '로그인이 필요합니다.',
+        },
+        {
+          status: 401,
+          statusText: 'Unauthorized',
+        },
+      )
+    }
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '회원 탈퇴가 완료되었습니다.',
+      },
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
+  }),
+
+  // @TODO remove it (check getUserStatus)
+  http.get(`${API_URL}/users/me/status`, ({ cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -59,7 +88,7 @@ export const handlers = [
     } satisfies GetMyInfoResponse)
   }),
 
-  http.get('/api/v1/challenges', () => {
+  http.get(`${API_URL}/challenges`, () => {
     return HttpResponse.json(
       apiServerMockingStore.getState().challenges.map((c) => {
         if (c.type !== 1) {
@@ -73,7 +102,7 @@ export const handlers = [
     )
   }),
 
-  http.get('/api/v1/challenges/user/me/joined', ({ cookies }) => {
+  http.get(`${API_URL}/challenges/user/me/joined`, ({ cookies }) => {
     const authToken = cookies['authToken']
 
     if (authToken == null || authToken == '') {
@@ -98,7 +127,7 @@ export const handlers = [
     )
   }),
 
-  http.get('/api/v1/challenges/:id', ({ params }) => {
+  http.get(`${API_URL}/challenges/:id`, ({ params }) => {
     const id = params['id']
     const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
     if (challenge == null) {
@@ -123,7 +152,7 @@ export const handlers = [
     return HttpResponse.json(challenge)
   }),
 
-  http.get('/api/v1/challenges/:id/teams/me/joined', ({ cookies, params }) => {
+  http.get(`${API_URL}/challenges/:id/teams/me/joined`, ({ cookies, params }) => {
     const id = params['id']
     if (id == null || typeof id !== 'string') {
       return new HttpResponse(null, {
@@ -163,7 +192,7 @@ export const handlers = [
     return HttpResponse.json(joinedTeams)
   }),
 
-  http.get('/api/v1/challenges/:challengeId/teams/:teamId', ({ params }) => {
+  http.get(`${API_URL}/challenges/:challengeId/teams/:teamId`, ({ params }) => {
     const challengeId = params['challengeId']
     const teamId = params['teamId']
     const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === challengeId)
@@ -251,6 +280,7 @@ export const handlers = [
       },
     })
   }),
+  
   http.get('/api/v1/users/me/points', () => {
     return HttpResponse.json({
       success: true,
@@ -262,21 +292,22 @@ export const handlers = [
       },
     })
   }),
-  http.post('/api/v1/challenges/:id/submit', async () => {
+
+  http.post(`${API_URL}/challenges/:id/submit`, async () => {
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',
     })
   }),
 
-  http.post('/api/v1/challenges/:challengeId/submit/team/:teamId', async () => {
+  http.post(`${API_URL}/challenges/:challengeId/submit/team/:teamId`, async () => {
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',
     })
   }),
 
-  http.post('/api/v1/challenges/:id/join', async ({ params, cookies }) => {
+  http.post(`${API_URL}/challenges/:id/join`, async ({ params, cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -316,7 +347,7 @@ export const handlers = [
     })
   }),
 
-  http.post('/api/v1/challenges/:id/teams/:teamId/join', async ({ params, cookies }) => {
+  http.post(`${API_URL}/challenges/:id/teams/:teamId/join`, async ({ params, cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -368,7 +399,7 @@ export const handlers = [
     })
   }),
 
-  http.post('/api/v1/challenges/:challengeId/teams', async ({ params, cookies, request }) => {
+  http.post(`${API_URL}/challenges/:challengeId/teams`, async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -430,8 +461,48 @@ export const handlers = [
       statusText: 'OK',
     })
   }),
+  http.post('/api/images', async ({ request }) => {
+    const url = new URL(request.url)
+    const purpose = url.searchParams.get('purpose')
 
-  http.put('/api/v1/teams/:teamId', async ({ params, cookies, request }) => {
+    const validPurposes = {
+      challenge: 'https://dummyimage.com/600x400/ff4444/ffffff.png&text=Challenge',
+      'challenge-cert': 'https://dummyimage.com/600x400/44ff44/ffffff.png&text=Cert',
+      info: 'https://dummyimage.com/600x400/4444ff/ffffff.png&text=Info',
+      product: 'https://dummyimage.com/600x400/ffbb33/ffffff.png&text=Product',
+      profile: 'https://dummyimage.com/600x400/888888/ffffff.png&text=Profile',
+    }
+
+    const formData = await request.formData()
+    const file = formData.get('file')
+
+    if (!file || !(file instanceof File) || !purpose || !(purpose in validPurposes)) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '유효하지 않은 요청입니다.',
+        },
+        {
+          status: 500,
+          statusText: 'Internal Server Error',
+        },
+      )
+    }
+
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '이미지 업로드에 성공했습니다.',
+        result: validPurposes[purpose as keyof typeof validPurposes],
+      },
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
+  }),
+
+  http.put(`${API_URL}/teams/:teamId`, async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException
@@ -496,7 +567,7 @@ export const handlers = [
     })
   }),
 
-  http.delete('/api/v1/teams/:teamId', async ({ cookies, params }) => {
+  http.delete(`${API_URL}/teams/:teamId`, async ({ cookies, params }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
       return foundUserOrException

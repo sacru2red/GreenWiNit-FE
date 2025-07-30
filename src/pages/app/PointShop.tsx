@@ -13,7 +13,10 @@ function PointShop() {
         <span className="text-[24px] font-bold text-black">포인트상점</span>
       </div>
       <div className="h-[48]px flex w-full items-center justify-center">
-        <UserStatusbar point={userStatus?.point ?? 0} availablePoint={userStatus?.point ?? 0} />
+        <UserStatusbar
+          point={userStatus?.result.userTotalPoints ?? 0}
+          availablePoint={userStatus?.result.userTotalPoints ?? 0}
+        />
       </div>
       <div className="scrollbar-hide flex flex-1 overflow-y-auto">
         <ProductList />

@@ -10,16 +10,12 @@ function MyPoints() {
 
   const { data: getPointsReponse } = useUserPoints()
 
-  const points = getPointsReponse?.result ?? {
-    currentBalance: 0,
-    totalEarned: 0,
-    totalSpent: 0,
-  }
+  if (!getPointsReponse) return <div>데이터 로딩중...</div>
 
   return (
     <MyPageLayout title="포인트 현황">
       <LogoAndName name={user?.name ?? '이름없음'} />
-      <PointOverview points={points} />
+      <PointOverview points={getPointsReponse?.result} />
       <PointHistoryContainer />
     </MyPageLayout>
   )
