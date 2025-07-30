@@ -1,7 +1,6 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
 import { GetMyInfoResponse } from '@/api/users'
-import { UserStatus } from '@/api/users'
 import { API_URL } from '@/constant/network'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
@@ -280,7 +279,7 @@ export const handlers = [
       },
     })
   }),
-  
+
   http.get('/api/v1/users/me/points', () => {
     return HttpResponse.json({
       success: true,
