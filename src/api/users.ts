@@ -42,6 +42,11 @@ export const usersApi = {
       },
     })
   },
+  withdraw: async () => {
+    return fetch(`${API_URL}/auth/withdraw`, {
+      method: 'POST',
+    })
+  },
 }
 
 export interface UserStatus {

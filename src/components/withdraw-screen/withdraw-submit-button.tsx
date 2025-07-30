@@ -2,17 +2,19 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import ResultNoticeDialog from '@/components/common/modal/notice-dialog'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { usersApi } from '@/api/users'
 
 function WithDrawSubmitButton() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showNoticeModal, setShowNoticeModal] = useState(false)
 
-  // const deleteAccount = async () => {
-  // 회원탈퇴 API 연결 로직 추가 예정
-  // }
+  const deleteAccount = async () => {
+    // 회원탈퇴 API 연결 로직 추가 예정
+    return usersApi.withdraw()
+  }
 
   const onConfirm = async () => {
-    // await deleteAccount()
+    await deleteAccount()
     setShowConfirmModal(false)
     setShowNoticeModal(true)
   }
