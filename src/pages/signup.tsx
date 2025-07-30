@@ -5,6 +5,7 @@ import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import InputNickname from '@/components/edit-profile-screen/nickname-form/input-nickname'
 import { Button } from '@/components/ui/button'
+import { initHistoryAndLocation } from '@/lib/utils'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 
@@ -29,8 +30,8 @@ const Signup = () => {
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     console.log(data)
-    if (!data.nickname || !data.profileImage) {
-      console.warn('nickname or profileImage is null')
+    if (!data.nickname) {
+      console.warn('nickname is null')
       return
     }
 
@@ -38,7 +39,10 @@ const Signup = () => {
       .signup({
         tempToken,
         nickname: data.nickname,
-        profileImageUrl: data.profileImage,
+        profileImageUrl: data.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
+      })
+      .then(() => {
+        initHistoryAndLocation()
       })
       .catch((err) => {
         console.error(err)

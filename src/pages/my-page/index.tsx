@@ -1,6 +1,7 @@
 import { usersApi } from '@/api/users'
 import UserCard from '@/components/common/UserCard'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
+import { initHistoryAndLocation } from '@/lib/utils'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 import { userStore } from '@/store/userStore'
 import { useNavigate } from 'react-router-dom'
@@ -41,6 +42,7 @@ function MyPage() {
           action: () => {
             void usersApi.logout()
             logout()
+            initHistoryAndLocation()
           },
         },
       ],

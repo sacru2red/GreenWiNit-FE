@@ -3,6 +3,7 @@ import ResultNoticeDialog from '@/components/common/modal/notice-dialog'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { usersApi } from '@/api/users'
+import { initHistoryAndLocation } from '@/lib/utils'
 
 function WithDrawSubmitButton() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -10,7 +11,9 @@ function WithDrawSubmitButton() {
 
   const deleteAccount = async () => {
     // 회원탈퇴 API 연결 로직 추가 예정
-    return usersApi.withdraw()
+    return usersApi.withdraw().then(() => {
+      initHistoryAndLocation()
+    })
   }
 
   const onConfirm = async () => {
