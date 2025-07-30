@@ -5,7 +5,7 @@ import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-butto
 import { FormEvent, Fragment, useState } from 'react'
 
 function EditProfileForm() {
-  const [profileImage, setProfileImage] = useState('')
+  const [profileImage, setProfileImage] = useState<string | null>(null)
   const [nicknameIsAvailable, _] = useState(false) // 닉네임 중복 체크 api 만들어지면 NicknameEditForm에 들어갈 예정
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
@@ -24,7 +24,7 @@ function EditProfileForm() {
       <form onSubmit={handleSubmit} className="flex h-full w-full flex-col gap-4">
         <fieldset className="mt-8 flex justify-center">
           <legend className="sr-only">프로필 사진 변경</legend>
-          <InputProfileImage src={profileImage} setSrc={setProfileImage} />
+          <InputProfileImage value={profileImage} onChange={setProfileImage} />
         </fieldset>
         <fieldset>
           <legend className="sr-only">닉네임 수정</legend>
