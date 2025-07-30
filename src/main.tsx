@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import fetchIntercept from 'fetch-intercept'
+import fetchIntercept, { FetchInterceptorResponse } from 'fetch-intercept'
 import { API_URL } from './constant/network.ts'
 import { userStore } from './store/userStore.ts'
 
@@ -32,7 +32,6 @@ fetchIntercept.register({
           Authorization: `Bearer ${userStore.getState().accessToken}`,
         },
       }
-      console.log('nextConfig', nextConfig)
 
       return [
         url,
@@ -44,5 +43,21 @@ fetchIntercept.register({
 
     // Modify the url or config here
     return [url, config]
+  },
+
+  response: function (response: FetchInterceptorResponse) {
+    if (response.url.startsWith(API_URL) && !response.ok) {
+      if (response.status >= 400 && response.status < 500) {
+        if (response.headers.get('content-type')?.includes('json')) {
+          response.json().then((body) => {
+            if (body.message === '접근이 거부되었습니다.') {
+              userStore.getState().setAccessToken(null)
+            }
+          })
+        }
+      }
+    }
+
+    return response
   },
 })

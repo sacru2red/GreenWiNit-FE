@@ -26,9 +26,13 @@ interface UserStoreState {
    * @TODO remove this
    */
   login: (user: User) => void
+  /**
+   * @deprecated
+   * @TODO remove this
+   */
   logout: () => void
   accessToken: string | null
-  setAccessToken: (accessToken: string) => void
+  setAccessToken: (accessToken: string | null) => void
 }
 
 export const userStore = create<UserStoreState>()(
@@ -43,7 +47,7 @@ export const userStore = create<UserStoreState>()(
         logout: () => {
           set({ user: null })
         },
-        setAccessToken: (accessToken: string) => {
+        setAccessToken: (accessToken: string | null) => {
           set({ accessToken })
         },
       }),
