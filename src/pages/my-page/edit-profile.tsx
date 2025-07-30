@@ -8,6 +8,7 @@ interface FormState {
 
 function EditProfile() {
   // @TODO migrate to react-hook-form
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formState, setFormState] = useState<FormState>({
     profileImage: null,
   })
@@ -15,7 +16,7 @@ function EditProfile() {
   return (
     <MyPageLayout title="회원정보수정" background="white">
       <EditProfileForm />
-      /** @TODO remove it
+      {/** @TODO remove it
       <div className="mx-auto mt-[33px]">
         <InputProfileImage
           value={formState.profileImage}
@@ -28,7 +29,7 @@ function EditProfile() {
         />
       </div>
       <NicknameEditForm />
-    **/
+    **/}
     </MyPageLayout>
   )
 }
