@@ -33,11 +33,12 @@ function Login() {
     // API_URL이나 API_SERVER_BASE_PATH 사용하면 안됨
     // 프록시를 통하면 리다이렉션 후 /login?error=auth_failed로 이동됨 (2025-07-30)
     const moveToBase =
-      import.meta.env.MODE === 'staging'
+      import.meta.env.VITE_OAUTH_BASE_URL ??
+      (import.meta.env.MODE === 'staging'
         ? 'https://staging-api.greenwinit.store'
         : import.meta.env.MODE === 'production'
           ? 'https://api.greenwinit.store'
-          : 'https://api.greenwinit.store'
+          : 'https://api.greenwinit.store')
     const moveTo = `${moveToBase}/oauth2/authorization/google`
     window.location.replace(moveTo)
   }
