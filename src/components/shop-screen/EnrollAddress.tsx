@@ -5,6 +5,8 @@ import { Input } from '../ui/input'
 import InputLabel from '../common/form/InputLabel'
 import BottomNavigation from '../common/BottomNav'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { addressApi } from '@/api/address'
+import { ServerPostAddress } from '@/types/addresses'
 
 interface FormData {
   name: string
@@ -30,7 +32,6 @@ const EnrollAddress = () => {
       const savedUserInfo = localStorage.getItem('deliveryUserInfo')
       if (savedUserInfo) {
         const userInfo = JSON.parse(savedUserInfo)
-        console.log(userInfo)
         setFormData({
           name: userInfo.name || '',
           phone: userInfo.phone || '',
@@ -62,7 +63,30 @@ const EnrollAddress = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    console.log(formData)
+    if (!formData.name.trim()) {
+      alert('이름을 입력해주세요.')
+      return
+    }
+
+    if (!formData.phone.trim()) {
+      alert('전화번호를 입력해주세요.')
+      return
+    }
+
+    if (!formData.address) {
+      alert('주소를 입력해주세요.')
+      return
+    }
+
+    const serverAddressForm: ServerPostAddress = {
+      recipientName: formData.name,
+      phoneNumber: formData.phone,
+      roadAddress: formData.address.roadAddress,
+      detailAddress: formData.address.detailAddress,
+      zipCode: formData.address.zonecode,
+    }
+
+    addressApi.saveAddress(serverAddressForm)
   }
 
   return (

@@ -1,28 +1,5 @@
-import { AddressState } from '@/components/common/form/AddressInput'
 import { API_URL } from '@/constant/network'
-import { createQueryKeys } from '@lukemorales/query-key-factory'
-
-export type ServerAddressInfo = {
-  deliveryAddressId: number
-  recipientName: string
-  phoneNumber: string
-  roadAddress: string
-  detailAddress: string
-  zipCode: string
-}
-
-export type ClientAddressInfo = {
-  id: number
-  name: string
-  phone: string
-  address: AddressState
-}
-
-export interface AddressInfoApiResponse {
-  success: boolean
-  message: string
-  result: ClientAddressInfo | null
-}
+import { ClientAddressInfo, ServerAddressInfo, ServerPostAddress } from '@/types/addresses'
 
 export const serverToClientAddress = (serverAddress: ServerAddressInfo): ClientAddressInfo => {
   return {
@@ -88,8 +65,20 @@ export const addressApi = {
 
     return serverToClientAddress(data)
   },
-}
+  saveAddress: async (data: ServerPostAddress) => {
+    try {
+      const response = await fetch(`/api/v1/deliveries/addresses`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
 
-export const addressQuerykey = createQueryKeys('address', {
-  detail: () => ['address'] as const,
-})
+      if (!response.ok) {
+        throw new Error(`응답 오류: ${response.status} ${response.statusText}`)
+      }
+
+      return true
+    } catch (error) {
+      throw new Error(`배송지 정보를 저장하는데 실패하였습니다: ${error}`)
+    }
+  },
+}
