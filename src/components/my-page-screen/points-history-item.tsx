@@ -1,7 +1,7 @@
-import { formatIsoToDateString } from '@/lib/utils'
-import { PointTransaction } from '@/types/potints'
+import { cn, formatIsoToDateString } from '@/lib/utils'
+import { PointHistory } from '@/types/points'
 
-function PointsHistoryItem({ info }: { info: PointTransaction }) {
+function PointsHistoryItem({ info }: { info: PointHistory }) {
   const formattedAmount = info.status === 'EARN' ? '+' + info.amount : '-' + info.amount
   const formattedCreatedDate = formatIsoToDateString(info.transactionAt)
 
@@ -11,7 +11,14 @@ function PointsHistoryItem({ info }: { info: PointTransaction }) {
         <h3 className="text-xm text-secondary-foreground">{info.description}</h3>
         <span className="text-lighter-gray text-xs">{formattedCreatedDate}</span>
       </div>
-      <div className="text-mountain_meadow text-lg font-bold">{formattedAmount}</div>
+      <div
+        className={cn(
+          'text-lg font-bold',
+          info.status === 'EARN' ? 'text-mountain_meadow' : 'text-[#FA4D56]',
+        )}
+      >
+        {formattedAmount}
+      </div>
     </div>
   )
 }

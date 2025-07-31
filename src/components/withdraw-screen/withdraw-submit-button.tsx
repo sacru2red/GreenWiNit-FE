@@ -10,7 +10,6 @@ function WithDrawSubmitButton() {
   const [showNoticeModal, setShowNoticeModal] = useState(false)
 
   const deleteAccount = async () => {
-    // 회원탈퇴 API 연결 로직 추가 예정
     return usersApi.withdraw().then(() => {
       initHistoryAndLocation()
     })

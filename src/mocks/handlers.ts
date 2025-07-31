@@ -1,6 +1,5 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
-import { UserStatus } from '@/api/users'
 import { API_URL } from '@/constant/network'
 import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
@@ -41,25 +40,31 @@ export const handlers = [
       },
     })
   }),
+  http.post('/api/auth/withdraw', ({ cookies }) => {
+    const authToken = cookies['authToken']
 
-  // @TODO remove it (check getUserStatus)
-  http.get(`${API_URL}/users/me/status`, ({ cookies }) => {
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
+    if (!authToken) {
+      return HttpResponse.json(
+        {
+          error: 'UNAUTHORIZED',
+          message: '로그인이 필요합니다.',
+        },
+        {
+          status: 401,
+          statusText: 'Unauthorized',
+        },
+      )
     }
-    const foundUser = foundUserOrException
-
-    return HttpResponse.json({
-      point: foundUser.point,
-      challengeCount: foundUser.challengeCount,
-      level: {
-        name: foundUser.level.name,
-        code: foundUser.level.code,
-        exp: foundUser.level.exp,
-        nextLevelExp: foundUser.level.nextLevelExp,
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '회원 탈퇴가 완료되었습니다.',
       },
-    } satisfies UserStatus)
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
   }),
 
   http.get(`${API_URL}/challenges`, () => {
@@ -196,6 +201,75 @@ export const handlers = [
       })
     }
     return HttpResponse.json(team)
+  }),
+
+  http.get('/api/v1/users/me/points-history', ({ request }) => {
+    const url = new URL(request.url)
+    const status = url.searchParams.get('status') // 'earn' 또는 'spend' 또는 null
+
+    const allContent = [
+      {
+        pointTransactionId: '1L',
+        description: '챌린지 적립',
+        amount: 1000,
+        status: 'EARN',
+        transactionAt: '2025-07-26T10:31:16.805Z',
+      },
+      {
+        pointTransactionId: '2L',
+        description: '굿즈 구매',
+        amount: 500,
+        status: 'SPEND',
+        transactionAt: '2025-07-25T14:20:00.000Z',
+      },
+      {
+        pointTransactionId: '3L',
+        description: '친환경 텀블러 교환',
+        amount: 700,
+        status: 'SPEND',
+        transactionAt: '2025-07-21T14:31:16.805Z',
+      },
+      {
+        pointTransactionId: '4L',
+        description: '회원가입 보너스',
+        amount: 1000,
+        status: 'EARN',
+        transactionAt: '2025-07-20T14:31:16.805Z',
+      },
+      {
+        pointTransactionId: '5L',
+        description: '플라스틱 줄이기 챌린지 완료',
+        amount: 800,
+        status: 'EARN',
+        transactionAt: '2025-07-18T12:31:16.805Z',
+      },
+    ]
+
+    const filteredContent = status
+      ? allContent.filter((item) => item.status.toLowerCase() === status.toLowerCase())
+      : allContent
+
+    return HttpResponse.json({
+      success: true,
+      message: '포인트 내역 조회 성공',
+      result: {
+        hasNext: false,
+        nextCursor: null,
+        content: filteredContent,
+      },
+    })
+  }),
+
+  http.get('/api/v1/users/me/points', () => {
+    return HttpResponse.json({
+      success: true,
+      message: 'string',
+      result: {
+        currentBalance: 4500,
+        totalEarned: 5200,
+        totalSpent: 700,
+      },
+    })
   }),
 
   http.post(`${API_URL}/challenges/:id/submit`, async () => {
@@ -365,6 +439,46 @@ export const handlers = [
       status: 200,
       statusText: 'OK',
     })
+  }),
+  http.post('/api/images', async ({ request }) => {
+    const url = new URL(request.url)
+    const purpose = url.searchParams.get('purpose')
+
+    const validPurposes = {
+      challenge: 'https://dummyimage.com/600x400/ff4444/ffffff.png&text=Challenge',
+      'challenge-cert': 'https://dummyimage.com/600x400/44ff44/ffffff.png&text=Cert',
+      info: 'https://dummyimage.com/600x400/4444ff/ffffff.png&text=Info',
+      product: 'https://dummyimage.com/600x400/ffbb33/ffffff.png&text=Product',
+      profile: 'https://dummyimage.com/600x400/888888/ffffff.png&text=Profile',
+    }
+
+    const formData = await request.formData()
+    const file = formData.get('file')
+
+    if (!file || !(file instanceof File) || !purpose || !(purpose in validPurposes)) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '유효하지 않은 요청입니다.',
+        },
+        {
+          status: 500,
+          statusText: 'Internal Server Error',
+        },
+      )
+    }
+
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '이미지 업로드에 성공했습니다.',
+        result: validPurposes[purpose as keyof typeof validPurposes],
+      },
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    )
   }),
 
   http.put(`${API_URL}/teams/:teamId`, async ({ params, cookies, request }) => {

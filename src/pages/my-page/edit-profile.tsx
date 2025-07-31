@@ -1,5 +1,4 @@
-import InputProfileImage from '@/components/common/input-profile-image'
-import NicknameEditForm from '@/components/edit-profile-screen/nickname-form'
+import EditProfileForm from '@/components/edit-profile-screen/edit-profile-form'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 import { useState } from 'react'
 
@@ -9,24 +8,14 @@ interface FormState {
 
 function EditProfile() {
   // @TODO migrate to react-hook-form
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formState, setFormState] = useState<FormState>({
     profileImage: null,
   })
 
   return (
     <MyPageLayout title="회원정보수정" background="white">
-      <div className="mx-auto mt-[33px]">
-        <InputProfileImage
-          value={formState.profileImage}
-          onChange={(newSrc) => {
-            setFormState({
-              ...formState,
-              profileImage: newSrc,
-            })
-          }}
-        />
-      </div>
-      <NicknameEditForm />
+      <EditProfileForm />
     </MyPageLayout>
   )
 }

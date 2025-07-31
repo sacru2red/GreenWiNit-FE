@@ -1,16 +1,38 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { PointFilterType } from '@/types/points'
+import { useQueryClient } from '@tanstack/react-query'
+import { userStore } from '@/store/userStore'
 
-type FilterType = '전체' | '교환내역' | '적립내역'
+type FilterElement = '전체' | '적립내역' | '교환내역'
 
 interface PointsHistoryFilterProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  setFilterType: Dispatch<SetStateAction<PointFilterType>>
 }
 
-function PointsHistoryFilter({ isOpen, setIsOpen }: PointsHistoryFilterProps) {
-  const [isChecked, setIsChecked] = useState<FilterType>('전체')
+function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistoryFilterProps) {
+  const [isChecked, setIsChecked] = useState<FilterElement>('전체')
+  const queryClient = useQueryClient()
+  const userId = userStore((s) => s.user?.id)
+
+  const handleFilterChange = async (label: FilterElement) => {
+    const statusMap: Record<FilterElement, PointFilterType> = {
+      전체: 'all',
+      적립내역: 'earn',
+      교환내역: 'spend',
+    }
+
+    const currentType = statusMap[isChecked]
+    const slectedType = statusMap[label]
+
+    queryClient.invalidateQueries({ queryKey: ['me/points-history', userId, currentType] })
+    setFilterType(slectedType)
+    setIsChecked(label)
+    setIsOpen(false)
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -20,14 +42,14 @@ function PointsHistoryFilter({ isOpen, setIsOpen }: PointsHistoryFilterProps) {
       >
         <div className="flex items-center text-start text-lg font-semibold">필터</div>
         <ul className="flex flex-col">
-          {['전체', '교환내역', '적립내역'].map((label) => (
+          {(['전체', '교환내역', '적립내역'] as const).map((label) => (
             <li key={label} className="flex items-center justify-between">
               <span
                 className={cn(
                   'hover:text-light-gray flex-1 cursor-pointer py-4 text-start text-base',
                   isChecked === label && 'text-mountain_meadow',
                 )}
-                onClick={() => setIsChecked(label as FilterType)}
+                onClick={() => handleFilterChange(label)}
               >
                 {label}
               </span>
