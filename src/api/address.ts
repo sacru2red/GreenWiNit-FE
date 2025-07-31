@@ -37,15 +37,16 @@ export const clientToServerAddress = (
 export const addressApi = {
   getAddress: async (): Promise<ClientAddressInfo> => {
     const response = await fetch(`${API_URL}/deliveries/addresses`)
+
     const data = await response.json()
 
-    return serverToClientAddress(data)
+    return serverToClientAddress(data.result)
   },
   updateAddress: async (
     id: number,
     body: Partial<ClientAddressInfo>,
   ): Promise<ClientAddressInfo> => {
-    const response = await fetch(`/api/v1/deliveries/addresses/${id}`, {
+    const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ export const addressApi = {
   },
   saveAddress: async (data: ServerPostAddress) => {
     try {
-      const response = await fetch(`/api/v1/deliveries/addresses`, {
+      const response = await fetch(`${API_URL}/deliveries/addresses`, {
         method: 'POST',
         body: JSON.stringify(data),
       })

@@ -1,6 +1,6 @@
 import { ChevronLeft } from 'lucide-react'
 import AddressInput, { AddressState } from '../common/form/AddressInput'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Input } from '../ui/input'
 import InputLabel from '../common/form/InputLabel'
 import BottomNavigation from '../common/BottomNav'
@@ -30,35 +30,22 @@ const EnrollAddress = () => {
     address: null,
   })
 
-  useEffect(() => {
-    if (isEditMode) {
-      const savedUserInfo = localStorage.getItem('deliveryUserInfo')
-      if (savedUserInfo) {
-        const userInfo = JSON.parse(savedUserInfo)
-        setFormData({
-          name: userInfo.name || '',
-          phone: userInfo.phone || '',
-          address: userInfo.address || null,
-        })
-      }
-    }
-  }, [isEditMode])
-
   const handleBackButtonClick = () => {
     if (fromPath) {
+      console.log(fromPath)
       navigate(fromPath)
     } else {
-      navigate(-1)
+      window.history.back()
     }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
-  }
+  }, [])
 
   const handleAddressChange = useCallback((address: AddressState) => {
     setFormData((prev) => ({

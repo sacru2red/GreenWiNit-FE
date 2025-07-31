@@ -5,7 +5,7 @@ const MINUTES = 60 * 1000
 
 const useAddress = () => {
   return useQuery({
-    queryKey: ['addresses'],
+    queryKey: ['address'],
     queryFn: addressApi.getAddress,
     staleTime: 5 * MINUTES,
   })

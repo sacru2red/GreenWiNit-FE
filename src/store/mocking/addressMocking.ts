@@ -3,21 +3,20 @@ import { AddressInfoApiResponse, ClientAddressInfo, ServerAddressInfo } from '@/
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-const mockAddressInfo: ServerAddressInfo[] = [
-  {
-    deliveryAddressId: 1,
-    recipientName: '홍길동',
-    phoneNumber: '010-1234-5678',
-    roadAddress: '00시 00구 00로 11',
-    detailAddress: '1층',
-    zipCode: '12345',
-  },
-]
+const mockAddressInfo: ServerAddressInfo = {
+  deliveryAddressId: 1,
+  recipientName: '홍길동',
+  phoneNumber: '010-1234-5678',
+  roadAddress: '00시 00구 00로 11',
+  detailAddress: '1층',
+  zipCode: '12345',
+}
 
-const clientMockAddress = mockAddressInfo[0] ? serverToClientAddress(mockAddressInfo[0]) : null
+const clientMockAddress = serverToClientAddress(mockAddressInfo)
 
 interface AddressInfoStore {
   addressInfo: ClientAddressInfo
+  getAddress: () => ClientAddressInfo | null
   enrollAddress: (newAddress: ClientAddressInfo) => AddressInfoApiResponse
   updateAddress: (updatedAddress: Partial<ClientAddressInfo>) => AddressInfoApiResponse
 }
@@ -27,6 +26,10 @@ export const addressMocking = create<AddressInfoStore>()(
     persist(
       (set, get) => ({
         addressInfo: clientMockAddress,
+
+        getAddress: (): ClientAddressInfo | null => {
+          return get().addressInfo
+        },
 
         enrollAddress: (newAddress: ClientAddressInfo): AddressInfoApiResponse => {
           set({ addressInfo: newAddress })

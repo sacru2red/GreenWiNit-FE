@@ -24,6 +24,8 @@ export type ClientAddressInfo = {
   address: AddressState
 }
 
+export type ClientAddressForm = Omit<ClientAddressInfo, 'id'>
+
 export interface AddressInfoApiResponse {
   success: boolean
   message: string
