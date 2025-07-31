@@ -1,6 +1,7 @@
-import { ClientAddressInfo, clientToServerAddress } from '@/api/address'
 import { API_URL } from '@/constant/network'
+import { clientToServerAddress } from '@/api/address'
 import { addressMocking } from '@/store/mocking/addressMocking'
+import { ClientAddressInfo, ServerPostAddress } from '@/types/addresses'
 import { http, HttpResponse } from 'msw'
 
 export const addressHandlers = [
@@ -59,5 +60,48 @@ export const addressHandlers = [
     const serverResponse = clientToServerAddress(clientResult, id)
 
     return HttpResponse.json(serverResponse)
+  }),
+  http.post('/api/v1/deliveries/addresses', async ({ request }) => {
+    try {
+      let nextId = 2
+      const body = (await request.json()) as ServerPostAddress
+
+      if (
+        !body.recipientName ||
+        !body.phoneNumber ||
+        !body.roadAddress ||
+        !body.detailAddress ||
+        !body.zipCode
+      ) {
+        return HttpResponse.json(
+          {
+            success: false,
+            message: '필수 필드가 누락되었습니다.',
+            result: null,
+          },
+          { status: 400 },
+        )
+      }
+
+      const newAddress = {
+        deliveryAddressId: nextId++,
+        ...body,
+      }
+
+      return HttpResponse.json({
+        success: true,
+        message: '배송지 정보 추가가 성공했습니다.',
+        result: newAddress,
+      })
+    } catch (error) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다',
+          result: null,
+        },
+        { status: 500 },
+      )
+    }
   }),
 ]

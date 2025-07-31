@@ -8,11 +8,27 @@ const userInfos = {
   address: '서울 강동구 아리수로 50길 50래미안힐스테이트 고덕 101동 1004',
 }
 
-const DeliveryAddress = () => {
+interface DeliveryAddressProps {
+  pointProductId: string | undefined
+}
+
+const DeliveryAddress = ({ pointProductId }: DeliveryAddressProps) => {
   const navigate = useNavigate()
   const location = useLocation()
 
   const [userInfo, setUserInfo] = useState(userInfos)
+
+  const handleEnrollAddress = () => {
+    navigate(`/point-shop/product/${pointProductId}/enrollAddress?mode=add`, {
+      state: { from: location.pathname + location.search },
+    })
+  }
+
+  const handleUpdateAddress = () => {
+    navigate(`/point-shop/product/${pointProductId}/enrollAddress?mode=edit`, {
+      state: { from: location.pathname + location.search },
+    })
+  }
 
   useEffect(() => {
     const savedUserInfo = localStorage.getItem('deliveryUserInfo')
@@ -20,14 +36,6 @@ const DeliveryAddress = () => {
       setUserInfo(JSON.parse(savedUserInfo))
     }
   }, [])
-
-  const handleAddressClick = () => {
-    if (userInfo) {
-      navigate(`${location.pathname}/enrollAddress?mode=edit`)
-    } else {
-      navigate(`${location.pathname}/enrollAddress?mode=add`)
-    }
-  }
 
   return (
     <div>
@@ -41,7 +49,7 @@ const DeliveryAddress = () => {
             </div>
             <button
               className="max-h-[40px] rounded-[8px] bg-green-600 px-[30px] py-[10px] text-white"
-              onClick={handleAddressClick}
+              onClick={handleUpdateAddress}
             >
               수정
             </button>
@@ -59,7 +67,7 @@ const DeliveryAddress = () => {
         <div className="m-[20px] flex flex-col border p-[20px]">
           <div className="pb-[20px]">배송지를 먼저 등록해주세요</div>
           <button
-            onClick={handleAddressClick}
+            onClick={handleEnrollAddress}
             className={
               'mx-[120px] flex flex-row items-center justify-center rounded-[10px] bg-green-500 py-[8px] text-white transition hover:bg-green-600'
             }

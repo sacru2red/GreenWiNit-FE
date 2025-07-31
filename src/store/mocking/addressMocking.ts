@@ -1,22 +1,20 @@
-import {
-  AddressInfoApiResponse,
-  ClientAddressInfo,
-  ServerAddressInfo,
-  serverToClientAddress,
-} from '@/api/address'
+import { serverToClientAddress } from '@/api/address'
+import { AddressInfoApiResponse, ClientAddressInfo, ServerAddressInfo } from '@/types/addresses'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-const mockAddressInfo: ServerAddressInfo = {
-  deliveryAddressId: 1,
-  recipientName: '홍길동',
-  phoneNumber: '010-1234-5678',
-  roadAddress: '00시 00구 00로 11',
-  detailAddress: '1층',
-  zipCode: '12345',
-}
+const mockAddressInfo: ServerAddressInfo[] = [
+  {
+    deliveryAddressId: 1,
+    recipientName: '홍길동',
+    phoneNumber: '010-1234-5678',
+    roadAddress: '00시 00구 00로 11',
+    detailAddress: '1층',
+    zipCode: '12345',
+  },
+]
 
-const clientMockAddress = serverToClientAddress(mockAddressInfo)
+const clientMockAddress = mockAddressInfo[0] ? serverToClientAddress(mockAddressInfo[0]) : null
 
 interface AddressInfoStore {
   addressInfo: ClientAddressInfo

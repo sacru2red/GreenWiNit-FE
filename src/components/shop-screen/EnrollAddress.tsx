@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Input } from '../ui/input'
 import InputLabel from '../common/form/InputLabel'
 import BottomNavigation from '../common/BottomNav'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { ServerPostAddress } from '@/types/addresses'
 
@@ -17,6 +17,9 @@ interface FormData {
 const EnrollAddress = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const fromPath = location.state?.from
 
   const mode = searchParams.get('mode') || 'add'
   const isEditMode = mode === 'edit'
@@ -42,7 +45,11 @@ const EnrollAddress = () => {
   }, [isEditMode])
 
   const handleBackButtonClick = () => {
-    navigate(-1)
+    if (fromPath) {
+      navigate(fromPath)
+    } else {
+      navigate(-1)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +94,7 @@ const EnrollAddress = () => {
     }
 
     addressApi.saveAddress(serverAddressForm)
+    navigate(fromPath)
   }
 
   return (
