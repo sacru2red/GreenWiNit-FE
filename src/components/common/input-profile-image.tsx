@@ -29,8 +29,10 @@ function InputProfileImage({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      setInnerState({ uploading: true, src: URL.createObjectURL(file) })
+      const processingObjectURL = URL.createObjectURL(file)
+      setInnerState({ uploading: true, src: processingObjectURL })
       imagesApi.uploadImage('profile', file).then((res) => {
+        URL.revokeObjectURL(processingObjectURL)
         setInnerState({ uploading: false, src: res.result })
         if (!res.success) {
           toast.error(res.message)

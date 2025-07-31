@@ -1,5 +1,5 @@
 import { Plus as PlusIcon } from 'lucide-react'
-import { ForwardedRef, Fragment, useEffect, useRef } from 'react'
+import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
 import { omit } from 'es-toolkit'
 import { cn } from '@/lib/utils'
 
@@ -12,13 +12,24 @@ const InputUploadImage = (
   const mergedRef = mergeRefs(props.ref, inputRef)
 
   const imageBlob = inputRef.current?.files?.[0]
+  const [processingObjectURL, setProcessingObjectURL] = useState<string | null>(null)
 
   useEffect(() => {
-    console.log('imageBlob 2', imageBlob)
     if (imageBlob == null) {
+      setProcessingObjectURL(null)
       return
     }
+    const processingObjectURL = URL.createObjectURL(imageBlob)
+    setProcessingObjectURL(processingObjectURL)
   }, [imageBlob])
+
+  useEffect(() => {
+    return () => {
+      if (processingObjectURL) {
+        URL.revokeObjectURL(processingObjectURL)
+      }
+    }
+  }, [processingObjectURL])
 
   return (
     <div
@@ -28,7 +39,7 @@ const InputUploadImage = (
       )}
       onClick={() => inputRef.current?.click()}
     >
-      {imageBlob == null ? (
+      {processingObjectURL == null ? (
         <Fragment>
           <div className="rounded-full border-[2px] border-[#3A9B6E] p-2">
             <PlusIcon className="text-[#3A9B6E]" />
@@ -37,7 +48,7 @@ const InputUploadImage = (
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
       ) : (
-        <img src={URL.createObjectURL(imageBlob)} alt="uploaded" className="min-h-[15vh]" />
+        <img src={processingObjectURL} alt="uploaded" className="min-h-[15vh]" />
       )}
       <input type="file" className="hidden" {...omit(props, ['value'])} ref={mergedRef} />
     </div>

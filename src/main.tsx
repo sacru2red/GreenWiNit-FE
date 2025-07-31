@@ -4,6 +4,7 @@ import './index.css'
 import fetchIntercept, { FetchInterceptorResponse } from 'fetch-intercept'
 import { API_URL } from './constant/network.ts'
 import { userStore } from './store/userStore.ts'
+import { initHistoryAndLocation } from './lib/utils.ts'
 
 async function enableMocking() {
   if (import.meta.env.MODE === 'production') {
@@ -52,6 +53,7 @@ fetchIntercept.register({
           response.json().then((body) => {
             if (body.message === '접근이 거부되었습니다.') {
               userStore.getState().setAccessToken(null)
+              initHistoryAndLocation()
             }
           })
         }
