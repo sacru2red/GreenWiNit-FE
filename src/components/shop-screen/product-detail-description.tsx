@@ -1,4 +1,4 @@
-import ProductDetailLabel from './ProductDetailLabel'
+import ProductDetailLabel from './product-detail-label'
 
 interface ProductDetailDescriptionProps {
   description: string | undefined

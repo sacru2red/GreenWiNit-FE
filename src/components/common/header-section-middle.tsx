@@ -1,5 +1,5 @@
-import AppTitle from './AppTitle'
-import SubTitle from './SubTitle'
+import AppTitle from './app-title'
+import SubTitle from './sub-title'
 
 interface HeaderSectionMiddleProps {
   initalPosition?: boolean

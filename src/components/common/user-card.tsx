@@ -1,7 +1,7 @@
-import { useUserStatus } from '@/hooks/useUserStatus'
+import { useUserStatus } from '@/hooks/use-user-status'
 import { Link, useNavigate } from 'react-router-dom'
 import { userStore } from '@/store/userStore'
-import LogoIcon from '../common/LogoIcon'
+import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
 
 const UserCard = () => {

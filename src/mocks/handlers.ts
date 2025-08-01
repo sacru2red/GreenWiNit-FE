@@ -1,7 +1,7 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { Team } from '@/api/challenges'
 import { API_URL } from '@/constant/network'
-import { apiServerMockingStore, ME } from '@/store/apiServerMockingStore'
+import { apiServerMockingStore, ME } from '@/store/api-server-mocking-store'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [

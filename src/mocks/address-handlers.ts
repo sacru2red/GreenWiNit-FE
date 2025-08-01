@@ -1,6 +1,6 @@
 import { API_URL } from '@/constant/network'
 import { clientToServerAddress } from '@/api/address'
-import { apiServerMockingStore } from '@/store/apiServerMockingStore'
+import { apiServerMockingStore } from '@/store/api-server-mocking-store'
 import { ClientAddress } from '@/types/addresses'
 import { http, HttpResponse } from 'msw'
 

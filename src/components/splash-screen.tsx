@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import HeaderSectionMiddle from './common/HeaderSectionMiddle'
+import HeaderSectionMiddle from './common/header-section-middle'
 
 const SplashScreen = () => {
   const [showImages, setShowImages] = useState(false)

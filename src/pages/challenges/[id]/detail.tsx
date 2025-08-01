@@ -1,17 +1,17 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import BottomNavigation from '@/components/common/BottomNavigation'
+import BottomNavigation from '@/components/common/bottom-navigation'
 import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import useChallenge from '@/hooks/challenge/useChallenge'
+import ChallengeTitle from '@/components/common/challenges/challenge-title'
+import useChallenge from '@/hooks/challenge/use-challenge'
 
 const ChallengeDetail = () => {
   const params = useParams<{ challengeId: string }>()

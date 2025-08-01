@@ -1,4 +1,4 @@
-import useProducts from '@/hooks/useProducts'
+import useProducts from '@/hooks/use-products'
 import { useNavigate } from 'react-router-dom'
 
 const ProductList = () => {

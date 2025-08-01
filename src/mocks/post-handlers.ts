@@ -1,4 +1,4 @@
-import { apiServerMockingStore } from '@/store/apiServerMockingStore'
+import { apiServerMockingStore } from '@/store/api-server-mocking-store'
 import { http, HttpResponse } from 'msw'
 
 export const postHandlers = [

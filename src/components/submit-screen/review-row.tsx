@@ -1,8 +1,8 @@
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 import { Path, useController, UseControllerProps } from 'react-hook-form'
-import Required from '@/components/common/Required'
+import Required from '@/components/common/required'
 import { FormState } from './type'
-import Textarea from '@/components/common/form/Textarea'
+import Textarea from '@/components/common/form/textarea'
 
 type MinFormState = Pick<FormState, 'review'>
 type ReviewRowProps<T extends MinFormState> = Omit<UseControllerProps<T>, 'name'>

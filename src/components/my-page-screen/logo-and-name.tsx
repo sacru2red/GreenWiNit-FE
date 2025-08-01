@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/common/LogoIcon'
+import LogoIcon from '@/components/common/logo-icon'
 
 function LogoAndName({ name }: { name: string }) {
   return (

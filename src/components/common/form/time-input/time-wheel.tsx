@@ -1,4 +1,4 @@
-import WheelItem from './WheelItem'
+import WheelItem from './wheel-item'
 
 interface TimeWheelProps<T extends string | number> {
   items: readonly T[]

@@ -1,13 +1,13 @@
-import Required from '@/components/common/Required'
+import Required from '@/components/common/required'
 import Input from '@/components/common/form/Input'
 import { Controller, useForm } from 'react-hook-form'
-import DatePickerSingle from '@/components/common/form/DatePickerSingle'
+import DatePickerSingle from '@/components/common/form/date-picker-single'
 import { omit } from 'es-toolkit'
-import TimeInput from '@/components/common/form/TimeInput'
-import AddressInput from '@/components/common/form/AddressInput'
+import TimeInput from '@/components/common/form/time-input'
+import AddressInput from '@/components/common/form/address-input'
 import { Button } from '@/components/ui/button'
 import { FormState, UpsertPageBodyProps } from './types'
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 
 const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) => {
   const { register, handleSubmit, control, formState } = useForm<FormState>({

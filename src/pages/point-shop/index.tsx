@@ -1,8 +1,8 @@
-import BottomNavigation from '@/components/common/BottomNavigation'
-import PageContainer from '@/components/common/PageContainer'
-import ProductList from '@/components/shop-screen/ProductList'
-import UserStatusbar from '@/components/shop-screen/UserStatusbar'
-import { useUserStatus } from '@/hooks/useUserStatus'
+import BottomNavigation from '@/components/common/bottom-navigation'
+import PageContainer from '@/components/common/page-container'
+import ProductList from '@/components/shop-screen/product-list'
+import UserStatusbar from '@/components/shop-screen/user-statusbar'
+import { useUserStatus } from '@/hooks/use-user-status'
 
 function PointShop() {
   const { data: userStatus } = useUserStatus()

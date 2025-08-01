@@ -1,4 +1,4 @@
-import { AddressState } from '@/components/common/form/AddressInput'
+import { AddressState } from '@/components/common/form/address-input'
 
 export type AddressForm = {
   name: string

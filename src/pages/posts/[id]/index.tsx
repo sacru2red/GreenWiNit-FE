@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import CategoryLabel from '@/components/post-screen/category-label'
-import { usePost } from '@/hooks/post/usePost'
+import { usePost } from '@/hooks/post/use-post'
 
 const PostDetail = () => {
   const navigate = useNavigate()

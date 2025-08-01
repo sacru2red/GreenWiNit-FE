@@ -1,6 +1,6 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
@@ -9,8 +9,8 @@ import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
-import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
-import { FormState, UpsertPageBodyProps } from '@/components/common/teams/UpsertPageBody/types'
+import UpsertPageBody from '@/components/common/teams/upsert-page-body'
+import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 
 const TeamEnroll = () => {
   const params = useParams<{ challengeId: string }>()

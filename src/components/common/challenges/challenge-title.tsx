@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/common/LogoIcon'
+import LogoIcon from '@/components/common/logo-icon'
 
 interface ChallengeTitleProps {
   title?: string | undefined | null

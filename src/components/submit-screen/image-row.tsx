@@ -1,8 +1,8 @@
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 import { Path, useController, UseControllerProps } from 'react-hook-form'
-import Required from '@/components/common/Required'
+import Required from '@/components/common/required'
 import { FormState } from './type'
-import InputUploadImage from '@/components/common/form/InputUploadImage'
+import InputUploadImage from '@/components/common/form/input-upload-image'
 
 type MinFormState = Pick<FormState, 'image'>
 type ImageRowProps<T extends MinFormState> = Omit<UseControllerProps<T>, 'name'>

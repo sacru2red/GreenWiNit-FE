@@ -1,8 +1,8 @@
 import { usersApi } from '@/api/users'
-import HeaderSectionMiddle from '@/components/common/HeaderSectionMiddle'
-import GoogleWideButton from '@/components/login-screen/GoogleWideButton'
-import KakaoWideButton from '@/components/login-screen/KakaoWideButton'
-import NaverWideButton from '@/components/login-screen/NaverWideButton'
+import HeaderSectionMiddle from '@/components/common/header-section-middle'
+import GoogleWideButton from '@/components/login-screen/google-wide-button'
+import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
+import NaverWideButton from '@/components/login-screen/naver-wide-button'
 import { userStore } from '@/store/userStore'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 

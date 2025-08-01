@@ -1,15 +1,15 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
-import { FormState, UpsertPageBodyProps } from '@/components/common/teams/UpsertPageBody/types'
-import useChallengesTeam from '@/hooks/challenge/useChallengesTeam'
+import UpsertPageBody from '@/components/common/teams/upsert-page-body'
+import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
+import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 
 dayjs.extend(customParseFormat)
 

@@ -1,6 +1,6 @@
 import PointsFilterButton from '@/components/my-page-screen/points-filter-button'
 import PointsHistoryList from '@/components/my-page-screen/points-history-list'
-import { useUserPointHistory } from '@/hooks/useUserPointHistory'
+import { useUserPointHistory } from '@/hooks/use-user-point-history'
 import { PointFilterType } from '@/types/points'
 import { useState } from 'react'
 

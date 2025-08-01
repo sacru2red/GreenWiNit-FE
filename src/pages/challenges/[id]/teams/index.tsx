@@ -1,16 +1,16 @@
 import { challengesApi } from '@/api/challenges'
-import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
+import ChallengeTitle from '@/components/common/challenges/challenge-title'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
-import useChallenge from '@/hooks/challenge/useChallenge'
+import useChallenge from '@/hooks/challenge/use-challenge'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SquareCheckBig } from 'lucide-react'
 import { Users as GroupsIcon } from 'lucide-react'
-import BottomNavigation from '@/components/common/BottomNavigation'
-import TeamCard from '@/components/common/teams/TeamCard'
+import BottomNavigation from '@/components/common/bottom-navigation'
+import TeamCard from '@/components/common/teams/team-card'
 
 const ChallengesTeam = () => {
   const params = useParams<{ challengeId: string }>()

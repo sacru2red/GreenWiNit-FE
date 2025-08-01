@@ -1,4 +1,4 @@
-import { Post } from '@/store/apiServerMockingStore'
+import { Post } from '@/store/api-server-mocking-store'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const postsApi = {

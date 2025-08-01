@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useState, useRef, useEffect } from 'react'
-import TimeWheel from './TimeWheel'
+import TimeWheel from './time-wheel'
 
 interface TimePickerProps {
   value: Date | null

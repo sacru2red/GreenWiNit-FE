@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { ComponentProps, Fragment, useState } from 'react'
 import Input from '../Input'
 import dayjs from 'dayjs'
-import TimePicker from './TimePicker'
+import TimePicker from './time-picker'
 
 type TimeInputProps = Omit<ComponentProps<typeof Input>, 'value' | 'onChange'> & {
   value: Date | null
