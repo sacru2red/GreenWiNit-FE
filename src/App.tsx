@@ -31,7 +31,7 @@ import InformationDetail from './pages/informations/[id]/detail'
 import EnrollAddress from './components/shop-screen/EnrollAddress'
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import InformationShare from './pages/InformationShare'
+import Posts from './pages/posts'
 import ProductDetail from './pages/products/[id]/detail'
 
 const queryClient = new QueryClient()
@@ -90,7 +90,7 @@ function App() {
                     path="/my-page/challenges/certify/:challengeId"
                     element={<CertifiedChallengesDetail />}
                   />
-                  <Route path="/information-share" element={<InformationShare />} />
+                  <Route path="/posts" element={<Posts />} />
                   <Route path="/information-share/:informationId" element={<InformationDetail />} />
                   <Route path="/point-shop" element={<PointShop />} />
                   <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />

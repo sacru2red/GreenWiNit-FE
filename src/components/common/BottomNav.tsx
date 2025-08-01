@@ -79,7 +79,7 @@ const NAV_ITEMS = [
   {
     icon: '/icons/share.svg',
     label: '정보공유',
-    moveTo: '/information-share',
+    moveTo: '/posts',
   },
   {
     icon: '/icons/shop.svg',

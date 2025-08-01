@@ -1,4 +1,4 @@
-import { InfoCard } from '@/pages/InformationShare'
+import { InfoCard } from '@/pages/posts'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 

@@ -12,7 +12,7 @@ export type InfoCard = {
   content: string
 }
 
-function InformationShare() {
+function Posts() {
   const { isLoading, data: infoData } = useInformations()
 
   const [activeTab, setActiveTab] = useState<TabType>('전체')
@@ -69,4 +69,4 @@ function InformationShare() {
   )
 }
 
-export default InformationShare
+export default Posts
