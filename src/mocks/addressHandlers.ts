@@ -1,12 +1,12 @@
 import { API_URL } from '@/constant/network'
 import { clientToServerAddress } from '@/api/address'
-import { addressMockingStore } from '@/store/mocking/addressMocking'
+import { apiServerMockingStore } from '@/store/apiServerMockingStore'
 import { ClientAddress } from '@/types/addresses'
 import { http, HttpResponse } from 'msw'
 
 export const addressHandlers = [
   http.get(`${API_URL}/deliveries/addresses`, () => {
-    const response = addressMockingStore.getState().getAddress()
+    const response = apiServerMockingStore.getState().getAddress()
     if (!response) {
       return HttpResponse.json({
         success: false,
@@ -37,8 +37,8 @@ export const addressHandlers = [
 
     const body = (await request.json()) as Partial<ClientAddress>
 
-    addressMockingStore.getState().updateAddress(body)
-    const afterUpdatingAddress = addressMockingStore.getState().address
+    apiServerMockingStore.getState().updateAddress(body)
+    const afterUpdatingAddress = apiServerMockingStore.getState().address
 
     const clientResult = afterUpdatingAddress
 
@@ -63,7 +63,7 @@ export const addressHandlers = [
   }),
   http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
     const body = (await request.json()) as ClientAddress
-    addressMockingStore.getState().enrollAddress(body)
+    apiServerMockingStore.getState().enrollAddress(body)
 
     const serverResponse = clientToServerAddress(body, body.id)
 

@@ -1,20 +1,6 @@
 import { API_URL } from '@/constant/network'
+import { serverToClientAddress } from '@/lib/utils'
 import { ClientAddress, ServerAddress, ServerPostAddress } from '@/types/addresses'
-
-export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
-  return {
-    id: serverAddress.deliveryAddressId,
-    name: serverAddress.recipientName,
-    phone: serverAddress.phoneNumber,
-    address: {
-      roadAddress: serverAddress.roadAddress,
-      roadnameCode: '',
-      zonecode: serverAddress.zipCode,
-      detailAddress: serverAddress.detailAddress,
-      sigungu: '',
-    },
-  }
-}
 
 export const clientToServerAddress = (
   clientAddress: ClientAddress,

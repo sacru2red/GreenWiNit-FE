@@ -3,6 +3,8 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { User } from './userStore'
 import { v4 } from 'uuid'
+import { ClientAddress } from '@/types/addresses'
+import { serverToClientAddress } from '@/lib/utils'
 
 /**
  * 이 파일은 추후에 삭제되어야 합니다.
@@ -16,9 +18,15 @@ interface ApiServerMockingState {
   enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => void
   deleteTeam: (teamId: string) => void
   modifyTeam: (team: Omit<Team, 'users'>) => void
+
   posts: Post[]
   getPosts: () => Post[]
   getPostById: (id: number) => Post | undefined
+
+  address: ClientAddress
+  getAddress: () => ClientAddress | null
+  enrollAddress: (newAddress: ClientAddress) => void
+  updateAddress: (updatedAddress: Partial<ClientAddress>) => void
 }
 
 export type Post = {
@@ -279,6 +287,34 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
         getPosts: () => get().posts,
         getPostById: (id: number) => get().posts.find((post) => post.id === id),
         setPosts: (posts: Post[]) => set({ posts: posts }),
+
+        address: serverToClientAddress({
+          deliveryAddressId: 1,
+          recipientName: '홍길동',
+          phoneNumber: '010-1234-5678',
+          roadAddress: '00시 00구 00로 11',
+          detailAddress: '1층',
+          zipCode: '12345',
+        }),
+        getAddress: (): ClientAddress | null => {
+          return get().address
+        },
+        enrollAddress: (newAddress: ClientAddress) => {
+          set({ address: newAddress })
+        },
+
+        updateAddress: (updatedAddress: Partial<ClientAddress>) => {
+          const currentAddress = get().address
+          const newAddress = {
+            ...currentAddress,
+            ...updatedAddress,
+            address: updatedAddress.address
+              ? { ...currentAddress.address, ...updatedAddress.address }
+              : currentAddress.address,
+          }
+
+          set({ address: newAddress })
+        },
       }),
       {
         name: 'apiServerMockingStore',
