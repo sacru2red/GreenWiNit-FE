@@ -15,12 +15,10 @@ export const addressHandlers = [
       })
     }
 
-    const serverResponse = clientToServerAddress(response, response.id)
-
     return HttpResponse.json({
       success: true,
       message: '배송지 조회에 성공했습니다.',
-      result: serverResponse,
+      result: response,
     })
   }),
   http.put(`${API_URL}/deliveries/addresses/:deliveryAddressId`, async ({ request, params }) => {
