@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import InformationLabel from './InformationLabel'
+import CategoryLabel from './category-label'
 
-type InformationCardProps = {
+type PostItemProps = {
   id: number
   categoryName: string
   title: string
@@ -9,13 +9,7 @@ type InformationCardProps = {
   thumbnailUrl: string
 }
 
-const InformationCard = ({
-  id,
-  categoryName,
-  title,
-  content,
-  thumbnailUrl,
-}: InformationCardProps) => {
+const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemProps) => {
   const navigate = useNavigate()
 
   const handleClickCard = () => {
@@ -42,7 +36,7 @@ const InformationCard = ({
       <div className="flex flex-col justify-baseline p-[12px]">
         <div className="flex flex-row items-center justify-between gap-2 py-[10px]">
           <p className="text-md flex-1 truncate text-start font-bold">{title}</p>
-          <InformationLabel categoryName={categoryName} />
+          <CategoryLabel categoryName={categoryName} />
         </div>
         <p className="items-start justify-baseline text-start">{content.substring(0, 30)}</p>
       </div>
@@ -50,4 +44,4 @@ const InformationCard = ({
   )
 }
 
-export default InformationCard
+export default PostItem

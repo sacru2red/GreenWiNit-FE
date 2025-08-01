@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
-import InformationLabel from '@/components/Information-screen/InformationLabel'
+import CategoryLabel from '@/components/post-screen/category-label'
 import { usePost } from '@/hooks/post/usePost'
 
 const PostDetail = () => {
@@ -30,7 +30,7 @@ const PostDetail = () => {
       </div>
       <div className="flex flex-row items-center justify-between p-[16px]">
         <div className="text-xl font-bold">{post.title}</div>
-        <InformationLabel categoryName={post.infoCategoryName} />
+        <CategoryLabel categoryName={post.infoCategoryName} />
       </div>
       <div className="flex flex-col text-start">
         <p className="border-b-2 px-[16px] pt-[16px] text-xl font-bold text-black">소개</p>

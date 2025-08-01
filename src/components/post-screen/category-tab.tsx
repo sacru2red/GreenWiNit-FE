@@ -1,13 +1,11 @@
 export type TabType = '전체' | '참여형' | '커뮤니티'
 
-interface InformationTabProps {
+interface CategoryTabProps {
   onTabChange: (tabType: TabType) => void
   activeTab?: TabType
 }
 
-const InformationTab = ({ onTabChange, activeTab }: InformationTabProps) => {
-  const tabs: TabType[] = ['전체', '참여형', '커뮤니티']
-
+const CategoryTab = ({ onTabChange, activeTab }: CategoryTabProps) => {
   const handleTabClick = (tabType: TabType) => {
     onTabChange(tabType)
   }
@@ -27,4 +25,6 @@ const InformationTab = ({ onTabChange, activeTab }: InformationTabProps) => {
   )
 }
 
-export default InformationTab
+const tabs: TabType[] = ['전체', '참여형', '커뮤니티']
+
+export default CategoryTab

@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils'
 
-type InformationLabelProps = {
+type CategoryLabelProps = {
   categoryName: string
 }
 
-const InformationLabel = ({ categoryName }: InformationLabelProps) => {
+const CategoryLabel = ({ categoryName }: CategoryLabelProps) => {
   return (
     <div
       className={cn(
@@ -19,4 +19,4 @@ const InformationLabel = ({ categoryName }: InformationLabelProps) => {
   )
 }
 
-export default InformationLabel
+export default CategoryLabel

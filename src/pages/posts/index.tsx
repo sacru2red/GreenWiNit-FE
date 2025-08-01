@@ -1,6 +1,6 @@
 import BottomNavigation from '@/components/common/BottomNav'
-import InformationCard from '@/components/Information-screen/InformationCard'
-import InformationTab, { TabType } from '@/components/Information-screen/InformationTab'
+import PostItem from '@/components/post-screen/post-item'
+import CategoryTab, { TabType } from '@/components/post-screen/category-tab'
 import { usePosts } from '@/hooks/post/usePosts'
 import { useState } from 'react'
 
@@ -27,12 +27,12 @@ function Posts() {
           정보공유
         </div>
         <hr />
-        <InformationTab onTabChange={setActiveTab} activeTab={activeTab} />
+        <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
       </header>
       <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {filteredPosts ? (
           filteredPosts.map((item) => (
-            <InformationCard
+            <PostItem
               key={item.id}
               id={item.id}
               categoryName={item.infoCategoryName}
