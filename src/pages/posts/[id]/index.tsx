@@ -3,11 +3,11 @@ import { ChevronLeft } from 'lucide-react'
 import InformationLabel from '@/components/Information-screen/InformationLabel'
 import { useInformation } from '@/hooks/useInformation'
 
-const InformationDetail = () => {
+const PostDetail = () => {
   const navigate = useNavigate()
-  const { informationId } = useParams<{ informationId: string }>()
-  const numericId = informationId ? parseInt(informationId) : undefined
-  const { isLoading, data: cardData } = useInformation(numericId)
+  const { postId } = useParams<{ postId: string }>()
+  const parsedPostId = postId ? parseInt(postId) : undefined
+  const { isLoading, data: cardData } = useInformation(parsedPostId)
 
   if (isLoading) return <div>로딩 중...</div>
 
@@ -40,4 +40,4 @@ const InformationDetail = () => {
   )
 }
 
-export default InformationDetail
+export default PostDetail

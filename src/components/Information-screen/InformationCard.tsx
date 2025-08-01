@@ -20,7 +20,7 @@ const InformationCard = ({
 
   const handleClickCard = () => {
     const cardData = { id, categoryName, title, content, thumbnailUrl }
-    navigate(`/information-share/${id}`, {
+    navigate(`/posts/${id}`, {
       state: { cardData },
     })
   }

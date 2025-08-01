@@ -12,6 +12,9 @@ export type InfoCard = {
   content: string
 }
 
+/**
+ * 실제 화면상에서 "정보공유"에 해당하는 페이지
+ */
 function Posts() {
   const { isLoading, data: infoData } = useInformations()
 

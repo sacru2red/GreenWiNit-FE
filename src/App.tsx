@@ -27,7 +27,7 @@ import CertifiedChallengesDetail from '@/pages/my-page/certified-challenges-deta
 import NotFound from '@/pages/404'
 import './App.css'
 import PointShop from './pages/PointShop'
-import InformationDetail from './pages/informations/[id]/detail'
+import PostDetail from './pages/posts/[id]'
 import EnrollAddress from './components/shop-screen/EnrollAddress'
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -91,7 +91,7 @@ function App() {
                     element={<CertifiedChallengesDetail />}
                   />
                   <Route path="/posts" element={<Posts />} />
-                  <Route path="/information-share/:informationId" element={<InformationDetail />} />
+                  <Route path="/posts/:postId" element={<PostDetail />} />
                   <Route path="/point-shop" element={<PointShop />} />
                   <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
                   <Route
