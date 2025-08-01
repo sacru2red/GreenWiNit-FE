@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import InformationLabel from '@/components/Information-screen/InformationLabel'
-import { useInformation } from '@/hooks/useInformation'
+import { useInformation } from '@/hooks/post/useInformation'
 
 const PostDetail = () => {
   const navigate = useNavigate()

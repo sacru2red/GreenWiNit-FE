@@ -1,7 +1,7 @@
 import BottomNavigation from '@/components/common/BottomNav'
 import InformationCard from '@/components/Information-screen/InformationCard'
 import InformationTab, { TabType } from '@/components/Information-screen/InformationTab'
-import { useInformations } from '@/hooks/useInformations'
+import { useInformations } from '@/hooks/post/useInformations'
 import { useState } from 'react'
 
 /**
