@@ -1,9 +1,9 @@
 import { serverToClientAddress } from '@/api/address'
-import { AddressInfoApiResponse, ClientAddressInfo, ServerAddressInfo } from '@/types/addresses'
+import { ClientAddress, ServerAddress } from '@/types/addresses'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-const mockAddressInfo: ServerAddressInfo = {
+const initState: ServerAddress = {
   deliveryAddressId: 1,
   recipientName: '홍길동',
   phoneNumber: '010-1234-5678',
@@ -12,37 +12,29 @@ const mockAddressInfo: ServerAddressInfo = {
   zipCode: '12345',
 }
 
-const clientMockAddress = serverToClientAddress(mockAddressInfo)
+const clientMockAddress = serverToClientAddress(initState)
 
-interface AddressInfoStore {
-  addressInfo: ClientAddressInfo
-  getAddress: () => ClientAddressInfo | null
-  enrollAddress: (newAddress: ClientAddressInfo) => AddressInfoApiResponse
-  updateAddress: (updatedAddress: Partial<ClientAddressInfo>) => AddressInfoApiResponse
+interface AddressStore {
+  address: ClientAddress
+  getAddress: () => ClientAddress | null
+  enrollAddress: (newAddress: ClientAddress) => void
+  updateAddress: (updatedAddress: Partial<ClientAddress>) => void
 }
 
-export const addressMocking = create<AddressInfoStore>()(
+export const addressMockingStore = create<AddressStore>()(
   devtools(
     persist(
       (set, get) => ({
-        addressInfo: clientMockAddress,
-
-        getAddress: (): ClientAddressInfo | null => {
-          return get().addressInfo
+        address: clientMockAddress,
+        getAddress: (): ClientAddress | null => {
+          return get().address
+        },
+        enrollAddress: (newAddress: ClientAddress) => {
+          set({ address: newAddress })
         },
 
-        enrollAddress: (newAddress: ClientAddressInfo): AddressInfoApiResponse => {
-          set({ addressInfo: newAddress })
-
-          return {
-            success: true,
-            message: '주소가 성공적으로 등록되었습니다.',
-            result: newAddress,
-          }
-        },
-
-        updateAddress: (updatedAddress: Partial<ClientAddressInfo>): AddressInfoApiResponse => {
-          const currentAddress = get().addressInfo
+        updateAddress: (updatedAddress: Partial<ClientAddress>) => {
+          const currentAddress = get().address
           const newAddress = {
             ...currentAddress,
             ...updatedAddress,
@@ -51,13 +43,7 @@ export const addressMocking = create<AddressInfoStore>()(
               : currentAddress.address,
           }
 
-          set({ addressInfo: newAddress })
-
-          return {
-            success: true,
-            message: '주소가 성공적으로 업데이트되었습니다.',
-            result: newAddress,
-          }
+          set({ address: newAddress })
         },
       }),
       {

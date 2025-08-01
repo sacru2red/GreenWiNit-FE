@@ -7,8 +7,8 @@ export const postsApi = {
     const data = (await response.json()) as Post[]
     return data
   },
-  getPost: async (infoId: number | undefined) => {
-    const response = await fetch(`/api/user/info/${infoId}`)
+  getPost: async (postId: number | undefined) => {
+    const response = await fetch(`/api/user/info/${postId}`)
     const data = (await response.json()) as Post
     return data
   },
@@ -16,7 +16,7 @@ export const postsApi = {
 
 const postsKey = createQueryKeys('posts', {
   list: () => ['list'] as const,
-  detail: (id: number | undefined) => ['detail', id] as const,
+  detail: (postId: number | undefined) => ['detail', postId] as const,
 })
 
 export const postsQueryKeys = postsKey
