@@ -1,21 +1,27 @@
-import { productMocking } from '@/store/mocking/productMocking'
-import { ProdcutDetailMocking } from '@/store/mocking/productDetailMocking'
+import { apiServerMockingStore } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 import { API_URL } from '@/constant/network'
 
 export const productHandlers = [
   http.get(`${API_URL}/point-products`, () => {
-    const response = productMocking.getState().getProducts()
+    const response = apiServerMockingStore.getState().getProducts()
     return HttpResponse.json(response)
   }),
 
   http.get(`${API_URL}/point-products/:pointProductId`, ({ params }) => {
     const productId = parseInt(params['pointProductId'] as string)
 
-    const response = ProdcutDetailMocking.getState().getProductDetail(productId)
+    const response = apiServerMockingStore.getState().getProductDetail(productId)
 
-    if (!response.success) {
-      return HttpResponse.json(response, { status: 404 })
+    if (!response) {
+      return HttpResponse.json(
+        {
+          success: false,
+          message: '해당 상품을 찾을 수 없습니다.',
+          result: null,
+        },
+        { status: 404 },
+      )
     }
 
     return HttpResponse.json(response)
