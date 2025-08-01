@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SquareCheckBig } from 'lucide-react'
 import { Users as GroupsIcon } from 'lucide-react'
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/BottomNavigation'
 import TeamCard from '@/components/common/teams/TeamCard'
 
 const ChallengesTeam = () => {

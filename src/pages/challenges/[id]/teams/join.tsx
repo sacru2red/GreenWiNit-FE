@@ -5,7 +5,7 @@ import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
 import useChallenge from '@/hooks/challenge/useChallenge'
 import { useNavigate, useParams } from 'react-router-dom'
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/BottomNavigation'
 
 const JoinTeam = () => {
   const params = useParams<{ challengeId: string }>()

@@ -1,5 +1,5 @@
 import AppTitle from '@/components/common/AppTitle'
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/BottomNavigation'
 import UserCard from '@/components/common/UserCard'
 import useIsLoggedIn from '@/hooks/useIsLoggedIn'
 import { useNavigate, useSearchParams } from 'react-router-dom'

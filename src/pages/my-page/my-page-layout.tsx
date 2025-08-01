@@ -1,4 +1,4 @@
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/BottomNavigation'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'

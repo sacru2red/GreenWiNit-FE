@@ -1,4 +1,4 @@
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/BottomNavigation'
 import PageContainer from '@/components/common/PageContainer'
 import ProductList from '@/components/shop-screen/ProductList'
 import UserStatusbar from '@/components/shop-screen/UserStatusbar'

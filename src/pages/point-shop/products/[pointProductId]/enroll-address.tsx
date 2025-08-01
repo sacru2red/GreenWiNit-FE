@@ -3,7 +3,7 @@ import AddressInput, { AddressState } from '../../../../components/common/form/A
 import { useCallback, useState } from 'react'
 import { Input } from '../../../../components/ui/input'
 import InputLabel from '../../../../components/common/form/InputLabel'
-import BottomNavigation from '../../../../components/common/BottomNav'
+import BottomNavigation from '../../../../components/common/BottomNavigation'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { ServerPostAddress } from '@/types/addresses'
