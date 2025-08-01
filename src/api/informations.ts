@@ -1,4 +1,4 @@
-import { InfoCard } from '@/pages/app/InformationShare'
+import { InfoCard } from '@/pages/InformationShare'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const informationsApi = {

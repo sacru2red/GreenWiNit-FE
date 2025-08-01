@@ -1,9 +1,5 @@
-import {
-  AddressInfoApiResponse,
-  ClientAddressInfo,
-  ServerAddressInfo,
-  serverToClientAddress,
-} from '@/api/address'
+import { serverToClientAddress } from '@/api/address'
+import { AddressInfoApiResponse, ClientAddressInfo, ServerAddressInfo } from '@/types/addresses'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
@@ -20,6 +16,7 @@ const clientMockAddress = serverToClientAddress(mockAddressInfo)
 
 interface AddressInfoStore {
   addressInfo: ClientAddressInfo
+  getAddress: () => ClientAddressInfo | null
   enrollAddress: (newAddress: ClientAddressInfo) => AddressInfoApiResponse
   updateAddress: (updatedAddress: Partial<ClientAddressInfo>) => AddressInfoApiResponse
 }
@@ -29,6 +26,10 @@ export const addressMocking = create<AddressInfoStore>()(
     persist(
       (set, get) => ({
         addressInfo: clientMockAddress,
+
+        getAddress: (): ClientAddressInfo | null => {
+          return get().addressInfo
+        },
 
         enrollAddress: (newAddress: ClientAddressInfo): AddressInfoApiResponse => {
           set({ addressInfo: newAddress })

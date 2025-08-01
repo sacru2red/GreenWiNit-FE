@@ -1,10 +1,12 @@
 import { ChevronLeft } from 'lucide-react'
 import AddressInput, { AddressState } from '../common/form/AddressInput'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Input } from '../ui/input'
 import InputLabel from '../common/form/InputLabel'
 import BottomNavigation from '../common/BottomNav'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { addressApi } from '@/api/address'
+import { ServerPostAddress } from '@/types/addresses'
 
 interface FormData {
   name: string
@@ -15,6 +17,9 @@ interface FormData {
 const EnrollAddress = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const fromPath = location.state?.from
 
   const mode = searchParams.get('mode') || 'add'
   const isEditMode = mode === 'edit'
@@ -25,32 +30,22 @@ const EnrollAddress = () => {
     address: null,
   })
 
-  useEffect(() => {
-    if (isEditMode) {
-      const savedUserInfo = localStorage.getItem('deliveryUserInfo')
-      if (savedUserInfo) {
-        const userInfo = JSON.parse(savedUserInfo)
-        console.log(userInfo)
-        setFormData({
-          name: userInfo.name || '',
-          phone: userInfo.phone || '',
-          address: userInfo.address || null,
-        })
-      }
-    }
-  }, [isEditMode])
-
   const handleBackButtonClick = () => {
-    navigate(-1)
+    if (fromPath) {
+      console.log(fromPath)
+      navigate(fromPath)
+    } else {
+      window.history.back()
+    }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
-  }
+  }, [])
 
   const handleAddressChange = useCallback((address: AddressState) => {
     setFormData((prev) => ({
@@ -62,7 +57,31 @@ const EnrollAddress = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    console.log(formData)
+    if (!formData.name.trim()) {
+      alert('이름을 입력해주세요.')
+      return
+    }
+
+    if (!formData.phone.trim()) {
+      alert('전화번호를 입력해주세요.')
+      return
+    }
+
+    if (!formData.address) {
+      alert('주소를 입력해주세요.')
+      return
+    }
+
+    const serverAddressForm: ServerPostAddress = {
+      recipientName: formData.name,
+      phoneNumber: formData.phone,
+      roadAddress: formData.address.roadAddress,
+      detailAddress: formData.address.detailAddress,
+      zipCode: formData.address.zonecode,
+    }
+
+    addressApi.saveAddress(serverAddressForm)
+    navigate(fromPath)
   }
 
   return (
