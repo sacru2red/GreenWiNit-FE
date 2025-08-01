@@ -1,23 +1,22 @@
 import { InfoCard } from '@/pages/posts'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
-export const informationsApi = {
-  getInformations: async () => {
+export const postsApi = {
+  getPosts: async () => {
     const response = await fetch('/api/user/info')
     const data = (await response.json()) as InfoCard[]
     return data
   },
-
-  getInformation: async (infoId: number | undefined) => {
+  getPost: async (infoId: number | undefined) => {
     const response = await fetch(`/api/user/info/${infoId}`)
     const data = (await response.json()) as InfoCard
     return data
   },
 }
 
-const informationsKey = createQueryKeys('informations', {
+const postsKey = createQueryKeys('posts', {
   list: () => ['list'] as const,
   detail: (id: number | undefined) => ['detail', id] as const,
 })
 
-export const informationQueryKeys = informationsKey
+export const postsQueryKeys = postsKey

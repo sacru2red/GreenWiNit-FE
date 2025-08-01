@@ -1,9 +1,9 @@
-import { informationQueryKeys, informationsApi } from '@/api/informations'
+import { postsQueryKeys, postsApi } from '@/api/posts'
 import { useQuery } from '@tanstack/react-query'
 
 export const useInformations = () => {
   return useQuery({
-    queryKey: informationQueryKeys.list().queryKey,
-    queryFn: informationsApi.getInformations,
+    queryKey: postsQueryKeys.list().queryKey,
+    queryFn: postsApi.getPosts,
   })
 }
