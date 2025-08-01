@@ -1,7 +1,7 @@
 import { apiServerMockingStore } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 
-export const InformationHandlers = [
+export const postHandlers = [
   http.get('/api/user/info', () => {
     const response = apiServerMockingStore.getState().getPosts()
     return HttpResponse.json(response)
