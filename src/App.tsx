@@ -29,7 +29,7 @@ import './App.css'
 import PointShop from './pages/point-shop'
 import ProductDetail from './pages/point-shop/products/[pointProductId]/detail'
 import PostDetail from './pages/posts/[id]'
-import EnrollAddress from './pages/point-shop/products/[pointProductId]/enrollAddress'
+import EnrollAddress from './pages/point-shop/products/[pointProductId]/enroll-address'
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Posts from './pages/posts'
@@ -95,7 +95,7 @@ function App() {
                   <Route path="/point-shop" element={<PointShop />} />
                   <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
                   <Route
-                    path="/point-shop/product/:pointProductId/enrollAddress"
+                    path="/point-shop/product/:pointProductId/enroll-address"
                     element={<EnrollAddress />}
                   />
                   <Route path="/signup" element={<Signup />} />
