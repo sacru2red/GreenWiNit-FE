@@ -1,16 +1,16 @@
-import { InformationMockingStore } from '@/store/InformationMockingStore'
+import { apiServerMockingStore } from '@/store/apiServerMockingStore'
 import { http, HttpResponse } from 'msw'
 
 export const InformationHandlers = [
   http.get('/api/user/info', () => {
-    const response = InformationMockingStore.getState().getInformations()
+    const response = apiServerMockingStore.getState().getPosts()
     return HttpResponse.json(response)
   }),
 
   http.get('/api/user/info/:infoId', ({ params }) => {
     const infoId = parseInt(params['infoId'] as string)
 
-    const response = InformationMockingStore.getState().getInformationById(infoId)
+    const response = apiServerMockingStore.getState().getPostById(infoId)
 
     if (response === undefined) {
       return HttpResponse.json(response, { status: 404 })

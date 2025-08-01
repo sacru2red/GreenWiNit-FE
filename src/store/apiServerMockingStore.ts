@@ -16,12 +16,12 @@ interface ApiServerMockingState {
   enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => void
   deleteTeam: (teamId: string) => void
   modifyTeam: (team: Omit<Team, 'users'>) => void
-  informations: InfoCard[]
-  getInformations: () => InfoCard[]
-  getInformationById: (id: number) => InfoCard | undefined
+  posts: Post[]
+  getPosts: () => Post[]
+  getPostById: (id: number) => Post | undefined
 }
 
-export type InfoCard = {
+export type Post = {
   id: number
   infoCategoryName: string
   title: string
@@ -231,7 +231,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             ),
           }))
         },
-        informations: [
+        posts: [
           {
             id: 1,
             infoCategoryName: '이벤트',
@@ -275,10 +275,10 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             thumbnailUrl: '/img/2.png',
             content: '버려지는 물건에 새 생명을 불어넣는 업사이클링 워크숍입니다.',
           },
-        ] satisfies InfoCard[],
-        getInformations: () => get().informations,
-        getInformationById: (id: number) => get().informations.find((info) => info.id === id),
-        setInformations: (informations: InfoCard[]) => set({ informations }),
+        ] satisfies Post[],
+        getPosts: () => get().posts,
+        getPostById: (id: number) => get().posts.find((info) => info.id === id),
+        setInformations: (informations: Post[]) => set({ posts: informations }),
       }),
       {
         name: 'apiServerMockingStore',
