@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import InformationLabel from '@/components/Information-screen/InformationLabel'
-import { useInformation } from '@/hooks/post/useInformation'
+import { usePost } from '@/hooks/post/usePost'
 
 const PostDetail = () => {
   const navigate = useNavigate()
   const { postId } = useParams<{ postId: string }>()
   const parsedPostId = postId ? parseInt(postId) : undefined
-  const { isLoading, data: cardData } = useInformation(parsedPostId)
+  const { isLoading, data: post } = usePost(parsedPostId)
 
   if (isLoading) return <div>로딩 중...</div>
 
-  if (!cardData) {
+  if (!post) {
     return <div>데이터를 찾을 수 없습니다.</div>
   }
 
@@ -26,15 +26,15 @@ const PostDetail = () => {
         <p className="text-center font-bold text-black">활동 상세</p>
       </header>
       <div className="bg-green-50">
-        <img src={cardData.thumbnailUrl} className="w-full" />
+        <img src={post.thumbnailUrl} className="w-full" />
       </div>
       <div className="flex flex-row items-center justify-between p-[16px]">
-        <div className="text-xl font-bold">{cardData.title}</div>
-        <InformationLabel categoryName={cardData.infoCategoryName} />
+        <div className="text-xl font-bold">{post.title}</div>
+        <InformationLabel categoryName={post.infoCategoryName} />
       </div>
       <div className="flex flex-col text-start">
         <p className="border-b-2 px-[16px] pt-[16px] text-xl font-bold text-black">소개</p>
-        <p className="p-[16px] text-gray-500">{cardData.content}</p>
+        <p className="p-[16px] text-gray-500">{post.content}</p>
       </div>
     </div>
   )

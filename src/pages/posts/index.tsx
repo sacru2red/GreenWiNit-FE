@@ -1,29 +1,24 @@
 import BottomNavigation from '@/components/common/BottomNav'
 import InformationCard from '@/components/Information-screen/InformationCard'
 import InformationTab, { TabType } from '@/components/Information-screen/InformationTab'
-import { useInformations } from '@/hooks/post/useInformations'
+import { usePosts } from '@/hooks/post/usePosts'
 import { useState } from 'react'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
  */
 function Posts() {
-  const { isLoading, data: infoData } = useInformations()
-
+  const { isLoading, data: posts } = usePosts()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
-
-  const handleTabChange = (tabType: TabType) => {
-    setActiveTab(tabType)
-  }
 
   if (isLoading) {
     return <div>로딩 중....</div>
   }
 
-  const filteredData =
+  const filteredPosts =
     activeTab === '전체'
-      ? infoData
-      : infoData?.filter((item) => item.infoCategoryName === transfetabToCategoryName(activeTab))
+      ? posts
+      : posts?.filter((item) => item.infoCategoryName === transferTabToCategoryName(activeTab))
 
   return (
     <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
@@ -32,11 +27,11 @@ function Posts() {
           정보공유
         </div>
         <hr />
-        <InformationTab onTabChange={handleTabChange} activeTab={activeTab} />
+        <InformationTab onTabChange={setActiveTab} activeTab={activeTab} />
       </header>
       <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {filteredData ? (
-          filteredData.map((item) => (
+        {filteredPosts ? (
+          filteredPosts.map((item) => (
             <InformationCard
               key={item.id}
               id={item.id}
@@ -57,7 +52,7 @@ function Posts() {
   )
 }
 
-const transfetabToCategoryName = (tabType: TabType) => {
+const transferTabToCategoryName = (tabType: TabType) => {
   if (tabType === '참여형') {
     return '이벤트'
   }
