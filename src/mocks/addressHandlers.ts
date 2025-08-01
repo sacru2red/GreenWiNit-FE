@@ -37,9 +37,10 @@ export const addressHandlers = [
 
     const body = (await request.json()) as Partial<ClientAddress>
 
-    const updateResult = addressMockingStore.getState().updateAddress(body)
+    addressMockingStore.getState().updateAddress(body)
+    const afterUpdatingAddress = addressMockingStore.getState().address
 
-    const clientResult = updateResult.result
+    const clientResult = afterUpdatingAddress
 
     if (!clientResult) {
       return HttpResponse.json(
@@ -62,13 +63,9 @@ export const addressHandlers = [
   }),
   http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
     const body = (await request.json()) as ClientAddress
-    const data = addressMockingStore.getState().enrollAddress(body)
+    addressMockingStore.getState().enrollAddress(body)
 
-    if (!data.success || !data.result) {
-      return HttpResponse.json(data)
-    }
-
-    const serverResponse = clientToServerAddress(data.result, data.result.id)
+    const serverResponse = clientToServerAddress(body, body.id)
 
     return HttpResponse.json({
       sucess: true,
