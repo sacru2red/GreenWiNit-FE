@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog
 import { useState } from 'react'
 import { toast } from 'sonner'
 import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import useChallenge from '@/hooks/useChallenge'
+import useChallenge from '@/hooks/challenge/useChallenge'
 
 const ChallengeDetail = () => {
   const params = useParams<{ challengeId: string }>()

@@ -9,7 +9,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/UpsertPageBody/types'
-import useChallengesTeam from '@/hooks/useChallengesTeam'
+import useChallengesTeam from '@/hooks/challenge/useChallengesTeam'
 
 dayjs.extend(customParseFormat)
 

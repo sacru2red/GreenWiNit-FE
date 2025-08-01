@@ -6,7 +6,7 @@ import MemberCount from '@/components/common/teams/MemberCount'
 import Overview from '@/components/common/teams/Overview'
 import PropertyList from '@/components/common/teams/PropertyList'
 import { Button } from '@/components/ui/button'
-import useChallengesTeam from '@/hooks/useChallengesTeam'
+import useChallengesTeam from '@/hooks/challenge/useChallengesTeam'
 import { useNavigate, useParams } from 'react-router-dom'
 
 /**

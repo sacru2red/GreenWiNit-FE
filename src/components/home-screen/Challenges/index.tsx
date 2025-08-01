@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Tab from '@/components/home-screen/Challenges/Tab'
 import { TabProps } from '@/components/home-screen/Challenges/type'
-import { useChallenges } from '@/hooks/useChallenges'
+import { useChallenges } from '@/hooks/challenge/useChallenges'
 import Challenge from '@/components/common/Challenge'
 import { useNavigate } from 'react-router-dom'
 import { Info as InfoOutlineIcon } from 'lucide-react'

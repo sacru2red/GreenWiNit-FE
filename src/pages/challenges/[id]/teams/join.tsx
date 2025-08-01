@@ -3,7 +3,7 @@ import TeamCard from '@/components/common/teams/TeamCard'
 import PageContainer from '@/components/common/PageContainer'
 import PageHeaderSection from '@/components/common/PageHeaderSection'
 import PageTitle from '@/components/common/PageTitle'
-import useChallenge from '@/hooks/useChallenge'
+import useChallenge from '@/hooks/challenge/useChallenge'
 import { useNavigate, useParams } from 'react-router-dom'
 import BottomNavigation from '@/components/common/BottomNav'
 
