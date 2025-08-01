@@ -1,6 +1,7 @@
 import BottomNavigation from '@/components/common/BottomNav'
 import PostItem from '@/components/post-screen/post-item'
-import CategoryTab, { TabType } from '@/components/post-screen/category-tab'
+import CategoryTab from '@/components/post-screen/category-tab'
+import { TabType } from '@/components/post-screen/category-tab/types'
 import { usePosts } from '@/hooks/post/usePosts'
 import { useState } from 'react'
 

@@ -1,4 +1,5 @@
-export type TabType = '전체' | '참여형' | '커뮤니티'
+import { cn } from '@/lib/utils'
+import { TabType } from './types'
 
 interface CategoryTabProps {
   onTabChange: (tabType: TabType) => void
@@ -15,7 +16,10 @@ const CategoryTab = ({ onTabChange, activeTab }: CategoryTabProps) => {
       {tabs.map((tab) => (
         <div
           key={tab}
-          className={`flex-1 cursor-pointer p-[10px] py-[16px] text-center transition-colors hover:font-bold ${activeTab === tab ? 'font-bold text-green-600' : ''} `}
+          className={cn(
+            'flex-1 cursor-pointer p-[10px] py-[16px] text-center transition-colors hover:font-bold',
+            activeTab === tab && 'font-bold text-green-600',
+          )}
           onClick={() => handleTabClick(tab)}
         >
           {tab}
