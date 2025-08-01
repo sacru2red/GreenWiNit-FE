@@ -1,31 +1,43 @@
-import { ClientAddressInfo, clientToServerAddress } from '@/api/address'
 import { API_URL } from '@/constant/network'
+import { clientToServerAddress } from '@/api/address'
 import { addressMocking } from '@/store/mocking/addressMocking'
+import { ClientAddressInfo } from '@/types/addresses'
 import { http, HttpResponse } from 'msw'
 
 export const addressHandlers = [
   http.get(`${API_URL}/deliveries/addresses`, () => {
-    const response = addressMocking.getState().addressInfo
-    return HttpResponse.json(response)
+    const response = addressMocking.getState().getAddress()
+    if (!response) {
+      return HttpResponse.json({
+        success: false,
+        message: '유효하지 않은 요청입니다.',
+        result: null,
+      })
+    }
+
+    return HttpResponse.json({
+      success: true,
+      message: '배송지 조회에 성공했습니다.',
+      result: response,
+    })
   }),
+  http.put(`${API_URL}/deliveries/addresses/:deliveryAddressId`, async ({ request, params }) => {
+    const { deliveryAddressId } = params
 
-  http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
-    const body = (await request.json()) as Partial<ClientAddressInfo>
-
-    const updateResult = addressMocking.getState().updateAddress(body)
-
-    const addressId = updateResult.result?.id
-
-    if (!addressId) {
+    if (!deliveryAddressId || isNaN(Number(deliveryAddressId))) {
       return HttpResponse.json(
         {
           success: false,
-          message: '수정하고자 하는 배송지 id가 없습니다',
+          message: '유효하지 않은 배송지 ID입니다',
           result: null,
         },
-        { status: 404 },
+        { status: 400 },
       )
     }
+
+    const body = (await request.json()) as Partial<ClientAddressInfo>
+
+    const updateResult = addressMocking.getState().updateAddress(body)
 
     const clientResult = updateResult.result
 
@@ -40,8 +52,28 @@ export const addressHandlers = [
       )
     }
 
-    const serverResponse = clientToServerAddress(clientResult, addressId)
+    const serverResponse = clientToServerAddress(clientResult, clientResult.id)
 
-    return HttpResponse.json(serverResponse)
+    return HttpResponse.json({
+      success: true,
+      message: '배송지를 수정할 수 없습니다',
+      result: serverResponse,
+    })
+  }),
+  http.post(`${API_URL}/deliveries/addresses`, async ({ request }) => {
+    const body = (await request.json()) as ClientAddressInfo
+    const data = addressMocking.getState().enrollAddress(body)
+
+    if (!data.success || !data.result) {
+      return HttpResponse.json(data)
+    }
+
+    const serverResponse = clientToServerAddress(data.result, data.result.id)
+
+    return HttpResponse.json({
+      sucess: true,
+      message: '배송지 정보 추가에 성공하였습니다',
+      result: serverResponse,
+    })
   }),
 ]

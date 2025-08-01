@@ -26,13 +26,13 @@ import CertifiedChallenges from '@/pages/my-page/certifed-challenges'
 import CertifiedChallengesDetail from '@/pages/my-page/certified-challenges-detail'
 import NotFound from '@/pages/404'
 import './App.css'
-import PointShop from './pages/app/PointShop'
-import ProductDetail from './pages/app/products/[id]/detail'
+import PointShop from './pages/PointShop'
+import InformationDetail from './pages/informations/[id]/detail'
 import EnrollAddress from './components/shop-screen/EnrollAddress'
-import InformationShare from './pages/app/InformationShare'
-import InformationDetail from './pages/app/informations/[id]/detail'
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import InformationShare from './pages/InformationShare'
+import ProductDetail from './pages/products/[id]/detail'
 
 const queryClient = new QueryClient()
 

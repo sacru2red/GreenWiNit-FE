@@ -9,11 +9,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const ProductDetail = () => {
   const params = useParams<{ pointProductId: string }>()
+  const pointProductId = params.pointProductId
   const navigate = useNavigate()
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)
 
-  const { data: product, isLoading: productLoading } = useProduct(params.pointProductId)
+  const { data: product, isLoading: productLoading } = useProduct(pointProductId)
   const { data: userStatus, isLoading: userLoading } = useUserStatus()
 
   const isLoading = productLoading || userLoading
@@ -54,7 +55,7 @@ const ProductDetail = () => {
           />
         </div>
         <div>
-          <DeliveryAddress />
+          <DeliveryAddress pointProductId={pointProductId} />
         </div>
         <div>
           <ProductDetailFooter
