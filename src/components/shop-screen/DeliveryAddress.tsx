@@ -1,9 +1,6 @@
-// DeliveryAddress.tsx
 import useAddress from '@/hooks/useAdress'
 import { Plus } from 'lucide-react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { AddressState } from '../common/form/AddressInput'
-import { ClientAddressInfo } from '@/types/addresses'
 
 interface DeliveryAddressProps {
   pointProductId?: string | undefined
@@ -17,33 +14,10 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
   const pointProductId = propPointProductId || params.pointProductId
 
   const { data: userAddressData, isLoading } = useAddress()
-  const defaultUserInfo: ClientAddressInfo = {
-    id: 0,
-    name: '',
-    phone: '',
-    address: {
-      roadAddress: '',
-      roadnameCode: '',
-      zonecode: '',
-      detailAddress: '',
-      sigungu: '',
-    },
-  }
 
-  const userInfo = userAddressData || defaultUserInfo
-
-  const totalAddress = (address: AddressState) => {
-    if (address === undefined || address === null) {
-      return
-    }
-    return address.roadAddress + address.detailAddress
-  }
-
-  console.log(userInfo)
-
-  const hasAddressInfo = () => {
-    return userInfo.name && userInfo.phone && userInfo.address
-  }
+  const hasAddress = Boolean(
+    userAddressData && userAddressData.name && userAddressData.phone && userAddressData.address,
+  )
 
   const handleAddressClick = () => {
     if (!pointProductId) {
@@ -53,7 +27,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
 
     const state = { from: location.pathname + location.search }
 
-    if (hasAddressInfo()) {
+    if (hasAddress) {
       navigate(`/point-shop/product/${pointProductId}/enrollAddress?mode=edit`, { state })
     } else {
       navigate(`/point-shop/product/${pointProductId}/enrollAddress?mode=add`, { state })
@@ -67,12 +41,12 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
   return (
     <div>
       <div className="text-xl font-bold">배송지 정보</div>
-      {hasAddressInfo() ? (
+      {hasAddress ? (
         <div className="m-[20px] flex flex-col border p-[20px] text-start">
           <div className="flex flex-row justify-between">
             <div>
               <span className="font-bold">이름: </span>
-              <span>{userInfo.name}</span>
+              <span>{userAddressData?.name}</span>
             </div>
             <button
               className="max-h-[40px] rounded-[8px] bg-green-600 px-[30px] py-[10px] text-white"
@@ -83,11 +57,15 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
           </div>
           <div>
             <span className="font-bold">전화번호: </span>
-            <span>{userInfo.phone}</span>
+            <span>{userAddressData?.phone}</span>
           </div>
           <div>
             <span className="font-bold">주소: </span>
-            <span>{totalAddress(userInfo.address)}</span>
+            <span>
+              {userAddressData && userAddressData.address
+                ? `${userAddressData.address.roadAddress} ${userAddressData.address.detailAddress}`
+                : null}
+            </span>
           </div>
         </div>
       ) : (
