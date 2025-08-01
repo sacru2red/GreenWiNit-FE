@@ -1,6 +1,13 @@
-import { InfoCard } from '@/pages/posts'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
+
+export type InfoCard = {
+  id: number
+  infoCategoryName: string
+  title: string
+  thumbnailUrl: string
+  content: string
+}
 
 interface InformationMockingStore {
   informations: InfoCard[]

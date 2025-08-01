@@ -3,14 +3,7 @@ import InformationCard from '@/components/Information-screen/InformationCard'
 import InformationTab, { TabType } from '@/components/Information-screen/InformationTab'
 import { useInformations } from '@/hooks/useInformations'
 import { useEffect, useState } from 'react'
-
-export type InfoCard = {
-  id: number
-  infoCategoryName: string
-  title: string
-  thumbnailUrl: string
-  content: string
-}
+import { InfoCard } from '@/store/InformationMockingStore'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지

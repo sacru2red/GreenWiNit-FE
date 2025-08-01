@@ -1,4 +1,4 @@
-import { InfoCard } from '@/pages/posts'
+import { InfoCard } from '@/store/InformationMockingStore'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const postsApi = {
