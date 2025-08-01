@@ -277,8 +277,8 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
           },
         ] satisfies Post[],
         getPosts: () => get().posts,
-        getPostById: (id: number) => get().posts.find((info) => info.id === id),
-        setInformations: (informations: Post[]) => set({ posts: informations }),
+        getPostById: (id: number) => get().posts.find((post) => post.id === id),
+        setPosts: (posts: Post[]) => set({ posts: posts }),
       }),
       {
         name: 'apiServerMockingStore',
