@@ -1,5 +1,5 @@
 import React, { ComponentProps, useState } from 'react'
-import LogoIcon from '@/components/common/LogoIcon'
+import LogoIcon from '@/components/common/logo-icon'
 import { imagesApi } from '@/api/images'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'

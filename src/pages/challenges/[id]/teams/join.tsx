@@ -1,11 +1,11 @@
-import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import TeamCard from '@/components/common/teams/TeamCard'
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
-import useChallenge from '@/hooks/useChallenge'
+import ChallengeTitle from '@/components/common/challenges/challenge-title'
+import TeamCard from '@/components/common/teams/team-card'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
+import useChallenge from '@/hooks/challenge/use-challenge'
 import { useNavigate, useParams } from 'react-router-dom'
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/bottom-navigation'
 
 const JoinTeam = () => {
   const params = useParams<{ challengeId: string }>()

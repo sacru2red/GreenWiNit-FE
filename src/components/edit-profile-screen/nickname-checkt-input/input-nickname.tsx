@@ -1,4 +1,4 @@
-import Required from '@/components/common/Required'
+import Required from '@/components/common/required'
 import { ComponentProps, Fragment, useId } from 'react'
 
 type InputNicknameProps = {

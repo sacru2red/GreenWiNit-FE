@@ -1,25 +1,11 @@
 import { API_URL } from '@/constant/network'
-import { ClientAddressInfo, ServerAddressInfo, ServerPostAddress } from '@/types/addresses'
-
-export const serverToClientAddress = (serverAddress: ServerAddressInfo): ClientAddressInfo => {
-  return {
-    id: serverAddress.deliveryAddressId,
-    name: serverAddress.recipientName,
-    phone: serverAddress.phoneNumber,
-    address: {
-      roadAddress: serverAddress.roadAddress,
-      roadnameCode: '',
-      zonecode: serverAddress.zipCode,
-      detailAddress: serverAddress.detailAddress,
-      sigungu: '',
-    },
-  }
-}
+import { serverToClientAddress } from '@/lib/utils'
+import { ClientAddress, ServerAddress, ServerPostAddress } from '@/types/addresses'
 
 export const clientToServerAddress = (
-  clientAddress: ClientAddressInfo,
+  clientAddress: ClientAddress,
   id: number,
-): ServerAddressInfo | null => {
+): ServerAddress | null => {
   if (!clientAddress.address) {
     return null
   }
@@ -35,17 +21,14 @@ export const clientToServerAddress = (
 }
 
 export const addressApi = {
-  getAddress: async (): Promise<ClientAddressInfo> => {
+  getAddress: async (): Promise<ClientAddress> => {
     const response = await fetch(`${API_URL}/deliveries/addresses`)
 
     const data = await response.json()
 
     return serverToClientAddress(data.result)
   },
-  updateAddress: async (
-    id: number,
-    body: Partial<ClientAddressInfo>,
-  ): Promise<ClientAddressInfo> => {
+  updateAddress: async (id: number, body: Partial<ClientAddress>): Promise<ClientAddress> => {
     const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
       method: 'PUT',
       headers: {

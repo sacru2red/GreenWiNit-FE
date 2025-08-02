@@ -3,7 +3,7 @@ import App from './App.tsx'
 import './index.css'
 import fetchIntercept, { FetchInterceptorResponse } from 'fetch-intercept'
 import { API_URL } from './constant/network.ts'
-import { userStore } from './store/userStore.ts'
+import { userStore } from './store/user-store.ts'
 import { initHistoryAndLocation } from './lib/utils.ts'
 
 async function enableMocking() {

@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from './components/ui/sonner'
 import { cn } from './lib/utils'
-import SplashScreen from './components/SplashScreen'
+import SplashScreen from './components/splash-screen'
 import JoinedChallenges from './pages/challenges/user/me/joined'
 import ChallengeDetail from './pages/challenges/[id]/detail'
 import ChallengeSubmitIndividual from './pages/challenges/[id]/submit/individual'
@@ -26,13 +26,13 @@ import CertifiedChallenges from '@/pages/my-page/certifed-challenges'
 import CertifiedChallengesDetail from '@/pages/my-page/certified-challenges-detail'
 import NotFound from '@/pages/404'
 import './App.css'
-import PointShop from './pages/PointShop'
-import InformationDetail from './pages/informations/[id]/detail'
-import EnrollAddress from './components/shop-screen/EnrollAddress'
+import PointShop from './pages/point-shop'
+import ProductDetail from './pages/point-shop/products/[pointProductId]/detail'
+import PostDetail from './pages/posts/[id]'
+import EnrollAddress from './pages/point-shop/products/[pointProductId]/enroll-address'
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import InformationShare from './pages/InformationShare'
-import ProductDetail from './pages/products/[id]/detail'
+import Posts from './pages/posts'
 
 const queryClient = new QueryClient()
 
@@ -90,12 +90,12 @@ function App() {
                     path="/my-page/challenges/certify/:challengeId"
                     element={<CertifiedChallengesDetail />}
                   />
-                  <Route path="/information-share" element={<InformationShare />} />
-                  <Route path="/information-share/:informationId" element={<InformationDetail />} />
+                  <Route path="/posts" element={<Posts />} />
+                  <Route path="/posts/:postId" element={<PostDetail />} />
                   <Route path="/point-shop" element={<PointShop />} />
                   <Route path="/point-shop/product/:pointProductId" element={<ProductDetail />} />
                   <Route
-                    path="/point-shop/product/:pointProductId/enrollAddress"
+                    path="/point-shop/product/:pointProductId/enroll-address"
                     element={<EnrollAddress />}
                   />
                   <Route path="/signup" element={<Signup />} />

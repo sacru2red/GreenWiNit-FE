@@ -1,5 +1,5 @@
 import { API_URL } from '@/constant/network'
-import { User } from '@/store/userStore'
+import { User } from '@/store/user-store'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
