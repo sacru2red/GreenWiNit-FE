@@ -1,4 +1,8 @@
+import { userStore } from '@/store/userStore'
+
 const CurrentNickname = () => {
+  const userName = userStore((s) => s.user?.name)
+
   return (
     <fieldset>
       <legend className="sr-only">현재 닉네임</legend>
@@ -12,10 +16,7 @@ const CurrentNickname = () => {
         type="text"
         id="current-nickname"
         name="current-nickname"
-        // @CHECK
-        // 이 컴포넌트는 입력값을 받는게 아닌 것 같습니다.
-        // props로 현재 닉네임 값을 받아 표시하고, 입력값은 받지 않는 readonly, not editable 로 설정해야 할 것 같습니다.
-        placeholder="현재 닉네임을 입력해주세요"
+        placeholder={userName ? userName : '현재 닉네임을 입력해주세요'}
         onKeyDown={(e) => {
           if (e.key === 'Enter') e.preventDefault()
         }}

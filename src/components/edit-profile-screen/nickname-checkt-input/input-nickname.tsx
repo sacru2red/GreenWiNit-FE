@@ -1,17 +1,41 @@
+import { usersApi } from '@/api/users'
 import Required from '@/components/common/Required'
-import { ComponentProps, Fragment, useId } from 'react'
+import {
+  ChangeEvent,
+  ComponentProps,
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useId,
+  useState,
+} from 'react'
+import { toast } from 'sonner'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
+  setIsNicknameChecked: Dispatch<SetStateAction<boolean>>
 } & ComponentProps<'input'>
 
-const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
+const InputNickname = ({ mode = 'new', setIsNicknameChecked, ...props }: InputNicknameProps) => {
+  const [innerValue, setInnerValue] = useState('')
   const id = useId()
 
-  const checkNicknameDuplication = () => {
-    // 닉네임 중복 확인 api 연결 예정
-    // https://discord.com/channels/1364946712967381052/1374691697971171460/1399058550902231040
-    // https://discord.com/channels/1364946712967381052/1374691697971171460/1399789554931859549
+  const checkNicknameDuplication = async () => {
+    if (mode === 'new') return
+
+    const res = await usersApi.checkNicknameDuplicate(innerValue)
+    console.log(res)
+
+    if (res.type === 'success') {
+      setIsNicknameChecked(true)
+      toast.success('사용 가능한 닉네임입니다.')
+    } else {
+      setIsNicknameChecked(false)
+      toast.error('중복된 닉네임이 존재합니다.')
+    }
+  }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInnerValue(e.target.value)
   }
 
   const labelContent =
@@ -35,12 +59,9 @@ const InputNickname = ({ mode = 'new', ...props }: InputNicknameProps) => {
           id={id}
           type="text"
           placeholder={mode === 'new' ? '새 닉네임을 입력해주세요.' : '닉네임 입력'}
-          // 중복체크 안되었을 떄에는 keydown 막고, 체크 되었으면 keydown 허용해서 enter 치면 모달 띄우게 할 예정
-          // onKeyDown={(e) => {
-          //   if (e.key === 'Enter') e.preventDefault()
-          // }}
           className="flex-1 px-3 py-4 text-sm focus:outline-none"
           {...props}
+          onChange={handleChange}
         />
         <button
           type="button"
