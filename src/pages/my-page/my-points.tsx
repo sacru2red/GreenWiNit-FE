@@ -1,9 +1,9 @@
 import LogoAndName from '@/components/my-page-screen/logo-and-name'
 import PointHistoryContainer from '@/components/my-page-screen/point-history-container'
 import PointOverview from '@/components/my-page-screen/point-overview'
-import { useUserPoints } from '@/hooks/useUserPoints'
+import { useUserPoints } from '@/hooks/use-user-points'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 function MyPoints() {
   const user = userStore((s) => s.user)

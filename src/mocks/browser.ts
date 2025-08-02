@@ -1,7 +1,13 @@
 // https://mswjs.io/docs/integrations/browser
 import { setupWorker } from 'msw/browser'
 import { handlers } from './handlers'
-import { productHandlers } from './productHandlers'
-import { InformationHandlers } from './informationHandlers'
+import { productHandlers } from './product-handlers'
+import { postHandlers } from './post-handlers'
+import { addressHandlers } from './address-handlers'
 
-export const worker = setupWorker(...handlers, ...productHandlers, ...InformationHandlers)
+export const worker = setupWorker(
+  ...handlers,
+  ...productHandlers,
+  ...postHandlers,
+  ...addressHandlers,
+)

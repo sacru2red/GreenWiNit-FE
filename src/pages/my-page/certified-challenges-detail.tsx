@@ -1,4 +1,4 @@
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallengesDetail() {

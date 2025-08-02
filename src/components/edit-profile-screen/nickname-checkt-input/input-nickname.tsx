@@ -1,5 +1,5 @@
 import { usersApi } from '@/api/users'
-import Required from '@/components/common/Required'
+import Required from '@/components/common/required'
 import {
   ChangeEvent,
   ComponentProps,
@@ -13,7 +13,7 @@ import { toast } from 'sonner'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
-  setIsNicknameChecked: Dispatch<SetStateAction<boolean>>
+  setIsNicknameChecked?: Dispatch<SetStateAction<boolean>>
 } & ComponentProps<'input'>
 
 const InputNickname = ({ mode = 'new', setIsNicknameChecked, ...props }: InputNicknameProps) => {

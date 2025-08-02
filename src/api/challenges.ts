@@ -1,5 +1,5 @@
 import { API_URL } from '@/constant/network'
-import { type User } from '@/store/userStore'
+import { type User } from '@/store/user-store'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export const challengesApi = {

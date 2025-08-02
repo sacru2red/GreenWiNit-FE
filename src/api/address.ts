@@ -1,47 +1,11 @@
-import { AddressState } from '@/components/common/form/AddressInput'
 import { API_URL } from '@/constant/network'
-
-export type ServerAddressInfo = {
-  deliveryAddressId: number
-  recipientName: string
-  phoneNumber: string
-  roadAddress: string
-  detailAddress: string
-  zipCode: string
-}
-
-export type ClientAddressInfo = {
-  id: number
-  name: string
-  phone: string
-  address: AddressState
-}
-
-export interface AddressInfoApiResponse {
-  success: boolean
-  message: string
-  result: ClientAddressInfo | null
-}
-
-export const serverToClientAddress = (serverAddress: ServerAddressInfo): ClientAddressInfo => {
-  return {
-    id: serverAddress.deliveryAddressId,
-    name: serverAddress.recipientName,
-    phone: serverAddress.phoneNumber,
-    address: {
-      roadAddress: serverAddress.roadAddress,
-      roadnameCode: '',
-      zonecode: serverAddress.zipCode,
-      detailAddress: serverAddress.detailAddress,
-      sigungu: '',
-    },
-  }
-}
+import { serverToClientAddress } from '@/lib/utils'
+import { ClientAddress, ServerAddress, ServerPostAddress } from '@/types/addresses'
 
 export const clientToServerAddress = (
-  clientAddress: ClientAddressInfo,
+  clientAddress: ClientAddress,
   id: number,
-): ServerAddressInfo | null => {
+): ServerAddress | null => {
   if (!clientAddress.address) {
     return null
   }
@@ -57,19 +21,48 @@ export const clientToServerAddress = (
 }
 
 export const addressApi = {
-  getAddress: async (): Promise<ClientAddressInfo> => {
+  getAddress: async (): Promise<ClientAddress> => {
     const response = await fetch(`${API_URL}/deliveries/addresses`)
+
     const data = await response.json()
+
+    return serverToClientAddress(data.result)
+  },
+  updateAddress: async (id: number, body: Partial<ClientAddress>): Promise<ClientAddress> => {
+    const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      throw new Error(`STATUS: ${response.status} ${response.statusText}`)
+    }
+
+    const data = await response.json()
+
+    if (!data) {
+      throw new Error('no data')
+    }
 
     return serverToClientAddress(data)
   },
-  updateAddress: async (body: Partial<ClientAddressInfo>): Promise<ClientAddressInfo> => {
-    const response = await fetch(`${API_URL}/deliveries/addresses`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
+  saveAddress: async (data: ServerPostAddress) => {
+    try {
+      const response = await fetch(`${API_URL}/deliveries/addresses`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
 
-    return serverToClientAddress(data)
+      if (!response.ok) {
+        throw new Error(`응답 오류: ${response.status} ${response.statusText}`)
+      }
+
+      return true
+    } catch (error) {
+      throw new Error(`배송지 정보를 저장하는데 실패하였습니다: ${error}`)
+    }
   },
 }

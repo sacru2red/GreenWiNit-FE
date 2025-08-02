@@ -1,4 +1,4 @@
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 const CurrentNickname = () => {
   const userName = userStore((s) => s.user?.name)

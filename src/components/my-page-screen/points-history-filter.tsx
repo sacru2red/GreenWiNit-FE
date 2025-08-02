@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { PointFilterType } from '@/types/points'
 import { useQueryClient } from '@tanstack/react-query'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 type FilterElement = '전체' | '적립내역' | '교환내역'
 
