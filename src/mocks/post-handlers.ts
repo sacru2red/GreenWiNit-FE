@@ -2,11 +2,6 @@ import { apiServerMockingStore } from '@/store/api-server-mocking-store'
 import { http, HttpResponse } from 'msw'
 
 export const postHandlers = [
-  http.get('/api/user/info', () => {
-    const response = apiServerMockingStore.getState().getPosts()
-    return HttpResponse.json(response)
-  }),
-
   http.get('/api/user/info/:infoId', ({ params }) => {
     const infoId = parseInt(params['infoId'] as string)
 

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import CategoryLabel from './category-label'
 
 type PostItemProps = {
-  id: number
+  id: string
   categoryName: string
   title: string
   content: string
