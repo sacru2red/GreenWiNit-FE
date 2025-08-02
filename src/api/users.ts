@@ -1,4 +1,5 @@
 import { API_URL } from '@/constant/network'
+import { WithDrawnFormState } from '@/pages/my-page/withdraw'
 import { User } from '@/store/user-store'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
@@ -50,42 +51,42 @@ export const usersApi = {
       },
     })
   },
-  withdraw: async () => {
-    return fetch(`${API_URL}/auth/withdraw`, {
+  withdraw: async ({ reasonType, customReason }: WithDrawnFormState) => {
+    return fetch(`${API_URL}/members/withdraw`, {
       method: 'POST',
-    })
+      body: JSON.stringify({ reasonType, customReason }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json() as Promise<PostWithdrawResponse>)
   },
 }
 
-export interface GetMyInfoResponse {
+export interface BaseApiResponse<T> {
   success: boolean
   message: string
-  result: {
-    userChallengeCount: number
-    userTotalPoints: number
-    userLevel: number
-  }
+  result?: T
 }
 
-export interface GetMyPointsResponse {
-  success: boolean
-  message: string
-  result: {
-    currentBalance: number
-    totalEarned: number
-    totalSpent: number
-  }
-}
+export type GetMyInfoResponse = BaseApiResponse<{
+  userChallengeCount: number
+  userTotalPoints: number
+  userLevel: number
+}>
 
-export interface GetMyPointsHistoryResponse {
-  success: boolean
-  message: string
-  result: {
-    hasNext: boolean
-    nextCursor: number
-    content: PointHistory[]
-  }
-}
+export type GetMyPointsResponse = BaseApiResponse<{
+  currentBalance: number
+  totalEarned: number
+  totalSpent: number
+}>
+
+export type GetMyPointsHistoryResponse = BaseApiResponse<{
+  hasNext: boolean
+  nextCursor: number
+  content: PointHistory[]
+}>
+
+export type PostWithdrawResponse = BaseApiResponse<undefined>
 
 const usersKey = createQueryKeys('users')
 
