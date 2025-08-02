@@ -24,12 +24,18 @@ export const usersApi = {
     return await fetch(`${API_URL}/members/profile`, {
       method: 'PUT',
       body: JSON.stringify({ nickname, profileImageUrl }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then((res) => res.json() as Promise<PutUserProfileResponse>)
   },
   checkNicknameDuplicate: async (nickname: string) => {
     return await fetch(`${API_URL}/members/nickname-check`, {
       method: 'POST',
       body: JSON.stringify({ nickname }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
   },
   login: async ({ oAuthToken }: { oAuthToken: string }) => {
@@ -106,13 +112,11 @@ type PutUserProfileResponse = { nickname: string; profileImageUrl: string } | { 
 
 type CheckNicknameDuplicateReponse =
   | {
-      type: 'success'
       nickname: string
       available: boolean
       message: string
     }
   | {
-      type: 'error'
       error: string
       message: string
     }
