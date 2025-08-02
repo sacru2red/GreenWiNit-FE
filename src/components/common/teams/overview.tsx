@@ -1,6 +1,6 @@
 import { challengesApi, challengesQueryKeys, Team } from '@/api/challenges'
 import LogoIcon from '../logo-icon'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'

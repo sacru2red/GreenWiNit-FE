@@ -3,7 +3,7 @@ import UserCard from '@/components/common/user-card'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
 import { initHistoryAndLocation } from '@/lib/utils'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 import { useNavigate } from 'react-router-dom'
 
 function MyPage() {

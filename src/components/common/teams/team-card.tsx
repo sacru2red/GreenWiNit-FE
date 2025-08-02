@@ -1,6 +1,6 @@
 import { type Team } from '@/api/challenges'
 import { cn } from '@/lib/utils'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 interface TeamCardProps {
   team: Team & { isJoinAllowed?: boolean }

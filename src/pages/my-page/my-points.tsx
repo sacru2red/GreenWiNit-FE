@@ -3,7 +3,7 @@ import PointHistoryContainer from '@/components/my-page-screen/point-history-con
 import PointOverview from '@/components/my-page-screen/point-overview'
 import { useUserPoints } from '@/hooks/use-user-points'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 function MyPoints() {
   const user = userStore((s) => s.user)

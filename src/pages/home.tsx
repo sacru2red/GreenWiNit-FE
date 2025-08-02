@@ -9,7 +9,7 @@ import PageContainer from '@/components/common/page-container'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 import PageHeaderSection from '@/components/common/page-header-section'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 
 function Home() {
   const isLoggedIn = useIsLoggedIn()

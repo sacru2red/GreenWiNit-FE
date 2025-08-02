@@ -3,7 +3,7 @@ import HeaderSectionMiddle from '@/components/common/header-section-middle'
 import GoogleWideButton from '@/components/login-screen/google-wide-button'
 import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
 import NaverWideButton from '@/components/login-screen/naver-wide-button'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 function Login() {

@@ -1,6 +1,6 @@
 import { useUserStatus } from '@/hooks/use-user-status'
 import { Link, useNavigate } from 'react-router-dom'
-import { userStore } from '@/store/userStore'
+import { userStore } from '@/store/user-store'
 import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
 
