@@ -1,5 +1,5 @@
 import Required from '@/components/common/required'
-import Input from '@/components/common/form/Input'
+import Input from '@/components/common/form/input'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerSingle from '@/components/common/form/date-picker-single'
 import { omit } from 'es-toolkit'

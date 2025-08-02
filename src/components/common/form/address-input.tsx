@@ -1,6 +1,6 @@
 import { ComponentProps, Fragment, useRef, useState } from 'react'
 import DaumPostcodeEmbed from 'react-daum-postcode'
-import Input from './Input'
+import Input from './input'
 import { Dialog, DialogContent } from '../../ui/dialog'
 
 export type AddressState = null | {

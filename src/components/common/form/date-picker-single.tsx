@@ -1,6 +1,6 @@
 import ReactDatePickerLib, { registerLocale, setDefaultLocale } from 'react-datepicker'
 import { ko } from 'date-fns/locale/ko'
-import Input from './Input'
+import Input from './input'
 import { ComponentProps } from 'react'
 import { CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
