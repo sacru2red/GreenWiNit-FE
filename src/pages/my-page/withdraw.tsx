@@ -1,5 +1,5 @@
 import WithDrawCaution from '@/components/withdraw-screen/withdraw-caution'
-import WithDrawReasonForm from '@/components/withdraw-screen/withdraw-reason-field'
+import WithdrawReasonField from '@/components/withdraw-screen/withdraw-reason-field'
 import NoticeMessage from '@/components/withdraw-screen/notice-message'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 import { useForm } from 'react-hook-form'
@@ -72,7 +72,7 @@ function WithDraw() {
       <MyPageLayout title="회원 탈퇴">
         <NoticeMessage />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <WithDrawReasonForm register={register} />
+          <WithdrawReasonField register={register} />
           <WithDrawCaution setChecked={setCautionIsChecked} />
           <div className="flex px-4 py-6">
             <Button size="flex" type="submit">
