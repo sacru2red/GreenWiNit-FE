@@ -20,7 +20,9 @@ export function initHistoryAndLocation() {
   // 스택에 루트 두개 넣어서 뒤로가기 버튼 눌러도 루트로 이동하게끔 처리함
   window.history.pushState(null, '', '/')
   window.history.pushState(null, '', '/')
-  window.location.reload()
+  if (window.location.pathname !== '/') {
+    window.location.reload()
+  }
 }
 
 export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
