@@ -83,31 +83,31 @@ export const usersApi = {
   },
 }
 
-export interface BaseApiResponse<T> {
+interface BaseApiResponse<T> {
   success: boolean
   message: string
   result?: T
 }
 
-export type GetMyInfoResponse = BaseApiResponse<{
+type GetMyInfoResponse = BaseApiResponse<{
   userChallengeCount: number
   userTotalPoints: number
   userLevel: number
 }>
 
-export type GetMyPointsResponse = BaseApiResponse<{
+type GetMyPointsResponse = BaseApiResponse<{
   currentBalance: number
   totalEarned: number
   totalSpent: number
 }>
 
-export type GetMyPointsHistoryResponse = BaseApiResponse<{
+type GetMyPointsHistoryResponse = BaseApiResponse<{
   hasNext: boolean
   nextCursor: number
   content: PointHistory[]
 }>
 
-export type PostWithdrawResponse = BaseApiResponse<undefined>
+type PostWithdrawResponse = BaseApiResponse<undefined>
 
 type PutUserProfileResponse = { nickname: string; profileImageUrl: string } | { message: string }
 
