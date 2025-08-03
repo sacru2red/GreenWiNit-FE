@@ -14,7 +14,6 @@ interface ApiServerMockingState {
   users: User[]
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
-  deleteTeam: (teamId: string) => void
 
   address: ClientAddress
   getAddress: () => ClientAddress | null
@@ -176,18 +175,6 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
           set((state) => ({
             challenges: state.challenges.map((c) =>
               c.id === challengeId ? { ...c, joinUserIds: [...c.joinUserIds, user.id] } : c,
-            ),
-          }))
-        },
-        deleteTeam: (teamId: string) => {
-          set((state) => ({
-            challenges: state.challenges.map((c) =>
-              c.type === 1 && c.teams.some((t) => t.id === teamId)
-                ? {
-                    ...c,
-                    teams: c.teams.map((t) => (t.id === teamId ? { ...t, isDeleted: true } : t)),
-                  }
-                : c,
             ),
           }))
         },

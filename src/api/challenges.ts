@@ -2,7 +2,6 @@ import { API_URL } from '@/constant/network'
 import { type User } from '@/store/auth-store'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
-import { Challenge as MockedChallenge } from '@/mocks/handlers'
 import { omit } from 'es-toolkit'
 
 export const challengesApi = {
@@ -136,19 +135,11 @@ export const challengesApi = {
       body: JSON.stringify(team),
     })
   },
-  deleteTeam: async (teamId: string | undefined) => {
-    if (teamId == null) {
-      throw new Error('teamId is required')
-    }
-    const response = await fetch(`${API_URL}/teams/${teamId}`, { method: 'DELETE' })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return response.json() as Promise<{ challenge: MockedChallenge }>
+  deleteTeam: async (teamId: number) => {
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
   },
   modifyTeam: async (team: TeamModifyRequestDto) => {
-    return fetch(`${API_URL}/teams/${team.id}`, {
+    return fetch(`${API_URL}/challenges/groups/${team.id}`, {
       method: 'PUT',
       body: JSON.stringify(omit(team, ['id'])),
     })

@@ -1,7 +1,5 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
 import { MockedTeam } from '@/api/challenges'
-import { API_URL } from '@/constant/network'
-import { apiServerMockingStore } from '@/store/api-server-mocking-store'
 import { User } from '@/store/auth-store'
 import { http, HttpResponse } from 'msw'
 
@@ -74,78 +72,7 @@ export const handlers = [
       },
     })
   }),
-
-  http.delete(`${API_URL}/teams/:teamId`, async ({ cookies, params }) => {
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
-    }
-    const foundUser = foundUserOrException
-
-    const teamId = params['teamId']
-    if (teamId == null || typeof teamId !== 'string') {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: not valid teamId',
-      })
-    }
-    const apiServerMockingStoreState = apiServerMockingStore.getState()
-    const { challenges, deleteTeam } = apiServerMockingStoreState
-    const challenge = challenges.find((c) => c.type === 1 && c.teams.some((t) => t.id === teamId))
-    if (challenge == null || challenge.type !== 1) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-    const team = challenge.teams.find((t) => t.id === teamId)
-    if (team == null || team.isDeleted) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found team',
-      })
-    }
-    const teamLeader = team.users.find((u) => u.isLeader)
-    if (teamLeader == null || teamLeader.id !== foundUser.id) {
-      return new HttpResponse(null, {
-        status: 403,
-        statusText: 'Forbidden: not allowed to delete team',
-      })
-    }
-    deleteTeam(teamId)
-
-    return new HttpResponse(
-      JSON.stringify({
-        challenge,
-      }),
-      {
-        status: 200,
-        statusText: 'OK',
-      },
-    )
-  }),
 ]
-
-const getUserFromCookie = (cookies: Record<string, string>) => {
-  const authToken = cookies['authToken']
-
-  if (authToken == null || authToken == '') {
-    return new HttpResponse(null, {
-      status: 401,
-      statusText: 'Unauthorized: not valid authToken',
-    })
-  }
-
-  const foundUser = apiServerMockingStore.getState().users[0]
-  if (foundUser == null) {
-    return new HttpResponse(null, {
-      status: 404,
-      statusText: 'Not Found: not found user',
-    })
-  }
-
-  return foundUser
-}
 
 export type Challenge = {
   id: string
