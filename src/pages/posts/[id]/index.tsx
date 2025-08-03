@@ -7,7 +7,8 @@ const PostDetail = () => {
   const navigate = useNavigate()
   const { postId } = useParams<{ postId: string }>()
   const parsedPostId = postId ? parseInt(postId) : undefined
-  const { isLoading, data: post } = usePost(parsedPostId)
+  const { isLoading, data } = usePost(parsedPostId)
+  const post = data?.result
 
   if (isLoading) return <div>로딩 중...</div>
 
@@ -26,7 +27,7 @@ const PostDetail = () => {
         <p className="text-center font-bold text-black">활동 상세</p>
       </header>
       <div className="bg-green-50">
-        <img src={post.thumbnailUrl} className="w-full" />
+        <img src={post.imageurl} className="w-full" />
       </div>
       <div className="flex flex-row items-center justify-between p-[16px]">
         <div className="text-xl font-bold">{post.title}</div>

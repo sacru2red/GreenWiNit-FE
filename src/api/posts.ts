@@ -1,5 +1,4 @@
 import { API_URL } from '@/constant/network'
-import { Post } from '@/store/api-server-mocking-store'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export interface PostElement {
@@ -30,8 +29,18 @@ export const postsApi = {
   },
   getPost: async (postId: number | undefined) => {
     const response = await fetch(`${API_URL}/user/info/${postId}`)
-    const data = (await response.json()) as Post
-    return data
+    return response.json() as Promise<
+      | {
+          success: false
+          message: string
+          result: null
+        }
+      | {
+          success: true
+          message: string
+          result: PostElement
+        }
+    >
   },
 }
 
