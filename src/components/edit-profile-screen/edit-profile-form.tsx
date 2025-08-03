@@ -28,8 +28,6 @@ function EditProfileForm() {
   })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    console.log('onSubmit 실행!')
-
     if (!data.nickname) {
       toast.error('닉네임을 입력해 주세요.')
       return
@@ -45,12 +43,9 @@ function EditProfileForm() {
   }
 
   const updateNickname = async () => {
-    if (!pendingData?.nickname) return
+    if (!pendingData?.nickname || !pendingData.profileImage) return
 
-    await usersApi.putUserProfile(
-      pendingData.nickname,
-      pendingData.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
-    )
+    await usersApi.putUserProfile(pendingData.nickname, pendingData.profileImage)
   }
 
   return (
