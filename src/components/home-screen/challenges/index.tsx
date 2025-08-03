@@ -13,12 +13,11 @@ import { cn } from '@/lib/utils'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')
-  const tabToType = tab === 'individual' ? 0 : 1
-  const { data: challenges } = useChallenges()
+  const { data: challenges } = useChallenges(tab)
   const navigate = useNavigate()
   const isLoggedIn = useIsLoggedIn()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
-  const filteredChallenges = challenges?.filter((c) => c.type === tabToType)
+  const filteredChallenges = challenges
 
   return (
     <div className="flex h-full flex-col">

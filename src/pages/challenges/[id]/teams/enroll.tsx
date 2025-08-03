@@ -14,7 +14,7 @@ import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert
 
 const TeamEnroll = () => {
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
@@ -28,8 +28,14 @@ const TeamEnroll = () => {
         date: dayjs(team.date).format('YYYY-MM-DD'),
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.list().queryKey })
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.detail(challengeId).queryKey })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.list({
+          challengeType: 'team',
+        }).queryKey,
+      })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+      })
       setShowConfirmDialog(true)
     },
     onError(error) {

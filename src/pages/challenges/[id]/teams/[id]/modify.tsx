@@ -15,7 +15,7 @@ dayjs.extend(customParseFormat)
 
 const TeamModify = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const teamId = params.teamId
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -36,8 +36,14 @@ const TeamModify = () => {
       })
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.list().queryKey })
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.detail(challengeId).queryKey })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.list({
+          challengeType: 'team',
+        }).queryKey,
+      })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+      })
       navigate(`/challenges/${challengeId}/teams`)
     },
     onError(error) {

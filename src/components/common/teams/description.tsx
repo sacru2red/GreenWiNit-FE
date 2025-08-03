@@ -1,7 +1,7 @@
-import { Team } from '@/api/challenges'
+import { MockedTeam } from '@/api/challenges'
 
 interface DescriptionProps {
-  team: Team
+  team: MockedTeam
 }
 
 const Description = ({ team }: DescriptionProps) => {

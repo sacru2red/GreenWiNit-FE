@@ -1,51 +1,51 @@
-import { type Team } from '@/api/challenges'
+import { Team } from '@/api/challenges'
 import { cn } from '@/lib/utils'
-import { userStore } from '@/store/user-store'
+import dayjs from 'dayjs'
 
 interface TeamCardProps {
-  team: Team & { isJoinAllowed?: boolean }
+  team: Team
   onClick?: () => void
 }
 
 const TeamCard = ({ team, onClick }: TeamCardProps) => {
-  const user = userStore((state) => state.user)
-  const teamLeader = team.users.find((t) => t.isLeader)
+  const isJoinAllowed = team.groupStatus === 'RECRUITING'
 
   return (
     <button
       onClick={onClick}
-      disabled={!team.isJoinAllowed}
+      disabled={!isJoinAllowed}
       className={cn(
         'overflow-hidden rounded-lg bg-white',
-        team.isJoinAllowed === false && '!cursor-not-allowed bg-[#d9d9d9]',
+        !isJoinAllowed && '!cursor-not-allowed bg-[#d9d9d9]',
       )}
     >
       <div className="flex flex-col gap-8 rounded-lg border border-gray-200 p-4">
         <div className="flex flex-row items-center justify-between gap-1">
-          <span className="text-title-smaller text-lg font-bold">{team.name}</span>
-          <span className="text-lighter-gray">{team.date}</span>
+          <span className="text-title-smaller text-lg font-bold">{team.groupName}</span>
+          <span className="text-lighter-gray">
+            {dayjs(team.groupBeginDateTime).format('YYYY.MM.DD')}
+          </span>
         </div>
         <div className="flex flex-col items-start gap-1">
           <div className="flex w-full flex-row items-center justify-between gap-2">
             <div className="flex gap-2">
               <span className="text-title-smaller">시간</span>
               <span className="text-lighter-gray">
-                {team.startAt} ~ {team.endAt}
+                {dayjs(team.groupBeginDateTime).format('HH:mm')} ~{' '}
+                {dayjs(team.groupEndDateTime).format('HH:mm')}
               </span>
             </div>
-            {teamLeader && user?.id === teamLeader.id && (
-              <span className="text-mountain_meadow font-bold">팀장</span>
-            )}
+            {team.isLeader && <span className="text-mountain_meadow font-bold">팀장</span>}
           </div>
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex gap-2">
               <span className="text-title-smaller">장소</span>
-              <span className="text-lighter-gray">{team.address.sigungu}</span>
+              <span className="text-lighter-gray">{team.groupAddress}</span>
             </div>
             <div className="flex gap-2">
               <span className="text-title-smaller">인원</span>
               <span className="text-lighter-gray">
-                {team.users.length} / {team.maxMemberCount}
+                {team.currentParticipants} / {team.maxParticipants}
               </span>
             </div>
           </div>

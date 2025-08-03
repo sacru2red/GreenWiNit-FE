@@ -1,7 +1,7 @@
-import { Team } from '@/api/challenges'
+import { MockedTeam } from '@/api/challenges'
 
 interface PropertyListProps {
-  team: Team
+  team: MockedTeam
 }
 
 const PropertyList = ({ team }: PropertyListProps) => {

@@ -2,14 +2,14 @@ import BottomNavigation from '@/components/common/bottom-navigation'
 import PostItem from '@/components/post-screen/post-item'
 import CategoryTab from '@/components/post-screen/category-tab'
 import { TabType } from '@/components/post-screen/category-tab/types'
-import { usePosts } from '@/hooks/post/use-posts'
+import { usePostsArrayOnly } from '@/hooks/post/use-posts'
 import { useState } from 'react'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
  */
 function Posts() {
-  const { isLoading, data: posts } = usePosts()
+  const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
 
   if (isLoading) {
@@ -39,7 +39,7 @@ function Posts() {
               categoryName={item.infoCategoryName}
               title={item.title}
               content={item.content}
-              thumbnailUrl={item.thumbnailUrl}
+              thumbnailUrl={item.imageurl}
             />
           ))
         ) : (

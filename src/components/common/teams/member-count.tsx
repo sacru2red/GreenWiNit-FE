@@ -1,7 +1,7 @@
-import { Team } from '@/api/challenges'
+import { MockedTeam } from '@/api/challenges'
 
 interface MemberCountProps {
-  team: Team
+  team: MockedTeam
 }
 
 const MemberCount = ({ team }: MemberCountProps) => {

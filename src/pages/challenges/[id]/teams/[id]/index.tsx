@@ -16,7 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const TeamDetail = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const teamId = params.teamId
 
   const queryClient = useQueryClient()
@@ -27,8 +27,14 @@ const TeamDetail = () => {
   const { mutate: joinTeam } = useMutation({
     mutationFn: () => challengesApi.joinTeam(challengeId, teamId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.list().queryKey })
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.detail(challengeId).queryKey })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.list({
+          challengeType: 'team',
+        }).queryKey,
+      })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.detail(Number(challengeId)).queryKey,
+      })
       setOpenConfirmDialog(true)
     },
     onError(error) {

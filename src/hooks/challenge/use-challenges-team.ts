@@ -1,10 +1,12 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useQuery } from '@tanstack/react-query'
 
-const useChallengesTeam = (challengeId: string | undefined, teamId: string | undefined) => {
+const useChallengesTeam = (challengeId: number | undefined, teamId: string | undefined) => {
   return useQuery({
-    queryKey: challengesQueryKeys.team(challengeId, teamId).queryKey,
-    queryFn: () => challengesApi.getChallengesTeam(challengeId, teamId),
+    queryKey: challengesQueryKeys.challenges.team(challengeId, teamId).queryKey,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    queryFn: () => challengesApi.getChallengesTeam(challengeId!, teamId!),
+    enabled: challengeId != null && teamId != null,
   })
 }
 

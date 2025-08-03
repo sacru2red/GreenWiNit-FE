@@ -70,6 +70,7 @@ function BottomNavigation() {
   )
 }
 
+// @TODO  use svgr, and tint color
 const NAV_ITEMS = [
   {
     icon: '/icons/home.svg',

@@ -2,6 +2,7 @@ import { Challenge as ChallengeType } from '@/api/challenges'
 import { cn } from '@/lib/utils'
 import { MouseEventHandler } from 'react'
 import dayjs from 'dayjs'
+import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
 
 interface ChallengeProps {
   challenge: ChallengeType
@@ -19,14 +20,15 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
       )}
       onClick={onClick}
     >
-      <img className="w-full" src={challenge.thumbnailUrl ?? '/img/3.png'} />
+      <img className="w-full" src={challenge.challengeImage || DEFAULT_CHALLENGE_IMAGE} />
       <div className="flex flex-col gap-1 p-3 text-start">
         <span className="text-title-smaller overflow-hidden text-sm font-bold text-ellipsis whitespace-nowrap">
-          {challenge.name}
+          {challenge.challengeName}
         </span>
         <span className="overflow-hidden text-sm text-ellipsis whitespace-nowrap text-[#737373]">
           {/* @NOTE: 해를 넘어가는 경우에 표기방법 고민 필요 */}
-          {dayjs(challenge.startAt).format('YY.MM.DD')} ~ {dayjs(challenge.endAt).format('MM.DD')}
+          {dayjs(challenge.beginDateTime).format('YY.MM.DD')} ~{' '}
+          {dayjs(challenge.endDateTime).format('MM.DD')}
         </span>
       </div>
     </div>
