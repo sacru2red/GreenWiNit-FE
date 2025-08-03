@@ -6,6 +6,9 @@ export type ServerProducts = {
   pointProductName: string
   thumbnailUrl: string
   pointPrice: number
+  /**
+   * 교환가능
+   */
   sellingStatus: string
 }
 
@@ -69,16 +72,40 @@ export const mapServerProductsDetailToClient = (
 }
 
 export const productsApi = {
-  getProducts: async (): Promise<Products[]> => {
+  getProducts: async () => {
     const response = await fetch(`${API_URL}/point-products`)
-    const data = await response.json()
+    const apiServerResponse = (await response.json()) satisfies
+      | {
+          success: true
+          message: 'string'
+          result: {
+            hasNext: boolean
+            nextCursor: number | null
+            content: ServerProducts[]
+          }
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
 
-    return mapServerProductsToClient(data.result.content)
+    return mapServerProductsToClient(apiServerResponse.result.content)
   },
 
-  getProduct: async (productId: string | undefined): Promise<ProductDetail> => {
+  getProduct: async (productId: string | undefined) => {
     const response = await fetch(`${API_URL}/point-products/${productId}`)
-    const data = await response.json()
+    const data = (await response.json()) satisfies
+      | {
+          success: true
+          message: string
+          result: ServerProductDetail
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
 
     return mapServerProductDetailToClient(data.result)
   },
