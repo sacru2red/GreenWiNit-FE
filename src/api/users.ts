@@ -17,6 +17,27 @@ export const usersApi = {
     const response = await fetch(`/api/v1/users/me/points-history${query}`)
     return response.json() as Promise<GetMyPointsHistoryResponse>
   },
+  putUserProfile: async (
+    nickname: string,
+    profileImageUrl = 'https://www.greenwinit.store/img/logo-icon.png',
+  ) => {
+    return await fetch(`${API_URL}/members/profile`, {
+      method: 'PUT',
+      body: JSON.stringify({ nickname, profileImageUrl }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json() as Promise<PutUserProfileResponse>)
+  },
+  checkNicknameDuplicate: async (nickname: string) => {
+    return await fetch(`${API_URL}/members/nickname-check`, {
+      method: 'POST',
+      body: JSON.stringify({ nickname }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
+  },
   login: async ({ oAuthToken }: { oAuthToken: string }) => {
     return await fetch('/api/login', {
       method: 'POST',
@@ -86,6 +107,19 @@ export interface GetMyPointsHistoryResponse {
     content: PointHistory[]
   }
 }
+
+type PutUserProfileResponse = { nickname: string; profileImageUrl: string } | { message: string }
+
+type CheckNicknameDuplicateReponse =
+  | {
+      nickname: string
+      available: boolean
+      message: string
+    }
+  | {
+      error: string
+      message: string
+    }
 
 const usersKey = createQueryKeys('users')
 

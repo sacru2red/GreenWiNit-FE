@@ -27,8 +27,22 @@ function MyPage() {
     {
       category: '고객센터',
       items: [
-        { title: '1:1문의', action: () => window.open('', '_blank') }, // 구글 폼 링크 미정
-        { title: 'FAQ', action: () => window.open('', '_blank') }, //FAQ 링크 미정
+        {
+          title: '1:1문의',
+          action: () =>
+            window.open(
+              'https://docs.google.com/forms/d/e/1FAIpQLSf3XdNHHpF30JI33iR-wj9p2DRzPe6qeEPhXQ29LWXyXHS7rg/viewform',
+              '_blank',
+            ),
+        },
+        {
+          title: 'FAQ',
+          action: () =>
+            window.open(
+              'https://www.notion.so/FAQ-243adf41302d80f895cbdd4b2947b9fa?source=copy_link',
+              '_blank',
+            ),
+        },
       ],
     },
     {
