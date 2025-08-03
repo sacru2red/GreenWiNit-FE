@@ -8,7 +8,7 @@ function PointHistoryContainer() {
   const [filterType, setFilterType] = useState<PointFilterType>('all')
   const { data: getPointHistoryReponse } = useUserPointHistory(filterType)
 
-  const list = getPointHistoryReponse?.result.content ?? []
+  const list = getPointHistoryReponse?.result?.content ?? []
 
   return (
     <section className="flex flex-col gap-4 p-4">

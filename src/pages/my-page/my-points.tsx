@@ -7,15 +7,15 @@ import { userStore } from '@/store/user-store'
 
 function MyPoints() {
   const user = userStore((s) => s.user)
-
   const { data: getPointsReponse } = useUserPoints()
+  const points = getPointsReponse?.result
 
-  if (!getPointsReponse) return <div>데이터 로딩중...</div>
+  if (!points) return <div>데이터 로딩중...</div>
 
   return (
     <MyPageLayout title="포인트 현황">
       <LogoAndName name={user?.name ?? '이름없음'} />
-      <PointOverview points={getPointsReponse?.result} />
+      <PointOverview points={points} />
       <PointHistoryContainer />
     </MyPageLayout>
   )
