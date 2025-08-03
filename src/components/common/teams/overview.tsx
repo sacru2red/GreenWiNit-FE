@@ -2,7 +2,7 @@ import {
   CHALLENGE_ROOT_QUERY_KEY,
   challengesApi,
   challengesQueryKeys,
-  MockedTeam,
+  TeamDetailResponse,
 } from '@/api/challenges'
 import LogoIcon from '../logo-icon'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
@@ -15,7 +15,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { Button } from '@/components/ui/button'
 
 interface OverviewProps {
-  team: MockedTeam
+  team: TeamDetailResponse
   allowManage?: boolean
 }
 
@@ -73,7 +73,7 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
         </Popover>
       ) : null}
       <LogoIcon size="large" className="border-1 bg-white" />
-      <span className="text-mountain_meadow-700 text-2xl font-bold">{team.name}</span>
+      <span className="text-mountain_meadow-700 text-2xl font-bold">{team.groupName}</span>
       <Dialog
         open={showConfirmDeletingDialog}
         onOpenChange={() => setShowConfirmDeletingDialog(false)}

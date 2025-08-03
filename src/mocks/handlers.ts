@@ -1,6 +1,4 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
-import { MockedTeam } from '@/api/challenges'
-import { User } from '@/store/auth-store'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [
@@ -73,39 +71,3 @@ export const handlers = [
     })
   }),
 ]
-
-export type Challenge = {
-  id: string
-  name: string
-  /**
-   * @deprecated
-   * howToJoin하고 description 중 하나만 사용할 수도 있음..
-   */
-  description: string
-  howToJoin: string
-  startAt: string
-  endAt: string
-  status: 0 | 1 | 2
-  statusKo: '모집중' | '진행중' | '종료'
-  thumbnailUrl: string
-  point: number
-  joinUserIds: string[]
-} & (
-  | {
-      type: 0
-      typeKo: '개인'
-      // 참여기록
-      participationRecords: ParticipationRecord[]
-    }
-  | {
-      type: 1
-      typeKo: '팀'
-      teams: MockedTeam[]
-    }
-)
-
-interface ParticipationRecord {
-  id: string
-  date: string
-  users: User[]
-}

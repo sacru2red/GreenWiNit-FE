@@ -19,7 +19,8 @@ const TeamModify = () => {
   const teamId = Number(params.teamId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
 
   const { mutate: modifyTeam } = useMutation({
     mutationFn: async (team: FormState) => {
@@ -30,9 +31,13 @@ const TeamModify = () => {
       await challengesApi.modifyTeam({
         ...rest,
         id,
-        startAt: dayjs(rest.startAt).format('HH:mm'),
-        endAt: dayjs(rest.endAt).format('HH:mm'),
-        date: dayjs(rest.date).format('YYYY-MM-DD'),
+        groupBeginDateTime: dayjs(rest.startAt).toISOString(),
+        groupEndDateTime: dayjs(rest.endAt).toISOString(),
+        groupName: rest.name,
+        roadAddress: rest.address.roadAddress,
+        detailAddress: rest.address.detailAddress,
+        groupDescription: rest.description,
+        maxParticipants: rest.maxMemberCount,
       })
     },
     onSuccess: () => {
@@ -76,9 +81,21 @@ const TeamModify = () => {
         onSubmit={onSubmit}
         initialData={{
           ...team,
-          date: dayjs(team.date).toDate(),
-          startAt: dayjs(team.startAt, 'HH:mm').toDate(),
-          endAt: dayjs(team.endAt, 'HH:mm').toDate(),
+          id: team.id.toString(),
+          name: team.groupName,
+          address: {
+            roadAddress: team.groupAddress,
+            roadnameCode: '',
+            zonecode: '',
+            detailAddress: team.groupAddress,
+            sigungu: '',
+          },
+          description: team.groupDescription,
+          date: dayjs(team.groupBeginDateTime).toDate(),
+          startAt: dayjs(team.groupBeginDateTime).toDate(),
+          endAt: dayjs(team.groupEndDateTime).toDate(),
+          maxMemberCount: team.maxParticipants,
+          openChatUrl: team.openChatUrl,
         }}
       />
     </PageContainer>

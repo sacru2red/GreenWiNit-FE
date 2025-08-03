@@ -23,7 +23,8 @@ const TeamDetail = () => {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const navigate = useNavigate()
 
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
   const { mutate: joinTeam } = useMutation({
     mutationFn: () => challengesApi.joinTeam(challengeId, teamId),
     onSuccess: () => {

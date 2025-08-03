@@ -1,5 +1,4 @@
 import { API_URL } from '@/constant/network'
-import { type User } from '@/store/auth-store'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { omit } from 'es-toolkit'
@@ -126,8 +125,19 @@ export const challengesApi = {
     }>
   },
   getChallengesTeam: async (challengeId: number, teamId: number) => {
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams/${teamId}`)
-    return response.json() as Promise<MockedTeam>
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/groups/${teamId}`)
+    return response.json() as Promise<
+      | {
+          success: true
+          message: string
+          result: TeamDetailResponse
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
+    >
   },
   enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
     return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
@@ -214,33 +224,6 @@ export interface ChallengeDetailResponse {
   type?: 'PERSONAL' | 'TEAM'
 }
 
-export interface MockedTeam {
-  id: string
-  name: string
-  date: string
-  startAt: string
-  endAt: string
-  /**
-   * https://postcode.map.daum.net/guide
-   */
-  address: {
-    roadAddress: string
-    roadnameCode: string
-    zonecode: string
-    detailAddress: string
-    sigungu: string
-  }
-  description: string
-  maxMemberCount: number
-  openChatUrl: string
-  users: Array<
-    User & {
-      isLeader?: boolean
-    }
-  >
-  isDeleted?: boolean
-}
-
 export interface ChallengeTeamsElement {
   id: number
   groupName: string
@@ -287,6 +270,21 @@ export interface TeamCreateRequestDto {
 
 export interface TeamModifyRequestDto extends TeamCreateRequestDto {
   id: string
+}
+
+export interface TeamDetailResponse {
+  id: number
+  groupName: string
+  groupAddress: string
+  groupDescription: string
+  openChatUrl: string
+  groupBeginDateTime: string
+  groupEndDateTime: string
+  currentParticipants: number
+  maxParticipants: number
+  groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
+  isLeader: boolean
+  isParticipant: boolean
 }
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'

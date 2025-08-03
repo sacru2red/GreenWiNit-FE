@@ -20,7 +20,8 @@ const ManageTeam = () => {
 
   const navigate = useNavigate()
 
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
 
   if (isLoading) {
     return <div>Loading...</div>
