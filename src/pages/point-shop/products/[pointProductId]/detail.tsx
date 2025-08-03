@@ -18,7 +18,7 @@ const ProductDetail = () => {
   const { data: userStatus, isLoading: userLoading } = useUserStatus()
 
   const isLoading = productLoading || userLoading
-  const availablePoint = userStatus?.result.userTotalPoints ?? 0
+  const availablePoint = userStatus?.result?.userTotalPoints ?? 0
   const deductPoint = isLoading ? 0 : selectedQuantity * (product?.price ?? 0)
 
   const handleQuantityChange = (newQuantity: number) => {

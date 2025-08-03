@@ -5,11 +5,11 @@ import { toast } from 'sonner'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
-  setIsNicknameChecked: (isChecked: boolean) => void
+  setIsNicknameDuplicated: (isChecked: boolean) => void
 } & ComponentPropsWithRef<'input'>
 
 const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
-  ({ mode = 'new', setIsNicknameChecked, ...props }, ref) => {
+  ({ mode = 'new', setIsNicknameDuplicated, ...props }, ref) => {
     const id = useId()
 
     const labelContent =
@@ -33,10 +33,10 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
       const res = await usersApi.checkNicknameDuplicate(nickname)
 
       if ('nickname' in res) {
-        setIsNicknameChecked(true)
+        setIsNicknameDuplicated(true)
         toast.success('사용 가능한 닉네임입니다.')
       } else {
-        setIsNicknameChecked(false)
+        setIsNicknameDuplicated(false)
         toast.error('중복된 닉네임이 존재합니다.')
       }
     }
