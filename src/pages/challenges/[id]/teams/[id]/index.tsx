@@ -17,13 +17,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 const TeamDetail = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
   const challengeId = Number(params.challengeId)
-  const teamId = params.teamId
+  const teamId = Number(params.teamId)
 
   const queryClient = useQueryClient()
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const navigate = useNavigate()
 
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
   const { mutate: joinTeam } = useMutation({
     mutationFn: () => challengesApi.joinTeam(challengeId, teamId),
     onSuccess: () => {

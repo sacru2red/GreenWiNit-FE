@@ -16,11 +16,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 const ManageTeam = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
   const challengeId = Number(params.challengeId)
-  const teamId = params.teamId
+  const teamId = Number(params.teamId)
 
   const navigate = useNavigate()
 
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
 
   if (isLoading) {
     return <div>Loading...</div>

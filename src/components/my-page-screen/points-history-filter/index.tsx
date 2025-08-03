@@ -1,26 +1,20 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { PointFilterType } from '@/types/points'
 import { useQueryClient } from '@tanstack/react-query'
 import useUserId from '@/hooks/use-user-id'
+import { PointsHistoryFilterProps } from './types'
 
-type FilterElement = '전체' | '적립내역' | '교환내역'
-
-interface PointsHistoryFilterProps {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  setFilterType: Dispatch<SetStateAction<PointFilterType>>
-}
-
+type FilterElement = (typeof FILTER_OPTIONS)[number]
 function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistoryFilterProps) {
   const [isChecked, setIsChecked] = useState<FilterElement>('전체')
   const queryClient = useQueryClient()
   const userId = useUserId()
 
   const handleFilterChange = async (label: FilterElement) => {
-    const statusMap: Record<FilterElement, PointFilterType> = {
-      전체: 'all',
+    const statusMap: Record<FilterElement, PointFilterType | null> = {
+      전체: null,
       적립내역: 'earn',
       교환내역: 'spend',
     }
@@ -42,7 +36,7 @@ function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistory
       >
         <div className="flex items-center text-start text-lg font-semibold">필터</div>
         <ul className="flex flex-col">
-          {(['전체', '교환내역', '적립내역'] as const).map((label) => (
+          {FILTER_OPTIONS.map((label) => (
             <li key={label} className="flex items-center justify-between">
               <span
                 className={cn(
@@ -63,5 +57,6 @@ function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistory
     </Dialog>
   )
 }
+const FILTER_OPTIONS = ['전체', '적립내역', '교환내역'] as const
 
 export default PointsHistoryFilter

@@ -1,9 +1,9 @@
-import { Team } from '@/api/challenges'
+import { ChallengeTeamsElement } from '@/api/challenges'
 import { cn } from '@/lib/utils'
 import dayjs from 'dayjs'
 
 interface TeamCardProps {
-  team: Team
+  team: ChallengeTeamsElement
   onClick?: () => void
 }
 

@@ -1,8 +1,7 @@
 import React, { ComponentProps, useState } from 'react'
 import LogoIcon from '@/components/common/logo-icon'
-import { imagesApi } from '@/api/images'
-import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import InputImage from './form/input-image'
 
 interface InputProfileImageProps
   extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
@@ -17,30 +16,10 @@ function InputProfileImage({
 }: InputProfileImageProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const source = prevSource ?? null
-  const [innerState, setInnerState] = useState<{ uploading: boolean; src: string | null }>({
-    uploading: false,
-    src: source,
-  })
+  const [preview, setPreview] = useState<string | null>(source)
 
   const handleClick = () => {
     fileInputRef.current?.click()
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const processingObjectURL = URL.createObjectURL(file)
-      setInnerState({ uploading: true, src: processingObjectURL })
-      imagesApi.uploadImage('profile', file).then((res) => {
-        URL.revokeObjectURL(processingObjectURL)
-        setInnerState({ uploading: false, src: res.result })
-        if (!res.success) {
-          toast.error(res.message)
-          return
-        }
-        onChange(res.result)
-      })
-    }
   }
 
   return (
@@ -50,14 +29,10 @@ function InputProfileImage({
       className="relative flex w-fit items-center justify-center rounded-full bg-white shadow-md"
     >
       <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
-        {innerState.src == null ? (
+        {!preview ? (
           <LogoIcon size="large" className="cursor-pointer" />
         ) : (
-          <img
-            src={innerState.src}
-            alt="프로필 이미지"
-            className="h-full w-full object-scale-down"
-          />
+          <img src={preview} alt="프로필 이미지" className="h-full w-full object-scale-down" />
         )}
       </div>
       <img
@@ -67,11 +42,11 @@ function InputProfileImage({
         height={24}
         className="absolute right-0 bottom-0"
       />
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        onChange={handleFileChange}
+      <InputImage
+        purpose="profile"
+        value={source}
+        onChange={onChange}
+        onChangePreview={setPreview}
         {...restProps}
         className={cn('hidden', restProps.className)}
       />

@@ -40,9 +40,9 @@ const ChallengeSubmitIndividual = () => {
     }
 
     challengesApi
-      .submitIndividualChallenge(challengeId, {
+      .submitChallenge(challengeId, {
         date: date.toISOString(),
-        imageUrl: image.name,
+        imageUrl: image,
         review,
       })
       .then(() => {
@@ -84,7 +84,7 @@ const ChallengeSubmitIndividual = () => {
             )}
           />
         </Row>
-        <ImageRow control={f.control} />
+        <ImageRow control={f.control} purpose="challenge" />
         <ReviewRow control={f.control} />
         <p className="text-lighter-gray w-full text-center text-sm">
           ※ 하나의 챌린지는 하루에 한번만 인증할 수 있어요!

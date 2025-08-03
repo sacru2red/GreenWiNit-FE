@@ -1,8 +1,7 @@
 import { API_URL } from '@/constant/network'
-import { type User } from '@/store/auth-store'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
-import { Challenge as MockedChallenge } from '@/mocks/handlers'
+import { omit } from 'es-toolkit'
 
 export const challengesApi = {
   getIndividualChallenges: async (cursor?: number | null) => {
@@ -87,24 +86,6 @@ export const challengesApi = {
       return res.json()
     })
   },
-  submitTeamChallenge: async (
-    challengeId: string | undefined,
-    teamId: string | undefined,
-    body: FormData,
-  ) => {
-    if (challengeId == null || teamId == null) {
-      throw new Error('challengeId or teamId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/submit/team/${teamId}`, {
-      method: 'POST',
-      body,
-    })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
-  },
   getJoinedTeamsMine: async (id: number) => {
     // @TODO replace API
     // https://github.com/GreenWiNit/backend/issues/188
@@ -116,7 +97,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: Array<Team>
+            content: Array<ChallengeTeamsElement>
           }
         }
       | {
@@ -126,18 +107,10 @@ export const challengesApi = {
         }
     >
   },
-  joinTeam: async (id: number | undefined, teamId: string | undefined) => {
-    if (id == null || teamId == null) {
-      throw new Error('id or teamId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${id}/teams/${teamId}/join`, {
+  joinTeam: async (_challengeId: number, teamId: number) => {
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, {
       method: 'POST',
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
   getChallengesTeams: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/${id}/groups`)
@@ -147,51 +120,41 @@ export const challengesApi = {
       result: {
         hasNext: boolean
         nextCursor: number | null
-        content: Array<Team>
+        content: Array<ChallengeTeamsElement>
       } | null
     }>
   },
-  getChallengesTeam: async (challengeId: number, teamId: string) => {
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams/${teamId}`)
-    return response.json() as Promise<MockedTeam>
+  getChallengesTeam: async (challengeId: number, teamId: number) => {
+    const response = await fetch(`${API_URL}/challenges/${challengeId}/groups/${teamId}`)
+    return response.json() as Promise<
+      | {
+          success: true
+          message: string
+          result: TeamDetailResponse
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
+    >
   },
-  enrollTeam: async (challengeId: number | undefined, team: Omit<MockedTeam, 'users' | 'id'>) => {
-    if (challengeId == null) {
-      throw new Error('challengeId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams`, {
+  enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
+    return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
       method: 'POST',
       body: JSON.stringify(team),
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
-  deleteTeam: async (teamId: string | undefined) => {
-    if (teamId == null) {
-      throw new Error('teamId is required')
-    }
-    const response = await fetch(`${API_URL}/teams/${teamId}`, { method: 'DELETE' })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return response.json() as Promise<{ challenge: MockedChallenge }>
+  deleteTeam: async (teamId: number) => {
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
   },
-  modifyTeam: async (team: Omit<MockedTeam, 'users'>) => {
-    const response = await fetch(`${API_URL}/teams/${team.id}`, {
+  modifyTeam: async (team: TeamModifyRequestDto) => {
+    return fetch(`${API_URL}/challenges/groups/${team.id}`, {
       method: 'PUT',
-      body: JSON.stringify(team),
+      body: JSON.stringify(omit(team, ['id'])),
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
-  submitIndividualChallenge: async (
+  submitChallenge: async (
     challengeId: number,
     body: {
       date: string
@@ -261,34 +224,7 @@ export interface ChallengeDetailResponse {
   type?: 'PERSONAL' | 'TEAM'
 }
 
-export interface MockedTeam {
-  id: string
-  name: string
-  date: string
-  startAt: string
-  endAt: string
-  /**
-   * https://postcode.map.daum.net/guide
-   */
-  address: {
-    roadAddress: string
-    roadnameCode: string
-    zonecode: string
-    detailAddress: string
-    sigungu: string
-  }
-  description: string
-  maxMemberCount: number
-  openChatUrl: string
-  users: Array<
-    User & {
-      isLeader?: boolean
-    }
-  >
-  isDeleted?: boolean
-}
-
-export interface Team {
+export interface ChallengeTeamsElement {
   id: number
   groupName: string
   groupAddress: string
@@ -298,6 +234,57 @@ export interface Team {
   maxParticipants: number
   groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
   isLeader: boolean
+}
+
+export interface TeamCreateRequestDto {
+  /**
+   * '강남구 러닝 그룹'
+   */
+  groupName: string
+  /**
+   * '서울시 강남구 테헤란로 123'
+   */
+  roadAddress: string
+  /**
+   * '삼성동 빌딩 1층'
+   */
+  detailAddress: string
+  /**
+   * '매주 화, 목 저녁 7시에 모여서 5km 러닝합니다.'
+   */
+  groupDescription: string
+  /**
+   * 'https://open.kakao.com/o/abc123'
+   */
+  openChatUrl: string
+  /**
+   * '2025-08-03T18:22:28.234Z'
+   */
+  groupBeginDateTime: string
+  /**
+   * '2025-08-03T18:22:28.234Z'
+   */
+  groupEndDateTime: string
+  maxParticipants: number
+}
+
+export interface TeamModifyRequestDto extends TeamCreateRequestDto {
+  id: string
+}
+
+export interface TeamDetailResponse {
+  id: number
+  groupName: string
+  groupAddress: string
+  groupDescription: string
+  openChatUrl: string
+  groupBeginDateTime: string
+  groupEndDateTime: string
+  currentParticipants: number
+  maxParticipants: number
+  groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
+  isLeader: boolean
+  isParticipant: boolean
 }
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'
@@ -317,7 +304,7 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     challengeType: 'individual' | 'team'
   }) => ['list', 'my-joined', { challengeType, cursor: cursor ?? undefined }] as const,
   detail: (id: number | undefined) => ['detail', id] as const,
-  team: (challengeId: number | undefined, teamId: string | undefined) =>
+  team: (challengeId: number | undefined, teamId: number | undefined) =>
     [challengeId, 'teams', teamId] as const,
   teams: (challengeId: number | undefined) => [challengeId, 'teams'] as const,
   joinedTeams: (challengeId: number | undefined) => [challengeId, 'teams', 'joined'] as const,

@@ -1,23 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-/**
- * @deprecated DO NOT USE THIS
- */
-export interface User {
-  id: string
-  name: string
-  email: string
-  point: number
-  challengeCount: number
-  level: {
-    name: string
-    code: number
-    exp: number
-    nextLevelExp: number
-  }
-}
-
 interface authStoreState {
   accessToken: string | null
   setAccessToken: (accessToken: string) => void

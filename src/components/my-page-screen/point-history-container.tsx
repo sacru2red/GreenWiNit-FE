@@ -5,7 +5,7 @@ import { PointFilterType } from '@/types/points'
 import { useState } from 'react'
 
 function PointHistoryContainer() {
-  const [filterType, setFilterType] = useState<PointFilterType>('all')
+  const [filterType, setFilterType] = useState<PointFilterType | null>(null)
   const { data: getPointHistoryReponse } = useUserPointHistory(filterType)
 
   const list = getPointHistoryReponse?.result?.content ?? []
