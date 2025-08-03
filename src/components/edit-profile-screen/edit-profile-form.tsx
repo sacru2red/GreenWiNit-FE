@@ -4,6 +4,7 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
+import { userStore } from '@/store/user-store'
 import { Fragment, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -15,8 +16,9 @@ export interface FormState {
 
 function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const userNickname = userStore((s) => s.user?.name) ?? '' // @TODO 현재 nickname을 조회하거나 같이 주는 api가 없는 것 같음(백엔드에 문의 예정). 현재는 name으로 쓰고 있으나, 만약 추가된다면 nickname으로 바뀔 예정
 
   const { control, handleSubmit } = useForm<FormState>({
     defaultValues: {
@@ -33,7 +35,7 @@ function EditProfileForm() {
       return
     }
 
-    if (!isNicknameChecked) {
+    if (!isNicknameDuplicated) {
       toast.error('닉네임 중복 체크를 해주세요.')
       return
     }
@@ -69,7 +71,7 @@ function EditProfileForm() {
         <fieldset>
           <legend className="sr-only">닉네임 수정</legend>
           <section className="flex w-full flex-col gap-2">
-            <CurrentNickname />
+            <CurrentNickname nickname={userNickname} />
             <Controller
               control={control}
               name="nickname"
@@ -78,9 +80,9 @@ function EditProfileForm() {
                   value={field.value ?? ''}
                   onChange={(e) => {
                     field.onChange(e)
-                    setIsNicknameChecked(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                    setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
                   }}
-                  setIsNicknameChecked={setIsNicknameChecked}
+                  setIsNicknameDuplicated={setIsNicknameDuplicated}
                 />
               )}
             ></Controller>

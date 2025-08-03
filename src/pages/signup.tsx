@@ -17,7 +17,7 @@ interface FormState {
 }
 const Signup = () => {
   const [searchParams] = useSearchParams()
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
 
   const tempToken = searchParams.get('tempToken')
 
@@ -38,7 +38,7 @@ const Signup = () => {
       return
     }
 
-    if (!isNicknameChecked) {
+    if (!isNicknameDuplicated) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
@@ -84,9 +84,9 @@ const Signup = () => {
               value={field.value ?? ''}
               onChange={(e) => {
                 field.onChange(e)
-                setIsNicknameChecked(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
               }}
-              setIsNicknameChecked={setIsNicknameChecked}
+              setIsNicknameDuplicated={setIsNicknameDuplicated}
             />
           )}
         ></Controller>
