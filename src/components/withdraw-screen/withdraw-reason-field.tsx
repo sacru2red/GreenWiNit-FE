@@ -1,14 +1,6 @@
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
 import { UseFormRegister } from 'react-hook-form'
 
-const reasons = [
-  { name: 'SERVICE_DISSATISFACTION', content: '서비스 이용이 불편해요' },
-  { name: 'POLICY_DISAGREEMENT', content: '원하는 정보가 없어요' },
-  { name: 'PRIVACY_CONCERN', content: '다른 서비스를 이용할 예정이에요' },
-  { name: 'PRIVACY_PROTECTION', content: '개인정보 보호를 위해 탈퇴할게요' },
-  { name: 'OTHER', content: '기타' },
-] as const
-
 interface WithdrawReasonFieldProps {
   register: UseFormRegister<WithDrawnFormState>
 }
@@ -48,5 +40,13 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
     </section>
   )
 }
+
+const reasons = [
+  { name: 'SERVICE_DISSATISFACTION', content: '서비스 이용이 불편해요' },
+  { name: 'POLICY_DISAGREEMENT', content: '원하는 정보가 없어요' },
+  { name: 'PRIVACY_CONCERN', content: '다른 서비스를 이용할 예정이에요' },
+  { name: 'PRIVACY_PROTECTION', content: '개인정보 보호를 위해 탈퇴할게요' },
+  { name: 'OTHER', content: '기타' },
+] as const
 
 export default WithdrawReasonField
