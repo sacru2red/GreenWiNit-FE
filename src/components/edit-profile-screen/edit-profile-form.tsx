@@ -1,9 +1,10 @@
 import { usersApi } from '@/api/users'
 import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
-import NicknameCheckInput from '@/components/edit-profile-screen/nickname-checkt-input'
+import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
+import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -13,11 +14,11 @@ export interface FormState {
 }
 
 function EditProfileForm() {
-  const formDataRef = useRef<FormState | null>(null)
+  const [pendingData, setPendingData] = useState<FormState | null>(null)
   const [isNicknameChecked, setIsNicknameChecked] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
 
-  const { control, register, handleSubmit } = useForm<FormState>({
+  const { control, handleSubmit } = useForm<FormState>({
     defaultValues: {
       nickname: null,
       profileImage: null,
@@ -25,28 +26,21 @@ function EditProfileForm() {
   })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    if (!data.nickname) {
-      toast.error('닉네임을 입력해주세요.')
-      return
-    }
-
     if (!isNicknameChecked) {
       toast.error('닉네임 중복 체크를 해주세요.')
       return
     }
 
-    formDataRef.current = data
+    setPendingData(data)
     setShowConfirmModal(true)
   }
 
   const updateNickname = async () => {
-    const data = formDataRef.current
-
-    if (!data?.nickname) return
+    if (!pendingData?.nickname) return
 
     await usersApi.putUserProfile(
-      data.nickname,
-      data.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
+      pendingData.nickname,
+      pendingData.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
     )
   }
 
@@ -67,7 +61,24 @@ function EditProfileForm() {
         </fieldset>
         <fieldset>
           <legend className="sr-only">닉네임 수정</legend>
-          <NicknameCheckInput register={register} setIsNicknameChecked={setIsNicknameChecked} />
+          <section className="flex w-full flex-col gap-2">
+            <CurrentNickname />
+            <Controller
+              control={control}
+              name="nickname"
+              rules={{ required: '닉네임을 입력해주세요.' }}
+              render={({ field }) => (
+                <InputNickname
+                  value={field.value ?? ''}
+                  onChange={(e) => {
+                    field.onChange(e)
+                    setIsNicknameChecked(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                  }}
+                  setIsNicknameChecked={setIsNicknameChecked}
+                />
+              )}
+            ></Controller>
+          </section>
         </fieldset>
         <fieldset className="mt-auto flex w-full">
           <legend className="sr-only">제출</legend>

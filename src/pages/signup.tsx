@@ -6,8 +6,10 @@ import PageHeaderSection from '@/components/common/page-header-section'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import { Button } from '@/components/ui/button'
 import { initHistoryAndLocation } from '@/lib/utils'
+import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 interface FormState {
   profileImage: string | null
@@ -15,13 +17,15 @@ interface FormState {
 }
 const Signup = () => {
   const [searchParams] = useSearchParams()
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false)
+
   const tempToken = searchParams.get('tempToken')
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')
   }
 
-  const { control, register, handleSubmit } = useForm<FormState>({
+  const { control, handleSubmit } = useForm<FormState>({
     defaultValues: {
       profileImage: null,
       nickname: null,
@@ -29,9 +33,13 @@ const Signup = () => {
   })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    console.log(data)
     if (!data.nickname) {
-      console.warn('nickname is null')
+      toast.error('닉네임을 입력해주세요.')
+      return
+    }
+
+    if (!isNicknameChecked) {
+      toast.error('닉네임 중복확인을 해주세요')
       return
     }
 
@@ -67,7 +75,21 @@ const Signup = () => {
             </div>
           )}
         />
-        <InputNickname {...register('nickname', { required: true })} mode="new" />
+        <Controller
+          control={control}
+          name="nickname"
+          rules={{ required: '닉네임을 입력해주세요.' }}
+          render={({ field }) => (
+            <InputNickname
+              value={field.value ?? ''}
+              onChange={(e) => {
+                field.onChange(e)
+                setIsNicknameChecked(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+              }}
+              setIsNicknameChecked={setIsNicknameChecked}
+            />
+          )}
+        ></Controller>
         <Button type="submit" className="mt-auto">
           제출
         </Button>
