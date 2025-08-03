@@ -24,6 +24,12 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
 
     const handleClick = async () => {
       const nickname = props.value as string
+
+      if (!nickname) {
+        toast.error('닉네임을 입력해 주세요.')
+        return
+      }
+
       const res = await usersApi.checkNicknameDuplicate(nickname)
 
       if ('nickname' in res) {

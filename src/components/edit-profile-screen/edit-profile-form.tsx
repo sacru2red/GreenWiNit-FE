@@ -26,6 +26,13 @@ function EditProfileForm() {
   })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
+    console.log('onSubmit 실행!')
+
+    if (!data.nickname) {
+      toast.error('닉네임을 입력해 주세요.')
+      return
+    }
+
     if (!isNicknameChecked) {
       toast.error('닉네임 중복 체크를 해주세요.')
       return
@@ -66,7 +73,6 @@ function EditProfileForm() {
             <Controller
               control={control}
               name="nickname"
-              rules={{ required: '닉네임을 입력해주세요.' }}
               render={({ field }) => (
                 <InputNickname
                   value={field.value ?? ''}
