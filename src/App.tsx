@@ -33,6 +33,7 @@ import EnrollAddress from './pages/point-shop/products/[pointProductId]/enroll-a
 import Signup from './pages/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Posts from './pages/posts'
+import Terms from '@/pages/terms'
 
 const queryClient = new QueryClient()
 
@@ -101,6 +102,7 @@ function App() {
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/500" element={<InternalServerError />} />
+                  <Route path="/terms" element={<Terms />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               )}
