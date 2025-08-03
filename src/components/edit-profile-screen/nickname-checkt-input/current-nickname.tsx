@@ -1,8 +1,4 @@
-import { userStore } from '@/store/user-store'
-
-const CurrentNickname = () => {
-  const userName = userStore((s) => s.user?.name)
-
+const CurrentNickname = ({ nickname }: { nickname: string }) => {
   return (
     <fieldset>
       <legend className="sr-only">현재 닉네임</legend>
@@ -13,13 +9,11 @@ const CurrentNickname = () => {
         현재 닉네임
       </label>
       <input
+        readOnly
         type="text"
         id="current-nickname"
         name="current-nickname"
-        placeholder={userName ? userName : '현재 닉네임을 입력해주세요'}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') e.preventDefault()
-        }}
+        value={nickname}
         className="text-secondary-foreground mt-2 h-[48px] w-full rounded-sm bg-[#F5F5F5] px-4 py-3 focus:outline-none"
       />
     </fieldset>
