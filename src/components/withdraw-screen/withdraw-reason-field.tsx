@@ -20,18 +20,18 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
       <ul className="flex flex-col gap-5">
         {reasons.map((el, index) => (
           <li key={index}>
-            <label className="flex items-center gap-3">
+            <label className="relative flex cursor-pointer items-center gap-3">
               <input
                 type="checkbox"
                 className="peer hidden"
                 value={el.name}
                 {...register('reasonType')}
               />
-              <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[#DDDDDD] peer-checked:border-[#3A9B6E]"></span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[#DDDDDD] peer-checked:border-[#3A9B6E]" />
               <img
                 src="/icons/check.svg"
                 alt="선택됨"
-                className="absolute ml-0.5 hidden peer-checked:block"
+                className="absolute top-1/2 left-[3px] hidden -translate-y-1/2 peer-checked:block"
               />
               <span className="text-secondary-foreground">{el.content}</span>
             </label>
