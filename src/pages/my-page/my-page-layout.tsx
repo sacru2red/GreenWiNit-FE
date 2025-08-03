@@ -1,4 +1,3 @@
-import BottomNavigation from '@/components/common/bottom-navigation'
 import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
@@ -9,15 +8,9 @@ interface MyPageLayoutProps {
   title: string
   background?: 'green' | 'white'
   children: ReactNode
-  navigationIsExist?: boolean
 }
 
-function MyPageLayout({
-  title,
-  background = 'white',
-  children,
-  navigationIsExist = false,
-}: MyPageLayoutProps) {
+function MyPageLayout({ title, background = 'white', children }: MyPageLayoutProps) {
   return (
     <PageContainer>
       <PageHeaderSection className="py-5">
@@ -28,12 +21,10 @@ function MyPageLayout({
         className={cn(
           'relative flex min-h-[calc(100vh-48px)] w-full min-w-[375px] flex-col overflow-scroll px-4 py-6',
           background === 'green' ? 'bg-[#E8F5E9]' : 'bg-white',
-          navigationIsExist ? 'min-h-[calc(100vh-125px)]' : 'min-h-[calc(100vh-48px)]',
         )}
       >
         {children}
       </main>
-      {navigationIsExist && <BottomNavigation />}
     </PageContainer>
   )
 }
