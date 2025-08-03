@@ -2,7 +2,6 @@ import { MockedTeam } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { User } from './auth-store'
-import { v4 } from 'uuid'
 import { ClientAddress } from '@/types/addresses'
 import { serverToClientAddress } from '@/lib/utils'
 import { ProdcutDetailType, Product } from '@/types/product'
@@ -16,7 +15,6 @@ interface ApiServerMockingState {
   users: User[]
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
-  enrollTeam: (challengeId: string, team: Omit<MockedTeam, 'id' | 'users'>, user: User) => void
   deleteTeam: (teamId: string) => void
   modifyTeam: (team: Omit<MockedTeam, 'users'>) => void
 
@@ -180,21 +178,6 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
           set((state) => ({
             challenges: state.challenges.map((c) =>
               c.id === challengeId ? { ...c, joinUserIds: [...c.joinUserIds, user.id] } : c,
-            ),
-          }))
-        },
-        enrollTeam: (challengeId: string, team: Omit<MockedTeam, 'id' | 'users'>, user: User) => {
-          set((state) => ({
-            challenges: state.challenges.map((c) =>
-              c.id === challengeId && c.type === 1
-                ? {
-                    ...c,
-                    teams: [
-                      ...c.teams,
-                      { ...team, id: v4(), users: [{ ...user, isLeader: true }] },
-                    ],
-                  }
-                : c,
             ),
           }))
         },

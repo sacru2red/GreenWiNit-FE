@@ -98,7 +98,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: Array<Team>
+            content: Array<ChallengeTeamsElement>
           }
         }
       | {
@@ -121,7 +121,7 @@ export const challengesApi = {
       result: {
         hasNext: boolean
         nextCursor: number | null
-        content: Array<Team>
+        content: Array<ChallengeTeamsElement>
       } | null
     }>
   },
@@ -129,19 +129,11 @@ export const challengesApi = {
     const response = await fetch(`${API_URL}/challenges/${challengeId}/teams/${teamId}`)
     return response.json() as Promise<MockedTeam>
   },
-  enrollTeam: async (challengeId: number | undefined, team: Omit<MockedTeam, 'users' | 'id'>) => {
-    if (challengeId == null) {
-      throw new Error('challengeId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/teams`, {
+  enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
+    return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
       method: 'POST',
       body: JSON.stringify(team),
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
   deleteTeam: async (teamId: string | undefined) => {
     if (teamId == null) {
@@ -262,7 +254,7 @@ export interface MockedTeam {
   isDeleted?: boolean
 }
 
-export interface Team {
+export interface ChallengeTeamsElement {
   id: number
   groupName: string
   groupAddress: string
@@ -272,6 +264,38 @@ export interface Team {
   maxParticipants: number
   groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
   isLeader: boolean
+}
+
+export interface TeamCreateRequestDto {
+  /**
+   * '강남구 러닝 그룹'
+   */
+  groupName: string
+  /**
+   * '서울시 강남구 테헤란로 123'
+   */
+  roadAddress: string
+  /**
+   * '삼성동 빌딩 1층'
+   */
+  detailAddress: string
+  /**
+   * '매주 화, 목 저녁 7시에 모여서 5km 러닝합니다.'
+   */
+  groupDescription: string
+  /**
+   * 'https://open.kakao.com/o/abc123'
+   */
+  openChatUrl: string
+  /**
+   * '2025-08-03T18:22:28.234Z'
+   */
+  groupBeginDateTime: string
+  /**
+   * '2025-08-03T18:22:28.234Z'
+   */
+  groupEndDateTime: string
+  maxParticipants: number
 }
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'

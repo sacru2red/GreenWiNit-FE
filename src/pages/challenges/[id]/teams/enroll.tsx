@@ -23,9 +23,13 @@ const TeamEnroll = () => {
     mutationFn: (team: FormState) =>
       challengesApi.enrollTeam(challengeId, {
         ...team,
-        startAt: dayjs(team.startAt).format('HH:mm'),
-        endAt: dayjs(team.endAt).format('HH:mm'),
-        date: dayjs(team.date).format('YYYY-MM-DD'),
+        groupBeginDateTime: dayjs(team.startAt).format('HH:mm'),
+        groupEndDateTime: dayjs(team.endAt).format('HH:mm'),
+        groupName: team.name,
+        roadAddress: team.address.roadAddress,
+        detailAddress: team.address.detailAddress,
+        groupDescription: team.description,
+        maxParticipants: team.maxMemberCount,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
