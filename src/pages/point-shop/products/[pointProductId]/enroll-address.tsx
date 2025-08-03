@@ -6,7 +6,7 @@ import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
-import { ServerPostAddress } from '@/types/addresses'
+import { UpdateAddressDto } from '@/types/addresses'
 
 interface FormData {
   name: string
@@ -72,7 +72,7 @@ const EnrollAddress = () => {
       return
     }
 
-    const serverAddressForm: ServerPostAddress = {
+    const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
       phoneNumber: formData.phone,
       roadAddress: formData.address.roadAddress,

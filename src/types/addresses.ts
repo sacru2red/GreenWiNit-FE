@@ -15,7 +15,13 @@ export type ServerAddress = {
   zipCode: string
 }
 
-export type ServerPostAddress = Omit<ServerAddress, 'deliveryAddressId'>
+export type UpdateAddressDto = {
+  recipientName: string
+  phoneNumber: string
+  roadAddress: string
+  detailAddress: string
+  zipCode: string
+}
 
 export type ClientAddress = {
   id: number
