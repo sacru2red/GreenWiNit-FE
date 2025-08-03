@@ -1,5 +1,5 @@
 export interface FormState {
   date: Date | null
-  image: File | null
+  image: string | null
   review: string
 }

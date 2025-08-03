@@ -1,45 +1,32 @@
 import { Plus as PlusIcon } from 'lucide-react'
-import { ForwardedRef, Fragment, useEffect, useRef, useState } from 'react'
+import { ForwardedRef, Fragment, useRef, useState } from 'react'
 import { omit } from 'es-toolkit'
 import { cn } from '@/lib/utils'
+import InputImage from './input-image'
 
-const InputUploadImage = (
-  props: Omit<React.ComponentProps<'input'>, 'value'> & { value: File | null },
-) => {
+type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value'> & {
+  value: string | null
+  purpose: Parameters<typeof InputImage>[0]['purpose']
+  onChange: (src: string | null) => void
+}
+
+const InputUploadImage = (props: InputUploadImageProps) => {
+  const source = props.value ?? null
+  const [preview, setPreview] = useState<string | null>(source)
   const inputRef = useRef<HTMLInputElement>(
     props.ref && typeof props.ref === 'object' && 'current' in props.ref ? props.ref.current : null,
   )
   const mergedRef = mergeRefs(props.ref, inputRef)
 
-  const imageBlob = inputRef.current?.files?.[0]
-  const [processingObjectURL, setProcessingObjectURL] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (imageBlob == null) {
-      setProcessingObjectURL(null)
-      return
-    }
-    const processingObjectURL = URL.createObjectURL(imageBlob)
-    setProcessingObjectURL(processingObjectURL)
-  }, [imageBlob])
-
-  useEffect(() => {
-    return () => {
-      if (processingObjectURL) {
-        URL.revokeObjectURL(processingObjectURL)
-      }
-    }
-  }, [processingObjectURL])
-
   return (
     <div
       className={cn(
         'flex min-h-[15vh] w-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl',
-        imageBlob == null ? 'bg-[#f0f0f0] p-8' : 'max-h-[20vh]',
+        preview == null ? 'bg-[#f0f0f0] p-8' : 'max-h-[20vh]',
       )}
       onClick={() => inputRef.current?.click()}
     >
-      {processingObjectURL == null ? (
+      {!preview ? (
         <Fragment>
           <div className="rounded-full border-[2px] border-[#3A9B6E] p-2">
             <PlusIcon className="text-[#3A9B6E]" />
@@ -48,9 +35,16 @@ const InputUploadImage = (
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
       ) : (
-        <img src={processingObjectURL} alt="uploaded" className="min-h-[15vh]" />
+        <img src={preview} alt="uploaded" className="min-h-[15vh]" />
       )}
-      <input type="file" className="hidden" {...omit(props, ['value'])} ref={mergedRef} />
+      <InputImage
+        value={source}
+        onChangePreview={setPreview}
+        {...omit(props, ['value'])}
+        onChange={props.onChange}
+        purpose={props.purpose}
+        ref={mergedRef}
+      />
     </div>
   )
 }

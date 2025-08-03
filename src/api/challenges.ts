@@ -87,24 +87,6 @@ export const challengesApi = {
       return res.json()
     })
   },
-  submitTeamChallenge: async (
-    challengeId: string | undefined,
-    teamId: string | undefined,
-    body: FormData,
-  ) => {
-    if (challengeId == null || teamId == null) {
-      throw new Error('challengeId or teamId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/submit/team/${teamId}`, {
-      method: 'POST',
-      body,
-    })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
-  },
   getJoinedTeamsMine: async (id: number) => {
     // @TODO replace API
     // https://github.com/GreenWiNit/backend/issues/188
@@ -191,7 +173,7 @@ export const challengesApi = {
     }
     return
   },
-  submitIndividualChallenge: async (
+  submitChallenge: async (
     challengeId: number,
     body: {
       date: string

@@ -23,21 +23,24 @@ const ChallengeSubmitTeam = () => {
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = params.challengeId
-  const teamId = params.teamId
+  const challengeId = Number(params.challengeId)
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     const { image, review } = data
     if (image == null) {
       throw new Error('image is required')
     }
-    const formData = new FormData()
-    formData.append('image', image)
-    formData.append('review', review)
 
-    challengesApi.submitTeamChallenge(challengeId, teamId, formData).then(() => {
-      setOpenConfirmDialog(true)
-    })
+    challengesApi
+      .submitChallenge(challengeId, {
+        // @CHECK 현재 시간으로 제출하는 것이 맞는지 확인
+        date: new Date().toISOString(),
+        imageUrl: image,
+        review,
+      })
+      .then(() => {
+        setOpenConfirmDialog(true)
+      })
   }
 
   return (
@@ -47,7 +50,7 @@ const ChallengeSubmitTeam = () => {
         <PageTitle>팀 챌린지 인증</PageTitle>
       </PageHeaderSection>
       <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4 p-4">
-        <ImageRow control={f.control} />
+        <ImageRow control={f.control} purpose="challenge" />
         <ReviewRow control={f.control} />
         <Button
           variant={f.formState.isValid ? 'default' : 'disabled'}

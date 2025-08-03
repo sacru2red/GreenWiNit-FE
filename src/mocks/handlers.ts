@@ -75,13 +75,6 @@ export const handlers = [
     })
   }),
 
-  http.post(`${API_URL}/challenges/:challengeId/submit/team/:teamId`, async () => {
-    return new HttpResponse('ok', {
-      status: 200,
-      statusText: 'OK',
-    })
-  }),
-
   http.post(`${API_URL}/challenges/:id/teams/:teamId/join`, async ({ params, cookies }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {
