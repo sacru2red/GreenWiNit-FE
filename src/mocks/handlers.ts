@@ -1,208 +1,11 @@
 // https://mswjs.io/docs/quick-start#2-request-handlers
-import { Team } from '@/api/challenges'
+import { MockedTeam } from '@/api/challenges'
 import { API_URL } from '@/constant/network'
-import { apiServerMockingStore, ME } from '@/store/api-server-mocking-store'
+import { apiServerMockingStore } from '@/store/api-server-mocking-store'
+import { User } from '@/store/user-store'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [
-  http.post('/api/login', async ({ request }) => {
-    const body = await request.json()
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    /** @ts-ignore: body is not typed */
-    const oAuthToken = body?.['oAuthToken']
-    console.log('oAuthToken', oAuthToken)
-
-    if (oAuthToken == 'ok-this-is-valid-oAuth-token') {
-      return new HttpResponse(JSON.stringify(ME), {
-        status: 200,
-        statusText: 'OK',
-        headers: {
-          'set-cookie': 'authToken=abc-123',
-        },
-      })
-    }
-
-    return new HttpResponse(null, {
-      status: 401,
-      statusText: 'Unauthorized',
-      headers: {
-        'set-cookie': 'authToken=;',
-      },
-    })
-  }),
-
-  http.post('/api/logout', async () => {
-    return new HttpResponse('ok', {
-      status: 200,
-      statusText: 'OK',
-      headers: {
-        'set-cookie': 'authToken=;',
-      },
-    })
-  }),
-  http.post('/api/auth/withdraw', ({ cookies }) => {
-    const authToken = cookies['authToken']
-
-    if (!authToken) {
-      return HttpResponse.json(
-        {
-          error: 'UNAUTHORIZED',
-          message: '로그인이 필요합니다.',
-        },
-        {
-          status: 401,
-          statusText: 'Unauthorized',
-        },
-      )
-    }
-    return HttpResponse.json(
-      {
-        success: true,
-        message: '회원 탈퇴가 완료되었습니다.',
-      },
-      {
-        status: 200,
-        statusText: 'OK',
-      },
-    )
-  }),
-
-  http.get(`${API_URL}/challenges`, () => {
-    return HttpResponse.json(
-      apiServerMockingStore.getState().challenges.map((c) => {
-        if (c.type !== 1) {
-          return c
-        }
-        return {
-          ...c,
-          teams: c.teams.filter((t) => !t.isDeleted),
-        }
-      }),
-    )
-  }),
-
-  http.get(`${API_URL}/challenges/user/me/joined`, ({ cookies }) => {
-    const authToken = cookies['authToken']
-
-    if (authToken == null || authToken == '') {
-      return new HttpResponse(null, {
-        status: 401,
-        statusText: 'Unauthorized: not valid authToken',
-      })
-    }
-
-    const foundUser = apiServerMockingStore.getState().users[0]
-    if (foundUser == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found user',
-      })
-    }
-
-    return HttpResponse.json(
-      apiServerMockingStore
-        .getState()
-        .challenges.filter((c) => c.joinUserIds.includes(foundUser.id)),
-    )
-  }),
-
-  http.get(`${API_URL}/challenges/:id`, ({ params }) => {
-    const id = params['id']
-    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
-    if (challenge == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-
-    if (challenge.type === 1) {
-      return HttpResponse.json({
-        ...challenge,
-        teams: challenge.teams
-          .filter((t) => !t.isDeleted)
-          .map((t) => ({
-            ...t,
-            isJoinAllowed: t.users.length < t.maxMemberCount,
-          })),
-      })
-    }
-
-    return HttpResponse.json(challenge)
-  }),
-
-  http.get(`${API_URL}/challenges/:id/teams/me/joined`, ({ cookies, params }) => {
-    const id = params['id']
-    if (id == null || typeof id !== 'string') {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: not valid id',
-      })
-    }
-    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === id)
-    if (challenge == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-    if (challenge.type !== 1) {
-      return new HttpResponse(null, {
-        status: 500,
-        statusText: 'Internal Server Error: cannot join team challenge (only team challenge)',
-      })
-    }
-
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
-    }
-    const foundUser = foundUserOrException
-
-    const teams = challenge.teams
-    const joinedTeams = teams
-      .filter((t) => t.users.some((u) => u.id === foundUser.id))
-      .filter((t) => !t.isDeleted)
-      .map((t) => ({
-        ...t,
-        isJoinAllowed: t.users.length < t.maxMemberCount,
-      }))
-
-    return HttpResponse.json(joinedTeams)
-  }),
-
-  http.get(`${API_URL}/challenges/:challengeId/teams/:teamId`, ({ params }) => {
-    const challengeId = params['challengeId']
-    const teamId = params['teamId']
-    const challenge = apiServerMockingStore.getState().challenges.find((c) => c.id === challengeId)
-    if (challenge == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-    if (challenge.type !== 1) {
-      return new HttpResponse(null, {
-        status: 500,
-        statusText: 'Internal Server Error: this challenge is not team challenge',
-      })
-    }
-    const team = challenge.teams.find((t) => t.id === teamId)
-    if (team == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found team',
-      })
-    }
-    if (team.isDeleted) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found team',
-      })
-    }
-    return HttpResponse.json(team)
-  }),
-
   http.get('/api/v1/users/me/points-history', ({ request }) => {
     const url = new URL(request.url)
     const status = url.searchParams.get('status') // 'earn' 또는 'spend' 또는 null
@@ -272,54 +75,7 @@ export const handlers = [
     })
   }),
 
-  http.post(`${API_URL}/challenges/:id/submit`, async () => {
-    return new HttpResponse('ok', {
-      status: 200,
-      statusText: 'OK',
-    })
-  }),
-
   http.post(`${API_URL}/challenges/:challengeId/submit/team/:teamId`, async () => {
-    return new HttpResponse('ok', {
-      status: 200,
-      statusText: 'OK',
-    })
-  }),
-
-  http.post(`${API_URL}/challenges/:id/join`, async ({ params, cookies }) => {
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
-    }
-    const foundUser = foundUserOrException
-
-    const id = params['id']
-    if (id == null || typeof id !== 'string') {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: not valid id',
-      })
-    }
-
-    const apiServerMockingStoreState = apiServerMockingStore.getState()
-    const { challenges, joinChallenge } = apiServerMockingStoreState
-    const challenge = challenges.find((c) => c.id === id)
-
-    if (challenge == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-    if (challenge.joinUserIds.includes(foundUser.id)) {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: already joined',
-      })
-    }
-
-    joinChallenge(id, foundUser)
-
     return new HttpResponse('ok', {
       status: 200,
       statusText: 'OK',
@@ -432,7 +188,7 @@ export const handlers = [
         statusText: 'Internal Server Error: not valid team',
       })
     }
-    const typedTeam = team as Omit<Team, 'users' | 'id'>
+    const typedTeam = team as Omit<MockedTeam, 'users' | 'id'>
     enrollTeam(challengeId, typedTeam, foundUser)
 
     return new HttpResponse('ok', {
@@ -538,7 +294,7 @@ export const handlers = [
         statusText: 'Internal Server Error: not valid team',
       })
     }
-    modifyTeam(payloadTeam as Omit<Team, 'users'>)
+    modifyTeam(payloadTeam as Omit<MockedTeam, 'users'>)
 
     return new HttpResponse('ok', {
       status: 200,
@@ -616,4 +372,40 @@ const getUserFromCookie = (cookies: Record<string, string>) => {
   }
 
   return foundUser
+}
+
+export type Challenge = {
+  id: string
+  name: string
+  /**
+   * @deprecated
+   * howToJoin하고 description 중 하나만 사용할 수도 있음..
+   */
+  description: string
+  howToJoin: string
+  startAt: string
+  endAt: string
+  status: 0 | 1 | 2
+  statusKo: '모집중' | '진행중' | '종료'
+  thumbnailUrl: string
+  point: number
+  joinUserIds: string[]
+} & (
+  | {
+      type: 0
+      typeKo: '개인'
+      // 참여기록
+      participationRecords: ParticipationRecord[]
+    }
+  | {
+      type: 1
+      typeKo: '팀'
+      teams: MockedTeam[]
+    }
+)
+
+interface ParticipationRecord {
+  id: string
+  date: string
+  users: User[]
 }

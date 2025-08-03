@@ -12,10 +12,11 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import useChallenge from '@/hooks/challenge/use-challenge'
+import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
 
 const ChallengeDetail = () => {
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
   const queryClient = useQueryClient()
@@ -23,11 +24,11 @@ const ChallengeDetail = () => {
   const { data: challenge } = useChallenge(challengeId)
 
   const { mutate: joinChallenge } = useMutation({
-    mutationFn: (pId: string) => challengesApi.joinChallenge(pId),
+    mutationFn: (pId: number) => challengesApi.joinChallenge(pId),
     onSuccess: () => {
       setOpenSuccessDialog(true)
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
       })
     },
     onError(error) {
@@ -36,18 +37,20 @@ const ChallengeDetail = () => {
     },
   })
 
+  const typeKo = challenge?.type === 'PERSONAL' ? '개인' : '팀'
+
   return (
     <PageContainer>
       <PageHeaderSection>
         <PageHeaderSection.BackIcon />
-        <PageTitle>{`${challenge?.typeKo} 챌린지 상세보기`}</PageTitle>
+        <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
       </PageHeaderSection>
       <div className="flex flex-1 flex-col gap-4 p-4">
-        <ChallengeTitle title={challenge?.name} />
+        <ChallengeTitle challengeId={challengeId} />
         <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
           <img
-            src={challenge?.thumbnailUrl}
-            alt={challenge?.name}
+            src={challenge?.imageUrl || DEFAULT_CHALLENGE_IMAGE}
+            alt="challenge image"
             className="w-full rounded-xl object-cover"
           />
           <div className="flex flex-col items-start gap-2">
@@ -59,7 +62,7 @@ const ChallengeDetail = () => {
                 <span className="text-card-base">
                   {challenge == null
                     ? null
-                    : `${dayjs(challenge.startAt).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endAt).format('YYYY.MM.DD')}`}
+                    : `${dayjs(challenge.beginDateTime).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('YYYY.MM.DD')}`}
                 </span>
               </p>
             </div>
@@ -68,7 +71,7 @@ const ChallengeDetail = () => {
                 참여방법
                 <br />
                 <span className="text-card-base">
-                  {challenge == null ? null : challenge.howToJoin}
+                  {challenge == null ? null : challenge.content}
                 </span>
               </p>
             </div>
@@ -98,10 +101,10 @@ const ChallengeDetail = () => {
       <BottomNavigation />
       <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
         <DialogContent className="flex flex-col gap-3">
-          <DialogDescription className="text-border text-center !text-lg !text-black">
+          <DialogDescription className="text-center !text-lg !text-black">
             챌린지 참여 완료
           </DialogDescription>
-          <DialogDescription className="text-border !text-light-gray text-center !text-sm">
+          <DialogDescription className="!text-light-gray text-center !text-sm">
             [홈] -&gt; [참여 챌린지]에서
             <br />
             챌린지를 인증해보세요!

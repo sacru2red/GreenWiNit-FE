@@ -1,4 +1,4 @@
-import { Challenge, Team } from '@/api/challenges'
+import { MockedTeam } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { User } from './user-store'
@@ -6,6 +6,7 @@ import { v4 } from 'uuid'
 import { ClientAddress } from '@/types/addresses'
 import { serverToClientAddress } from '@/lib/utils'
 import { ProdcutDetailType, Product } from '@/types/product'
+import { Challenge } from '@/mocks/handlers'
 
 /**
  * 이 파일은 추후에 삭제되어야 합니다.
@@ -16,9 +17,9 @@ interface ApiServerMockingState {
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
   joinTeam: (teamId: string, user: User) => void
-  enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => void
+  enrollTeam: (challengeId: string, team: Omit<MockedTeam, 'id' | 'users'>, user: User) => void
   deleteTeam: (teamId: string) => void
-  modifyTeam: (team: Omit<Team, 'users'>) => void
+  modifyTeam: (team: Omit<MockedTeam, 'users'>) => void
 
   address: ClientAddress
   getAddress: () => ClientAddress | null
@@ -31,7 +32,7 @@ interface ApiServerMockingState {
   getProductDetail: (productId: number) => ProdcutDetailType | undefined
 }
 
-export const ME = {
+const ME = {
   id: '1',
   name: 'John Doe',
   email: 'john.doe@example.com',
@@ -197,7 +198,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             ),
           }))
         },
-        enrollTeam: (challengeId: string, team: Omit<Team, 'id' | 'users'>, user: User) => {
+        enrollTeam: (challengeId: string, team: Omit<MockedTeam, 'id' | 'users'>, user: User) => {
           set((state) => ({
             challenges: state.challenges.map((c) =>
               c.id === challengeId && c.type === 1
@@ -224,7 +225,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             ),
           }))
         },
-        modifyTeam: (team: Omit<Team, 'users'>) => {
+        modifyTeam: (team: Omit<MockedTeam, 'users'>) => {
           set((state) => ({
             challenges: state.challenges.map((c) =>
               c.type === 1 && c.teams.some((t) => t.id === team.id)

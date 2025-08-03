@@ -15,11 +15,11 @@ import ImageRow from '@/components/submit-screen/image-row'
 import ReviewRow from '@/components/submit-screen/review-row'
 import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
+import useChallenge from '@/hooks/challenge/use-challenge'
 
 const ChallengeSubmitIndividual = () => {
   const f = useForm<FormState>({
     defaultValues: {
-      title: '',
       date: null,
       image: null,
       review: '',
@@ -27,25 +27,27 @@ const ChallengeSubmitIndividual = () => {
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
+  const { data: challenge } = useChallenge(challengeId)
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    const { title, date, image, review } = data
+    const { date, image, review } = data
     if (date == null) {
       throw new Error('date is required')
     }
     if (image == null) {
       throw new Error('image is required')
     }
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('date', date.toISOString())
-    formData.append('image', image)
-    formData.append('review', review)
 
-    challengesApi.submitIndividualChallenge(challengeId, formData).then(() => {
-      setOpenConfirmDialog(true)
-    })
+    challengesApi
+      .submitIndividualChallenge(challengeId, {
+        date: date.toISOString(),
+        imageUrl: image.name,
+        review,
+      })
+      .then(() => {
+        setOpenConfirmDialog(true)
+      })
   }
 
   return (
@@ -60,7 +62,7 @@ const ChallengeSubmitIndividual = () => {
             제목
             <Required />
           </h3>
-          <Input {...f.register('title', { required: true })} />
+          <Input value={challenge?.title ?? ''} contentEditable={false} />
         </Row>
         <Row>
           <h3>

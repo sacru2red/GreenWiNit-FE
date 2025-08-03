@@ -1,4 +1,9 @@
-import { challengesApi, challengesQueryKeys, Team } from '@/api/challenges'
+import {
+  CHALLENGE_ROOT_QUERY_KEY,
+  challengesApi,
+  challengesQueryKeys,
+  MockedTeam,
+} from '@/api/challenges'
 import LogoIcon from '../logo-icon'
 import { userStore } from '@/store/user-store'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
@@ -11,13 +16,13 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { Button } from '@/components/ui/button'
 
 interface OverviewProps {
-  team: Team
+  team: MockedTeam
   allowManage?: boolean
 }
 
 const Overview = ({ team, allowManage = false }: OverviewProps) => {
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const user = userStore((state) => state.user)
@@ -28,9 +33,11 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
   const { mutate: deleteTeam } = useMutation({
     mutationFn: () => challengesApi.deleteTeam(team.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.list().queryKey })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.detail(challengeId).queryKey,
+        queryKey: [CHALLENGE_ROOT_QUERY_KEY],
+      })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
       })
       navigate(`/challenges/${challengeId}/teams`)
     },
