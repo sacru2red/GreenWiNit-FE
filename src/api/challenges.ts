@@ -3,6 +3,7 @@ import { type User } from '@/store/auth-store'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { Challenge as MockedChallenge } from '@/mocks/handlers'
+import { omit } from 'es-toolkit'
 
 export const challengesApi = {
   getIndividualChallenges: async (cursor?: number | null) => {
@@ -146,16 +147,11 @@ export const challengesApi = {
     }
     return response.json() as Promise<{ challenge: MockedChallenge }>
   },
-  modifyTeam: async (team: Omit<MockedTeam, 'users'>) => {
-    const response = await fetch(`${API_URL}/teams/${team.id}`, {
+  modifyTeam: async (team: TeamModifyRequestDto) => {
+    return fetch(`${API_URL}/teams/${team.id}`, {
       method: 'PUT',
-      body: JSON.stringify(team),
+      body: JSON.stringify(omit(team, ['id'])),
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
   submitChallenge: async (
     challengeId: number,
@@ -296,6 +292,10 @@ export interface TeamCreateRequestDto {
    */
   groupEndDateTime: string
   maxParticipants: number
+}
+
+export interface TeamModifyRequestDto extends TeamCreateRequestDto {
+  id: string
 }
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'

@@ -1,4 +1,3 @@
-import { MockedTeam } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { User } from './auth-store'
@@ -16,7 +15,6 @@ interface ApiServerMockingState {
   challenges: Challenge[]
   joinChallenge: (challengeId: string, user: User) => void
   deleteTeam: (teamId: string) => void
-  modifyTeam: (team: Omit<MockedTeam, 'users'>) => void
 
   address: ClientAddress
   getAddress: () => ClientAddress | null
@@ -193,15 +191,7 @@ export const apiServerMockingStore = create<ApiServerMockingState>()(
             ),
           }))
         },
-        modifyTeam: (team: Omit<MockedTeam, 'users'>) => {
-          set((state) => ({
-            challenges: state.challenges.map((c) =>
-              c.type === 1 && c.teams.some((t) => t.id === team.id)
-                ? { ...c, teams: c.teams.map((t) => (t.id === team.id ? { ...t, ...team } : t)) }
-                : c,
-            ),
-          }))
-        },
+
         address: serverToClientAddress({
           deliveryAddressId: 1,
           recipientName: '홍길동',
