@@ -1,7 +1,7 @@
-import { userStore } from '@/store/user-store'
+import { authStore } from '@/store/auth-store'
 
 const useIsLoggedIn = () => {
-  const accessToken = userStore((s) => s.accessToken)
+  const accessToken = authStore((s) => s.accessToken)
   return accessToken != null
 }
 

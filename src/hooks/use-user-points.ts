@@ -1,12 +1,12 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
-import { userStore } from '@/store/user-store'
+import useUserId from './use-user-id'
 import { useQuery } from '@tanstack/react-query'
 
 export const useUserPoints = () => {
-  const user = userStore((s) => s.user)
+  const userId = useUserId()
 
   return useQuery({
-    queryKey: usersQueryKeys['me/points'].detail(user?.id).queryKey,
+    queryKey: usersQueryKeys['me/points'].detail(userId).queryKey,
     queryFn: usersApi.getUserPoints,
   })
 }

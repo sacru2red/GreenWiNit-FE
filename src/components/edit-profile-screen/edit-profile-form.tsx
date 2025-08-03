@@ -4,7 +4,7 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
-import { userStore } from '@/store/user-store'
+import useUserName from '@/hooks/use-user-name'
 import { Fragment, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -18,7 +18,8 @@ function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const userNickname = userStore((s) => s.user?.name) ?? '' // @TODO 현재 nickname을 조회하거나 같이 주는 api가 없는 것 같음(백엔드에 문의 예정). 현재는 name으로 쓰고 있으나, 만약 추가된다면 nickname으로 바뀔 예정
+  // @TODO 현재 nickname을 조회하거나 같이 주는 api가 없는 것 같음(백엔드에 문의 예정). 현재는 name으로 쓰고 있으나, 만약 추가된다면 nickname으로 바뀔 예정
+  const userNickname = useUserName()
 
   const { control, handleSubmit } = useForm<FormState>({
     defaultValues: {

@@ -3,12 +3,11 @@ import UserCard from '@/components/common/user-card'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
 import { initHistoryAndLocation } from '@/lib/utils'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { userStore } from '@/store/user-store'
+import { authStore } from '@/store/auth-store'
 import { useNavigate } from 'react-router-dom'
 
 function MyPage() {
   const navigate = useNavigate()
-  const logout = userStore((s) => s.logout)
 
   const CARD_ITEMS = [
     {
@@ -55,7 +54,7 @@ function MyPage() {
           title: '로그아웃',
           action: () => {
             void usersApi.logout()
-            logout()
+            authStore.getState().initAccessToken()
             initHistoryAndLocation()
           },
         },

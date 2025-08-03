@@ -9,7 +9,7 @@ import PageContainer from '@/components/common/page-container'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 import PageHeaderSection from '@/components/common/page-header-section'
-import { userStore } from '@/store/user-store'
+import { authStore } from '@/store/auth-store'
 
 function Home() {
   const isLoggedIn = useIsLoggedIn()
@@ -17,7 +17,7 @@ function Home() {
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const accessToken = searchParams.get('accessToken')
-  const setAccessToken = userStore((state) => state.setAccessToken)
+  const setAccessToken = authStore((state) => state.setAccessToken)
 
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {

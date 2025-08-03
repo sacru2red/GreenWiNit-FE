@@ -1,7 +1,7 @@
 import { MockedTeam } from '@/api/challenges'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { User } from './user-store'
+import { User } from './auth-store'
 import { v4 } from 'uuid'
 import { ClientAddress } from '@/types/addresses'
 import { serverToClientAddress } from '@/lib/utils'

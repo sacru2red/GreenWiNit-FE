@@ -1,5 +1,5 @@
 import { API_URL } from '@/constant/network'
-import { type User } from '@/store/user-store'
+import { type User } from '@/store/auth-store'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { Challenge as MockedChallenge } from '@/mocks/handlers'

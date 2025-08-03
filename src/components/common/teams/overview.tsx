@@ -5,7 +5,6 @@ import {
   MockedTeam,
 } from '@/api/challenges'
 import LogoIcon from '../logo-icon'
-import { userStore } from '@/store/user-store'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
@@ -25,9 +24,6 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
   const challengeId = Number(params.challengeId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const user = userStore((state) => state.user)
-  const teamLeader = team.users.find((t) => t.isLeader)
-  const isLeader = user?.id === teamLeader?.id
   const [showConfirmDeletingDialog, setShowConfirmDeletingDialog] = useState(false)
 
   const { mutate: deleteTeam } = useMutation({
@@ -42,6 +38,12 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
       navigate(`/challenges/${challengeId}/teams`)
     },
   })
+
+  /**
+   * @deprecated
+   * @TODO replace this
+   */
+  const isLeader = true
 
   return (
     <div className="relative flex flex-col items-center gap-2 p-4">
