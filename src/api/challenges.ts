@@ -108,18 +108,10 @@ export const challengesApi = {
         }
     >
   },
-  joinTeam: async (id: number | undefined, teamId: string | undefined) => {
-    if (id == null || teamId == null) {
-      throw new Error('id or teamId is required')
-    }
-    const response = await fetch(`${API_URL}/challenges/${id}/teams/${teamId}/join`, {
+  joinTeam: async (_challengeId: number, teamId: number) => {
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, {
       method: 'POST',
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
   getChallengesTeams: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/${id}/groups`)
@@ -133,7 +125,7 @@ export const challengesApi = {
       } | null
     }>
   },
-  getChallengesTeam: async (challengeId: number, teamId: string) => {
+  getChallengesTeam: async (challengeId: number, teamId: number) => {
     const response = await fetch(`${API_URL}/challenges/${challengeId}/teams/${teamId}`)
     return response.json() as Promise<MockedTeam>
   },
@@ -299,7 +291,7 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     challengeType: 'individual' | 'team'
   }) => ['list', 'my-joined', { challengeType, cursor: cursor ?? undefined }] as const,
   detail: (id: number | undefined) => ['detail', id] as const,
-  team: (challengeId: number | undefined, teamId: string | undefined) =>
+  team: (challengeId: number | undefined, teamId: number | undefined) =>
     [challengeId, 'teams', teamId] as const,
   teams: (challengeId: number | undefined) => [challengeId, 'teams'] as const,
   joinedTeams: (challengeId: number | undefined) => [challengeId, 'teams', 'joined'] as const,

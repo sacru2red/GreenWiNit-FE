@@ -17,7 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 const TeamDetail = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
   const challengeId = Number(params.challengeId)
-  const teamId = params.teamId
+  const teamId = Number(params.teamId)
 
   const queryClient = useQueryClient()
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)

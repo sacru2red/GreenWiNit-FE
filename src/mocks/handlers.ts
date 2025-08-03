@@ -75,58 +75,6 @@ export const handlers = [
     })
   }),
 
-  http.post(`${API_URL}/challenges/:id/teams/:teamId/join`, async ({ params, cookies }) => {
-    const foundUserOrException = getUserFromCookie(cookies)
-    if (foundUserOrException instanceof HttpResponse) {
-      return foundUserOrException
-    }
-    const foundUser = foundUserOrException
-
-    const id = params['id']
-    const teamId = params['teamId']
-    if (id == null || typeof id !== 'string' || teamId == null || typeof teamId !== 'string') {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: not valid id or teamId',
-      })
-    }
-
-    const apiServerMockingStoreState = apiServerMockingStore.getState()
-    const { challenges, joinTeam } = apiServerMockingStoreState
-    const challenge = challenges.find((c) => c.id === id)
-    if (challenge == null) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found challenge',
-      })
-    }
-    if (challenge.type !== 1) {
-      return new HttpResponse(null, {
-        status: 500,
-        statusText: 'Internal Server Error: this challenge is not team challenge',
-      })
-    }
-    const team = challenge.teams.find((t) => t.id === teamId)
-    if (team == null || team.isDeleted) {
-      return new HttpResponse(null, {
-        status: 404,
-        statusText: 'Not Found: not found team',
-      })
-    }
-    if (team.users.some((u) => u.id === foundUser.id)) {
-      return new HttpResponse(null, {
-        status: 400,
-        statusText: 'Bad Request: already joined',
-      })
-    }
-    joinTeam(teamId, foundUser)
-
-    return new HttpResponse('ok', {
-      status: 200,
-      statusText: 'OK',
-    })
-  }),
-
   http.post(`${API_URL}/challenges/:challengeId/teams`, async ({ params, cookies, request }) => {
     const foundUserOrException = getUserFromCookie(cookies)
     if (foundUserOrException instanceof HttpResponse) {

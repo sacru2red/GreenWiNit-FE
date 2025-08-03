@@ -16,7 +16,7 @@ dayjs.extend(customParseFormat)
 const TeamModify = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
   const challengeId = Number(params.challengeId)
-  const teamId = params.teamId
+  const teamId = Number(params.teamId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
