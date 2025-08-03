@@ -3,7 +3,7 @@ import { productQueryKeys, productsApi } from '@/api/products'
 
 const useProducts = () => {
   return useQuery({
-    queryKey: productQueryKeys.list().queryKey,
+    queryKey: productQueryKeys.products.list().queryKey,
     queryFn: () => productsApi.getProducts(),
   })
 }
