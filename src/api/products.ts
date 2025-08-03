@@ -1,5 +1,50 @@
 import { API_URL } from '@/constant/network'
-import { createQueryKeys } from '@lukemorales/query-key-factory'
+import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
+
+export const productsApi = {
+  getProducts: async () => {
+    const response = await fetch(`${API_URL}/point-products`)
+    const apiServerResponse = (await response.json()) satisfies
+      | {
+          success: true
+          message: 'string'
+          result: {
+            hasNext: boolean
+            nextCursor: number | null
+            content: ServerProducts[]
+          }
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
+
+    return mapServerProductsToClient(apiServerResponse.result.content)
+  },
+
+  getProduct: async (productId: string | undefined) => {
+    const response = await fetch(`${API_URL}/point-products/${productId}`)
+    const data = (await response.json()) satisfies
+      | {
+          success: true
+          message: string
+          result: ServerProductDetail
+        }
+      | {
+          success: false
+          message: string
+          result: null
+        }
+
+    return mapServerProductDetailToClient(data.result)
+  },
+}
+
+const productsKey = createQueryKeys('products', {
+  list: () => ['list'] as const,
+  detail: (id: string | undefined) => ['detail', id] as const,
+})
 
 export type ServerProducts = {
   pointProductId: number
@@ -71,49 +116,4 @@ export const mapServerProductsDetailToClient = (
   return serverProducts.map(mapServerProductDetailToClient)
 }
 
-export const productsApi = {
-  getProducts: async () => {
-    const response = await fetch(`${API_URL}/point-products`)
-    const apiServerResponse = (await response.json()) satisfies
-      | {
-          success: true
-          message: 'string'
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: ServerProducts[]
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductsToClient(apiServerResponse.result.content)
-  },
-
-  getProduct: async (productId: string | undefined) => {
-    const response = await fetch(`${API_URL}/point-products/${productId}`)
-    const data = (await response.json()) satisfies
-      | {
-          success: true
-          message: string
-          result: ServerProductDetail
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductDetailToClient(data.result)
-  },
-}
-
-const productsKey = createQueryKeys('products', {
-  list: () => ['list'] as const,
-  detail: (id: string | undefined) => ['detail', id] as const,
-})
-
-export const productQueryKeys = productsKey
+export const productQueryKeys = mergeQueryKeys(productsKey)
