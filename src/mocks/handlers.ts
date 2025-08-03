@@ -2,7 +2,7 @@
 import { MockedTeam } from '@/api/challenges'
 import { API_URL } from '@/constant/network'
 import { apiServerMockingStore } from '@/store/api-server-mocking-store'
-import { User } from '@/store/user-store'
+import { User } from '@/store/auth-store'
 import { http, HttpResponse } from 'msw'
 
 export const handlers = [

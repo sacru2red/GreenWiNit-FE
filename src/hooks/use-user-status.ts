@@ -1,13 +1,12 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
-import { userStore } from '@/store/user-store'
 import { useQuery } from '@tanstack/react-query'
+import useUserId from './use-user-id'
 
 export const useUserStatus = () => {
-  const user = userStore((s) => s.user)
+  const userId = useUserId()
 
   return useQuery({
-    queryKey: usersQueryKeys['me/status'].detail(user?.id).queryKey,
+    queryKey: usersQueryKeys['me/status'].detail(userId).queryKey,
     queryFn: usersApi.getUserStatus,
-    enabled: !!user?.id,
   })
 }

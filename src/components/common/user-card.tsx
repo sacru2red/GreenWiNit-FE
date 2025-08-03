@@ -1,12 +1,12 @@
 import { useUserStatus } from '@/hooks/use-user-status'
 import { Link, useNavigate } from 'react-router-dom'
-import { userStore } from '@/store/user-store'
 import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
+import useUserName from '@/hooks/use-user-name'
 
 const UserCard = () => {
-  const user = userStore((s) => s.user)
   const navigate = useNavigate()
+  const userName = useUserName()
 
   const handleLoginClick = () => {
     navigate('/login')
@@ -38,13 +38,13 @@ const UserCard = () => {
     <div className="flex flex-col items-center rounded-2xl bg-white shadow-lg">
       <div className="flex w-full items-center gap-8 px-5 py-4">
         <LogoIcon size="large" />
-        {user == null ? (
+        {!userName ? (
           <button onClick={handleLoginClick} className="text-start text-lg font-bold">
             로그인이 필요합니다.
           </button>
         ) : (
           <div className="flex flex-1 flex-col items-start gap-2">
-            <strong className="text-xl font-bold">{user.name}님</strong>
+            <strong className="text-xl font-bold">{userName}님</strong>
             <p className="text-start">환경 챌린지에 참여하고 포인트를 모아보세요</p>
           </div>
         )}

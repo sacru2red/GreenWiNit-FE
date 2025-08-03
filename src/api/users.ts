@@ -1,6 +1,5 @@
 import { API_URL } from '@/constant/network'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
-import { User } from '@/store/user-store'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
@@ -38,12 +37,6 @@ export const usersApi = {
         'Content-Type': 'application/json',
       },
     }).then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
-  },
-  login: async ({ oAuthToken }: { oAuthToken: string }) => {
-    return await fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ oAuthToken }),
-    }).then((res) => res.json() as Promise<User>)
   },
   logout: async () => {
     const response = await fetch(`${API_URL}/auth/logout`, {

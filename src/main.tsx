@@ -3,7 +3,7 @@ import App from './App.tsx'
 import './index.css'
 import fetchIntercept, { FetchInterceptorResponse } from 'fetch-intercept'
 import { API_URL } from './constant/network.ts'
-import { userStore } from './store/user-store.ts'
+import { authStore } from './store/auth-store.ts'
 import { initHistoryAndLocation } from './lib/utils.ts'
 
 async function enableMocking() {
@@ -30,7 +30,7 @@ fetchIntercept.register({
         ...config,
         headers: {
           ...config?.headers,
-          Authorization: `Bearer ${userStore.getState().accessToken}`,
+          Authorization: `Bearer ${authStore.getState().accessToken}`,
         },
       }
 
@@ -55,7 +55,7 @@ fetchIntercept.register({
         if (response.headers.get('content-type')?.includes('json')) {
           response.json().then((body) => {
             if (body.message === '접근이 거부되었습니다.' || body.message.includes('JWT 토큰')) {
-              userStore.getState().setAccessToken(null)
+              authStore.getState().initAccessToken()
               initHistoryAndLocation()
             }
           })
