@@ -58,16 +58,4 @@ export const handlers = [
       },
     })
   }),
-
-  http.get('/api/v1/users/me/points', () => {
-    return HttpResponse.json({
-      success: true,
-      message: 'string',
-      result: {
-        currentBalance: 4500,
-        totalEarned: 5200,
-        totalSpent: 700,
-      },
-    })
-  }),
 ]

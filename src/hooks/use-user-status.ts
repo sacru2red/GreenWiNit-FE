@@ -8,5 +8,6 @@ export const useUserStatus = () => {
   return useQuery({
     queryKey: usersQueryKeys['me/status'].detail(userId).queryKey,
     queryFn: usersApi.getUserStatus,
+    retry: false,
   })
 }

@@ -9,7 +9,7 @@ export const usersApi = {
     return response.json() as Promise<GetMyInfoResponse>
   },
   getUserPoints: async () => {
-    const response = await fetch('/api/v1/users/me/points')
+    const response = await fetch(`${API_URL}/points/me`)
     return response.json() as Promise<GetMyPointsResponse>
   },
   getUserPointHistory: async (status: PointFilterType = 'all') => {
@@ -39,14 +39,9 @@ export const usersApi = {
     }).then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
   },
   logout: async () => {
-    const response = await fetch(`${API_URL}/auth/logout`, {
+    return fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
     })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    return
   },
   signup: async ({
     tempToken,

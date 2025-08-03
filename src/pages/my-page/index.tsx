@@ -52,8 +52,8 @@ function MyPage() {
         { title: '회원탈퇴', action: () => navigate('/my-page/withdraw') },
         {
           title: '로그아웃',
-          action: () => {
-            void usersApi.logout()
+          action: async () => {
+            await usersApi.logout()
             authStore.getState().initAccessToken()
             initHistoryAndLocation()
           },
