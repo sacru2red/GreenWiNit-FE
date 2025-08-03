@@ -1,4 +1,4 @@
-export type PointFilterType = 'all' | 'earn' | 'spend'
+export type PointFilterType = 'earn' | 'spend'
 
 export type PointHistory = {
   pointTransactionId: string

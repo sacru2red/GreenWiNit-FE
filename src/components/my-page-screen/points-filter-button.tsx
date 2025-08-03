@@ -6,7 +6,7 @@ import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 function PointsFilterButton({
   setFilterType,
 }: {
-  setFilterType: Dispatch<SetStateAction<PointFilterType>>
+  setFilterType: Dispatch<SetStateAction<PointFilterType | null>>
 }) {
   const [isPointsHistoryFilterOpen, setIsPointsHistoryFilterOpen] = useState(false)
 

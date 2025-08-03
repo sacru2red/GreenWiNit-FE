@@ -1,4 +1,5 @@
 import { API_URL } from '@/constant/network'
+import { stringify } from '@/lib/query-string'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
@@ -12,9 +13,12 @@ export const usersApi = {
     const response = await fetch(`${API_URL}/points/me`)
     return response.json() as Promise<GetMyPointsResponse>
   },
-  getUserPointHistory: async (status: PointFilterType = 'all') => {
-    const query = status && status !== 'all' ? `?status=${status}` : ''
-    const response = await fetch(`/api/v1/users/me/points-history${query}`)
+  getUserPointHistory: async (status: PointFilterType | null) => {
+    const response = await fetch(
+      `${API_URL}/points/transaction?${stringify({
+        status,
+      })}`,
+    )
     return response.json() as Promise<GetMyPointsHistoryResponse>
   },
   putUserProfile: async (
@@ -121,7 +125,8 @@ const userPointsKey = createQueryKeys('me/points', {
 })
 
 const userPointHistoryKey = createQueryKeys('me/point-history', {
-  detail: (userId?: string, status?: PointFilterType) => [userId, status] as const,
+  detail: (userId?: string, status?: PointFilterType | null) =>
+    [userId, status ?? undefined] as const,
 })
 
 export const usersQueryKeys = mergeQueryKeys(
