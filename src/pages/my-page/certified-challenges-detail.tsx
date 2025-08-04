@@ -10,7 +10,7 @@ function CertifiedChallengesDetail() {
   }
 
   return (
-    <MyPageLayout title="인증 챌린지">
+    <MyPageLayout title="인증 챌린지" showBottomNavigation={true}>
       <div className="flex flex-1 flex-col gap-4 p-4">
         <Row>
           <h3>제목</h3>
