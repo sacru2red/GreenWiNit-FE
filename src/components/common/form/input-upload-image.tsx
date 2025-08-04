@@ -4,7 +4,7 @@ import { omit } from 'es-toolkit'
 import { cn } from '@/lib/utils'
 import InputImage from './input-image'
 
-type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value'> & {
+type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value' | 'onChange'> & {
   value: string | null
   purpose: Parameters<typeof InputImage>[0]['purpose']
   onChange: (src: string | null) => void
