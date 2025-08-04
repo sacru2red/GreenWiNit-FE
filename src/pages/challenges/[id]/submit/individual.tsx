@@ -1,25 +1,25 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
-import Required from '@/components/common/Required'
-import Input from '@/components/common/form/Input'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
+import Required from '@/components/common/required'
+import Input from '@/components/common/form/input'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import DatePickerSingle from '@/components/common/form/DatePickerSingle'
+import DatePickerSingle from '@/components/common/form/date-picker-single'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 import { FormState } from '@/components/submit-screen/type'
-import ImageRow from '@/components/submit-screen/ImageRow'
-import ReviewRow from '@/components/submit-screen/ReviewRow'
-import DoneDialog from '@/components/submit-screen/DoneDialog'
+import ImageRow from '@/components/submit-screen/image-row'
+import ReviewRow from '@/components/submit-screen/review-row'
+import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
+import useChallenge from '@/hooks/challenge/use-challenge'
 
 const ChallengeSubmitIndividual = () => {
   const f = useForm<FormState>({
     defaultValues: {
-      title: '',
       date: null,
       image: null,
       review: '',
@@ -27,25 +27,27 @@ const ChallengeSubmitIndividual = () => {
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
+  const { data: challenge } = useChallenge(challengeId)
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    const { title, date, image, review } = data
+    const { date, image, review } = data
     if (date == null) {
       throw new Error('date is required')
     }
     if (image == null) {
       throw new Error('image is required')
     }
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('date', date.toISOString())
-    formData.append('image', image)
-    formData.append('review', review)
 
-    challengesApi.submitIndividualChallenge(challengeId, formData).then(() => {
-      setOpenConfirmDialog(true)
-    })
+    challengesApi
+      .submitChallenge(challengeId, {
+        date: date.toISOString(),
+        imageUrl: image,
+        review,
+      })
+      .then(() => {
+        setOpenConfirmDialog(true)
+      })
   }
 
   return (
@@ -60,7 +62,7 @@ const ChallengeSubmitIndividual = () => {
             제목
             <Required />
           </h3>
-          <Input {...f.register('title', { required: true })} />
+          <Input value={challenge?.title ?? ''} contentEditable={false} />
         </Row>
         <Row>
           <h3>
@@ -82,7 +84,7 @@ const ChallengeSubmitIndividual = () => {
             )}
           />
         </Row>
-        <ImageRow control={f.control} />
+        <ImageRow control={f.control} purpose="challenge" />
         <ReviewRow control={f.control} />
         <p className="text-lighter-gray w-full text-center text-sm">
           ※ 하나의 챌린지는 하루에 한번만 인증할 수 있어요!

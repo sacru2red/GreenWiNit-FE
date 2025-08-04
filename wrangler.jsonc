@@ -1,0 +1,17 @@
+{
+  "name": "greenwinit",
+  "compatibility_date": "2024-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "env": {
+    "preview": {
+      "build": {
+        "command": "npm run build:staging"
+      }
+    },
+    "production": {
+      "build": {
+        "command": "npm run build"
+      }
+    }
+  }
+}

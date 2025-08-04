@@ -1,46 +1,48 @@
-import { AddressState } from '@/components/common/form/AddressInput'
+import { API_URL } from '@/constant/network'
+import { serverToClientAddress } from '@/lib/utils'
+import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresses'
 
-export type ServerAddressInfo = {
-  deliveryAddressId: number
-  recipientName: string
-  phoneNumber: string
-  roadAddress: string
-  detailAddress: string
-  zipCode: string
-}
+export const addressApi = {
+  getAddress: async () => {
+    const response = await fetch(`${API_URL}/deliveries/addresses`)
 
-export type ClientAddressInfo = {
-  id: number
-  name: string
-  phone: string
-  address: AddressState
-}
+    const data = (await response.json()) satisfies ServerAddress
 
-export interface AddressInfoApiResponse {
-  success: boolean
-  message: string
-  result: ClientAddressInfo | null
-}
+    return serverToClientAddress(data.result)
+  },
+  updateAddress: async (id: number, body: Partial<ClientAddress>) => {
+    const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
 
-export const serverToClientAddress = (serverAddress: ServerAddressInfo): ClientAddressInfo => {
-  return {
-    id: serverAddress.deliveryAddressId,
-    name: serverAddress.recipientName,
-    phone: serverAddress.phoneNumber,
-    address: {
-      roadAddress: serverAddress.roadAddress,
-      roadnameCode: '',
-      zonecode: serverAddress.zipCode,
-      detailAddress: serverAddress.detailAddress,
-      sigungu: '',
-    },
-  }
+    if (!response.ok) {
+      throw new Error(`STATUS: ${response.status} ${response.statusText}`)
+    }
+
+    const data = (await response.json()) satisfies ServerAddress
+
+    return serverToClientAddress(data)
+  },
+  saveAddress: async (data: UpdateAddressDto) => {
+    try {
+      await fetch(`${API_URL}/deliveries/addresses`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+    } catch (error) {
+      throw new Error(`배송지 정보를 저장하는데 실패하였습니다: ${error}`)
+    }
+  },
 }
 
 export const clientToServerAddress = (
-  clientAddress: ClientAddressInfo,
+  clientAddress: ClientAddress,
   id: number,
-): ServerAddressInfo | null => {
+): ServerAddress | null => {
   if (!clientAddress.address) {
     return null
   }
@@ -53,22 +55,4 @@ export const clientToServerAddress = (
     detailAddress: clientAddress.address.detailAddress,
     zipCode: clientAddress.address.zonecode,
   }
-}
-
-export const addressApi = {
-  getAddress: async (): Promise<ClientAddressInfo> => {
-    const response = await fetch(`api/v1/deliveries/addresses`)
-    const data = await response.json()
-
-    return serverToClientAddress(data)
-  },
-  updateAddress: async (body: Partial<ClientAddressInfo>): Promise<ClientAddressInfo> => {
-    const response = await fetch(`api/vi/deliveries/addresses`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
-
-    return serverToClientAddress(data)
-  },
 }

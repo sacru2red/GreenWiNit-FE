@@ -1,4 +1,4 @@
-import Row from '@/components/common/form/Row'
+import Row from '@/components/common/form/row'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallengesDetail() {
@@ -10,7 +10,7 @@ function CertifiedChallengesDetail() {
   }
 
   return (
-    <MyPageLayout title="인증 챌린지" navigationIsExist={true}>
+    <MyPageLayout title="인증 챌린지">
       <div className="flex flex-1 flex-col gap-4 p-4">
         <Row>
           <h3>제목</h3>

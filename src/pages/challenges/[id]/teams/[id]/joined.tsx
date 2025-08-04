@@ -1,12 +1,12 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
-import Description from '@/components/common/teams/Description'
-import MemberCount from '@/components/common/teams/MemberCount'
-import Overview from '@/components/common/teams/Overview'
-import PropertyList from '@/components/common/teams/PropertyList'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
+import Description from '@/components/common/teams/description'
+import MemberCount from '@/components/common/teams/member-count'
+import Overview from '@/components/common/teams/overview'
+import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/ui/button'
-import useChallengesTeam from '@/hooks/useChallengesTeam'
+import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { useNavigate, useParams } from 'react-router-dom'
 
 /**
@@ -15,12 +15,13 @@ import { useNavigate, useParams } from 'react-router-dom'
  */
 const ManageTeam = () => {
   const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = params.challengeId
-  const teamId = params.teamId
+  const challengeId = Number(params.challengeId)
+  const teamId = Number(params.teamId)
 
   const navigate = useNavigate()
 
-  const { data: team, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const team = data?.result
 
   if (isLoading) {
     return <div>Loading...</div>

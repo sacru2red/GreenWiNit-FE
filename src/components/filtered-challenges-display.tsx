@@ -1,4 +1,4 @@
-import Challenge from '@/components/common/Challenge'
+import Challenge from '@/components/common/challenge'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -9,11 +9,27 @@ import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 function FilteredChallengesDisplay() {
   const navigate = useNavigate()
   const [challengeType, setChallengeType] = useState<0 | 1>(0)
+  const challengeTypeString = challengeType === 0 ? 'individual' : 'team'
   const { data: challenges } = useQuery({
-    queryKey: challengesQueryKeys.listJoinedMine().queryKey,
-    queryFn: challengesApi.getJoinedChallengesMine,
+    queryKey: challengesQueryKeys.challenges.listJoinedMine({
+      challengeType: challengeTypeString,
+    }).queryKey,
+    queryFn: () =>
+      challengesApi.getJoinedChallengesMine({
+        challengeType: challengeTypeString,
+        cursor: null,
+      }),
   })
-  const filteredChallenges = challenges?.filter((c) => c.type === challengeType)
+  const filteredChallenges =
+    challenges?.result?.content?.filter((c) => {
+      const isTeam = c.type?.toLowerCase() === 'team'
+      const isIndividual = c.type?.toLowerCase() === 'individual'
+
+      return (
+        (challengeTypeString === 'team' && isTeam) ||
+        (challengeTypeString === 'individual' && isIndividual)
+      )
+    }) ?? []
 
   return (
     <section className="flex w-full flex-1 flex-col gap-4 p-4">

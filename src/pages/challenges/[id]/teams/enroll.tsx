@@ -1,6 +1,6 @@
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
@@ -9,12 +9,12 @@ import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
-import UpsertPageBody from '@/components/common/teams/UpsertPageBody'
-import { FormState, UpsertPageBodyProps } from '@/components/common/teams/UpsertPageBody/types'
+import UpsertPageBody from '@/components/common/teams/upsert-page-body'
+import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 
 const TeamEnroll = () => {
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
@@ -23,13 +23,23 @@ const TeamEnroll = () => {
     mutationFn: (team: FormState) =>
       challengesApi.enrollTeam(challengeId, {
         ...team,
-        startAt: dayjs(team.startAt).format('HH:mm'),
-        endAt: dayjs(team.endAt).format('HH:mm'),
-        date: dayjs(team.date).format('YYYY-MM-DD'),
+        groupBeginDateTime: dayjs(team.startAt).format('HH:mm'),
+        groupEndDateTime: dayjs(team.endAt).format('HH:mm'),
+        groupName: team.name,
+        roadAddress: team.address.roadAddress,
+        detailAddress: team.address.detailAddress,
+        groupDescription: team.description,
+        maxParticipants: team.maxMemberCount,
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.list().queryKey })
-      queryClient.invalidateQueries({ queryKey: challengesQueryKeys.detail(challengeId).queryKey })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.list({
+          challengeType: 'team',
+        }).queryKey,
+      })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+      })
       setShowConfirmDialog(true)
     },
     onError(error) {

@@ -94,6 +94,12 @@ button {
   line-height: 2.4rem;
   margin: 0;
 }
+.react-datepicker__view-calendar-icon {
+  align-items: center;
+  && {
+    display: inline-flex;
+  }
+}
 
 /* WheelItem transform styles */
 .wheel-item {

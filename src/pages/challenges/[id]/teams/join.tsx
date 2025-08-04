@@ -1,18 +1,19 @@
-import ChallengeTitle from '@/components/common/challenges/ChallengeTitle'
-import TeamCard from '@/components/common/teams/TeamCard'
-import PageContainer from '@/components/common/PageContainer'
-import PageHeaderSection from '@/components/common/PageHeaderSection'
-import PageTitle from '@/components/common/PageTitle'
-import useChallenge from '@/hooks/useChallenge'
+import ChallengeTitle from '@/components/common/challenges/challenge-title'
+import TeamCard from '@/components/common/teams/team-card'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
+import useChallengesTeams from '@/hooks/challenge/use-challenges-teams'
 import { useNavigate, useParams } from 'react-router-dom'
-import BottomNavigation from '@/components/common/BottomNav'
+import BottomNavigation from '@/components/common/bottom-navigation'
 
 const JoinTeam = () => {
   const params = useParams<{ challengeId: string }>()
-  const challengeId = params.challengeId
+  const challengeId = Number(params.challengeId)
 
-  const { data: challenge } = useChallenge(challengeId)
   const navigate = useNavigate()
+  const { data } = useChallengesTeams(challengeId)
+  const teams = data?.result?.content ?? []
 
   return (
     <PageContainer>
@@ -21,10 +22,10 @@ const JoinTeam = () => {
         <PageTitle>팀 선택하기</PageTitle>
       </PageHeaderSection>
       <div className="flex flex-1 flex-col gap-4 p-4">
-        <ChallengeTitle title={challenge?.name} />
+        <ChallengeTitle challengeId={challengeId} />
         <div className="flex flex-1 flex-col gap-4">
-          {challenge?.type !== 1 ? null : challenge.teams.length ? (
-            challenge.teams.map((team) => (
+          {teams.length ? (
+            teams.map((team) => (
               <TeamCard
                 key={team.id}
                 onClick={() => {
