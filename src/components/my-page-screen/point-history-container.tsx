@@ -1,3 +1,4 @@
+import EmptyPointHistory from '@/components/my-page-screen/empty-point-history'
 import PointsFilterButton from '@/components/my-page-screen/points-filter-button'
 import PointsHistoryList from '@/components/my-page-screen/points-history-list'
 import { useUserPointHistory } from '@/hooks/use-user-point-history'
@@ -16,7 +17,13 @@ function PointHistoryContainer() {
         <h2 className="text-lg font-bold">포인트 내역</h2>
         <PointsFilterButton setFilterType={setFilterType} />
       </div>
-      <PointsHistoryList list={list} />
+      {list ? (
+        <PointsHistoryList list={list} />
+      ) : (
+        <div className="mt-5">
+          <EmptyPointHistory />
+        </div>
+      )}
     </section>
   )
 }
