@@ -11,7 +11,6 @@ interface InputProfileImageProps
 }
 
 function InputImage({
-  value: prevSource,
   onChange: onChange,
   onChangePreview,
   purpose,
@@ -33,7 +32,15 @@ function InputImage({
     }
   }
 
-  return <input type="file" accept="image/*" onChange={handleFileChange} {...restProps} />
+  return (
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+      {...restProps}
+      value={restProps.value ?? undefined}
+    />
+  )
 }
 
 export default InputImage

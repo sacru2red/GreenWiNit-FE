@@ -14,17 +14,17 @@ export function formatIsoToDateString(isoString: string): string {
   return `${year}.${month}.${day}`
 }
 
-export function initHistoryAndLocation() {
+export function initHistoryAndLocation(to: string = '/') {
   // 브라우저의 히스토리 스택을 완전히 클리어하고 싶지만,
   // 해당 방법을 찾지 못했음 (아마 보안상의 이유로 그런 방법이 없는 것으로 추측)
   // 스택에 루트 두개 넣어서 뒤로가기 버튼 눌러도 루트로 이동하게끔 처리함
-  if (window.location.pathname !== '/') {
+  if (window.location.pathname !== to) {
     setTimeout(() => {
       window.location.reload()
     }, 100)
   }
-  window.history.pushState(null, '', '/')
-  window.history.pushState(null, '', '/')
+  window.history.pushState(null, '', to)
+  window.history.pushState(null, '', to)
 }
 
 export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
