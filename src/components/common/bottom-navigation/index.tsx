@@ -1,5 +1,10 @@
 import { MouseEventHandler, useState, useCallback, MouseEvent } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import PostIcon from './post.svg?react'
+import HomeIcon from './home.svg?react'
+import ShopIcon from './shop.svg?react'
+import MyPageIcon from './my-page.svg?react'
+import { cn } from '@/lib/utils'
 
 function BottomNavigation() {
   const navigate = useNavigate()
@@ -42,7 +47,10 @@ function BottomNavigation() {
     <nav className="border-t border-gray-200 bg-white shadow-lg">
       <div className="flex h-16 items-center justify-around px-4">
         {NAV_ITEMS.map((item) => {
-          const isActive = location.pathname.startsWith(item.moveTo)
+          const isActive =
+            item.moveTo === '/'
+              ? location.pathname === item.moveTo
+              : location.pathname.startsWith(item.moveTo)
 
           return (
             <button
@@ -54,11 +62,9 @@ function BottomNavigation() {
             >
               {/* 클릭 시 퍼지는 애니메이션 효과 */}
               <div className="absolute inset-0 rounded-lg transition-all duration-50 ease-in-out group-active:bg-gray-100" />
-              <img
-                src={item.icon}
-                alt={item.label}
-                className="relative mb-1 h-6 w-6 transition-all duration-50 group-hover:opacity-80"
-              />
+              <div className="relative mb-1 h-6 w-6 transition-all duration-50 group-hover:opacity-80">
+                {item.icon({ isActive })}
+              </div>
               <span className="relative text-sm leading-tight font-medium transition-all duration-50 group-hover:opacity-80">
                 {item.label}
               </span>
@@ -70,28 +76,53 @@ function BottomNavigation() {
   )
 }
 
-// @TODO  use svgr, and tint color
+interface NavItem {
+  icon: (props: { isActive: boolean }) => React.ReactNode
+  label: string
+  moveTo: string
+}
+
 const NAV_ITEMS = [
   {
-    icon: '/icons/home.svg',
+    icon: (props: { isActive: boolean }) => (
+      <HomeIcon
+        {...props}
+        className={cn(props.isActive ? 'text-mountain_meadow' : 'text-[#737373]')}
+      />
+    ),
     label: '홈',
     moveTo: '/',
-  },
+  } satisfies NavItem,
   {
-    icon: '/icons/share.svg',
+    icon: (props: { isActive: boolean }) => (
+      <PostIcon
+        {...props}
+        className={cn(props.isActive ? 'text-mountain_meadow' : 'text-[#737373]')}
+      />
+    ),
     label: '정보공유',
     moveTo: '/posts',
-  },
+  } satisfies NavItem,
   {
-    icon: '/icons/shop.svg',
+    icon: (props: { isActive: boolean }) => (
+      <ShopIcon
+        {...props}
+        className={cn(props.isActive ? 'text-mountain_meadow' : 'text-[#737373]')}
+      />
+    ),
     label: '포인트상점',
     moveTo: '/point-shop',
-  },
+  } satisfies NavItem,
   {
-    icon: '/icons/person.svg',
+    icon: (props: { isActive: boolean }) => (
+      <MyPageIcon
+        {...props}
+        className={cn(props.isActive ? 'text-mountain_meadow' : 'text-[#737373]')}
+      />
+    ),
     label: '마이페이지',
     moveTo: '/my-page',
-  },
+  } satisfies NavItem,
 ] as const
 
 export default BottomNavigation
