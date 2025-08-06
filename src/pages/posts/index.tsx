@@ -4,6 +4,9 @@ import CategoryTab from '@/components/post-screen/category-tab'
 import { TabType } from '@/components/post-screen/category-tab/types'
 import { usePostsArrayOnly } from '@/hooks/post/use-posts'
 import { useState } from 'react'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
@@ -22,14 +25,11 @@ function Posts() {
       : posts?.filter((item) => item.infoCategoryName === transferTabToCategoryName(activeTab))
 
   return (
-    <div className="grid h-screen w-full grid-rows-[auto_1fr_auto]">
-      <header>
-        <div className="items-center justify-center bg-white p-[22px] text-xl font-bold">
-          정보공유
-        </div>
-        <hr />
-        <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
-      </header>
+    <PageContainer>
+      <PageHeaderSection>
+        <PageTitle>정보공유</PageTitle>
+      </PageHeaderSection>
+      <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
       <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {filteredPosts ? (
           filteredPosts.map((item) => (
@@ -46,10 +46,8 @@ function Posts() {
           <div>데이터를 찾을 수 없습니다.</div>
         )}
       </div>
-      <footer>
-        <BottomNavigation />
-      </footer>
-    </div>
+      <BottomNavigation containerClassName="mt-auto" />
+    </PageContainer>
   )
 }
 

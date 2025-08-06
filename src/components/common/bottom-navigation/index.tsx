@@ -6,7 +6,10 @@ import ShopIcon from './shop.svg?react'
 import MyPageIcon from './my-page.svg?react'
 import { cn } from '@/lib/utils'
 
-function BottomNavigation() {
+interface BottomNavigationProps {
+  containerClassName?: string
+}
+function BottomNavigation({ containerClassName }: BottomNavigationProps) {
   const navigate = useNavigate()
   // 이스터에그: 마이페이지 버튼 빠른 클릭 카운트용
   const [myPageClickCount, setMyPageClickCount] = useState(0)
@@ -44,7 +47,7 @@ function BottomNavigation() {
   }
 
   return (
-    <nav className="border-t border-gray-200 bg-white shadow-lg">
+    <nav className={cn('border-t border-gray-200 bg-white shadow-lg', containerClassName)}>
       <div className="flex h-16 items-center justify-around px-4">
         {NAV_ITEMS.map((item) => {
           const isActive =

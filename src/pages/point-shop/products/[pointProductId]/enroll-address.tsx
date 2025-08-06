@@ -1,4 +1,3 @@
-import { ChevronLeft } from 'lucide-react'
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
 import { useCallback, useState } from 'react'
 import { Input } from '../../../../components/ui/input'
@@ -7,6 +6,9 @@ import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
+import PageContainer from '@/components/common/page-container'
+import PageHeaderSection from '@/components/common/page-header-section'
+import PageTitle from '@/components/common/page-title'
 
 interface FormData {
   name: string
@@ -29,15 +31,6 @@ const EnrollAddress = () => {
     phone: '',
     address: null,
   })
-
-  const handleBackButtonClick = () => {
-    if (fromPath) {
-      console.log(fromPath)
-      navigate(fromPath)
-    } else {
-      window.history.back()
-    }
-  }
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -85,12 +78,11 @@ const EnrollAddress = () => {
   }
 
   return (
-    <div className="w-full bg-white">
-      <div className="flex min-h-[50px] flex-shrink-0 flex-row items-center gap-30 p-[20px]">
-        <ChevronLeft size={24} onClick={handleBackButtonClick} />
-        <div className="text-xl text-black">{isEditMode ? '주소지 수정' : '주소지 추가'}</div>
-      </div>
-      <hr />
+    <PageContainer>
+      <PageHeaderSection>
+        <PageHeaderSection.BackIcon />
+        <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
+      </PageHeaderSection>
       <form onSubmit={handleSubmit}>
         <div className="flex-1 p-[16px] text-start">
           <InputLabel required={true}>이름</InputLabel>
@@ -123,7 +115,7 @@ const EnrollAddress = () => {
         </div>
       </form>
       <BottomNavigation />
-    </div>
+    </PageContainer>
   )
 }
 

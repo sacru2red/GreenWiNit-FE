@@ -27,7 +27,7 @@ export const postsApi = {
         }
     >
   },
-  getPost: async (postId: number | undefined) => {
+  getPost: async (postId: string | undefined) => {
     const response = await fetch(`${API_URL}/user/info/${postId}`)
     return response.json() as Promise<
       | {
@@ -46,7 +46,7 @@ export const postsApi = {
 
 const postsKey = createQueryKeys('posts', {
   list: () => ['list'] as const,
-  detail: (postId: number | undefined) => ['detail', postId] as const,
+  detail: (postId: string | undefined) => ['detail', postId] as const,
 })
 
 export const postsQueryKeys = postsKey
