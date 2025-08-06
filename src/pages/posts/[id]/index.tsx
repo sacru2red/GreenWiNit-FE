@@ -7,8 +7,7 @@ import PageTitle from '@/components/common/page-title'
 
 const PostDetail = () => {
   const { postId } = useParams<{ postId: string }>()
-  const parsedPostId = postId ? parseInt(postId) : undefined
-  const { isLoading, data } = usePost(parsedPostId)
+  const { isLoading, data } = usePost(postId)
   const post = data?.result
 
   if (isLoading) return <div>로딩 중...</div>
