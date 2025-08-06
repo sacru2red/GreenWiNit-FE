@@ -4,62 +4,79 @@ import CategoryTab from '@/components/post-screen/category-tab'
 import { TabType } from '@/components/post-screen/category-tab/types'
 import { usePostsArrayOnly } from '@/hooks/post/use-posts'
 import { useState } from 'react'
+<<<<<<< HEAD
 import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
+=======
+import { CircleAlert } from 'lucide-react'
+import useUserInfo from '@/hooks/use-user-info'
+import LoginDialog from '@/components/common/modal/login-dialog'
+import { useNavigate } from 'react-router-dom'
+>>>>>>> e086e44 (fix(#96): 정보 공유 UI 업데이트)
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
  */
 function Posts() {
+  const navigate = useNavigate()
+  const { data: user } = useUserInfo()
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
 
-  if (isLoading) {
-    return <div>로딩 중....</div>
+  const handleNavigateLogin = () => {
+    navigate('/login')
   }
 
   const filteredPosts =
-    activeTab === '전체'
-      ? posts
-      : posts?.filter((item) => item.infoCategoryName === transferTabToCategoryName(activeTab))
+    activeTab === '전체' ? posts : posts?.filter((item) => item.infoCategoryName === activeTab)
+
+  if (user === undefined || user === null) {
+    return (
+      <LoginDialog
+        isOpen={isModalOpen}
+        description="로그인 후,"
+        paragraph="정보공유를 확인할 수 있어요"
+        setIsOpen={setIsModalOpen}
+        onLogin={handleNavigateLogin}
+      />
+    )
+  }
 
   return (
+<<<<<<< HEAD
     <PageContainer>
       <PageHeaderSection>
         <PageTitle>정보공유</PageTitle>
       </PageHeaderSection>
       <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
-      <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {filteredPosts ? (
-          filteredPosts.map((item) => (
-            <PostItem
-              key={item.id}
-              id={item.id}
-              categoryName={item.infoCategoryName}
-              title={item.title}
-              content={item.content}
-              thumbnailUrl={item.imageurl}
-            />
-          ))
-        ) : (
-          <div>데이터를 찾을 수 없습니다.</div>
-        )}
-      </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center">포스트를 찾는 중....</div>
+      ) : (
+        <div className="overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {filteredPosts ? (
+            filteredPosts.map((item) => (
+              <PostItem
+                key={item.id}
+                id={item.id}
+                categoryName={item.infoCategoryName}
+                title={item.title}
+                content={item.content}
+                thumbnailUrl={item.imageurl}
+              />
+            ))
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-4">
+              <CircleAlert size={32} color="gray" />
+              <div className="font-bold text-gray-400">공유된 포스트를 찾을 수 없어요.</div>
+            </div>
+          )}
+        </div>
+      )}
       <BottomNavigation containerClassName="mt-auto" />
     </PageContainer>
   )
-}
-
-const transferTabToCategoryName = (tabType: TabType) => {
-  if (tabType === '참여형') {
-    return '이벤트'
-  }
-  if (tabType === '커뮤니티') {
-    return '커뮤니티'
-  }
-
-  return null
 }
 
 export default Posts
