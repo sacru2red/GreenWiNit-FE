@@ -1,10 +1,12 @@
 import React, { ComponentProps } from 'react'
 import { imagesApi } from '@/api/images'
 import { toast } from 'sonner'
+import { omit } from 'es-toolkit'
+import { cn } from '@/lib/utils'
 
 interface InputProfileImageProps
   extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
-  value: string | null
+  localFileName: string | null
   onChange: (src: string | null) => void
   onChangePreview?: (src: string) => void
   purpose: Parameters<typeof imagesApi.uploadImage>[0]
@@ -37,8 +39,9 @@ function InputImage({
       type="file"
       accept="image/*"
       onChange={handleFileChange}
-      {...restProps}
-      value={restProps.value ?? undefined}
+      {...omit(restProps, ['localFileName'])}
+      value={restProps.localFileName ?? undefined}
+      className={cn(restProps.className, 'cursor-pointer')}
     />
   )
 }

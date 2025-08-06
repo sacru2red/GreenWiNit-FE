@@ -44,7 +44,7 @@ function InputProfileImage({
       />
       <InputImage
         purpose="profile"
-        value={source}
+        localFileName={source}
         onChange={onChange}
         onChangePreview={setPreview}
         {...restProps}
