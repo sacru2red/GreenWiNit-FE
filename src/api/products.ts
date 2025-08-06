@@ -1,51 +1,6 @@
 import { API_URL } from '@/constant/network'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
-export const productsApi = {
-  getProducts: async () => {
-    const response = await fetch(`${API_URL}/point-products`)
-    const apiServerResponse = (await response.json()) satisfies
-      | {
-          success: true
-          message: 'string'
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: ServerProducts[]
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductsToClient(apiServerResponse.result.content)
-  },
-
-  getProduct: async (productId: string | undefined) => {
-    const response = await fetch(`${API_URL}/point-products/${productId}`)
-    const data = (await response.json()) satisfies
-      | {
-          success: true
-          message: string
-          result: ServerProductDetail
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductDetailToClient(data.result)
-  },
-}
-
-const productsKey = createQueryKeys('products', {
-  list: () => ['list'] as const,
-  detail: (id: string | undefined) => ['detail', id] as const,
-})
-
 export type ServerProducts = {
   pointProductId: number
   pointProductName: string
@@ -115,5 +70,68 @@ export const mapServerProductsDetailToClient = (
 ): ProductDetail[] => {
   return serverProducts.map(mapServerProductDetailToClient)
 }
+
+export const productsApi = {
+  getProducts: async () => {
+    try {
+      const response = await fetch(`${API_URL}/point-products`)
+
+      if (!response.ok) {
+        throw new Error(`API ERROR: ${response.status} ${response.statusText}`)
+      }
+
+      const apiServerResponse = (await response.json()) satisfies
+        | {
+            success: true
+            message: 'string'
+            result: {
+              hasNext: boolean
+              nextCursor: number | null
+              content: ServerProducts[]
+            }
+          }
+        | {
+            success: false
+            message: string
+            result: null
+          }
+
+      return mapServerProductsToClient(apiServerResponse.result.content)
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다.')
+    }
+  },
+
+  getProduct: async (productId: string | undefined) => {
+    try {
+      const response = await fetch(`${API_URL}/point-products/${productId}`)
+
+      if (!response.ok) {
+        throw new Error(`API ERROR : ${response.status} ${response.statusText}`)
+      }
+
+      const data = (await response.json()) satisfies
+        | {
+            success: true
+            message: string
+            result: ServerProductDetail
+          }
+        | {
+            success: false
+            message: string
+            result: null
+          }
+
+      return mapServerProductDetailToClient(data.result)
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다.')
+    }
+  },
+}
+
+const productsKey = createQueryKeys('products', {
+  list: () => ['list'] as const,
+  detail: (id: string | undefined) => ['detail', id] as const,
+})
 
 export const productQueryKeys = mergeQueryKeys(productsKey)

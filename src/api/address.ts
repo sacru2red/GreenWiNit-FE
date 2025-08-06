@@ -4,11 +4,19 @@ import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresse
 
 export const addressApi = {
   getAddress: async () => {
-    const response = await fetch(`${API_URL}/deliveries/addresses`)
+    try {
+      const response = await fetch(`${API_URL}/deliveries/addresses`)
 
-    const data = (await response.json()) satisfies ServerAddress
+      if (!response.ok) {
+        throw new Error(`API ERROR: ${response.status} ${response.statusText}`)
+      }
 
-    return serverToClientAddress(data.result)
+      const data = (await response.json()) satisfies ServerAddress
+
+      return serverToClientAddress(data.result)
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : '예상치 못한 오류가 발생하였습니다.')
+    }
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
     const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
