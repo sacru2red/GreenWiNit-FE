@@ -2,12 +2,23 @@ import HeaderSectionMiddle from '@/components/common/header-section-middle'
 import GoogleWideButton from '@/components/login-screen/google-wide-button'
 import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
 import NaverWideButton from '@/components/login-screen/naver-wide-button'
+import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 function Login() {
   const navigate = useNavigate()
-  const [params] = useSearchParams()
+  const [params, setParams] = useSearchParams()
   const redirectTo = params.get('redirect')
+  const errorName = params.get('error')
+  const message = params.get('message')
+
+  useEffect(() => {
+    if (errorName && message) {
+      setParams({})
+      toast.error(`${errorName}: ${message}`)
+    }
+  }, [errorName, message, setParams])
 
   const processLoginMocked = () => {
     navigate(redirectTo ?? '/')
