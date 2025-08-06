@@ -16,7 +16,7 @@ function Login() {
   useEffect(() => {
     if (errorName && message) {
       setParams({})
-      toast.error(`${errorName}: ${message}`)
+      toast.error(message)
     }
   }, [errorName, message, setParams])
 
