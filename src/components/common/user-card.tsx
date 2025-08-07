@@ -9,6 +9,7 @@ const UserCard = () => {
   const navigate = useNavigate()
   const accessToken = authStore((state) => state.accessToken)
   const userName = useUserName()
+  console.log('userName', userName)
 
   const handleLoginClick = () => {
     navigate('/login')

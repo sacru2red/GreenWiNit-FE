@@ -73,6 +73,25 @@ export const usersApi = {
       },
     }).then((res) => res.json() as Promise<PostWithdrawResponse>)
   },
+  getUserMe: async () => {
+    const response = await fetch(`${API_URL}/members/me`)
+    return response.json() as Promise<
+      | {
+          success: false
+          message: string
+          result: null
+        }
+      | {
+          success: true
+          message: string
+          result: {
+            nickname: string
+            email: string
+            profileImageUrl: string | null
+          }
+        }
+    >
+  },
 }
 
 interface BaseApiResponse<T> {
@@ -114,24 +133,17 @@ type CheckNicknameDuplicateReponse =
       message: string
     }
 
-const usersKey = createQueryKeys('users')
-
-const userMeStatusKey = createQueryKeys('me/status', {
-  detail: (userId?: string) => [userId] as const,
+const usersMeKey = createQueryKeys('users/me', {
+  member: ['member'],
+  status: ['status'],
 })
 
-const userPointsKey = createQueryKeys('me/points', {
-  detail: (userId?: string) => [userId] as const,
+const userPointsKey = createQueryKeys('points', {
+  detail: ['detail'],
 })
 
 const userPointHistoryKey = createQueryKeys('me/point-history', {
-  detail: (userId?: string, status?: PointFilterType | null) =>
-    [userId, status ?? undefined] as const,
+  detail: (status?: PointFilterType | null) => [status ?? undefined] as const,
 })
 
-export const usersQueryKeys = mergeQueryKeys(
-  usersKey,
-  userMeStatusKey,
-  userPointsKey,
-  userPointHistoryKey,
-)
+export const usersQueryKeys = mergeQueryKeys(usersMeKey, userPointsKey, userPointHistoryKey)

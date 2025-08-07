@@ -1,6 +1,5 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
-import useUserId from './use-user-id'
 
 export const useUserStatus = (
   options?: Omit<
@@ -8,15 +7,13 @@ export const useUserStatus = (
       Awaited<ReturnType<typeof usersApi.getUserStatus>>,
       Error,
       Awaited<ReturnType<typeof usersApi.getUserStatus>>,
-      ReturnType<(typeof usersQueryKeys)['me/status']['detail']>['queryKey']
+      (typeof usersQueryKeys)['users/me']['status']['queryKey']
     >,
     'queryKey' | 'queryFn'
   >,
 ) => {
-  const userId = useUserId()
-
   return useQuery({
-    queryKey: usersQueryKeys['me/status'].detail(userId).queryKey,
+    queryKey: usersQueryKeys['users/me']['status'].queryKey,
     queryFn: usersApi.getUserStatus,
     retry: false,
     ...options,
