@@ -36,7 +36,7 @@ export const postsApi = {
       throw new Error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다.')
     }
   },
-  getPost: async (postId: number | undefined) => {
+  getPost: async (postId: string | undefined) => {
     try {
       const response = await fetch(`${API_URL}/user/info/${postId}`)
 

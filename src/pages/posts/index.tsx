@@ -4,16 +4,13 @@ import CategoryTab from '@/components/post-screen/category-tab'
 import { TabType } from '@/components/post-screen/category-tab/types'
 import { usePostsArrayOnly } from '@/hooks/post/use-posts'
 import { useState } from 'react'
-<<<<<<< HEAD
 import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
-=======
 import { CircleAlert } from 'lucide-react'
 import useUserInfo from '@/hooks/use-user-info'
 import LoginDialog from '@/components/common/modal/login-dialog'
 import { useNavigate } from 'react-router-dom'
->>>>>>> e086e44 (fix(#96): 정보 공유 UI 업데이트)
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
@@ -45,7 +42,6 @@ function Posts() {
   }
 
   return (
-<<<<<<< HEAD
     <PageContainer>
       <PageHeaderSection>
         <PageTitle>정보공유</PageTitle>
