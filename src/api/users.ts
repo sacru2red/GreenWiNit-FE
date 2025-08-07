@@ -133,26 +133,17 @@ type CheckNicknameDuplicateReponse =
       message: string
     }
 
-const usersKey = createQueryKeys('users', {
-  me: ['me'],
+const usersMeKey = createQueryKeys('users/me', {
+  member: ['member'],
+  status: ['status'],
 })
 
-const userMeStatusKey = createQueryKeys('me/status', {
-  detail: (userId?: string) => [userId] as const,
-})
-
-const userPointsKey = createQueryKeys('me/points', {
-  detail: (userId?: string) => [userId] as const,
+const userPointsKey = createQueryKeys('points', {
+  detail: ['detail'],
 })
 
 const userPointHistoryKey = createQueryKeys('me/point-history', {
-  detail: (userId?: string, status?: PointFilterType | null) =>
-    [userId, status ?? undefined] as const,
+  detail: (status?: PointFilterType | null) => [status ?? undefined] as const,
 })
 
-export const usersQueryKeys = mergeQueryKeys(
-  usersKey,
-  userMeStatusKey,
-  userPointsKey,
-  userPointHistoryKey,
-)
+export const usersQueryKeys = mergeQueryKeys(usersMeKey, userPointsKey, userPointHistoryKey)

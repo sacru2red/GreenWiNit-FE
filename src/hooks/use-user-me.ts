@@ -7,14 +7,14 @@ const useUserMe = (
       Awaited<ReturnType<typeof usersApi.getUserMe>>,
       Error,
       Awaited<ReturnType<typeof usersApi.getUserMe>>,
-      typeof usersQueryKeys.users.me.queryKey
+      (typeof usersQueryKeys)['users/me']['member']['queryKey']
     >,
     'queryKey' | 'queryFn'
   >,
 ) => {
   return useQuery({
     ...options,
-    queryKey: usersQueryKeys.users.me.queryKey,
+    queryKey: usersQueryKeys['users/me']['member'].queryKey,
     queryFn: usersApi.getUserMe,
   })
 }
