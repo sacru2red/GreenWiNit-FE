@@ -1,6 +1,8 @@
+import useUserMe from './use-user-me'
+
 const useUserName = () => {
-  // @TODO replace this
-  return '홍길동'
+  const { data } = useUserMe()
+  return data?.result?.nickname ?? null
 }
 
 export default useUserName

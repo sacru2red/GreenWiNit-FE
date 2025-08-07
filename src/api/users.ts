@@ -73,6 +73,25 @@ export const usersApi = {
       },
     }).then((res) => res.json() as Promise<PostWithdrawResponse>)
   },
+  getUserMe: async () => {
+    const response = await fetch(`${API_URL}/members/me`)
+    return response.json() as Promise<
+      | {
+          success: false
+          message: string
+          result: null
+        }
+      | {
+          success: true
+          message: string
+          result: {
+            nickname: string
+            email: string
+            profileImageUrl: string | null
+          }
+        }
+    >
+  },
 }
 
 interface BaseApiResponse<T> {
@@ -114,7 +133,9 @@ type CheckNicknameDuplicateReponse =
       message: string
     }
 
-const usersKey = createQueryKeys('users')
+const usersKey = createQueryKeys('users', {
+  me: ['me'],
+})
 
 const userMeStatusKey = createQueryKeys('me/status', {
   detail: (userId?: string) => [userId] as const,
