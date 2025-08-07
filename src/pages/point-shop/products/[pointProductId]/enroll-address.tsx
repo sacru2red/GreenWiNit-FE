@@ -9,6 +9,7 @@ import { UpdateAddressDto } from '@/types/addresses'
 import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
+import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 
 interface FormData {
   name: string
@@ -31,6 +32,7 @@ const EnrollAddress = () => {
     phone: '',
     address: null,
   })
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -47,23 +49,15 @@ const EnrollAddress = () => {
     }))
   }, [])
 
+  const hasAddress = (): boolean => {
+    if (!formData.address || !formData.name || !formData.phone) return false
+    return true
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.name.trim()) {
-      alert('이름을 입력해주세요.')
-      return
-    }
-
-    if (!formData.phone.trim()) {
-      alert('전화번호를 입력해주세요.')
-      return
-    }
-
-    if (!formData.address) {
-      alert('주소를 입력해주세요.')
-      return
-    }
+    if (!hasAddress() || formData.address === null) return
 
     const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
@@ -74,7 +68,11 @@ const EnrollAddress = () => {
     }
 
     addressApi.saveAddress(serverAddressForm)
-    navigate(fromPath)
+    setIsModalOpen((prev) => !prev)
+  }
+
+  const handleConfirm = () => {
+    window.history.back()
   }
 
   return (
@@ -83,37 +81,64 @@ const EnrollAddress = () => {
         <PageHeaderSection.BackIcon />
         <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
       </PageHeaderSection>
-      <form onSubmit={handleSubmit}>
-        <div className="flex-1 p-[16px] text-start">
-          <InputLabel required={true}>이름</InputLabel>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-          <InputLabel required={true}>전화번호</InputLabel>
-          <Input
-            type="text"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-          />
-          <InputLabel required={true}>주소</InputLabel>
-          <AddressInput value={formData.address} onChange={handleAddressChange} />
-        </div>
-        <div className="mt-70 mb-5 flex flex-shrink-0 justify-center p-4">
-          <button
-            type="submit"
-            className="rounded-[8px] bg-green-600 px-[138px] py-[14px] text-white"
-            onClick={handleSubmit}
-          >
-            저장하기
-          </button>
-        </div>
-      </form>
+      {isModalOpen === true ? (
+        <ConfirmDialog
+          isOpen={isModalOpen}
+          description="배송지 저장이 완료되었습니다."
+          paragraph="이제 상품을 교환할 수 있습니다!"
+          setIsOpen={setIsModalOpen}
+          onConfirm={handleConfirm}
+        />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="flex-1 p-4 text-start">
+            <InputLabel required={true}>이름</InputLabel>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+            <div className="pt-2">
+              {!formData.name.trim() && (
+                <span className="bg-red-500 pt-2 text-start text-sm">이름을 입력해주세요.</span>
+              )}
+            </div>
+            <InputLabel required={true}>전화번호</InputLabel>
+            <Input
+              type="text"
+              id="phone"
+              name="phone"
+              placeholder="010-XXXX-XXXX"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+            <div className="pt-2">
+              {!formData.phone.trim() && (
+                <span className="text-start text-sm text-red-500">전화번호를 입력해주세요.</span>
+              )}
+            </div>
+            <InputLabel required={true}>주소</InputLabel>
+            <AddressInput value={formData.address} onChange={handleAddressChange} />
+            <div className="pt-2">
+              {!formData.address && (
+                <span className="bg-red-500 pt-2 text-start text-sm">주소를 입력해주세요.</span>
+              )}
+            </div>
+          </div>
+          <div className="mt-70 mb-5 flex flex-shrink-0 justify-center p-4">
+            <button
+              type="submit"
+              className="rounded-[8px] bg-green-600 px-36 py-4 text-white"
+              onClick={handleSubmit}
+              disabled={!hasAddress()}
+            >
+              저장하기
+            </button>
+          </div>
+        </form>
+      )}
       <BottomNavigation />
     </PageContainer>
   )
