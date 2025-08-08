@@ -23,7 +23,7 @@ const WarnNotLoggedIn = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogDescription className="text-center whitespace-pre-line text-black">
+        <DialogDescription className="text-center whitespace-pre text-black">
           {message}
         </DialogDescription>
         <DialogFooter className="flex flex-row gap-6 sm:justify-center">
@@ -31,9 +31,8 @@ const WarnNotLoggedIn = ({
             variant="cancel"
             size="flex"
             onClick={() => {
-              if (backButtonAction === 'close') {
-                onOpenChange(false)
-              } else {
+              onOpenChange(false)
+              if (backButtonAction === 'back') {
                 navigate(-1)
               }
             }}

@@ -15,6 +15,9 @@ function Login() {
     if (errorName && message) {
       setParams({})
       toast.error(message)
+    } else if (message) {
+      setParams({})
+      toast.info(message)
     }
   }, [errorName, message, setParams])
 

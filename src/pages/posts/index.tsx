@@ -8,35 +8,30 @@ import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import { CircleAlert } from 'lucide-react'
-import useUserMe from '@/hooks/use-user-me'
-import LoginDialog from '@/components/common/modal/login-dialog'
-import { useNavigate } from 'react-router-dom'
+import useIsLoggedIn from '@/hooks/use-is-logged-in'
+import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
  */
 function Posts() {
-  const navigate = useNavigate()
-  const { data: user } = useUserMe()
+  const isLoggedIn = useIsLoggedIn()
+  // const { data: user } = useUserMe()
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
 
-  const handleNavigateLogin = () => {
-    navigate('/login')
-  }
-
   const filteredPosts =
     activeTab === '전체' ? posts : posts?.filter((item) => item.infoCategoryName === activeTab)
 
-  if (user === undefined || user === null) {
+  if (!isLoggedIn) {
     return (
-      <LoginDialog
+      <WarnNotLoggedIn
         isOpen={isModalOpen}
-        description="로그인 후,"
-        paragraph="정보공유를 확인할 수 있어요"
-        setIsOpen={setIsModalOpen}
-        onLogin={handleNavigateLogin}
+        message={`로그인 후,\n정보공유를 확인할 수 있어요.`}
+        infoMessageAfterRedirecting="정보공유를 확인하기위해 로그인 해주세요."
+        onOpenChange={setIsModalOpen}
+        backButtonAction="back"
       />
     )
   }
