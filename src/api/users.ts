@@ -5,10 +5,6 @@ import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const usersApi = {
-  getUser: async () => {
-    const response = await fetch(`${API_URL}/members/me`)
-    return response.json() as Promise<GetUserResponse>
-  },
   getUserStatus: async () => {
     const response = await fetch(`${API_URL}/user/mypage`)
     return response.json() as Promise<GetMyInfoResponse>
@@ -103,12 +99,6 @@ interface BaseApiResponse<T> {
   message: string
   result?: T
 }
-
-type GetUserResponse = BaseApiResponse<{
-  nickname: string
-  email: string
-  profileImageUrl: string
-}>
 
 type GetMyInfoResponse = BaseApiResponse<{
   userChallengeCount: number

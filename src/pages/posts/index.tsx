@@ -8,7 +8,7 @@ import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import { CircleAlert } from 'lucide-react'
-import useUserInfo from '@/hooks/use-user-info'
+import useUserMe from '@/hooks/use-user-me'
 import LoginDialog from '@/components/common/modal/login-dialog'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom'
  */
 function Posts() {
   const navigate = useNavigate()
-  const { data: user } = useUserInfo()
+  const { data: user } = useUserMe()
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
