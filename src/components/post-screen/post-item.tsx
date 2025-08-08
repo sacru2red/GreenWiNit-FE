@@ -21,10 +21,10 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
 
   return (
     <div
-      className="scrollbar-hide m-4 flex max-h-full max-w-full cursor-pointer flex-row items-start justify-start overflow-y-auto rounded-[25px] border bg-white shadow-md"
+      className="scrollbar-hide m-4 flex max-w-full cursor-pointer flex-row items-start justify-start overflow-y-auto rounded-[25px] border bg-white shadow-md"
       onClick={handleClickCard}
     >
-      <div className="h-32 w-32 flex-shrink-0 sm:h-40 sm:w-40">
+      <div className="h-36 w-36 flex-shrink-0 sm:h-42 sm:w-42">
         <img
           className="h-full w-full rounded-l-[25px] bg-green-50 object-cover"
           src={thumbnailUrl}
@@ -33,12 +33,14 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
           height="180"
         />
       </div>
-      <div className="flex flex-1 flex-col justify-baseline p-2">
+      <div className="flex flex-1 flex-col justify-baseline px-2 py-1">
         <div className="flex flex-row items-center justify-between py-2">
           <p className="text-md flex flex-1 text-start font-bold">{title}</p>
           <CategoryLabel categoryName={categoryName} />
         </div>
-        <p className="items-start justify-baseline text-start">{content.substring(0, 30)}</p>
+        <p className="items-start justify-baseline text-start">
+          {content.length > 30 ? `${content.substring(0, 30)}...` : content}
+        </p>
       </div>
     </div>
   )
