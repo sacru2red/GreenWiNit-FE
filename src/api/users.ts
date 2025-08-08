@@ -7,7 +7,7 @@ import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 export const usersApi = {
   getUser: async () => {
     const response = await fetch(`${API_URL}/members/me`)
-    return response.json() as Promise<GEtUserResponse>
+    return response.json() as Promise<GetUserResponse>
   },
   getUserStatus: async () => {
     const response = await fetch(`${API_URL}/user/mypage`)
@@ -104,7 +104,7 @@ interface BaseApiResponse<T> {
   result?: T
 }
 
-type GEtUserResponse = BaseApiResponse<{
+type GetUserResponse = BaseApiResponse<{
   nickname: string
   email: string
   profileImageUrl: string
