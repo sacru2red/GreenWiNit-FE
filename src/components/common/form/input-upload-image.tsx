@@ -38,23 +38,20 @@ const InputUploadImage = (props: InputUploadImageProps) => {
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
       ) : null}
-      {hasRemoteImage && source ? null : (
-        <InputImage
-          {...omit(props, ['value'])}
-          localFileName={
-            source &&
-            (source?.startsWith('file://') ||
-              source?.startsWith('blob:') ||
-              source?.startsWith('/'))
-              ? source
-              : null
-          }
-          onChangePreview={setPreview}
-          onChange={props.onChange}
-          purpose={props.purpose}
-          ref={mergedRef}
-        />
-      )}
+      <InputImage
+        {...omit(props, ['value'])}
+        localFileName={
+          source &&
+          (source?.startsWith('file://') || source?.startsWith('blob:') || source?.startsWith('/'))
+            ? source
+            : null
+        }
+        onChangePreview={setPreview}
+        onChange={props.onChange}
+        purpose={props.purpose}
+        ref={mergedRef}
+        className={cn(hasRemoteImage && source && 'hidden', props.className)}
+      />
     </div>
   )
 }
