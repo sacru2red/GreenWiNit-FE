@@ -7,7 +7,7 @@ export const addressApi = {
   getAddress: async () => {
     return await fetch(`${API_URL}/deliveries/addresses`)
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() satisfies Promise<ServerAddress>)
+      .then((res) => res.json() as Promise<ServerAddress>)
       .then((data) => serverToClientAddress(data))
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
@@ -23,7 +23,7 @@ export const addressApi = {
       throw new Error(`STATUS: ${response.status} ${response.statusText}`)
     }
 
-    const data = (await response.json()) satisfies ServerAddress
+    const data = (await response.json()) as ServerAddress
 
     return serverToClientAddress(data)
   },

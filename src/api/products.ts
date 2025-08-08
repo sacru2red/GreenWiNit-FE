@@ -8,7 +8,7 @@ export const productsApi = {
       .then(throwResponseStatusThenChaining)
       .then(
         (res) =>
-          res.json() satisfies Promise<{
+          res.json() as Promise<{
             success: true
             message: string
             result: {
@@ -20,13 +20,12 @@ export const productsApi = {
       )
       .then((data) => mapServerProductsToClient(data.result.content))
   },
-
   getProduct: async (productId: string | undefined) => {
     return await fetch(`${API_URL}/point-products/${productId}`)
       .then(throwResponseStatusThenChaining)
       .then(
         (res) =>
-          res.json() satisfies Promise<{
+          res.json() as Promise<{
             success: true
             message: string
             result: ServerProductDetail

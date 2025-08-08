@@ -16,20 +16,13 @@ export const postsApi = {
       .then(throwResponseStatusThenChaining)
       .then(
         (res) =>
-          res.json() satisfies Promise<
-            | {
-                success: false
-                message: string
-                result: null
-              }
-            | {
-                success: true
-                message: string
-                result: {
-                  content: PostElement[]
-                }
-              }
-          >,
+          res.json() as Promise<{
+            success: true
+            message: string
+            result: {
+              content: PostElement[]
+            }
+          }>,
       )
   },
   getPost: async (postId: string | undefined) => {
@@ -37,7 +30,7 @@ export const postsApi = {
       .then(throwResponseStatusThenChaining)
       .then(
         (res) =>
-          res.json() satisfies Promise<{
+          res.json() as Promise<{
             success: true
             message: string
             result: PostElement
