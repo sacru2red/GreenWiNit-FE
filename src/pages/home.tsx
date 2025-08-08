@@ -48,7 +48,6 @@ function Home() {
         <WarnNotLoggedIn
           isOpen={isWarnNotLoggedInDialogOpen}
           onOpenChange={setIsWarnNotLoggedInDialogOpen}
-          redirectUrl="/challenges/user/me/joined"
         />
       </div>
       <Challenges />

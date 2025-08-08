@@ -1,1 +1,1 @@
-export type TabType = '전체' | '참여형' | '커뮤니티'
+export type TabType = '전체' | '이벤트' | '콘텐츠' | '기타'

@@ -12,7 +12,7 @@ const CategoryTab = ({ onTabChange, activeTab }: CategoryTabProps) => {
   }
 
   return (
-    <div className="text-md flex flex-row items-center justify-center gap-[80px] bg-white px-[20px] text-center">
+    <div className="text-md flex flex-row items-center justify-center gap-2 bg-white px-[20px] text-center whitespace-nowrap">
       {tabs.map((tab) => (
         <div
           key={tab}
@@ -29,6 +29,6 @@ const CategoryTab = ({ onTabChange, activeTab }: CategoryTabProps) => {
   )
 }
 
-const tabs: TabType[] = ['전체', '참여형', '커뮤니티']
+const tabs: TabType[] = ['전체', '이벤트', '콘텐츠', '기타']
 
 export default CategoryTab
