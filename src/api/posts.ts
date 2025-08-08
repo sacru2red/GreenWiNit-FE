@@ -18,7 +18,7 @@ export const postsApi = {
         throw new Error(`API ERROR: ${response.status} ${response.statusText}`)
       }
 
-      return response.json() as Promise<
+      return (await response.json()) as Promise<
         | {
             success: false
             message: string
@@ -44,7 +44,7 @@ export const postsApi = {
         throw new Error(`API ERROR: ${response.status} ${response.statusText}`)
       }
 
-      return response.json() as Promise<
+      return (await response.json()) as Promise<
         | {
             success: false
             message: string
