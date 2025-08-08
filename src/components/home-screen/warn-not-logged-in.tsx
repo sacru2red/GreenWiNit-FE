@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom'
 interface WarnNotLoggedInProps {
   isOpen: boolean
   onOpenChange(open: boolean): void
-  redirectUrl?: string
 }
 
-const WarnNotLoggedIn = ({ isOpen, onOpenChange, redirectUrl }: WarnNotLoggedInProps) => {
+const WarnNotLoggedIn = ({ isOpen, onOpenChange }: WarnNotLoggedInProps) => {
   const navigate = useNavigate()
 
   return (
@@ -22,7 +21,7 @@ const WarnNotLoggedIn = ({ isOpen, onOpenChange, redirectUrl }: WarnNotLoggedInP
           <Button variant="cancel" size="flex" onClick={() => onOpenChange(false)}>
             취소
           </Button>
-          <Button size="flex" onClick={() => navigate(`/login?redirect=${redirectUrl ?? '/'}`)}>
+          <Button size="flex" onClick={() => navigate(`/login}`)}>
             확인
           </Button>
         </DialogFooter>

@@ -3,13 +3,11 @@ import GoogleWideButton from '@/components/login-screen/google-wide-button'
 import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
 import NaverWideButton from '@/components/login-screen/naver-wide-button'
 import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 function Login() {
-  const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
-  const redirectTo = params.get('redirect')
   const errorName = params.get('error')
   const message = params.get('message')
 
@@ -20,8 +18,8 @@ function Login() {
     }
   }, [errorName, message, setParams])
 
-  const processLoginMocked = () => {
-    navigate(redirectTo ?? '/')
+  const warnItsDeveloping = () => {
+    toast.error('해당 소셜미디어 로그인은 개발 중입니다.')
   }
 
   const processGoogleLogin = () => {
@@ -42,9 +40,9 @@ function Login() {
     <div className="relative flex w-full flex-1 flex-col items-center justify-start gap-12">
       <HeaderSectionMiddle />
       <div className="absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
-        <KakaoWideButton onClick={processLoginMocked} />
+        <KakaoWideButton onClick={warnItsDeveloping} />
         <GoogleWideButton onClick={processGoogleLogin} />
-        <NaverWideButton onClick={processLoginMocked} />
+        <NaverWideButton onClick={warnItsDeveloping} />
         <p className="text-light-gray mt-4 text-center text-sm">
           간편하게 로그인하고
           <br />
