@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { Input } from '../../../../components/ui/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
 import PageContainer from '@/components/common/page-container'
@@ -22,6 +22,7 @@ const EnrollAddress = () => {
   const [searchParams] = useSearchParams()
   const mode = searchParams.get('mode') || 'add'
   const isEditMode = mode === 'edit'
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -68,7 +69,7 @@ const EnrollAddress = () => {
   }
 
   const handleConfirm = () => {
-    window.history.back()
+    navigate(-1)
   }
 
   return (
