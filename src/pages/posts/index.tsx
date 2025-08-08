@@ -16,10 +16,9 @@ import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
  */
 function Posts() {
   const isLoggedIn = useIsLoggedIn()
-  // const { data: user } = useUserMe()
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState(true)
 
   const filteredPosts =
     activeTab === '전체' ? posts : posts?.filter((item) => item.infoCategoryName === activeTab)

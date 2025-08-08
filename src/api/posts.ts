@@ -25,7 +25,7 @@ export const postsApi = {
           }>,
       )
   },
-  getPost: async (postId: string | undefined) => {
+  getPost: async (postId: string) => {
     return fetch(`${API_URL}/user/info/${postId}`)
       .then(throwResponseStatusThenChaining)
       .then(

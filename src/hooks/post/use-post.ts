@@ -4,7 +4,8 @@ import { useQuery } from '@tanstack/react-query'
 export const usePost = (id: string | undefined) => {
   return useQuery({
     queryKey: postsQueryKeys.detail(id).queryKey,
-    queryFn: () => postsApi.getPost(id),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    queryFn: () => postsApi.getPost(id!),
     enabled: !!id,
   })
 }
