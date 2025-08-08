@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { Input } from '../../../../components/ui/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
 import PageContainer from '@/components/common/page-container'
@@ -19,11 +19,6 @@ interface FormData {
 
 const EnrollAddress = () => {
   const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const fromPath = location.state?.from
-
   const mode = searchParams.get('mode') || 'add'
   const isEditMode = mode === 'edit'
 
@@ -49,15 +44,12 @@ const EnrollAddress = () => {
     }))
   }, [])
 
-  const hasAddress = (): boolean => {
-    if (!formData.address || !formData.name || !formData.phone) return false
-    return true
-  }
+  const hasAddress = Boolean(formData.address && formData.name && formData.phone)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!hasAddress() || formData.address === null) return
+    if (!hasAddress || formData.address === null) return
 
     const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
@@ -132,7 +124,7 @@ const EnrollAddress = () => {
               type="submit"
               className="rounded-[8px] bg-green-600 px-36 py-4 text-white"
               onClick={handleSubmit}
-              disabled={!hasAddress()}
+              disabled={!hasAddress}
             >
               저장하기
             </button>
