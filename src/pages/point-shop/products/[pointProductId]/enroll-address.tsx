@@ -10,6 +10,7 @@ import PageContainer from '@/components/common/page-container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
+import { toast } from 'sonner'
 
 interface FormData {
   name: string
@@ -49,7 +50,10 @@ const EnrollAddress = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!hasAddress || formData.address === null) return
+    if (!hasAddress || formData.address === null) {
+      toast.error('배송지 정보를 입력해주세요.')
+      return
+    }
 
     const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
