@@ -16,6 +16,9 @@ type LoginDialogProps = {
   onLogin: () => void
 }
 
+/**
+ * @deprecated use WarnNotLoggedIn
+ */
 function LoginDialog({ isOpen, description, paragraph, setIsOpen, onLogin }: LoginDialogProps) {
   const navigate = useNavigate()
 

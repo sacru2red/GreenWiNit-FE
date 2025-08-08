@@ -1,22 +1,14 @@
 import { API_URL } from '@/constant/network'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 import { serverToClientAddress } from '@/lib/utils'
 import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresses'
 
 export const addressApi = {
   getAddress: async () => {
-    try {
-      const response = await fetch(`${API_URL}/deliveries/addresses`)
-
-      if (!response.ok) {
-        throw new Error(`API ERROR: ${response.status} ${response.statusText}`)
-      }
-
-      const data = (await response.json()) satisfies ServerAddress
-
-      return serverToClientAddress(data.result)
-    } catch (error) {
-      throw new Error(error instanceof Error ? error.message : '예상치 못한 오류가 발생하였습니다.')
-    }
+    return await fetch(`${API_URL}/deliveries/addresses`)
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() satisfies Promise<ServerAddress>)
+      .then((data) => serverToClientAddress(data))
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
     const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
