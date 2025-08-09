@@ -13,10 +13,12 @@ const pageHeaderSectionVariants = cva(
 )
 
 type PageHeaderSectionProps = VariantProps<typeof pageHeaderSectionVariants> &
-  React.HTMLAttributes<HTMLDivElement>
+  React.HTMLAttributes<HTMLHeadingElement>
 
 const PageHeaderSection = ({ className, ...props }: PageHeaderSectionProps) => {
-  return <div {...props} className={cn(pageHeaderSectionVariants(className), className)}></div>
+  return (
+    <header {...props} className={cn(pageHeaderSectionVariants(className), className)}></header>
+  )
 }
 
 const BackIcon = (props: ComponentProps<typeof ChevronLeftIcon>) => {

@@ -21,21 +21,21 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
 
   return (
     <div
-      className="m-[16px] flex min-h-[150px] cursor-pointer flex-row items-start justify-start overflow-hidden rounded-[25px] border bg-white shadow-md"
+      className="scrollbar-hide m-4 flex max-h-full max-w-full cursor-pointer flex-row items-start justify-start overflow-y-auto rounded-[25px] border bg-white shadow-md"
       onClick={handleClickCard}
     >
-      <div className="h-[180px] w-[180px] flex-shrink-0">
+      <div className="h-32 w-32 flex-shrink-0 sm:h-40 sm:w-40">
         <img
-          className="h-full rounded-l-[25px] bg-green-50 object-cover"
+          className="h-full w-full rounded-l-[25px] bg-green-50 object-cover"
           src={thumbnailUrl}
-          alt="활동이미지"
+          alt="활동썸네일"
           width="180"
           height="180"
         />
       </div>
-      <div className="flex flex-col justify-baseline p-[12px]">
-        <div className="flex flex-row items-center justify-between gap-2 py-[10px]">
-          <p className="text-md flex-1 truncate text-start font-bold">{title}</p>
+      <div className="flex flex-1 flex-col justify-baseline p-2">
+        <div className="flex flex-row items-center justify-between py-2">
+          <p className="text-md flex flex-1 text-start font-bold">{title}</p>
           <CategoryLabel categoryName={categoryName} />
         </div>
         <p className="items-start justify-baseline text-start">{content.substring(0, 30)}</p>

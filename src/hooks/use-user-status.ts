@@ -1,13 +1,21 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
-import { useQuery } from '@tanstack/react-query'
-import useUserId from './use-user-id'
+import { useQuery, UseQueryOptions } from '@tanstack/react-query'
 
-export const useUserStatus = () => {
-  const userId = useUserId()
-
+export const useUserStatus = (
+  options?: Omit<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof usersApi.getUserStatus>>,
+      Error,
+      Awaited<ReturnType<typeof usersApi.getUserStatus>>,
+      (typeof usersQueryKeys)['users/me']['status']['queryKey']
+    >,
+    'queryKey' | 'queryFn'
+  >,
+) => {
   return useQuery({
-    queryKey: usersQueryKeys['me/status'].detail(userId).queryKey,
+    queryKey: usersQueryKeys['users/me']['status'].queryKey,
     queryFn: usersApi.getUserStatus,
     retry: false,
+    ...options,
   })
 }

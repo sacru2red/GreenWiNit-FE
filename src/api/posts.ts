@@ -1,4 +1,5 @@
 import { API_URL } from '@/constant/network'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 
 export interface PostElement {
@@ -11,42 +12,36 @@ export interface PostElement {
 
 export const postsApi = {
   getPosts: async () => {
-    const response = await fetch(`${API_URL}/user/info`)
-    return response.json() as Promise<
-      | {
-          success: false
-          message: string
-          result: null
-        }
-      | {
-          success: true
-          message: string
-          result: {
-            content: PostElement[]
-          }
-        }
-    >
+    return await fetch(`${API_URL}/user/info`)
+      .then(throwResponseStatusThenChaining)
+      .then(
+        (res) =>
+          res.json() as Promise<{
+            success: true
+            message: string
+            result: {
+              content: PostElement[]
+            }
+          }>,
+      )
   },
-  getPost: async (postId: number | undefined) => {
-    const response = await fetch(`${API_URL}/user/info/${postId}`)
-    return response.json() as Promise<
-      | {
-          success: false
-          message: string
-          result: null
-        }
-      | {
-          success: true
-          message: string
-          result: PostElement
-        }
-    >
+  getPost: async (postId: string) => {
+    return fetch(`${API_URL}/user/info/${postId}`)
+      .then(throwResponseStatusThenChaining)
+      .then(
+        (res) =>
+          res.json() as Promise<{
+            success: true
+            message: string
+            result: PostElement
+          }>,
+      )
   },
 }
 
 const postsKey = createQueryKeys('posts', {
   list: () => ['list'] as const,
-  detail: (postId: number | undefined) => ['detail', postId] as const,
+  detail: (postId: string | undefined) => ['detail', postId] as const,
 })
 
 export const postsQueryKeys = postsKey

@@ -44,9 +44,6 @@ function App() {
     setTimeout(() => {
       setShowSplashScreen(false)
     }, 1500)
-
-    // eslint-disable-next-line no-restricted-syntax
-    void fetch('http://localhost:8080/api/challenges/1')
   }, [])
 
   return (

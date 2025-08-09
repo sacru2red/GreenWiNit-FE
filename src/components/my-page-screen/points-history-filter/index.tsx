@@ -3,14 +3,13 @@ import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { PointFilterType } from '@/types/points'
 import { useQueryClient } from '@tanstack/react-query'
-import useUserId from '@/hooks/use-user-id'
 import { PointsHistoryFilterProps } from './types'
+import { usersQueryKeys } from '@/api/users'
 
 type FilterElement = (typeof FILTER_OPTIONS)[number]
 function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistoryFilterProps) {
   const [isChecked, setIsChecked] = useState<FilterElement>('전체')
   const queryClient = useQueryClient()
-  const userId = useUserId()
 
   const handleFilterChange = async (label: FilterElement) => {
     const statusMap: Record<FilterElement, PointFilterType | null> = {
@@ -22,7 +21,9 @@ function PointsHistoryFilter({ isOpen, setIsOpen, setFilterType }: PointsHistory
     const currentType = statusMap[isChecked]
     const slectedType = statusMap[label]
 
-    queryClient.invalidateQueries({ queryKey: ['me/points-history', userId, currentType] })
+    queryClient.invalidateQueries({
+      queryKey: usersQueryKeys['me/point-history'].detail(currentType).queryKey,
+    })
     setFilterType(slectedType)
     setIsChecked(label)
     setIsOpen(false)

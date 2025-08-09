@@ -3,16 +3,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
 import useUserName from '@/hooks/use-user-name'
+import { authStore } from '@/store/auth-store'
 
 const UserCard = () => {
   const navigate = useNavigate()
+  const accessToken = authStore((state) => state.accessToken)
   const userName = useUserName()
+  console.log('userName', userName)
 
   const handleLoginClick = () => {
     navigate('/login')
   }
 
-  const { data } = useUserStatus()
+  const { data } = useUserStatus({ enabled: !!accessToken })
   const userChallengeCount = data?.result?.userChallengeCount ?? 0
   const userTotalPoints = data?.result?.userTotalPoints ?? 0
   const userLevel = data?.result?.userLevel ?? 0

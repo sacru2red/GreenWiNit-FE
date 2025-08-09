@@ -11,12 +11,13 @@ type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value' | 'onCh
 }
 
 const InputUploadImage = (props: InputUploadImageProps) => {
-  const source = props.value ?? null
+  const source = props.value
   const [preview, setPreview] = useState<string | null>(source)
   const inputRef = useRef<HTMLInputElement>(
     props.ref && typeof props.ref === 'object' && 'current' in props.ref ? props.ref.current : null,
   )
   const mergedRef = mergeRefs(props.ref, inputRef)
+  const hasRemoteImage = source?.startsWith('http://') || source?.startsWith('https://')
 
   return (
     <div
@@ -26,7 +27,9 @@ const InputUploadImage = (props: InputUploadImageProps) => {
       )}
       onClick={() => inputRef.current?.click()}
     >
-      {!preview ? (
+      {hasRemoteImage && source ? (
+        <img src={source} alt="uploaded" className="min-h-[15vh]" />
+      ) : !preview ? (
         <Fragment>
           <div className="rounded-full border-[2px] border-[#3A9B6E] p-2">
             <PlusIcon className="text-[#3A9B6E]" />
@@ -34,16 +37,20 @@ const InputUploadImage = (props: InputUploadImageProps) => {
           <span className="text-bold text-[#666666]">이미지를 업로드 해주세요.</span>
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
-      ) : (
-        <img src={preview} alt="uploaded" className="min-h-[15vh]" />
-      )}
+      ) : null}
       <InputImage
-        value={source}
-        onChangePreview={setPreview}
         {...omit(props, ['value'])}
+        localFileName={
+          source &&
+          (source?.startsWith('file://') || source?.startsWith('blob:') || source?.startsWith('/'))
+            ? source
+            : null
+        }
+        onChangePreview={setPreview}
         onChange={props.onChange}
         purpose={props.purpose}
         ref={mergedRef}
+        className={cn(hasRemoteImage && source && 'hidden', props.className)}
       />
     </div>
   )

@@ -8,9 +8,9 @@ const CategoryLabel = ({ categoryName }: CategoryLabelProps) => {
   return (
     <div
       className={cn(
-        'flex-shrink-0 items-center justify-center rounded-[8px] px-[8px] py-[4px] text-sm',
+        'flex shrink-0 items-center justify-center rounded-[8px] px-2 py-1 text-sm',
         categoryName === '이벤트' && 'bg-green-100 text-green-700',
-        categoryName === '커뮤니티' && 'bg-blue-100 text-blue-700',
+        categoryName === '콘텐츠' && 'bg-yellow-100 text-yellow-500',
         categoryName === '기타' && 'bg-purple-100 text-purple-700',
       )}
     >

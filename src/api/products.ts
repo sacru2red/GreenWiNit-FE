@@ -1,43 +1,37 @@
 import { API_URL } from '@/constant/network'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
 export const productsApi = {
   getProducts: async () => {
-    const response = await fetch(`${API_URL}/point-products`)
-    const apiServerResponse = (await response.json()) satisfies
-      | {
-          success: true
-          message: 'string'
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: ServerProducts[]
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductsToClient(apiServerResponse.result.content)
+    return await fetch(`${API_URL}/point-products`)
+      .then(throwResponseStatusThenChaining)
+      .then(
+        (res) =>
+          res.json() as Promise<{
+            success: true
+            message: string
+            result: {
+              hasNext: boolean
+              nextCursor: number | null
+              content: ServerProducts[]
+            }
+          }>,
+      )
+      .then((data) => mapServerProductsToClient(data.result.content))
   },
-
   getProduct: async (productId: string | undefined) => {
-    const response = await fetch(`${API_URL}/point-products/${productId}`)
-    const data = (await response.json()) satisfies
-      | {
-          success: true
-          message: string
-          result: ServerProductDetail
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-
-    return mapServerProductDetailToClient(data.result)
+    return await fetch(`${API_URL}/point-products/${productId}`)
+      .then(throwResponseStatusThenChaining)
+      .then(
+        (res) =>
+          res.json() as Promise<{
+            success: true
+            message: string
+            result: ServerProductDetail
+          }>,
+      )
+      .then((data) => mapServerProductDetailToClient(data.result))
   },
 }
 

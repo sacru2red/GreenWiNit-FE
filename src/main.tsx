@@ -11,12 +11,13 @@ createRoot(document.getElementById('root')!).render(<App />)
 
 fetchIntercept.register({
   request: function (url: string, config: RequestInit) {
-    if (url.startsWith(API_URL)) {
+    const accessToken = authStore.getState().accessToken
+    if (url.startsWith(API_URL) && accessToken) {
       const nextConfig = {
         ...config,
         headers: {
           ...config?.headers,
-          Authorization: `Bearer ${authStore.getState().accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
 
