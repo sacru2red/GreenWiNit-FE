@@ -30,6 +30,8 @@ function InputImage({
           return
         }
         onChange(res.result)
+        // 선택 후 다시 같은 파일 선택 가능하게 초기화하려면:
+        if (e.target) e.target.value = ''
       })
     }
   }
@@ -40,10 +42,10 @@ function InputImage({
       accept="image/*"
       onChange={handleFileChange}
       {...omit(restProps, ['localFileName'])}
-      value={restProps.localFileName ?? undefined}
       className={cn(restProps.className, 'cursor-pointer')}
     />
   )
 }
 
+InputImage.displayName = 'InputImage'
 export default InputImage
