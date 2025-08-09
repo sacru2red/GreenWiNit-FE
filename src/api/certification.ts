@@ -1,6 +1,6 @@
 import { API_URL } from '@/constant/network'
 
-export const certifyApi = {
+export const certificationApi = {
   getChallengeCertDetails: async (certId: number) => {
     const response = await fetch(`${API_URL}/my/challenges/certifications/${certId}}`)
     return response.json() as Promise<GetChallengeCertDetailsRes>

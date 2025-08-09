@@ -13,7 +13,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: ChallengeInfo[]
+            content: ChallengeItem[]
           }
         }
       | {
@@ -32,7 +32,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: ChallengeInfo[]
+            content: ChallengeItem[]
           }
         }
       | {
@@ -174,7 +174,7 @@ export const challengesApi = {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        'CertifiedChallenges-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
     })
     return response.json() as Promise<PostChallengeCertRes>
@@ -187,7 +187,7 @@ type BaseResponse<T> = {
   result?: T
 }
 
-export interface ChallengeInfo {
+export interface ChallengeItem {
   id: number
   challengeName: string
   /**
@@ -245,7 +245,7 @@ export interface ChallengeDetailResponse {
 export type JoinedChallengesMineReponse = BaseResponse<{
   hasNext: boolean
   nextCursor: number | null
-  content: ChallengeInfo[]
+  content: ChallengeItem[]
 }>
 
 export interface ChallengeTeamsElement {

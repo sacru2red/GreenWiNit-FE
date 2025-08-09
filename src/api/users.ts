@@ -1,6 +1,7 @@
 import { API_URL } from '@/constant/network'
 import { stringify } from '@/lib/query-string'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
+import { BaseApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
@@ -73,12 +74,6 @@ export const usersApi = {
       },
     }).then((res) => res.json() as Promise<PostWithdrawResponse>)
   },
-}
-
-interface BaseApiResponse<T> {
-  success: boolean
-  message: string
-  result?: T
 }
 
 type GetMyInfoResponse = BaseApiResponse<{

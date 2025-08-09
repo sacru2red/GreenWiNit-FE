@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { challengesApi, challengesQueryKeys, GetChallengeCertRes } from '@/api/challenges'
+import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 
 export const useCertifiedChallenges = () => {
   const [challengeType, setChallengeType] = useState<0 | 1>(0)
@@ -16,7 +16,7 @@ export const useCertifiedChallenges = () => {
       cursor: null,
     })
 
-  const { data } = useQuery<GetChallengeCertRes>({
+  const { data } = useQuery({
     queryKey,
     queryFn,
   })

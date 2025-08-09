@@ -1,13 +1,13 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { CertifiedChallenges, ChallengeInfo } from '@/api/challenges'
+import { CertifiedChallenges, ChallengeItem } from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
-import Challenge from '@/components/common/challenge'
 import { Dispatch, SetStateAction } from 'react'
+import Challenge from '@/components/common/challenge'
 
 interface FilteredChallengesDisplayProps {
   challengeType: 0 | 1 // 0 == personal,  1 == team
   setChallengeType: Dispatch<SetStateAction<0 | 1>>
-  challenges: ChallengeInfo[] | CertifiedChallenges[]
+  challenges: ChallengeItem[] | CertifiedChallenges[]
   handleNavigate: (challengeId: number, teamId?: number) => void
 }
 
