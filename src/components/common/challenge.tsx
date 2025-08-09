@@ -11,7 +11,19 @@ interface ChallengeProps {
 }
 
 const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
-  const isJoinedChallenge = 'beginDateTime' in challenge
+  const isJoined = 'beginDateTime' in challenge
+
+  const view = isJoined
+    ? {
+        title: challenge.challengeName,
+        image: challenge.challengeImage || DEFAULT_CHALLENGE_IMAGE,
+        subText: `${dayjs(challenge.beginDateTime).format('YY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('MM.DD')}`,
+      }
+    : {
+        title: challenge.challengeTitle,
+        image: challenge.certificationImageUrl || DEFAULT_CHALLENGE_IMAGE,
+        subText: dayjs(challenge.certifiedDate).format('YY.MM.DD'),
+      }
 
   return (
     <div
@@ -22,23 +34,13 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
       )}
       onClick={onClick}
     >
-      <img
-        className="w-full"
-        src={
-          isJoinedChallenge
-            ? challenge.challengeImage
-            : challenge.certificationImageUrl || DEFAULT_CHALLENGE_IMAGE
-        }
-      />
+      <img className="w-full" src={view.image} />
       <div className="flex flex-col gap-1 p-3 text-start">
         <span className="text-title-smaller overflow-hidden text-sm font-bold text-ellipsis whitespace-nowrap">
-          {isJoinedChallenge ? challenge.challengeName : challenge.challengeTitle}
+          {view.title}
         </span>
         <span className="overflow-hidden text-sm text-ellipsis whitespace-nowrap text-[#737373]">
-          {/* @NOTE: 해를 넘어가는 경우에 표기방법 고민 필요 */}
-          {isJoinedChallenge
-            ? `${dayjs(challenge.beginDateTime).format('YY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('MM.DD')}`
-            : dayjs(challenge.certifiedDate).format('YY.MM.DD')}
+          {view.subText}
         </span>
       </div>
     </div>
