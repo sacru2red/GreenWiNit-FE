@@ -13,7 +13,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: ChallengeItem[]
+            content: Challenge[]
           }
         }
       | {
@@ -32,7 +32,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: ChallengeItem[]
+            content: Challenge[]
           }
         }
       | {
@@ -187,7 +187,7 @@ type BaseResponse<T> = {
   result?: T
 }
 
-export interface ChallengeItem {
+export interface Challenge {
   id: number
   challengeName: string
   /**
@@ -245,7 +245,7 @@ export interface ChallengeDetailResponse {
 export type JoinedChallengesMineReponse = BaseResponse<{
   hasNext: boolean
   nextCursor: number | null
-  content: ChallengeItem[]
+  content: Challenge[]
 }>
 
 export interface ChallengeTeamsElement {
@@ -317,6 +317,9 @@ export type CertifiedChallenges = {
   memberNickname: string
   memberEmail: string
   certificationImageUrl: string
+  challengeId: number
+  challengeTitle: string
+  challengeCode: string // 'CH-P-20250109-143521-A3FV'
   certificationReview: string
   certifiedDate: string
   status: 'PENDING' | 'PAID' | 'REJECTED'

@@ -17,7 +17,8 @@ function CertifiedChallengeDetails() {
         <Row>
           <h3>제목</h3>
           <div className="w-full rounded-[10px] border border-[#c0c0c0] bg-white p-4 text-start">
-            <span className="text-secondary-foreground text-base">{info.title ?? '제목 없음'}</span>
+            {/* @TODO info.title 생기면 '제목 없음' 대체할 예정 */}
+            <span className="text-secondary-foreground text-base">제목 없음</span>
           </div>
         </Row>
         <Row>

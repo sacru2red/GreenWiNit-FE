@@ -1,5 +1,5 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { CertifiedChallenges, ChallengeItem } from '@/api/challenges'
+import { CertifiedChallenges, Challenge as ChallengeType } from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Dispatch, SetStateAction } from 'react'
 import Challenge from '@/components/common/challenge'
@@ -7,7 +7,7 @@ import Challenge from '@/components/common/challenge'
 interface FilteredChallengesDisplayProps {
   challengeType: 0 | 1 // 0 == personal,  1 == team
   setChallengeType: Dispatch<SetStateAction<0 | 1>>
-  challenges: ChallengeItem[] | CertifiedChallenges[]
+  challenges: ChallengeType[] | CertifiedChallenges[]
   handleNavigate: (challengeId: number, teamId?: number) => void
 }
 
@@ -38,7 +38,7 @@ function FilteredChallengesDisplay({
                     onClick={
                       challengeType === 0
                         ? () => handleNavigate(challenge.id)
-                        : () => handleNavigate(challenge.id, challenge.teamId) //@TODO 현재 api에 teamId가 없음. 백엔드 팀에 문의한 상황
+                        : () => handleNavigate(challenge.id, 0) //@TODO challenge.teamId 생기면 0이 대체될 예정
                     }
                   />
                 </CarouselItem>
