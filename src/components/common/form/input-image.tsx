@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react'
+import React, { ComponentProps, forwardRef } from 'react'
 import { imagesApi } from '@/api/images'
 import { toast } from 'sonner'
 import { omit } from 'es-toolkit'
@@ -12,12 +12,10 @@ interface InputProfileImageProps
   purpose: Parameters<typeof imagesApi.uploadImage>[0]
 }
 
-function InputImage({
-  onChange: onChange,
-  onChangePreview,
-  purpose,
-  ...restProps
-}: InputProfileImageProps) {
+function InputImageImpl(
+  { onChange: onChange, onChangePreview, purpose, ...restProps }: InputProfileImageProps,
+  ref: React.Ref<HTMLInputElement>,
+) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -30,7 +28,6 @@ function InputImage({
           return
         }
         onChange(res.result)
-        // 선택 후 다시 같은 파일 선택 가능하게 초기화하려면:
         if (e.target) e.target.value = ''
       })
     }
@@ -38,6 +35,7 @@ function InputImage({
 
   return (
     <input
+      ref={ref}
       type="file"
       accept="image/*"
       onChange={handleFileChange}
@@ -46,6 +44,8 @@ function InputImage({
     />
   )
 }
+
+const InputImage = forwardRef<HTMLInputElement, InputProfileImageProps>(InputImageImpl)
 
 InputImage.displayName = 'InputImage'
 export default InputImage
