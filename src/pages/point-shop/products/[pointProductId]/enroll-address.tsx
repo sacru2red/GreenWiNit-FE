@@ -1,6 +1,6 @@
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { useState } from 'react'
-import { Input } from '../../../../components/ui/input'
+import { Fragment, useState } from 'react'
+import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -27,7 +27,7 @@ const EnrollAddress = () => {
   const isEditMode = mode === 'edit'
   const navigate = useNavigate()
 
-  const { register, handleSubmit, control, formState } = useForm<FormData>({
+  const { register, handleSubmit, control, formState, setError } = useForm<FormData>({
     defaultValues: {
       name: '',
       phone: '',
@@ -37,22 +37,55 @@ const EnrollAddress = () => {
   const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const submitHandler: SubmitHandler<FormData> = (formData) => {
+  const submitHandler: SubmitHandler<FormData> = async (formData) => {
     if (formData.address === null) {
       toast.error('배송지 정보를 입력해주세요.')
       return
     }
+    const isValidPhoneNumber =
+      /^0\d{1,2}-\d{3,4}-\d{4}$/.test(formData.phone) || /^0\d{8,10}$/.test(formData.phone)
+    console.log('isValidPhoneNumber', isValidPhoneNumber)
+    if (!isValidPhoneNumber) {
+      setError('phone', { message: '전화번호 형식에 맞지 않습니다.' })
+      return
+    }
+    /**
+     * 02-111-1234 (9)
+     * 051-123-1234 (10)
+     * 02-1111-1234 (10)
+     * 051-1234-1234 (11)
+     * 010-1234-1234 (11)
+     */
+    const formattedPhoneNumber = formData.phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
+      console.log('match', match)
+      if (match.startsWith('02')) {
+        return `${match.slice(0, 2)}-${match.length === 9 ? `${match.slice(2, 5)}-${match.slice(5)}` : `${match.slice(2, 6)}-${match.slice(6)}`}`
+      }
+      if (match.length === 10) {
+        return `${match.slice(0, 3)}-${match.slice(3, 6)}-${match.slice(6)}`
+      }
+      if (match.length === 11) {
+        return `${match.slice(0, 3)}-${match.slice(3, 7)}-${match.slice(7)}`
+      }
+      return match
+    })
 
     const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
-      phoneNumber: formData.phone,
+      phoneNumber: formattedPhoneNumber,
       roadAddress: formData.address.roadAddress,
       detailAddress: formData.address.detailAddress,
       zipCode: formData.address.zonecode,
     }
 
-    addressApi.saveAddress(serverAddressForm)
-    setIsModalOpen((prev) => !prev)
+    await addressApi
+      .saveAddress(serverAddressForm)
+      .then(() => {
+        setIsModalOpen(true)
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
   }
 
   const handleConfirm = () => {
@@ -74,35 +107,38 @@ const EnrollAddress = () => {
           onConfirm={handleConfirm}
         />
       ) : (
-        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
-          <div className="flex flex-col text-start">
-            <InputLabel required={true}>이름</InputLabel>
-            <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
-            <ErrorMessage name="name" errors={errors} />
-            <InputLabel required={true}>전화번호</InputLabel>
-            <Input
-              type="text"
-              placeholder="010-XXXX-XXXX"
-              inputMode="tel"
-              {...register('phone', { required: '전화번호를 입력해주세요.' })}
-            />
-            <ErrorMessage name="phone" errors={errors} />
-            <InputLabel required={true}>주소</InputLabel>
-            {/* <AddressInput {...register('address', { required: '주소를 입력해주세요.' })} /> */}
-            <Controller
-              control={control}
-              name="address"
-              rules={{ required: '주소를 입력해주세요.' }}
-              render={({ field }) => <AddressInput {...field} />}
-            />
-            <ErrorMessage name="address" errors={errors} />
-          </div>
-          <Button type="submit" className="mt-auto">
-            저장하기
-          </Button>
-        </form>
+        <Fragment>
+          <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
+            <div className="flex flex-col text-start">
+              <InputLabel required={true}>이름</InputLabel>
+              <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+              <ErrorMessage name="name" errors={errors} />
+              <InputLabel required={true}>전화번호</InputLabel>
+              <Input
+                type="text"
+                placeholder="010-XXXX-XXXX"
+                inputMode="tel"
+                {...register('phone', {
+                  required: '전화번호를 입력해주세요.',
+                })}
+              />
+              <ErrorMessage name="phone" errors={errors} />
+              <InputLabel required={true}>주소</InputLabel>
+              <Controller
+                control={control}
+                name="address"
+                rules={{ required: '주소를 입력해주세요.' }}
+                render={({ field }) => <AddressInput {...field} />}
+              />
+              <ErrorMessage name="address" errors={errors} />
+            </div>
+            <Button type="submit" className="mt-auto">
+              저장하기
+            </Button>
+          </form>
+          <BottomNavigation />
+        </Fragment>
       )}
-      <BottomNavigation />
     </PageContainer>
   )
 }
