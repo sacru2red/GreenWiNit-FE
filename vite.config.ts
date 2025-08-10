@@ -47,8 +47,8 @@ export default defineConfig(({ mode }) => {
               }
               if (id.includes('embla-carousel')) return 'vendor-embla-carousel'
               if (id.includes('dayjs')) return 'vendor-dayjs'
-              if (id.includes('react') || id.includes('react-dom')) {
-                return 'react'
+              if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+                return 'vendor-react'
               }
               return 'vendor'
             }
