@@ -161,7 +161,7 @@ export const challengesApi = {
     challengeType: 'individual' | 'team'
   }) => {
     const response = await fetch(
-      `${API_URL}/my/challenges/certifications/${challengeType === 'individual' ? 'personal' : 'team'}?${String({ cursor })}`,
+      `${API_URL}/my/challenges/certifications/${challengeType === 'individual' ? 'personal' : 'team'}?${stringify({ cursor })}`,
     )
     return response.json() as Promise<GetChallengeCertRes>
   },

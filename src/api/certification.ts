@@ -1,4 +1,5 @@
 import { API_URL } from '@/constant/network'
+import { stringify } from '@/lib/query-string'
 
 export const certificationApi = {
   getChallengeCertDetails: async (certId: number) => {
@@ -11,8 +12,9 @@ export const certificationApi = {
     return response.json() as Promise<GetChallengeCertRes>
   },
   getPersonalCertifedChallenges: async (cursor?: number) => {
-    const query = cursor ? `?cursor=${cursor}` : ''
-    const response = await fetch(`${API_URL}/my/challenges/certifications/personal${query}`)
+    const response = await fetch(
+      `${API_URL}/my/challenges/certifications/personal${stringify({ cursor })}`,
+    )
     return response.json() as Promise<GetChallengeCertRes>
   },
   postChallengeCertify: async (challengeId: number, body: PostChallengeCertifyRequestBody) => {
