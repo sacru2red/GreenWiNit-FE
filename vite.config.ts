@@ -38,6 +38,9 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
+              if (id.includes('use-callback-ref')) {
+                return 'vendor-use-callback-ref'
+              }
               if (id.includes('react-datepicker')) return 'vendor-react-datepicker'
               if (id.includes('date-fns')) return 'vendor-date-fns'
               if (id.includes('@tanstack/react-query')) return 'vendor-tanstack-react-query'
@@ -47,10 +50,16 @@ export default defineConfig(({ mode }) => {
               }
               if (id.includes('embla-carousel')) return 'vendor-embla-carousel'
               if (id.includes('dayjs')) return 'vendor-dayjs'
+              if (id.includes('next-themes')) return 'vendor-next-themes'
+              if (id.includes('@radix-ui')) {
+                return 'vendor-radix-ui'
+              }
+              if (id.includes('@tanstack/react-query')) {
+                return 'vendor-tanstack'
+              }
               if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
                 return 'vendor-react'
               }
-              return 'vendor'
             }
           },
         },
