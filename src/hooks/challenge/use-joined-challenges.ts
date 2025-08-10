@@ -16,15 +16,15 @@ export const useJoinedChallenges = () => {
       cursor: null,
     })
 
-  const { data } = useQuery({
+  const queryResult = useQuery({
     queryKey,
     queryFn,
   })
 
   return {
+    ...queryResult,
     challengeType,
     setChallengeType,
     challengeTypeString,
-    data,
   }
 }

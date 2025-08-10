@@ -4,10 +4,10 @@ import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
 
 function JoinedChallengesContainer() {
   const navigate = useNavigate()
-  const { challengeType, setChallengeType, data } = useJoinedChallenges()
-  if (!data) return <div>데이터 불러오는 중...</div>
+  const { challengeType, setChallengeType, data, isLoading } = useJoinedChallenges()
+  if (isLoading) return <div>데이터 불러오는 중...</div>
 
-  const challenges = data.result?.content
+  const challenges = data?.result?.content
   if (!challenges) return <div>챌린지에 참여해주세요.</div>
 
   const isPersonal = challengeType === 0
