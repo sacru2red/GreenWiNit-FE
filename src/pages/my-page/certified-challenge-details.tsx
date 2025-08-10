@@ -5,11 +5,12 @@ import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallengeDetails() {
   const { challengeId } = useParams<{ challengeId: string }>()
-  const { data } = useCertifiedChallengeDetails(Number(challengeId))
+  const { data, isLoading } = useCertifiedChallengeDetails(Number(challengeId))
+
+  if (isLoading) return <div>데이터를 불러오는 중...</div>
 
   const info = data?.result
-
-  if (!info) return <div>데이터를 불러오는 중...</div>
+  if (!info) return <div>데이터가 없습니다.</div>
 
   return (
     <MyPageLayout title="인증 챌린지" showBottomNavigation={true}>

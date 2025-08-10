@@ -5,12 +5,8 @@ export const useCertifiedChallengeDetails = (certId: number) => {
   const queryKey = challengesQueryKeys.challenges.certifiedDetail({ certId }).queryKey
   const queryFn = () => challengesApi.getCertifiedChallengeDetails(certId)
 
-  const { data } = useQuery({
+  return useQuery({
     queryKey,
     queryFn,
   })
-
-  return {
-    data,
-  }
 }
