@@ -3,7 +3,7 @@ import MyPageLayout from '@/pages/my-page/my-page-layout'
 
 function CertifiedChallenges() {
   return (
-    <MyPageLayout title="인증 챌린지">
+    <MyPageLayout title="인증 챌린지" showBottomNavigation>
       <CertifiedChallengesContainer />
     </MyPageLayout>
   )
