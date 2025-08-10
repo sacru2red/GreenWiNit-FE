@@ -8,6 +8,7 @@ const useAddress = () => {
     queryKey: ['address'],
     queryFn: addressApi.getAddress,
     staleTime: 5 * MINUTES,
+    retry: false,
   })
 }
 
