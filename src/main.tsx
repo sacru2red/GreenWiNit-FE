@@ -40,12 +40,15 @@ fetchIntercept.register({
     if (isApiUrl && !response.ok) {
       if (response.status >= 400 && response.status < 500) {
         if (response.headers.get('content-type')?.includes('json')) {
-          response.json().then((body) => {
-            if (body.message === '접근이 거부되었습니다.' || body.message.includes('JWT 토큰')) {
-              authStore.getState().initAccessToken()
-              initHistoryAndLocation('/login')
-            }
-          })
+          response
+            .clone()
+            .json()
+            .then((body) => {
+              if (body.message === '접근이 거부되었습니다.' || body.message.includes('JWT 토큰')) {
+                authStore.getState().initAccessToken()
+                initHistoryAndLocation('/login')
+              }
+            })
         }
       }
     }
