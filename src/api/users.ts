@@ -115,7 +115,10 @@ type GetMyPointsHistoryResponse = BaseApiResponse<{
 
 type PostWithdrawResponse = BaseApiResponse<undefined>
 
-type PutUserProfileResponse = { nickname: string; profileImageUrl: string } | { message: string }
+type PutUserProfileResponse = BaseApiResponse<{
+  nickname: string
+  profileImageUrl: string
+}>
 
 type CheckNicknameDuplicateReponse =
   | {
