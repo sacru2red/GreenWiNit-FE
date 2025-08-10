@@ -11,6 +11,7 @@ import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 interface FormData {
   name: string
@@ -87,8 +88,8 @@ const EnrollAddress = () => {
           onConfirm={handleConfirm}
         />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="flex-1 p-4 text-start">
+        <form onSubmit={handleSubmit} className="flex flex-1 flex-col p-4">
+          <div className="flex flex-col text-start">
             <InputLabel required={true}>이름</InputLabel>
             <Input
               type="text"
@@ -124,16 +125,9 @@ const EnrollAddress = () => {
               )}
             </div>
           </div>
-          <div className="mt-70 mb-5 flex flex-shrink-0 justify-center p-4">
-            <button
-              type="submit"
-              className="rounded-[8px] bg-green-600 px-36 py-4 text-white"
-              onClick={handleSubmit}
-              disabled={!hasAddress}
-            >
-              저장하기
-            </button>
-          </div>
+          <Button type="submit" onClick={handleSubmit} className="mt-auto">
+            저장하기
+          </Button>
         </form>
       )}
       <BottomNavigation />
