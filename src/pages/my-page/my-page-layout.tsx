@@ -26,14 +26,13 @@ function MyPageLayout({
       </PageHeaderSection>
       <main
         className={cn(
-          'relative flex min-h-[calc(100vh-48px)] w-full min-w-[375px] flex-col overflow-scroll px-4 py-6',
+          'relative flex w-full min-w-[375px] flex-col overflow-scroll px-4 py-6',
           background === 'green' ? 'bg-[#E8F5E9]' : 'bg-white',
-          showBottomNavigation && 'min-h-[calc(100vh-48px-77px)]',
         )}
       >
         {children}
       </main>
-      {showBottomNavigation && <BottomNavigation />}
+      {showBottomNavigation && <BottomNavigation containerClassName="mt-auto" />}
     </PageContainer>
   )
 }
