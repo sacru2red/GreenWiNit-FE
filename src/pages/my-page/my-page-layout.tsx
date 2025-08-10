@@ -26,7 +26,7 @@ function MyPageLayout({
       </PageHeaderSection>
       <main
         className={cn(
-          'relative flex w-full min-w-[375px] flex-col overflow-scroll px-4 py-6',
+          'relative flex w-full flex-col overflow-scroll px-4 py-6',
           background === 'green' ? 'bg-[#E8F5E9]' : 'bg-white',
         )}
       >
