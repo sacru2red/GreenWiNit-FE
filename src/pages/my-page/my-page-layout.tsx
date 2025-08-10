@@ -22,7 +22,7 @@ function MyPageLayout({
         <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{title}</PageTitle>
       </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection bg={background === 'green' ? 'theme' : 'form'}>
+      <PageLayOut.BodySection bg={background === 'green' ? 'theme' : 'form'} className="mt-0">
         {children}
       </PageLayOut.BodySection>
       {showBottomNavigation && (
