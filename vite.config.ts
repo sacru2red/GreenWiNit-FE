@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id === 'react') {
+              if (id === 'react' || id === 'react-dom') {
                 return 'react'
               }
               if (id.includes('react-datepicker')) return 'vendor-react-datepicker'
