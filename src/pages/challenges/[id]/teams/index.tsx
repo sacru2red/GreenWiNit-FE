@@ -1,6 +1,6 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
-import PageContainer from '@/components/common/page-container'
+import PageContainer from '@/components/common/page-layout/container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'

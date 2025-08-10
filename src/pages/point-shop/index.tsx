@@ -1,5 +1,5 @@
 import BottomNavigation from '@/components/common/bottom-navigation'
-import PageContainer from '@/components/common/page-container'
+import PageContainer from '@/components/common/page-layout/container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import PageTitle from '@/components/common/page-title'
 import ProductList from '@/components/shop-screen/product-list'

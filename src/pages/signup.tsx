@@ -1,7 +1,7 @@
 import { usersApi } from '@/api/users'
 import AppTitle from '@/components/common/app-title'
 import InputProfileImage from '@/components/common/input-profile-image'
-import PageContainer from '@/components/common/page-container'
+import PageContainer from '@/components/common/page-layout/container'
 import PageHeaderSection from '@/components/common/page-header-section'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import { Button } from '@/components/ui/button'
