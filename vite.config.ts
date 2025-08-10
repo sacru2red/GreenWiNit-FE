@@ -38,6 +38,9 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
+              if (id === 'react') {
+                return 'react'
+              }
               if (id.includes('react-datepicker')) return 'vendor-react-datepicker'
               if (id.includes('date-fns')) return 'vendor-date-fns'
               if (id.includes('@tanstack/react-query')) return 'vendor-tanstack-react-query'
