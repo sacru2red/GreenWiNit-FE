@@ -3,10 +3,13 @@ import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { ComponentProps } from 'react'
 
-const inputVariants = cva('h-auto min-h-[1lh] py-3 px-4', {
-  variants: {},
-  defaultVariants: {},
-})
+const inputVariants = cva(
+  'h-auto min-h-[1lh] py-3 px-4 selection:bg-mountain_meadow selection:text-mountain_meadow-0',
+  {
+    variants: {},
+    defaultVariants: {},
+  },
+)
 
 type InputProps = VariantProps<typeof inputVariants> & ComponentProps<'input'>
 
