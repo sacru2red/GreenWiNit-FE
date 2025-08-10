@@ -30,7 +30,7 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
   })
 
   return (
-    <form className="flex flex-1 flex-col gap-4 p-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-1 flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <Row>
         <span>
           제목

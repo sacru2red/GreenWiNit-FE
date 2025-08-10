@@ -1,7 +1,6 @@
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import TeamCard from '@/components/common/teams/team-card'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import useChallengesTeams from '@/hooks/challenge/use-challenges-teams'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -16,12 +15,12 @@ const JoinTeam = () => {
   const teams = data?.result?.content ?? []
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>팀 선택하기</PageTitle>
-      </PageHeaderSection>
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
         <ChallengeTitle challengeId={challengeId} />
         <div className="flex flex-1 flex-col gap-4">
           {teams.length ? (
@@ -48,9 +47,11 @@ const JoinTeam = () => {
             </div>
           )}
         </div>
-      </div>
-      <BottomNavigation />
-    </PageContainer>
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

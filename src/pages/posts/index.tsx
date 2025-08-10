@@ -4,8 +4,7 @@ import CategoryTab from '@/components/post-screen/category-tab'
 import { TabType } from '@/components/post-screen/category-tab/types'
 import { usePostsArrayOnly } from '@/hooks/post/use-posts'
 import { useState } from 'react'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { CircleAlert } from 'lucide-react'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
@@ -36,15 +35,15 @@ function Posts() {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
         <PageTitle>정보공유</PageTitle>
-      </PageHeaderSection>
+      </PageLayOut.HeaderSection>
       <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
       {isLoading ? (
         <div className="flex items-center justify-center">포스트를 찾는 중....</div>
       ) : (
-        <div className="flex flex-col gap-4 overflow-y-auto p-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex flex-col gap-4 overflow-y-auto p-4">
           {filteredPosts ? (
             filteredPosts.map((item) => (
               <PostItem
@@ -64,8 +63,10 @@ function Posts() {
           )}
         </div>
       )}
-      <BottomNavigation containerClassName="mt-auto" />
-    </PageContainer>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

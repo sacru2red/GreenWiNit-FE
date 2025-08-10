@@ -1,6 +1,7 @@
 import useAddress from '@/hooks/use-adress'
 import { Plus } from 'lucide-react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Fragment } from 'react'
 
 interface DeliveryAddressProps {
   pointProductId?: string | undefined
@@ -39,7 +40,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
   }
 
   return (
-    <div>
+    <Fragment>
       <div className="text-xl font-bold">배송지 정보</div>
       {hasAddress ? (
         <div className="m-[20px] flex flex-col border p-[20px] text-start">
@@ -80,7 +81,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
           </button>
         </div>
       )}
-    </div>
+    </Fragment>
   )
 }
 

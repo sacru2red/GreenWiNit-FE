@@ -29,9 +29,9 @@ const ProductDetailDescription = ({
   if (isLoading) return <div>로딩 중...</div>
 
   return (
-    <div className="flex flex-col p-[16px] text-center">
+    <div className="flex flex-col p-4 text-center">
       <p className="text-xl">제품 설명</p>
-      <p className="p-[16px]">{description}</p>
+      <p className="p-4">{description}</p>
       <hr />
       <ProductDetailLabel
         label="사용 가능 포인트"

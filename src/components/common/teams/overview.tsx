@@ -46,7 +46,7 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
   const isLeader = true
 
   return (
-    <div className="relative flex flex-col items-center gap-2 p-4">
+    <div className="bg-card relative flex flex-col items-center gap-2 p-4">
       {isLeader && allowManage ? (
         <Popover>
           <PopoverTrigger asChild>
