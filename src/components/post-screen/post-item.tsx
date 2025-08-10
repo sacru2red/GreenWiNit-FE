@@ -21,7 +21,7 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
 
   return (
     <div
-      className="scrollbar-hide flex max-w-full cursor-pointer flex-row items-start justify-start overflow-y-auto rounded-[25px] border bg-white shadow-md"
+      className="scrollbar-hide flex max-w-full cursor-pointer flex-row items-start justify-start overflow-y-auto rounded-3xl border bg-white shadow-md"
       onClick={handleClickCard}
     >
       <div className="h-36 w-36 flex-shrink-0 sm:h-42 sm:w-42">
