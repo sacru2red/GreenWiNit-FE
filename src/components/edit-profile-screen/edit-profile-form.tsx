@@ -1,10 +1,11 @@
-import { usersApi } from '@/api/users'
+import { usersApi, usersQueryKeys } from '@/api/users'
 import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
 import useUserName from '@/hooks/use-user-name'
+import { useQueryClient } from '@tanstack/react-query'
 import { Fragment, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -20,6 +21,7 @@ function EditProfileForm() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   // @TODO 현재 nickname을 조회하거나 같이 주는 api가 없는 것 같음(백엔드에 문의 예정). 현재는 name으로 쓰고 있으나, 만약 추가된다면 nickname으로 바뀔 예정
   const userNickname = useUserName()
+  const qc = useQueryClient()
 
   const { control, handleSubmit } = useForm<FormState>({
     defaultValues: {
@@ -44,9 +46,16 @@ function EditProfileForm() {
   }
 
   const updateNickname = async () => {
-    if (!pendingData?.nickname || !pendingData.profileImage) return
+    if (!pendingData?.nickname) return
 
-    await usersApi.putUserProfile(pendingData.nickname, pendingData.profileImage)
+    const res = await usersApi.putUserProfile(pendingData.nickname, pendingData.profileImage ?? '')
+    if (res.success) {
+      setShowConfirmModal(false)
+      await qc.invalidateQueries({
+        queryKey: usersQueryKeys['users/me']['member'].queryKey,
+        refetchType: 'active',
+      })
+    }
   }
 
   return (
