@@ -54,7 +54,7 @@ function BottomNavigation({ containerClassName }: BottomNavigationProps) {
         {NAV_ITEMS.map((item) => {
           const isActive =
             item.moveTo === '/'
-              ? location.pathname === item.moveTo
+              ? location.pathname === item.moveTo || location.pathname.startsWith('/challenges')
               : location.pathname.startsWith(item.moveTo)
 
           return (
