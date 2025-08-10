@@ -38,18 +38,18 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id === 'react' || id === 'react-dom') {
-                return 'react'
-              }
               if (id.includes('react-datepicker')) return 'vendor-react-datepicker'
               if (id.includes('date-fns')) return 'vendor-date-fns'
               if (id.includes('@tanstack/react-query')) return 'vendor-tanstack-react-query'
               if (id.includes('sonner')) return 'vendor-sonner'
-              // if (id.includes('react-hook-form') || id.startsWith('@hookform/')) {
-              //   return 'vendor-react-hook-form'
-              // }
+              if (id.includes('react-hook-form') || id.startsWith('@hookform/')) {
+                return 'vendor-react-hook-form'
+              }
               if (id.includes('embla-carousel')) return 'vendor-embla-carousel'
               if (id.includes('dayjs')) return 'vendor-dayjs'
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'react'
+              }
               return 'vendor'
             }
           },
