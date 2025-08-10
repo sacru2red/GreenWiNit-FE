@@ -25,6 +25,9 @@ export const addressApi = {
   saveAddress: async (data: UpdateAddressDto) => {
     return await fetch(`${API_URL}/deliveries/addresses`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     })
       .then(throwResponseStatusThenChaining)
