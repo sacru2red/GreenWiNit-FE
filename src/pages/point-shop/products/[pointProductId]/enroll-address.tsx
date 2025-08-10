@@ -1,5 +1,5 @@
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { Input } from '../../../../components/ui/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
@@ -12,6 +12,8 @@ import PageTitle from '@/components/common/page-title'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import ErrorMessage from '@/components/common/form/error-message'
 
 interface FormData {
   name: string
@@ -25,34 +27,18 @@ const EnrollAddress = () => {
   const isEditMode = mode === 'edit'
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    phone: '',
-    address: null,
+  const { register, handleSubmit, control, formState } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      phone: '',
+      address: null,
+    },
   })
+  const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }, [])
-
-  const handleAddressChange = useCallback((address: AddressState) => {
-    setFormData((prev) => ({
-      ...prev,
-      address,
-    }))
-  }, [])
-
-  const hasAddress = Boolean(formData.address && formData.name && formData.phone)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!hasAddress || formData.address === null) {
+  const submitHandler: SubmitHandler<FormData> = (formData) => {
+    if (formData.address === null) {
       toast.error('배송지 정보를 입력해주세요.')
       return
     }
@@ -88,44 +74,30 @@ const EnrollAddress = () => {
           onConfirm={handleConfirm}
         />
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-1 flex-col p-4">
+        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
           <div className="flex flex-col text-start">
             <InputLabel required={true}>이름</InputLabel>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-            <div className="pt-2">
-              {!formData.name.trim() && (
-                <span className="bg-red-500 pt-2 text-start text-sm">이름을 입력해주세요.</span>
-              )}
-            </div>
+            <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+            <ErrorMessage name="name" errors={errors} />
             <InputLabel required={true}>전화번호</InputLabel>
             <Input
               type="text"
-              id="phone"
-              name="phone"
               placeholder="010-XXXX-XXXX"
-              value={formData.phone}
-              onChange={handleInputChange}
+              inputMode="tel"
+              {...register('phone', { required: '전화번호를 입력해주세요.' })}
             />
-            <div className="pt-2">
-              {!formData.phone.trim() && (
-                <span className="text-start text-sm text-red-500">전화번호를 입력해주세요.</span>
-              )}
-            </div>
+            <ErrorMessage name="phone" errors={errors} />
             <InputLabel required={true}>주소</InputLabel>
-            <AddressInput value={formData.address} onChange={handleAddressChange} />
-            <div className="pt-2">
-              {!formData.address && (
-                <span className="bg-red-500 pt-2 text-start text-sm">주소를 입력해주세요.</span>
-              )}
-            </div>
+            {/* <AddressInput {...register('address', { required: '주소를 입력해주세요.' })} /> */}
+            <Controller
+              control={control}
+              name="address"
+              rules={{ required: '주소를 입력해주세요.' }}
+              render={({ field }) => <AddressInput {...field} />}
+            />
+            <ErrorMessage name="address" errors={errors} />
           </div>
-          <Button type="submit" onClick={handleSubmit} className="mt-auto">
+          <Button type="submit" className="mt-auto">
             저장하기
           </Button>
         </form>
