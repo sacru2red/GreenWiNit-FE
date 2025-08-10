@@ -11,31 +11,25 @@ export const addressApi = {
       .then((data) => serverToClientAddress(data))
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
-    const response = await fetch(`${API_URL}/deliveries/addresses/${id}`, {
+    return await fetch(`${API_URL}/deliveries/addresses/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
     })
-
-    if (!response.ok) {
-      throw new Error(`STATUS: ${response.status} ${response.statusText}`)
-    }
-
-    const data = (await response.json()) as ServerAddress
-
-    return serverToClientAddress(data)
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<ServerAddress>)
+      .then((data) => serverToClientAddress(data))
   },
   saveAddress: async (data: UpdateAddressDto) => {
-    try {
-      await fetch(`${API_URL}/deliveries/addresses`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-      })
-    } catch (error) {
-      throw new Error(`배송지 정보를 저장하는데 실패하였습니다: ${error}`)
-    }
+    return await fetch(`${API_URL}/deliveries/addresses`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<ServerAddress>)
+      .then((data) => serverToClientAddress(data))
   },
 }
 
