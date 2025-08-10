@@ -108,13 +108,32 @@ button {
   transform-style: preserve-3d;
 }
 
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+/**
+ * 스크롤바 스타일 통일
+ */
+html {
+  scrollbar-width: auto;
+  scrollbar-gutter: auto;
+  scrollbar-color: auto;
+}
+/* 혹시 나중에 진짜 스타일링을 하고 싶은 경우를 위해 남겨둠 */
+/* ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-mountain_meadow);
+} */
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+/**
+ * 터치가능한 기기인지 감지
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer
+ * https://caniuse.com/css-media-interaction
+ */
+@media (pointer: coarse) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--color-mountain_meadow);
   }
 }

@@ -43,7 +43,7 @@ function Posts() {
       {isLoading ? (
         <div className="flex items-center justify-center">포스트를 찾는 중....</div>
       ) : (
-        <div className="flex flex-col gap-4 overflow-y-auto p-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex flex-col gap-4 overflow-y-auto p-4">
           {filteredPosts ? (
             filteredPosts.map((item) => (
               <PostItem
