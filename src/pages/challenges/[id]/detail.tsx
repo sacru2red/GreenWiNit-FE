@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -40,12 +39,12 @@ const ChallengeDetail = () => {
   const typeKo = challenge?.type === 'PERSONAL' ? '개인' : '팀'
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
-      </PageHeaderSection>
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
         <ChallengeTitle challengeId={challengeId} />
         <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
           <img
@@ -76,7 +75,7 @@ const ChallengeDetail = () => {
               </p>
             </div>
             <div className="bg-card w-full items-center justify-center p-4">
-              <p className="text-card-head text-start">
+              <p className="text-card-head text-start wrap-anywhere whitespace-break-spaces">
                 포인트
                 <br />
                 <span className="text-card-base">
@@ -97,8 +96,10 @@ const ChallengeDetail = () => {
         >
           챌린지 참여하기
         </Button>
-      </div>
-      <BottomNavigation />
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
       <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
         <DialogContent className="flex flex-col gap-3">
           <DialogDescription className="text-center !text-lg !text-black">
@@ -116,7 +117,7 @@ const ChallengeDetail = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </PageContainer>
+    </PageLayOut.Container>
   )
 }
 

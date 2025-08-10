@@ -6,8 +6,7 @@ import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { toast } from 'sonner'
@@ -93,50 +92,54 @@ const EnrollAddress = () => {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
-      </PageHeaderSection>
-      <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
-        <div className="flex flex-col text-start">
-          <InputLabel required={true}>이름</InputLabel>
-          <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
-          <ErrorMessage name="name" errors={errors} />
-          <InputLabel required={true}>전화번호</InputLabel>
-          <Input
-            type="text"
-            placeholder="010-XXXX-XXXX"
-            inputMode="tel"
-            {...register('phone', {
-              required: '전화번호를 입력해주세요.',
-            })}
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col">
+          <div className="flex flex-col text-start">
+            <InputLabel required={true}>이름</InputLabel>
+            <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+            <ErrorMessage name="name" errors={errors} />
+            <InputLabel required={true}>전화번호</InputLabel>
+            <Input
+              type="text"
+              placeholder="010-XXXX-XXXX"
+              inputMode="tel"
+              {...register('phone', {
+                required: '전화번호를 입력해주세요.',
+              })}
+            />
+            <ErrorMessage name="phone" errors={errors} />
+            <InputLabel required={true}>주소</InputLabel>
+            <Controller
+              control={control}
+              name="address"
+              rules={{ required: '주소를 입력해주세요.' }}
+              render={({ field }) => <AddressInput {...field} />}
+            />
+            <ErrorMessage name="address" errors={errors} />
+          </div>
+          <Button type="submit" className="mt-auto">
+            저장하기
+          </Button>
+        </form>
+        {isModalOpen === true ? (
+          <ConfirmDialog
+            isOpen={isModalOpen}
+            description="배송지 저장이 완료되었습니다."
+            paragraph="이제 상품을 교환할 수 있습니다!"
+            setIsOpen={setIsModalOpen}
+            onConfirm={handleConfirm}
           />
-          <ErrorMessage name="phone" errors={errors} />
-          <InputLabel required={true}>주소</InputLabel>
-          <Controller
-            control={control}
-            name="address"
-            rules={{ required: '주소를 입력해주세요.' }}
-            render={({ field }) => <AddressInput {...field} />}
-          />
-          <ErrorMessage name="address" errors={errors} />
-        </div>
-        <Button type="submit" className="mt-auto">
-          저장하기
-        </Button>
-      </form>
-      <BottomNavigation />
-      {isModalOpen === true ? (
-        <ConfirmDialog
-          isOpen={isModalOpen}
-          description="배송지 저장이 완료되었습니다."
-          paragraph="이제 상품을 교환할 수 있습니다!"
-          setIsOpen={setIsModalOpen}
-          onConfirm={handleConfirm}
-        />
-      ) : null}
-    </PageContainer>
+        ) : null}
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

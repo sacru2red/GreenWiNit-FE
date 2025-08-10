@@ -29,31 +29,29 @@ const ProductList = () => {
   }
 
   return (
-    <div className="px-4 py-6">
-      <div className="grid grid-cols-2">
-        {products?.map((product) => {
-          return (
-            <div
-              key={product?.id}
-              className="cursor-pointer rounded-[25px] p-4 text-left"
-              onClick={() => handleProductClick(product?.id)}
-            >
-              <div className="mb-2 min-h-[140px] min-w-[140px] items-center justify-center rounded-[10px] bg-white p-5">
-                <img
-                  className="items-center justify-center"
-                  src={product?.thumbnailUrl}
-                  alt={product?.name}
-                  width="160"
-                  height="160"
-                />
-              </div>
-              <p className="text-sm text-black">{product?.name}</p>
-              <p className="text-xs text-gray-500">{product?.sellingStatus}</p>
-              <p className="text-lg text-green-600">{product?.price}p</p>
+    <div className="grid grid-cols-2">
+      {products?.map((product) => {
+        return (
+          <div
+            key={product?.id}
+            className="cursor-pointer rounded-[25px] p-4 text-left"
+            onClick={() => handleProductClick(product?.id)}
+          >
+            <div className="mb-2 min-h-[140px] min-w-[140px] items-center justify-center rounded-[10px] bg-white p-5">
+              <img
+                className="items-center justify-center"
+                src={product?.thumbnailUrl}
+                alt={product?.name}
+                width="160"
+                height="160"
+              />
             </div>
-          )
-        })}
-      </div>
+            <p className="text-sm text-black">{product?.name}</p>
+            <p className="text-xs text-gray-500">{product?.sellingStatus}</p>
+            <p className="text-lg text-green-600">{product?.price}p</p>
+          </div>
+        )
+      })}
     </div>
   )
 }

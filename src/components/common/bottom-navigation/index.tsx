@@ -47,8 +47,10 @@ function BottomNavigation({ containerClassName }: BottomNavigationProps) {
   }
 
   return (
-    <nav className={cn('border-t border-gray-200 bg-white shadow-lg', containerClassName)}>
-      <div className="flex h-16 items-center justify-around px-4">
+    <nav
+      className={cn('flex w-full border-t border-gray-200 bg-white shadow-lg', containerClassName)}
+    >
+      <div className="flex h-16 flex-1 items-center justify-around px-4">
         {NAV_ITEMS.map((item) => {
           const isActive =
             item.moveTo === '/'

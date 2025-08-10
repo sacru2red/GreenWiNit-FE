@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Required from '@/components/common/required'
 import Input from '@/components/common/form/input'
@@ -51,56 +50,58 @@ const ChallengeSubmitIndividual = () => {
   }
 
   return (
-    <PageContainer bg="form">
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container bg="form">
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>개인 챌린지 인증</PageTitle>
-      </PageHeaderSection>
-      <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4 p-4">
-        <Row>
-          <h3>
-            제목
-            <Required />
-          </h3>
-          <Input value={challenge?.title ?? ''} contentEditable={false} />
-        </Row>
-        <Row>
-          <h3>
-            날짜
-            <Required />
-          </h3>
-          <Controller
-            control={f.control}
-            name="date"
-            rules={{ required: true }}
-            render={({ field }) => (
-              /* wrapping for removing gap */
-              <div className="w-full">
-                <DatePickerSingle
-                  selected={field.value}
-                  onChange={(date) => field.onChange(date == null ? null : new Date(date))}
-                />
-              </div>
-            )}
-          />
-        </Row>
-        <ImageRow control={f.control} purpose="challenge" />
-        <ReviewRow control={f.control} />
-        <p className="text-lighter-gray w-full text-center text-sm">
-          ※ 하나의 챌린지는 하루에 한번만 인증할 수 있어요!
-          <br />
-          다른 챌린지에 도전해보세요!
-        </p>
-        <Button
-          variant={f.formState.isValid ? 'default' : 'disabled'}
-          className="mt-auto text-lg"
-          type="submit"
-        >
-          제출하기
-        </Button>
-      </form>
-      <DoneDialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog} />
-    </PageContainer>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4">
+          <Row>
+            <h3>
+              제목
+              <Required />
+            </h3>
+            <Input value={challenge?.title ?? ''} contentEditable={false} />
+          </Row>
+          <Row>
+            <h3>
+              날짜
+              <Required />
+            </h3>
+            <Controller
+              control={f.control}
+              name="date"
+              rules={{ required: true }}
+              render={({ field }) => (
+                /* wrapping for removing gap */
+                <div className="w-full">
+                  <DatePickerSingle
+                    selected={field.value}
+                    onChange={(date) => field.onChange(date == null ? null : new Date(date))}
+                  />
+                </div>
+              )}
+            />
+          </Row>
+          <ImageRow control={f.control} purpose="challenge" />
+          <ReviewRow control={f.control} />
+          <p className="text-lighter-gray w-full text-center text-sm">
+            ※ 하나의 챌린지는 하루에 한번만 인증할 수 있어요!
+            <br />
+            다른 챌린지에 도전해보세요!
+          </p>
+          <Button
+            variant={f.formState.isValid ? 'default' : 'disabled'}
+            className="mt-auto text-lg"
+            type="submit"
+          >
+            제출하기
+          </Button>
+        </form>
+        <DoneDialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog} />
+      </PageLayOut.BodySection>
+    </PageLayOut.Container>
   )
 }
 

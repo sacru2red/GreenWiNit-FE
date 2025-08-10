@@ -1,6 +1,5 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Description from '@/components/common/teams/description'
 import MemberCount from '@/components/common/teams/member-count'
@@ -54,28 +53,30 @@ const TeamDetail = () => {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container bg="form">
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>팀 정보</PageTitle>
-      </PageHeaderSection>
-      <Overview team={team} />
-      <div className="flex flex-1 flex-col gap-4 bg-white p-4">
-        <MemberCount team={team} />
-        <Description team={team} />
-        <PropertyList team={team} />
-        <div className="mt-auto flex w-full">
-          <Button size="flex" onClick={() => joinTeam()}>
-            팀 가입신청
-          </Button>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+        <Overview team={team} />
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <MemberCount team={team} />
+          <Description team={team} />
+          <PropertyList team={team} />
+          <div className="mt-auto flex w-full">
+            <Button size="flex" onClick={() => joinTeam()}>
+              팀 가입신청
+            </Button>
+          </div>
         </div>
-      </div>
+      </PageLayOut.BodySection>
       <Dialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog}>
         <DialogContent className="flex flex-col gap-3">
-          <DialogDescription className="text-border text-center !text-lg !text-black">
+          <DialogDescription className="text-center !text-lg !text-black">
             팀 가입 완료
           </DialogDescription>
-          <DialogDescription className="text-border !text-light-gray text-center !text-sm">
+          <DialogDescription className="!text-light-gray text-center !text-sm">
             [홈] -&gt; [참여 챌린지]에서 확인하세요!
             <br />
             오픈채팅방을 통해 이야기를 나눠요.
@@ -87,7 +88,7 @@ const TeamDetail = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </PageContainer>
+    </PageLayOut.Container>
   )
 }
 

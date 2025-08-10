@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const pageFooterSectionVariants = cva('flex mt-auto', {
+const pageFooterSectionVariants = cva('flex mt-auto w-full', {
   variants: {},
   defaultVariants: {},
 })

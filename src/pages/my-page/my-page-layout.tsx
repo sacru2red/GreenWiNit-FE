@@ -1,8 +1,6 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
 import BottomNavigation from '@/components/common/bottom-navigation'
 
 interface MyPageLayoutProps {
@@ -19,21 +17,20 @@ function MyPageLayout({
   children,
 }: MyPageLayoutProps) {
   return (
-    <PageContainer>
-      <PageHeaderSection className="py-5">
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{title}</PageTitle>
-      </PageHeaderSection>
-      <main
-        className={cn(
-          'relative flex w-full flex-col overflow-scroll px-4 py-6',
-          background === 'green' ? 'bg-[#E8F5E9]' : 'bg-white',
-        )}
-      >
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection bg={background === 'green' ? 'theme' : 'form'}>
         {children}
-      </main>
-      {showBottomNavigation && <BottomNavigation containerClassName="mt-auto" />}
-    </PageContainer>
+      </PageLayOut.BodySection>
+      {showBottomNavigation && (
+        <PageLayOut.FooterSection>
+          <BottomNavigation />
+        </PageLayOut.FooterSection>
+      )}
+    </PageLayOut.Container>
   )
 }
 

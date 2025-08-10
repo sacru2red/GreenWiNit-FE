@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
@@ -71,34 +70,36 @@ const TeamModify = () => {
   }
 
   return (
-    <PageContainer bg="form">
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container bg="form">
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>수정하기</PageTitle>
-      </PageHeaderSection>
-      <UpsertPageBody
-        mode="modify"
-        onSubmit={onSubmit}
-        initialData={{
-          ...team,
-          id: team.id.toString(),
-          name: team.groupName,
-          address: {
-            roadAddress: team.groupAddress,
-            roadnameCode: '',
-            zonecode: '',
-            detailAddress: team.groupAddress,
-            sigungu: '',
-          },
-          description: team.groupDescription,
-          date: dayjs(team.groupBeginDateTime).toDate(),
-          startAt: dayjs(team.groupBeginDateTime).toDate(),
-          endAt: dayjs(team.groupEndDateTime).toDate(),
-          maxMemberCount: team.maxParticipants,
-          openChatUrl: team.openChatUrl,
-        }}
-      />
-    </PageContainer>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <UpsertPageBody
+          mode="modify"
+          onSubmit={onSubmit}
+          initialData={{
+            ...team,
+            id: team.id.toString(),
+            name: team.groupName,
+            address: {
+              roadAddress: team.groupAddress,
+              roadnameCode: '',
+              zonecode: '',
+              detailAddress: team.groupAddress,
+              sigungu: '',
+            },
+            description: team.groupDescription,
+            date: dayjs(team.groupBeginDateTime).toDate(),
+            startAt: dayjs(team.groupBeginDateTime).toDate(),
+            endAt: dayjs(team.groupEndDateTime).toDate(),
+            maxMemberCount: team.maxParticipants,
+            openChatUrl: team.openChatUrl,
+          }}
+        />
+      </PageLayOut.BodySection>
+    </PageLayOut.Container>
   )
 }
 

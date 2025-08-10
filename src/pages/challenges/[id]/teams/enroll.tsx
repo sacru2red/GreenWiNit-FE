@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -53,12 +52,14 @@ const TeamEnroll = () => {
   }
 
   return (
-    <PageContainer bg="form">
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container bg="form">
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>팀 등록하기</PageTitle>
-      </PageHeaderSection>
-      <UpsertPageBody mode="enroll" onSubmit={onSubmit} />
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <UpsertPageBody mode="enroll" onSubmit={onSubmit} />
+      </PageLayOut.BodySection>
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="flex flex-col gap-4">
           <DialogDescription className="text-border text-bold text-center !text-xl !text-black">
@@ -76,7 +77,7 @@ const TeamEnroll = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </PageContainer>
+    </PageLayOut.Container>
   )
 }
 

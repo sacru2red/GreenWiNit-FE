@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Description from '@/components/common/teams/description'
 import MemberCount from '@/components/common/teams/member-count'
@@ -33,26 +32,28 @@ const ManageTeam = () => {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>팀 정보</PageTitle>
-      </PageHeaderSection>
-      <Overview team={team} allowManage />
-      <div className="flex flex-1 flex-col gap-4 bg-white p-4">
-        <MemberCount team={team} />
-        <Description team={team} />
-        <PropertyList team={team} />
-        <div className="mt-auto flex w-full">
-          <Button
-            size="flex"
-            onClick={() => navigate(`/challenges/${challengeId}/submit/teams/${teamId}`)}
-          >
-            챌린지 인증하기
-          </Button>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+        <Overview team={team} allowManage />
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <MemberCount team={team} />
+          <Description team={team} />
+          <PropertyList team={team} />
+          <div className="mt-auto flex w-full">
+            <Button
+              size="flex"
+              onClick={() => navigate(`/challenges/${challengeId}/submit/teams/${teamId}`)}
+            >
+              챌린지 인증하기
+            </Button>
+          </div>
         </div>
-      </div>
-    </PageContainer>
+      </PageLayOut.BodySection>
+    </PageLayOut.Container>
   )
 }
 

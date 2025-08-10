@@ -5,11 +5,10 @@ import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Challenges from '@/components/home-screen/challenges'
-import PageContainer from '@/components/common/page-layout/container'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
-import PageHeaderSection from '@/components/common/page-layout/header-section'
 import { authStore } from '@/store/auth-store'
+import PageLayOut from '@/components/common/page-layout'
 
 function Home() {
   const isLoggedIn = useIsLoggedIn()
@@ -36,23 +35,27 @@ function Home() {
   }, [accessToken, setAccessToken, setSearchParams])
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
         <AppTitle className="!text-3xl" />
-      </PageHeaderSection>
-      <div className="mt-5 flex flex-col p-4">
-        <UserCard />
-        <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
-          참여 챌린지
-        </Button>
-        <WarnNotLoggedIn
-          isOpen={isWarnNotLoggedInDialogOpen}
-          onOpenChange={setIsWarnNotLoggedInDialogOpen}
-        />
-      </div>
-      <Challenges />
-      <BottomNavigation />
-    </PageContainer>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection padding="zero">
+        <div className="flex flex-col gap-4 p-4">
+          <UserCard />
+          <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
+            참여 챌린지
+          </Button>
+          <WarnNotLoggedIn
+            isOpen={isWarnNotLoggedInDialogOpen}
+            onOpenChange={setIsWarnNotLoggedInDialogOpen}
+          />
+        </div>
+        <Challenges />
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

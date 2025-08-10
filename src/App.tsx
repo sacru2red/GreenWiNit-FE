@@ -66,13 +66,13 @@ function App() {
                     path="/challenges/:challengeId/submit/individual"
                     element={<ChallengeSubmitIndividual />}
                   />
+                  <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
+                  <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
+                  <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
                   <Route
                     path="/challenges/:challengeId/submit/teams/:teamId"
                     element={<ChallengeSubmitTeam />}
                   />
-                  <Route path="/challenges/:challengeId/teams/join" element={<JoinTeam />} />
-                  <Route path="/challenges/:challengeId/teams" element={<ChallengesTeam />} />
-                  <Route path="/challenges/:challengeId/teams/enroll" element={<TeamEnroll />} />
                   <Route
                     path="/challenges/:challengeId/teams/:teamId/joined"
                     element={<ManageTeam />}
