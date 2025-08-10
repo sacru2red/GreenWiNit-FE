@@ -1,5 +1,5 @@
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
@@ -98,6 +98,35 @@ const EnrollAddress = () => {
         <PageHeaderSection.BackIcon />
         <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
       </PageHeaderSection>
+      <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
+        <div className="flex flex-col text-start">
+          <InputLabel required={true}>이름</InputLabel>
+          <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+          <ErrorMessage name="name" errors={errors} />
+          <InputLabel required={true}>전화번호</InputLabel>
+          <Input
+            type="text"
+            placeholder="010-XXXX-XXXX"
+            inputMode="tel"
+            {...register('phone', {
+              required: '전화번호를 입력해주세요.',
+            })}
+          />
+          <ErrorMessage name="phone" errors={errors} />
+          <InputLabel required={true}>주소</InputLabel>
+          <Controller
+            control={control}
+            name="address"
+            rules={{ required: '주소를 입력해주세요.' }}
+            render={({ field }) => <AddressInput {...field} />}
+          />
+          <ErrorMessage name="address" errors={errors} />
+        </div>
+        <Button type="submit" className="mt-auto">
+          저장하기
+        </Button>
+      </form>
+      <BottomNavigation />
       {isModalOpen === true ? (
         <ConfirmDialog
           isOpen={isModalOpen}
@@ -106,39 +135,7 @@ const EnrollAddress = () => {
           setIsOpen={setIsModalOpen}
           onConfirm={handleConfirm}
         />
-      ) : (
-        <Fragment>
-          <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col p-4">
-            <div className="flex flex-col text-start">
-              <InputLabel required={true}>이름</InputLabel>
-              <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
-              <ErrorMessage name="name" errors={errors} />
-              <InputLabel required={true}>전화번호</InputLabel>
-              <Input
-                type="text"
-                placeholder="010-XXXX-XXXX"
-                inputMode="tel"
-                {...register('phone', {
-                  required: '전화번호를 입력해주세요.',
-                })}
-              />
-              <ErrorMessage name="phone" errors={errors} />
-              <InputLabel required={true}>주소</InputLabel>
-              <Controller
-                control={control}
-                name="address"
-                rules={{ required: '주소를 입력해주세요.' }}
-                render={({ field }) => <AddressInput {...field} />}
-              />
-              <ErrorMessage name="address" errors={errors} />
-            </div>
-            <Button type="submit" className="mt-auto">
-              저장하기
-            </Button>
-          </form>
-          <BottomNavigation />
-        </Fragment>
-      )}
+      ) : null}
     </PageContainer>
   )
 }
