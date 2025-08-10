@@ -1,6 +1,6 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageContainer from '@/components/common/page-layout/container'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import PageTitle from '@/components/common/page-title'
 import Description from '@/components/common/teams/description'
 import MemberCount from '@/components/common/teams/member-count'

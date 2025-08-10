@@ -1,4 +1,4 @@
-import PageHeaderSection from '../common/page-header-section'
+import PageHeaderSection from '../common/page-layout/header-section'
 
 interface ProductDetailHeaderProps {
   imgUrl: string | undefined

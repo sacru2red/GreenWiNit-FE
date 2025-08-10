@@ -1,5 +1,5 @@
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageContainer from '@/components/common/page-layout/container'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import PageTitle from '@/components/common/page-title'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'

@@ -1,6 +1,6 @@
 import BottomNavigation from '@/components/common/bottom-navigation'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageContainer from '@/components/common/page-layout/container'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import PageTitle from '@/components/common/page-title'
 import JoinedChallengesContainer from '@/components/home-screen/challenges/joined-challenges-container'
 

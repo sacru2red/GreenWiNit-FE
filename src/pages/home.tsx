@@ -8,7 +8,7 @@ import Challenges from '@/components/home-screen/challenges'
 import PageContainer from '@/components/common/page-layout/container'
 import { Button } from '@/components/ui/button'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import { authStore } from '@/store/auth-store'
 
 function Home() {

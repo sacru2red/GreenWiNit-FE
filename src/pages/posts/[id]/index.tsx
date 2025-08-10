@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
 import CategoryLabel from '@/components/post-screen/category-label'
 import { usePost } from '@/hooks/post/use-post'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageContainer from '@/components/common/page-layout/container'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import PageTitle from '@/components/common/page-title'
 
 const PostDetail = () => {

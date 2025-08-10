@@ -1,5 +1,5 @@
 import PageContainer from '@/components/common/page-layout/container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageHeaderSection from '@/components/common/page-layout/header-section'
 import PageTitle from '@/components/common/page-title'
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
