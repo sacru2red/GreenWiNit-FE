@@ -4,10 +4,10 @@ import { useCertifiedChallenges } from '@/hooks/challenge/use-certified-challeng
 
 function CertifiedChallengesContainer() {
   const navigate = useNavigate()
-  const { challengeType, setChallengeType, data } = useCertifiedChallenges()
-  if (!data) return <div>데이터 불러오는 중...</div>
+  const { challengeType, setChallengeType, data, isLoading } = useCertifiedChallenges()
+  if (isLoading) return <div>데이터 불러오는 중...</div>
 
-  const challenges = data.result?.content
+  const challenges = data?.result?.content
   if (!challenges) return <div>인증한 챌린지가 없습니다.</div>
 
   const handleNavigate = (challengeId: number) => {

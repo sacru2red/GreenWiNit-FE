@@ -16,15 +16,16 @@ export const useCertifiedChallenges = () => {
       cursor: null,
     })
 
-  const { data } = useQuery({
+  const queryResult = useQuery({
     queryKey,
     queryFn,
+    retry: false,
   })
 
   return {
+    ...queryResult,
     challengeType,
     setChallengeType,
     challengeTypeString,
-    data,
   }
 }
