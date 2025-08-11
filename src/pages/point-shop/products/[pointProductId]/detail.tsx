@@ -41,7 +41,7 @@ const ProductDetail = () => {
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection padding="zero" className="m-0">
         <div className="relative w-full">
-          <div className="flex h-[300px] w-full justify-center bg-gray-100 p-[2px]">
+          <div className="flex h-75 w-full justify-center bg-gray-100 p-4">
             <img src={product?.thumbnailUrl} alt="Product" />
           </div>
           <div className="px-4 py-2 text-left font-bold">
