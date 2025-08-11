@@ -6,6 +6,7 @@ import useProduct from '@/hooks/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Loading from '@/components/common/loading'
 
 const ProductDetail = () => {
   const params = useParams<{ pointProductId: string }>()
@@ -30,7 +31,7 @@ const ProductDetail = () => {
   }
 
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <Loading />
   }
 
   return (

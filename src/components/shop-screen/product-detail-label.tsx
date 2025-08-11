@@ -82,7 +82,7 @@ const ProductDetailLabel = ({
           )}
         </div>
       ) : (
-        <p className={cn('font-bold', valueClassName)}>{point}p</p>
+        <p className={cn('font-bold', valueClassName)}>{point}</p>
       )}
     </div>
   )

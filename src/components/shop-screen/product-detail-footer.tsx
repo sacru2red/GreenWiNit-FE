@@ -11,6 +11,8 @@ const ProductDetailFooter = ({
   deductPoint,
   onExchange,
 }: ProductDetailFooterProps) => {
+  const isDisabled = availablePoint < deductPoint
+
   return (
     <div className="w-full">
       <p className="px-[10px] pt-[20px] text-sm">
@@ -21,11 +23,9 @@ const ProductDetailFooter = ({
         onClick={onExchange}
         className={cn(
           'm-[20px] min-w-[360px] rounded-[10px] bg-green-500 px-[10px] py-[14px] font-bold text-white',
-          {
-            disabled: 'cursor-default bg-gray-400 text-gray-600',
-          },
+          isDisabled && 'bg-gray-400 text-gray-600',
         )}
-        disabled={availablePoint < deductPoint}
+        disabled={isDisabled}
       >
         포인트 교환하기
       </button>

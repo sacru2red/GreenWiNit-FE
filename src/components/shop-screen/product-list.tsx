@@ -1,6 +1,7 @@
 import useProducts from '@/hooks/use-products'
 import { CircleAlert } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../common/loading'
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -12,11 +13,7 @@ const ProductList = () => {
   const { data: products, isLoading } = useProducts()
 
   if (isLoading) {
-    return (
-      <div className="flex w-full items-center justify-center">
-        <p className="text-center">로딩 중...</p>
-      </div>
-    )
+    return <Loading />
   }
 
   if (!products || products.length === 0) {
