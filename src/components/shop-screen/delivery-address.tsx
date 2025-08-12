@@ -50,10 +50,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
               <span className="font-bold">이름: </span>
               <span>{userAddressData?.name}</span>
             </div>
-            <Button
-              className="max-h-10 rounded-md px-6 py-2 text-white"
-              onClick={handleAddressClick}
-            >
+            <Button className="max-h-10 min-w-18" onClick={handleAddressClick}>
               수정
             </Button>
           </div>
@@ -75,7 +72,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
           <div className="pb-4 text-base md:text-lg">배송지를 먼저 등록해주세요</div>
           <Button
             onClick={handleAddressClick}
-            className="mx-24 flex flex-row items-center justify-center rounded-md bg-emerald-500 p-2 text-white"
+            className="flex w-fit flex-row items-center justify-center self-center rounded-md px-6 py-2"
           >
             <Plus size={20} />
             <span>등록하기</span>
