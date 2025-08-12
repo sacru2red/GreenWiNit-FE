@@ -5,7 +5,16 @@ import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresse
 
 export const addressApi = {
   getAddress: async () => {
-    return await fetch(`${API_URL}/deliveries/addresses`)
+    const auth = JSON.parse(localStorage.getItem('auth') || '{}')
+    const token = auth.state.accessToken
+
+    return await fetch(`${API_URL}/deliveries/addresses`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<ServerAddress>)
       .then((data) => serverToClientAddress(data))
@@ -34,22 +43,4 @@ export const addressApi = {
       .then((res) => res.json() as Promise<ServerAddress>)
       .then((data) => serverToClientAddress(data))
   },
-}
-
-export const clientToServerAddress = (
-  clientAddress: ClientAddress,
-  id: number,
-): ServerAddress | null => {
-  if (!clientAddress.address) {
-    return null
-  }
-
-  return {
-    deliveryAddressId: id,
-    recipientName: clientAddress.name,
-    phoneNumber: clientAddress.phone,
-    roadAddress: clientAddress.address.roadAddress,
-    detailAddress: clientAddress.address.detailAddress,
-    zipCode: clientAddress.address.zonecode,
-  }
 }

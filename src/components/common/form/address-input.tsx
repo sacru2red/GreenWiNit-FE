@@ -5,11 +5,10 @@ import { Dialog, DialogContent } from '../../ui/dialog'
 
 export type AddressState = null | {
   roadAddress: string
-  roadnameCode: string
   zonecode: string
   detailAddress: string
-  sigungu: string
 }
+
 type AddressInputProps = ComponentProps<typeof DaumPostcodeEmbed> & {
   autoClose?: never
   onComplete?: never
