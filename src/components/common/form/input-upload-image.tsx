@@ -1,7 +1,7 @@
 import { Plus as PlusIcon } from 'lucide-react'
-import { ForwardedRef, Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { omit } from 'es-toolkit'
-import { cn } from '@/lib/utils'
+import { cn, mergeRefs } from '@/lib/utils'
 import InputImage from './input-image'
 
 type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value' | 'onChange'> & {
@@ -54,18 +54,6 @@ const InputUploadImage = (props: InputUploadImageProps) => {
       />
     </div>
   )
-}
-
-function mergeRefs<T>(...refs: (ForwardedRef<T> | undefined)[]) {
-  return (node: T) => {
-    refs.forEach((ref) => {
-      if (typeof ref === 'function') {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
-    })
-  }
 }
 
 export default InputUploadImage
