@@ -3,6 +3,8 @@ import CategoryLabel from '@/components/post-screen/category-label'
 import { usePost } from '@/hooks/post/use-post'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
+import Loading from '@/components/common/loading'
+import { CircleAlert } from 'lucide-react'
 
 const PostDetail = () => {
   const { postId } = useParams<{ postId: string }>()
@@ -10,17 +12,14 @@ const PostDetail = () => {
   const post = data?.result
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center">
-        <p>로딩 중...</p>
-      </div>
-    )
+    return <Loading />
   }
 
   if (!post) {
     return (
-      <div className="flex justify-center">
-        <p>데이터를 찾을 수 없습니다.</p>
+      <div className="flex items-center justify-center">
+        <CircleAlert size={36} color="gray" />
+        <p>등록된 상품이 없습니다.</p>
       </div>
     )
   }

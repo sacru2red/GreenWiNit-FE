@@ -1,13 +1,19 @@
 import { API_URL } from '@/constant/network'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { serverToClientAddress } from '@/lib/utils'
-import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresses'
+import { ClientAddress, UpdateAddressDto } from '@/types/addresses'
+import { BaseApiResponse } from '@/types/api'
 
 export const addressApi = {
   getAddress: async () => {
-    return await fetch(`${API_URL}/deliveries/addresses`)
+    return await fetch(`${API_URL}/deliveries/addresses`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() as Promise<ServerAddress>)
+      .then((res) => res.json() as Promise<AddressResponse>)
       .then((data) => serverToClientAddress(data))
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
@@ -19,7 +25,7 @@ export const addressApi = {
       body: JSON.stringify(body),
     })
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() as Promise<ServerAddress>)
+      .then((res) => res.json() as Promise<AddressResponse>)
       .then((data) => serverToClientAddress(data))
   },
   saveAddress: async (data: UpdateAddressDto) => {
@@ -31,25 +37,17 @@ export const addressApi = {
       body: JSON.stringify(data),
     })
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() as Promise<ServerAddress>)
+      .then((res) => res.json() as Promise<AddressResponse>)
       .then((data) => serverToClientAddress(data))
   },
 }
 
-export const clientToServerAddress = (
-  clientAddress: ClientAddress,
-  id: number,
-): ServerAddress | null => {
-  if (!clientAddress.address) {
-    return null
-  }
-
-  return {
-    deliveryAddressId: id,
-    recipientName: clientAddress.name,
-    phoneNumber: clientAddress.phone,
-    roadAddress: clientAddress.address.roadAddress,
-    detailAddress: clientAddress.address.detailAddress,
-    zipCode: clientAddress.address.zonecode,
-  }
+export type ServerAddress = {
+  deliveryAddressId: number
+  recipientName: string
+  phoneNumber: string
+  roadAddress: string
+  detailAddress: string
+  zipCode: string
 }
+export type AddressResponse = BaseApiResponse<ServerAddress>

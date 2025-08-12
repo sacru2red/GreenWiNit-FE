@@ -6,6 +6,7 @@ import useProduct from '@/hooks/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Loading from '@/components/common/loading'
 
 const ProductDetail = () => {
   const params = useParams<{ pointProductId: string }>()
@@ -30,7 +31,7 @@ const ProductDetail = () => {
   }
 
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <Loading />
   }
 
   return (
@@ -39,8 +40,8 @@ const ProductDetail = () => {
         <PageLayOut.HeaderSection.BackIcon />
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection padding="zero" className="m-0">
-        <div className="w-full">
-          <div className="flex h-80 w-full justify-center bg-gray-100 p-1">
+        <div className="relative w-full">
+          <div className="flex h-75 w-full justify-center bg-gray-100 p-4">
             <img src={product?.thumbnailUrl} alt="Product" />
           </div>
           <div className="px-4 py-2 text-left font-bold">

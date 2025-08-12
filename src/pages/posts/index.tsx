@@ -9,6 +9,7 @@ import PageTitle from '@/components/common/page-title'
 import { CircleAlert } from 'lucide-react'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
+import Loading from '@/components/common/loading'
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
@@ -41,7 +42,7 @@ function Posts() {
       </PageLayOut.HeaderSection>
       <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
       {isLoading ? (
-        <div className="flex items-center justify-center">포스트를 찾는 중....</div>
+        <Loading />
       ) : (
         <div className="flex flex-col gap-4 overflow-y-auto p-4">
           {filteredPosts ? (

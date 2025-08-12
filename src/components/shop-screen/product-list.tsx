@@ -1,6 +1,7 @@
 import useProducts from '@/hooks/use-products'
 import { CircleAlert } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../common/loading'
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -12,11 +13,7 @@ const ProductList = () => {
   const { data: products, isLoading } = useProducts()
 
   if (isLoading) {
-    return (
-      <div className="flex w-full items-center justify-center">
-        <p className="text-center">로딩 중...</p>
-      </div>
-    )
+    return <Loading />
   }
 
   if (!products || products.length === 0) {
@@ -29,26 +26,26 @@ const ProductList = () => {
   }
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 self-center">
       {products?.map((product) => {
         return (
           <div
             key={product?.id}
-            className="cursor-pointer rounded-[25px] p-4 text-left"
+            className="cursor-pointer items-center justify-center rounded-md p-2 text-start"
             onClick={() => handleProductClick(product?.id)}
           >
-            <div className="mb-2 min-h-[140px] min-w-[140px] items-center justify-center rounded-[10px] bg-white p-5">
+            <div className="mb-2 h-36 w-36 items-center justify-center rounded-md bg-white">
               <img
-                className="items-center justify-center"
+                className="h-full w-full items-center justify-center rounded-lg"
                 src={product?.thumbnailUrl}
                 alt={product?.name}
-                width="160"
-                height="160"
               />
             </div>
-            <p className="text-sm text-black">{product?.name}</p>
-            <p className="text-xs text-gray-500">{product?.sellingStatus}</p>
-            <p className="text-lg text-green-600">{product?.price}p</p>
+            <p className="text-md font-bold whitespace-nowrap text-black md:text-base">
+              {product?.name}
+            </p>
+            <p className="md:text-md text-xs text-gray-500">{product?.sellingStatus}</p>
+            <p className="text-lg font-bold text-green-600 md:text-xl">{product?.price}p</p>
           </div>
         )
       })}

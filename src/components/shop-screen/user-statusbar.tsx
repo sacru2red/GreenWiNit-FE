@@ -11,12 +11,12 @@ const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
           <p className="mb-1 text-xs text-gray-500">나의 포인트</p>
           <p className="text-2xl font-semibold text-black">{point}</p>
         </div>
-        <button className="rounded-[25px] bg-green-100 px-4 py-2 text-sm text-green-700">
+        <button className="text-md rounded-lg bg-green-100 px-4 py-2 text-green-700 md:text-base">
           포인트 내역
         </button>
       </div>
       <div className="self-start px-4 py-2 text-start">
-        <p className="text-sm text-black">사용 가능 포인트: {availablePoint}p</p>
+        <p className="md:text-md text-xs text-black">사용 가능 포인트: {availablePoint}p</p>
       </div>
     </div>
   )

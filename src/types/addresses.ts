@@ -6,15 +6,6 @@ export type AddressForm = {
   address: AddressState
 }
 
-export type ServerAddress = {
-  deliveryAddressId: number
-  recipientName: string
-  phoneNumber: string
-  roadAddress: string
-  detailAddress: string
-  zipCode: string
-}
-
 export type UpdateAddressDto = {
   recipientName: string
   phoneNumber: string
@@ -23,11 +14,17 @@ export type UpdateAddressDto = {
   zipCode: string
 }
 
+type Address = {
+  roadAddress: string
+  detailAddress: string
+  zoneCode: string
+}
+
 export type ClientAddress = {
   id: number
   name: string
   phone: string
-  address: AddressState
+  address: Address
 }
 
 export type ClientAddressForm = Omit<ClientAddress, 'id'>
