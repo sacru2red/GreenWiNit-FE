@@ -8,6 +8,11 @@
   justify-content: center;
   align-self: center;
   justify-self: center;
+
+  @media (max-width: 375px) {
+    justify-self: flex-start;
+    align-self: flex-start;
+  }
 }
 
 .logo {
@@ -91,6 +96,9 @@
   --color-error: var(--error);
 }
 @theme {
+  /* min-screen */
+  --breakpoint-ms: 375px;
+
   --color-mountain_meadow: #0fba7e;
   --color-mountain_meadow-0: #f5f9f7;
   --color-mountain_meadow-100: #c0f9e7;

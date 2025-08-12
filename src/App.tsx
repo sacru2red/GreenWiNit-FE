@@ -50,7 +50,7 @@ function App() {
     <ErrorBoundary fallback={<InternalServerError />}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <div className="bg-mountain_meadow-0 outline-mountain_meadow relative flex aspect-[375/812] h-full justify-self-center outline-1">
+          <div className="bg-mountain_meadow-0 outline-mountain_meadow relative flex aspect-[375/812] h-full justify-self-center outline-1 max-[375px]:aspect-auto max-[375px]:w-full">
             {showSplashScreen ? (
               <div
                 className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
