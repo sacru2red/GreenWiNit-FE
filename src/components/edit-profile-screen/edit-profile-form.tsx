@@ -55,6 +55,7 @@ function EditProfileForm() {
         queryKey: usersQueryKeys['users/me']['member'].queryKey,
         refetchType: 'active',
       })
+      toast.success('회원정보가 수정되었습니다.')
     }
   }
 
