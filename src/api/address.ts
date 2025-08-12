@@ -5,13 +5,9 @@ import { ClientAddress, ServerAddress, UpdateAddressDto } from '@/types/addresse
 
 export const addressApi = {
   getAddress: async () => {
-    const auth = JSON.parse(localStorage.getItem('auth') || '{}')
-    const token = auth.state.accessToken
-
     return await fetch(`${API_URL}/deliveries/addresses`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })

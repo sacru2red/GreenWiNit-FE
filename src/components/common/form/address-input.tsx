@@ -5,9 +5,9 @@ import { Dialog, DialogContent } from '../../ui/dialog'
 
 export type AddressState = null | {
   roadAddress: string
+  roadnameCode: string
   zonecode: string
   detailAddress: string
-  roadnameCode: string
   sigungu: string
 }
 
