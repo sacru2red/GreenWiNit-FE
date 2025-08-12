@@ -1,4 +1,5 @@
-import { ClientAddress, ServerAddress } from '@/types/addresses'
+import { AddressResponse } from '@/api/address'
+import { ClientAddress } from '@/types/addresses'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -27,7 +28,7 @@ export function initHistoryAndLocation(to: string = '/') {
   window.history.pushState(null, '', to)
 }
 
-export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
+export const serverToClientAddress = (serverAddress: AddressResponse): ClientAddress => {
   return {
     id: serverAddress.result.deliveryAddressId,
     name: serverAddress.result.recipientName,

@@ -26,7 +26,8 @@ const ProductDetailDescription = ({
 
   const deductPoint = isLoading ? 0 : selectedQuantity * (price ?? 0)
   const isLeakPoint = availablePoint - deductPoint < 0
-  const finalPoint = isLoading || isLeakPoint ? '구매 불가' : `${availablePoint - deductPoint}p`
+  const textIfDoneExchangingPoint =
+    isLoading || isLeakPoint ? '구매 불가' : `${availablePoint - deductPoint}p`
 
   if (isLoading) return <Loading />
 
@@ -54,7 +55,7 @@ const ProductDetailDescription = ({
         point={`${deductPoint}p`}
         valueClassName="text-red-500"
       />
-      <ProductDetailLabel label="총 보유 포인트" point={finalPoint} />
+      <ProductDetailLabel label="총 보유 포인트" point={textIfDoneExchangingPoint} />
       <hr />
     </div>
   )

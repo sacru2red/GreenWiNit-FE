@@ -26,7 +26,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="ml-4 grid grid-cols-2">
+    <div className="grid grid-cols-2 self-center">
       {products?.map((product) => {
         return (
           <div
