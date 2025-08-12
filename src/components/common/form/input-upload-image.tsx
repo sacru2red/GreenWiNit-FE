@@ -37,7 +37,9 @@ const InputUploadImage = (props: InputUploadImageProps) => {
           <span className="text-bold text-[#666666]">이미지를 업로드 해주세요.</span>
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
-      ) : null}
+      ) : (
+        <img src={preview} alt="preview" className="min-h-[15vh]" />
+      )}
       <InputImage
         {...omit(props, ['value'])}
         localFileName={
