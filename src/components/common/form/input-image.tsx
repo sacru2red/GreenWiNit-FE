@@ -12,7 +12,6 @@ interface InputImageProps extends Omit<ComponentProps<'input'>, 'src' | 'value' 
 }
 
 function InputImage({
-  ref,
   onChange: onChange,
   onChangePreview,
   purpose,
@@ -30,14 +29,12 @@ function InputImage({
           return
         }
         onChange(res.result)
-        if (e.target) e.target.value = ''
       })
     }
   }
 
   return (
     <input
-      ref={ref}
       type="file"
       accept="image/*"
       onChange={handleFileChange}
