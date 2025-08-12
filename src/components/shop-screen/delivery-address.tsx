@@ -72,7 +72,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
           <div className="pb-4 text-base md:text-lg">배송지를 먼저 등록해주세요</div>
           <Button
             onClick={handleAddressClick}
-            className="flex w-fit flex-row items-center justify-center self-center rounded-md px-6 py-2"
+            className="flex w-fit flex-row items-center justify-center self-center px-6 py-2"
           >
             <Plus size={20} />
             <span>등록하기</span>
