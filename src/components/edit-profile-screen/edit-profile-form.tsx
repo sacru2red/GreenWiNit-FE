@@ -4,9 +4,9 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
-import useUserName from '@/hooks/use-user-name'
+import useUserMe from '@/hooks/use-user-me'
 import { useQueryClient } from '@tanstack/react-query'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -19,16 +19,25 @@ function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-  // @TODO 현재 nickname을 조회하거나 같이 주는 api가 없는 것 같음(백엔드에 문의 예정). 현재는 name으로 쓰고 있으나, 만약 추가된다면 nickname으로 바뀔 예정
-  const userNickname = useUserName()
+  const { data: me } = useUserMe({ refetchOnWindowFocus: false, refetchOnMount: false })
+  const userNickname = me?.result?.nickname ?? null
   const qc = useQueryClient()
 
-  const { control, handleSubmit } = useForm<FormState>({
+  const { control, handleSubmit, reset } = useForm<FormState>({
     defaultValues: {
       nickname: null,
       profileImage: null,
     },
   })
+
+  useEffect(() => {
+    if (me) {
+      reset({
+        nickname: null,
+        profileImage: me.result?.profileImageUrl ?? null,
+      })
+    }
+  }, [me, reset])
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     if (!data.nickname) {
@@ -55,6 +64,7 @@ function EditProfileForm() {
         queryKey: usersQueryKeys['users/me']['member'].queryKey,
         refetchType: 'active',
       })
+      toast.success('회원정보가 수정되었습니다.')
     }
   }
 
