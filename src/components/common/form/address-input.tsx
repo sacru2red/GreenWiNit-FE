@@ -7,6 +7,8 @@ export type AddressState = null | {
   roadAddress: string
   zonecode: string
   detailAddress: string
+  roadnameCode: string
+  sigungu: string
 }
 
 type AddressInputProps = ComponentProps<typeof DaumPostcodeEmbed> & {
