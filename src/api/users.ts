@@ -1,6 +1,7 @@
 import { API_URL } from '@/constant/network'
 import { stringify } from '@/lib/query-string'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
+import { BaseApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
@@ -94,12 +95,6 @@ export const usersApi = {
   },
 }
 
-interface BaseApiResponse<T> {
-  success: boolean
-  message: string
-  result?: T
-}
-
 type GetMyInfoResponse = BaseApiResponse<{
   userChallengeCount: number
   userTotalPoints: number
@@ -120,7 +115,10 @@ type GetMyPointsHistoryResponse = BaseApiResponse<{
 
 type PostWithdrawResponse = BaseApiResponse<undefined>
 
-type PutUserProfileResponse = { nickname: string; profileImageUrl: string } | { message: string }
+type PutUserProfileResponse = BaseApiResponse<{
+  nickname: string
+  profileImageUrl: string
+}>
 
 type CheckNicknameDuplicateReponse =
   | {

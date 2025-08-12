@@ -1,11 +1,12 @@
 import DeliveryAddress from '@/components/shop-screen/delivery-address'
 import ProductDetailDescription from '@/components/shop-screen/product-detail-description'
 import ProductDetailFooter from '@/components/shop-screen/product-detail-footer'
-import ProductDetailHeader from '@/components/shop-screen/product-detai-header'
+import PageLayOut from '@/components/common/page-layout'
 import useProduct from '@/hooks/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Loading from '@/components/common/loading'
 
 const ProductDetail = () => {
   const params = useParams<{ pointProductId: string }>()
@@ -30,42 +31,42 @@ const ProductDetail = () => {
   }
 
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <Loading />
   }
 
   return (
-    <>
-      <div className="scrollbar-hide flex flex-col overflow-y-scroll">
-        <div>
-          <ProductDetailHeader
-            imgUrl={product?.thumbnailUrl}
-            name={product?.name}
-            price={product?.price}
-          />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection padding="zero" className="m-0">
+        <div className="relative w-full">
+          <div className="flex h-75 w-full justify-center bg-gray-100 p-4">
+            <img src={product?.thumbnailUrl} alt="Product" />
+          </div>
+          <div className="px-4 py-2 text-left font-bold">
+            <p className="text-xl text-black">{product?.name}</p>
+            <p className="text-2xl text-green-500">{product?.price} 포인트</p>
+          </div>
+          <hr />
         </div>
-        <div>
-          <ProductDetailDescription
-            description={product?.description}
-            price={product?.price}
-            remainingQuantity={product?.stockQuantity}
-            selectedQuantity={selectedQuantity}
-            onQuantityChange={handleQuantityChange}
-            availablePoint={availablePoint}
-            isLoading={isLoading}
-          />
-        </div>
-        <div>
-          <DeliveryAddress pointProductId={pointProductId} />
-        </div>
-        <div>
-          <ProductDetailFooter
-            availablePoint={availablePoint}
-            deductPoint={deductPoint}
-            onExchange={handleExchangePoint}
-          />
-        </div>
-      </div>
-    </>
+        <ProductDetailDescription
+          description={product?.description}
+          price={product?.price}
+          remainingQuantity={product?.stockQuantity}
+          selectedQuantity={selectedQuantity}
+          onQuantityChange={handleQuantityChange}
+          availablePoint={availablePoint}
+          isLoading={isLoading}
+        />
+        <DeliveryAddress pointProductId={pointProductId} />
+        <ProductDetailFooter
+          availablePoint={availablePoint}
+          deductPoint={deductPoint}
+          onExchange={handleExchangePoint}
+        />
+      </PageLayOut.BodySection>
+    </PageLayOut.Container>
   )
 }
 

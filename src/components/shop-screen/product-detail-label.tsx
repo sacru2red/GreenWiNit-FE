@@ -43,7 +43,7 @@ const ProductDetailLabel = ({
   const quantityOptions = Array.from({ length: remainingQuantity }, (_, i) => i + 1)
 
   return (
-    <div className="text-md relative flex flex-row justify-between p-[16px]">
+    <div className="text-md relative flex flex-row justify-between p-4">
       <p className="text-black">{label}</p>
       {isButton ? (
         <div className="relative">
@@ -82,7 +82,7 @@ const ProductDetailLabel = ({
           )}
         </div>
       ) : (
-        <p className={cn('font-bold', valueClassName)}>{point}p</p>
+        <p className={cn('font-bold', valueClassName)}>{point}</p>
       )}
     </div>
   )

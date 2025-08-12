@@ -1,16 +1,18 @@
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { useCallback, useState } from 'react'
-import { Input } from '../../../../components/ui/input'
+import { useState } from 'react'
+import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import ErrorMessage from '@/components/common/form/error-message'
 
 interface FormData {
   name: string
@@ -24,48 +26,65 @@ const EnrollAddress = () => {
   const isEditMode = mode === 'edit'
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    phone: '',
-    address: null,
+  const { register, handleSubmit, control, formState, setError } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      phone: '',
+      address: null,
+    },
   })
+  const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }, [])
-
-  const handleAddressChange = useCallback((address: AddressState) => {
-    setFormData((prev) => ({
-      ...prev,
-      address,
-    }))
-  }, [])
-
-  const hasAddress = Boolean(formData.address && formData.name && formData.phone)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!hasAddress || formData.address === null) {
+  const submitHandler: SubmitHandler<FormData> = async (formData) => {
+    if (formData.address === null) {
       toast.error('배송지 정보를 입력해주세요.')
       return
     }
+    const isValidPhoneNumber =
+      /^0\d{1,2}-\d{3,4}-\d{4}$/.test(formData.phone) || /^0\d{8,10}$/.test(formData.phone)
+    console.log('isValidPhoneNumber', isValidPhoneNumber)
+    if (!isValidPhoneNumber) {
+      setError('phone', { message: '전화번호 형식에 맞지 않습니다.' })
+      return
+    }
+    /**
+     * 02-111-1234 (9)
+     * 051-123-1234 (10)
+     * 02-1111-1234 (10)
+     * 051-1234-1234 (11)
+     * 010-1234-1234 (11)
+     */
+    const formattedPhoneNumber = formData.phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
+      console.log('match', match)
+      if (match.startsWith('02')) {
+        return `${match.slice(0, 2)}-${match.length === 9 ? `${match.slice(2, 5)}-${match.slice(5)}` : `${match.slice(2, 6)}-${match.slice(6)}`}`
+      }
+      if (match.length === 10) {
+        return `${match.slice(0, 3)}-${match.slice(3, 6)}-${match.slice(6)}`
+      }
+      if (match.length === 11) {
+        return `${match.slice(0, 3)}-${match.slice(3, 7)}-${match.slice(7)}`
+      }
+      return match
+    })
 
     const serverAddressForm: UpdateAddressDto = {
       recipientName: formData.name,
-      phoneNumber: formData.phone,
+      phoneNumber: formattedPhoneNumber,
       roadAddress: formData.address.roadAddress,
       detailAddress: formData.address.detailAddress,
       zipCode: formData.address.zonecode,
     }
 
-    addressApi.saveAddress(serverAddressForm)
-    setIsModalOpen((prev) => !prev)
+    await addressApi
+      .saveAddress(serverAddressForm)
+      .then(() => {
+        setIsModalOpen(true)
+      })
+      .catch((error) => {
+        toast.error(error.message)
+      })
   }
 
   const handleConfirm = () => {
@@ -73,71 +92,54 @@ const EnrollAddress = () => {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
-      </PageHeaderSection>
-      {isModalOpen === true ? (
-        <ConfirmDialog
-          isOpen={isModalOpen}
-          description="배송지 저장이 완료되었습니다."
-          paragraph="이제 상품을 교환할 수 있습니다!"
-          setIsOpen={setIsModalOpen}
-          onConfirm={handleConfirm}
-        />
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="flex-1 p-4 text-start">
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col">
+          <div className="flex flex-col text-start">
             <InputLabel required={true}>이름</InputLabel>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-            <div className="pt-2">
-              {!formData.name.trim() && (
-                <span className="bg-red-500 pt-2 text-start text-sm">이름을 입력해주세요.</span>
-              )}
-            </div>
+            <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+            <ErrorMessage name="name" errors={errors} />
             <InputLabel required={true}>전화번호</InputLabel>
             <Input
               type="text"
-              id="phone"
-              name="phone"
               placeholder="010-XXXX-XXXX"
-              value={formData.phone}
-              onChange={handleInputChange}
+              inputMode="tel"
+              {...register('phone', {
+                required: '전화번호를 입력해주세요.',
+              })}
             />
-            <div className="pt-2">
-              {!formData.phone.trim() && (
-                <span className="text-start text-sm text-red-500">전화번호를 입력해주세요.</span>
-              )}
-            </div>
+            <ErrorMessage name="phone" errors={errors} />
             <InputLabel required={true}>주소</InputLabel>
-            <AddressInput value={formData.address} onChange={handleAddressChange} />
-            <div className="pt-2">
-              {!formData.address && (
-                <span className="bg-red-500 pt-2 text-start text-sm">주소를 입력해주세요.</span>
-              )}
-            </div>
+            <Controller
+              control={control}
+              name="address"
+              rules={{ required: '주소를 입력해주세요.' }}
+              render={({ field }) => <AddressInput {...field} />}
+            />
+            <ErrorMessage name="address" errors={errors} />
           </div>
-          <div className="mt-70 mb-5 flex flex-shrink-0 justify-center p-4">
-            <button
-              type="submit"
-              className="rounded-[8px] bg-green-600 px-36 py-4 text-white"
-              onClick={handleSubmit}
-              disabled={!hasAddress}
-            >
-              저장하기
-            </button>
-          </div>
+          <Button type="submit" className="mt-auto">
+            저장하기
+          </Button>
         </form>
-      )}
-      <BottomNavigation />
-    </PageContainer>
+        {isModalOpen === true ? (
+          <ConfirmDialog
+            isOpen={isModalOpen}
+            description="배송지 저장이 완료되었습니다."
+            paragraph="이제 상품을 교환할 수 있습니다!"
+            setIsOpen={setIsModalOpen}
+            onConfirm={handleConfirm}
+          />
+        ) : null}
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

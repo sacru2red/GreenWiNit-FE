@@ -10,6 +10,7 @@ export type AddressState = null | {
   detailAddress: string
   sigungu: string
 }
+
 type AddressInputProps = ComponentProps<typeof DaumPostcodeEmbed> & {
   autoClose?: never
   onComplete?: never

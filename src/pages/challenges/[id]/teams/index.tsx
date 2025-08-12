@@ -1,7 +1,6 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import useChallenge from '@/hooks/challenge/use-challenge'
@@ -30,12 +29,12 @@ const ChallengesTeam = () => {
   }
 
   return (
-    <PageContainer>
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container>
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>나의 팀</PageTitle>
-      </PageHeaderSection>
-      <div className="flex flex-1 flex-col gap-4 p-4">
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
         <ChallengeTitle challengeId={challengeId} />
         {joinedTeams?.length ? (
           <div className="flex flex-col gap-4">
@@ -60,9 +59,11 @@ const ChallengesTeam = () => {
             <GroupsIcon />팀 등록하기
           </Button>
         </div>
-      </div>
-      <BottomNavigation />
-    </PageContainer>
+      </PageLayOut.BodySection>
+      <PageLayOut.FooterSection>
+        <BottomNavigation />
+      </PageLayOut.FooterSection>
+    </PageLayOut.Container>
   )
 }
 

@@ -1,6 +1,8 @@
 import useAddress from '@/hooks/use-adress'
 import { Plus } from 'lucide-react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Fragment } from 'react'
+import { Button } from '../ui/button'
 
 interface DeliveryAddressProps {
   pointProductId?: string | undefined
@@ -16,7 +18,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
   const { data: userAddressData, isLoading } = useAddress()
 
   const hasAddress = Boolean(
-    userAddressData && userAddressData.name && userAddressData.phone && userAddressData.address,
+    userAddressData && userAddressData !== null && userAddressData !== undefined,
   )
 
   const handleAddressClick = () => {
@@ -39,21 +41,18 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
   }
 
   return (
-    <div>
+    <Fragment>
       <div className="text-xl font-bold">배송지 정보</div>
       {hasAddress ? (
-        <div className="m-[20px] flex flex-col border p-[20px] text-start">
+        <div className="text-md m-4 flex flex-col rounded-lg border p-4 text-start md:text-base">
           <div className="flex flex-row justify-between">
             <div>
               <span className="font-bold">이름: </span>
               <span>{userAddressData?.name}</span>
             </div>
-            <button
-              className="max-h-[40px] rounded-[8px] bg-green-600 px-[30px] py-[10px] text-white"
-              onClick={handleAddressClick}
-            >
+            <Button className="max-h-10 min-w-18" onClick={handleAddressClick}>
               수정
-            </button>
+            </Button>
           </div>
           <div>
             <span className="font-bold">전화번호: </span>
@@ -69,18 +68,18 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
           </div>
         </div>
       ) : (
-        <div className="m-2 flex flex-col border p-4">
-          <div className="pb-2">배송지를 먼저 등록해주세요</div>
-          <button
+        <div className="m-4 flex flex-col rounded-lg border p-8">
+          <div className="pb-4 text-base md:text-lg">배송지를 먼저 등록해주세요</div>
+          <Button
             onClick={handleAddressClick}
-            className="mx-[120px] flex flex-row items-center justify-center rounded-[10px] bg-green-500 py-2 text-white transition hover:bg-green-600"
+            className="flex w-fit flex-row items-center justify-center self-center px-6 py-2"
           >
             <Plus size={20} />
             <span>등록하기</span>
-          </button>
+          </Button>
         </div>
       )}
-    </div>
+    </Fragment>
   )
 }
 

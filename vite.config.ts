@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
+      allowedHosts: ['db6803daed2d.ngrok-free.app'],
       proxy: {
         [env.VITE_API_URL]: {
           target: env.API_PROXY_TO,
@@ -42,10 +43,26 @@ export default defineConfig(({ mode }) => {
               if (id.includes('date-fns')) return 'vendor-date-fns'
               if (id.includes('@tanstack/react-query')) return 'vendor-tanstack-react-query'
               if (id.includes('sonner')) return 'vendor-sonner'
-              if (id.includes('react-hook-form')) return 'vendor-react-hook-form'
+              if (id.includes('react-hook-form') || id.includes('@hookform')) {
+                return 'vendor-react-hook-form'
+              }
               if (id.includes('embla-carousel')) return 'vendor-embla-carousel'
               if (id.includes('dayjs')) return 'vendor-dayjs'
-              return 'vendor'
+              if (id.includes('next-themes')) return 'vendor-next-themes'
+              if (id.includes('@radix-ui')) {
+                return 'vendor-radix-ui'
+              }
+              if (id.includes('@tanstack/react-query')) {
+                return 'vendor-tanstack'
+              }
+              if (
+                id.includes('react') ||
+                id.includes('react-dom') ||
+                id.includes('scheduler') ||
+                id.includes('use-callback-ref')
+              ) {
+                return 'vendor-react'
+              }
             }
           },
         },

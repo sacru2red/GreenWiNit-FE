@@ -1,5 +1,4 @@
-import PageContainer from '@/components/common/page-container'
-import PageHeaderSection from '@/components/common/page-header-section'
+import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
@@ -44,24 +43,26 @@ const ChallengeSubmitTeam = () => {
   }
 
   return (
-    <PageContainer bg="form">
-      <PageHeaderSection>
-        <PageHeaderSection.BackIcon />
+    <PageLayOut.Container bg="form">
+      <PageLayOut.HeaderSection>
+        <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>팀 챌린지 인증</PageTitle>
-      </PageHeaderSection>
-      <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4 p-4">
-        <ImageRow control={f.control} purpose="challenge" />
-        <ReviewRow control={f.control} />
-        <Button
-          variant={f.formState.isValid ? 'default' : 'disabled'}
-          className="mt-auto text-lg"
-          type="submit"
-        >
-          제출하기
-        </Button>
-      </form>
+      </PageLayOut.HeaderSection>
+      <PageLayOut.BodySection>
+        <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4">
+          <ImageRow control={f.control} purpose="challenge" />
+          <ReviewRow control={f.control} />
+          <Button
+            variant={f.formState.isValid ? 'default' : 'disabled'}
+            className="mt-auto text-lg"
+            type="submit"
+          >
+            제출하기
+          </Button>
+        </form>
+      </PageLayOut.BodySection>
       <DoneDialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog} />
-    </PageContainer>
+    </PageLayOut.Container>
   )
 }
 

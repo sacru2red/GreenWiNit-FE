@@ -1,3 +1,4 @@
+import Loading from '../common/loading'
 import ProductDetailLabel from './product-detail-label'
 
 interface ProductDetailDescriptionProps {
@@ -24,18 +25,20 @@ const ProductDetailDescription = ({
   const finalCount = Math.min(selectableCount, 5)
 
   const deductPoint = isLoading ? 0 : selectedQuantity * (price ?? 0)
-  const finalPoint = isLoading ? 0 : availablePoint - deductPoint
+  const isLeakPoint = availablePoint - deductPoint < 0
+  const textIfDoneExchangingPoint =
+    isLoading || isLeakPoint ? '구매 불가' : `${availablePoint - deductPoint}p`
 
-  if (isLoading) return <div>로딩 중...</div>
+  if (isLoading) return <Loading />
 
   return (
-    <div className="flex flex-col p-[16px] text-center">
+    <div className="flex flex-col p-4 text-center">
       <p className="text-xl">제품 설명</p>
-      <p className="p-[16px]">{description}</p>
+      <p className="p-4">{description}</p>
       <hr />
       <ProductDetailLabel
         label="사용 가능 포인트"
-        point={availablePoint}
+        point={`${availablePoint}p`}
         valueClassName="text-green-500"
       />
       <ProductDetailLabel
@@ -47,8 +50,12 @@ const ProductDetailDescription = ({
         onQuantityChange={onQuantityChange}
         selectedQuantity={selectedQuantity}
       />
-      <ProductDetailLabel label="차감 포인트" point={deductPoint} valueClassName="text-red-500" />
-      <ProductDetailLabel label="총 보유 포인트" point={finalPoint} />
+      <ProductDetailLabel
+        label="차감 포인트"
+        point={`${deductPoint}p`}
+        valueClassName="text-red-500"
+      />
+      <ProductDetailLabel label="총 보유 포인트" point={textIfDoneExchangingPoint} />
       <hr />
     </div>
   )
