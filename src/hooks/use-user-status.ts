@@ -1,5 +1,6 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
 import { useQuery, UseQueryOptions } from '@tanstack/react-query'
+import useIsLoggedIn from './use-is-logged-in'
 
 export const useUserStatus = (
   options?: Omit<
@@ -12,10 +13,13 @@ export const useUserStatus = (
     'queryKey' | 'queryFn'
   >,
 ) => {
+  const isLoggedIn = useIsLoggedIn()
+
   return useQuery({
     queryKey: usersQueryKeys['users/me']['status'].queryKey,
     queryFn: usersApi.getUserStatus,
     retry: false,
+    enabled: isLoggedIn,
     ...options,
   })
 }
