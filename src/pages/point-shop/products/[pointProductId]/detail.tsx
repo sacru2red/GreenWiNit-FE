@@ -46,7 +46,7 @@ const ProductDetail = () => {
           </div>
           <div className="px-4 py-2 text-left font-bold">
             <p className="text-xl text-black">{product?.name}</p>
-            <p className="text-2xl text-green-500">{product?.price} 포인트</p>
+            <p className="text-2xl text-[#0FBA7E]">{product?.price} 포인트</p>
           </div>
           <hr />
         </div>

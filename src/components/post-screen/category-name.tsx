@@ -8,10 +8,10 @@ const CategoryName = ({ category }: CategoryNameProps) => {
   return (
     <div
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-sm px-2 text-sm md:text-base',
-        category === '이벤트' && 'bg-green-100 text-green-700',
-        category === '콘텐츠' && 'bg-yellow-100 text-yellow-500',
-        category === '기타' && 'bg-purple-100 text-purple-700',
+        'flex shrink-0 items-center justify-center rounded-sm px-2 py-1 text-sm md:text-base',
+        category === '이벤트' && 'bg-[#E3F2FD] text-[#1976D2]',
+        category === '콘텐츠' && 'bg-[#FFF8E1] text-[#FFA000]',
+        category === '기타' && 'bg-[#F3E5F5] text-[#9C27B0]',
       )}
     >
       {category}

@@ -11,7 +11,7 @@ const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
           <p className="mb-1 text-xs text-gray-500">나의 포인트</p>
           <p className="text-2xl font-semibold text-black">{point}</p>
         </div>
-        <button className="text-md rounded-lg bg-green-100 px-4 py-2 text-green-700 md:text-base">
+        <button className="text-md rounded-lg bg-[#E8F5E9] px-4 py-2 text-green-700 md:text-base">
           포인트 내역
         </button>
       </div>
