@@ -37,7 +37,7 @@ const UserCard = () => {
   ]
 
   return (
-    <div className="shadow-drop-shadow border-lighter-gray-border flex flex-col items-center rounded-2xl border-1 bg-white">
+    <div className="border-lighter-gray-border flex flex-col items-center rounded-2xl border-1 bg-white">
       <div className="flex w-full items-center gap-8 px-5 py-4">
         <LogoIcon size="large" />
         {!userName ? (
