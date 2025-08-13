@@ -1,6 +1,6 @@
 import DeliveryAddress from '@/components/shop-screen/delivery-address'
-import ProductDetailDescription from '@/components/shop-screen/product-detail-description'
-import ProductDetailFooter from '@/components/shop-screen/product-detail-footer'
+import PointDescription from '@/components/shop-screen/point-description'
+import ExchangeProduct from '@/components/shop-screen/exchange-product'
 import PageLayOut from '@/components/common/page-layout'
 import useProduct from '@/hooks/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
@@ -50,7 +50,7 @@ const ProductDetail = () => {
           </div>
           <hr />
         </div>
-        <ProductDetailDescription
+        <PointDescription
           description={product?.description}
           price={product?.price}
           remainingQuantity={product?.stockQuantity}
@@ -60,7 +60,7 @@ const ProductDetail = () => {
           isLoading={isLoading}
         />
         <DeliveryAddress pointProductId={pointProductId} />
-        <ProductDetailFooter
+        <ExchangeProduct
           availablePoint={availablePoint}
           deductPoint={deductPoint}
           onExchange={handleExchangePoint}
