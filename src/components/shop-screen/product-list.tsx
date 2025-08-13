@@ -1,4 +1,4 @@
-import useProducts from '@/hooks/use-products'
+import useProducts from '@/hooks/product/use-products'
 import { CircleAlert } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../common/loading'
