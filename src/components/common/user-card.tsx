@@ -1,14 +1,17 @@
 import { useUserStatus } from '@/hooks/use-user-status'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
 import useUserName from '@/hooks/use-user-name'
 import { authStore } from '@/store/auth-store'
+import useUserEmail from '@/hooks/use-user-email'
 
 const UserCard = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const accessToken = authStore((state) => state.accessToken)
   const userName = useUserName()
+  const userEmail = useUserEmail()
 
   const handleLoginClick = () => {
     navigate('/login')
@@ -47,7 +50,11 @@ const UserCard = () => {
         ) : (
           <div className="flex flex-1 flex-col items-start gap-2">
             <strong className="text-xl font-bold">{userName}님</strong>
-            <p className="text-start">환경 챌린지에 참여하고 포인트를 모아보세요</p>
+            {pathname === '/' ? (
+              <p className="text-start">환경 챌린지에 참여하고 포인트를 모아보세요</p>
+            ) : (
+              <p className="text-light-gray text-start text-sm">{userEmail}</p>
+            )}
           </div>
         )}
       </div>
