@@ -1,5 +1,5 @@
 import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
@@ -13,6 +13,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ErrorMessage from '@/components/common/form/error-message'
+import useAddress from '@/hooks/use-adress'
 
 interface FormData {
   name: string
@@ -26,7 +27,7 @@ const EnrollAddress = () => {
   const isEditMode = mode === 'edit'
   const navigate = useNavigate()
 
-  const { register, handleSubmit, control, formState, setError } = useForm<FormData>({
+  const { register, handleSubmit, control, formState, setError, reset } = useForm<FormData>({
     defaultValues: {
       name: '',
       phone: '',
@@ -35,6 +36,17 @@ const EnrollAddress = () => {
   })
   const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { data: deliveryAddress, isLoading: addressLoading } = useAddress()
+
+  useEffect(() => {
+    if (isEditMode && deliveryAddress && !addressLoading) {
+      reset({
+        name: deliveryAddress.name || '',
+        phone: deliveryAddress.phone || '',
+        address: deliveryAddress.address || null,
+      })
+    }
+  }, [isEditMode, deliveryAddress, addressLoading, reset])
 
   const submitHandler: SubmitHandler<FormData> = async (formData) => {
     if (formData.address === null) {
@@ -95,7 +107,7 @@ const EnrollAddress = () => {
     <PageLayOut.Container>
       <PageLayOut.HeaderSection>
         <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>{isEditMode ? '주소지 수정' : '주소지 추가'}</PageTitle>
+        <PageTitle>{isEditMode ? '배송지 정보 수정' : '배송지 정보 입력'}</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection>
         <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col">
@@ -118,7 +130,10 @@ const EnrollAddress = () => {
               control={control}
               name="address"
               rules={{ required: '주소를 입력해주세요.' }}
-              render={({ field }) => <AddressInput {...field} />}
+              render={({ field }) => {
+                console.log('주소 확인', field)
+                return <AddressInput {...field} />
+              }}
             />
             <ErrorMessage name="address" errors={errors} />
           </div>
