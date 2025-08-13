@@ -33,8 +33,10 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
       </div>
       <div className="flex h-full flex-1 flex-col px-2">
         <div className="flex flex-row items-center justify-between py-2">
-          <p className="flex flex-1 truncate text-start text-sm font-bold md:text-base">{title}</p>
-          <CategoryLabel categoryName={categoryName} />
+          <p className="flex flex-1 truncate text-start text-sm font-bold md:text-base">
+            {title.length > 8 ? title.substring(0, 8) : title}
+          </p>
+          <CategoryLabel category={categoryName} />
         </div>
         <p className="w-full truncate text-start text-xs wrap-anywhere text-ellipsis whitespace-break-spaces text-gray-600 md:text-base">
           {content.length > 40 ? `${content.substring(0, 40)}...` : content}
