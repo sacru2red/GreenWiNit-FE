@@ -68,7 +68,10 @@ function MyPage() {
         <UserCard />
         {CARD_ITEMS.map((el, i) => {
           return (
-            <Card key={i} className="h-fit rounded-2xl bg-white p-0 shadow-lg">
+            <Card
+              key={i}
+              className="border-lighter-gray-border h-fit rounded-2xl border-1 bg-white p-0"
+            >
               <CardContent className="flex flex-col">
                 <button className="flex w-full flex-row items-center justify-center p-4 font-bold">
                   {el.category}

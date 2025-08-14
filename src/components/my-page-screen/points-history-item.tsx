@@ -6,7 +6,7 @@ function PointsHistoryItem({ info }: { info: PointHistory }) {
   const formattedCreatedDate = formatIsoToDateString(info.transactionAt)
 
   return (
-    <div className="flex h-20 w-full items-center rounded-[12px] bg-white p-4 shadow-lg">
+    <div className="border-lighter-gray-border flex h-20 w-full items-center rounded-[12px] border-1 bg-white p-4">
       <div className="flex-1 flex-col gap-1 text-start">
         <h3 className="text-xm text-secondary-foreground">{info.description}</h3>
         <span className="text-lighter-gray text-xs">{formattedCreatedDate}</span>

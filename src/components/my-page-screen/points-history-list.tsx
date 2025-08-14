@@ -3,7 +3,7 @@ import { PointHistory } from '@/types/points'
 
 function PointsHistoryList({ list }: { list: PointHistory[] }) {
   return (
-    <ul className="flex h-full flex-col gap-4">
+    <ul className="flex flex-col gap-4 px-4">
       {list.map((el) => (
         <PointsHistoryItem key={el.pointTransactionId} info={el} />
       ))}

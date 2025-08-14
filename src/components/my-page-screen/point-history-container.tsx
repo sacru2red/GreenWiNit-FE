@@ -12,12 +12,12 @@ function PointHistoryContainer() {
   const list = getPointHistoryReponse?.result?.content ?? []
 
   return (
-    <section className="flex flex-col gap-4 p-4">
-      <div className="flex justify-between">
+    <section className="flex-1 flex-col gap-4 bg-white">
+      <div className="flex justify-between p-4">
         <h2 className="text-lg font-bold">포인트 내역</h2>
         <PointsFilterButton setFilterType={setFilterType} />
       </div>
-      {list ? (
+      {list.length > 0 ? (
         <PointsHistoryList list={list} />
       ) : (
         <div className="mt-5">

@@ -13,7 +13,7 @@ function MyPoints() {
   if (!points) return <div>데이터 로딩중...</div>
 
   return (
-    <MyPageLayout title="포인트 현황">
+    <MyPageLayout title="포인트 현황" background="green" className="p-0">
       <LogoAndName name={userName ?? '이름없음'} />
       <PointOverview points={points} />
       <PointHistoryContainer />

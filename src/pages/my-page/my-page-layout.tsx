@@ -8,6 +8,7 @@ interface MyPageLayoutProps {
   background?: 'green' | 'white'
   showBottomNavigation?: boolean
   children: ReactNode
+  className?: string
 }
 
 function MyPageLayout({
@@ -15,6 +16,7 @@ function MyPageLayout({
   background = 'white',
   showBottomNavigation = false,
   children,
+  className,
 }: MyPageLayoutProps) {
   return (
     <PageLayOut.Container>
@@ -22,7 +24,10 @@ function MyPageLayout({
         <PageLayOut.HeaderSection.BackIcon />
         <PageTitle>{title}</PageTitle>
       </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection bg={background === 'green' ? 'theme' : 'form'} className="mt-0">
+      <PageLayOut.BodySection
+        bg={background === 'green' ? 'theme' : 'form'}
+        className={`m-0 h-[calc(100vh-48px)] ${className}`}
+      >
         {children}
       </PageLayOut.BodySection>
       {showBottomNavigation && (
