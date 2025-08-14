@@ -1,7 +1,7 @@
 import { Plus as PlusIcon } from 'lucide-react'
-import { ForwardedRef, Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { omit } from 'es-toolkit'
-import { cn } from '@/lib/utils'
+import { cn, mergeRefs } from '@/lib/utils'
 import InputImage from './input-image'
 
 type InputUploadImageProps = Omit<React.ComponentProps<'input'>, 'value' | 'onChange'> & {
@@ -37,7 +37,9 @@ const InputUploadImage = (props: InputUploadImageProps) => {
           <span className="text-bold text-[#666666]">이미지를 업로드 해주세요.</span>
           <span className="text-sm text-[#999999]">권장 크기: 1200 x 800px</span>
         </Fragment>
-      ) : null}
+      ) : (
+        <img src={preview} alt="preview" className="min-h-[15vh]" />
+      )}
       <InputImage
         {...omit(props, ['value'])}
         localFileName={
@@ -54,18 +56,6 @@ const InputUploadImage = (props: InputUploadImageProps) => {
       />
     </div>
   )
-}
-
-function mergeRefs<T>(...refs: (ForwardedRef<T> | undefined)[]) {
-  return (node: T) => {
-    refs.forEach((ref) => {
-      if (typeof ref === 'function') {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
-    })
-  }
 }
 
 export default InputUploadImage

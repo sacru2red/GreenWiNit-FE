@@ -4,8 +4,7 @@ import { toast } from 'sonner'
 import { omit } from 'es-toolkit'
 import { cn } from '@/lib/utils'
 
-interface InputProfileImageProps
-  extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
+interface InputImageProps extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
   localFileName: string | null
   onChange: (src: string | null) => void
   onChangePreview?: (src: string) => void
@@ -17,7 +16,7 @@ function InputImage({
   onChangePreview,
   purpose,
   ...restProps
-}: InputProfileImageProps) {
+}: InputImageProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -40,7 +39,6 @@ function InputImage({
       accept="image/*"
       onChange={handleFileChange}
       {...omit(restProps, ['localFileName'])}
-      value={restProps.localFileName ?? undefined}
       className={cn(restProps.className, 'cursor-pointer')}
     />
   )

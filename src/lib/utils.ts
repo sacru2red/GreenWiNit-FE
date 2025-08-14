@@ -1,6 +1,7 @@
 import { AddressResponse } from '@/api/address'
 import { ClientAddress } from '@/types/addresses'
 import { clsx, type ClassValue } from 'clsx'
+import { ForwardedRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -38,5 +39,17 @@ export const serverToClientAddress = (serverAddress: AddressResponse): ClientAdd
       zoneCode: serverAddress.result.zipCode,
       detailAddress: serverAddress.result.detailAddress,
     },
+  }
+}
+
+export function mergeRefs<T>(...refs: (ForwardedRef<T> | undefined)[]) {
+  return (node: T) => {
+    refs.forEach((ref) => {
+      if (typeof ref === 'function') {
+        ref(node)
+      } else if (ref) {
+        ref.current = node
+      }
+    })
   }
 }
