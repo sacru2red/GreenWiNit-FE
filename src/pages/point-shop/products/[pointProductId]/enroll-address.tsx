@@ -35,7 +35,7 @@ const EnrollAddress = () => {
     },
   })
   const errors = formState.errors
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { data: deliveryAddress, isLoading: addressLoading } = useAddress()
 
   useEffect(() => {
