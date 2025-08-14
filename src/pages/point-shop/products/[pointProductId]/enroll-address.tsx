@@ -8,12 +8,12 @@ import { addressApi } from '@/api/address'
 import { UpdateAddressDto } from '@/types/addresses'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
-import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import ErrorMessage from '@/components/common/form/error-message'
 import useAddress from '@/hooks/use-adress'
+import NoticeDialog from '@/components/common/modal/notice-dialog'
 
 interface FormData {
   name: string
@@ -141,7 +141,7 @@ const EnrollAddress = () => {
           </Button>
         </form>
         {isModalOpen === true ? (
-          <ConfirmDialog
+          <NoticeDialog
             isOpen={isModalOpen}
             description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
             setIsOpen={setIsModalOpen}
