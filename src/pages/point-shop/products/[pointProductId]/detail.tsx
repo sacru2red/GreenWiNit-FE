@@ -1,8 +1,8 @@
 import DeliveryAddress from '@/components/shop-screen/delivery-address'
-import ProductDetailDescription from '@/components/shop-screen/product-detail-description'
-import ProductDetailFooter from '@/components/shop-screen/product-detail-footer'
+import PointDescription from '@/components/shop-screen/point-description'
+import ExchangeProduct from '@/components/shop-screen/exchange-product'
 import PageLayOut from '@/components/common/page-layout'
-import useProduct from '@/hooks/use-product'
+import useProduct from '@/hooks/product/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -46,11 +46,11 @@ const ProductDetail = () => {
           </div>
           <div className="px-4 py-2 text-left font-bold">
             <p className="text-xl text-black">{product?.name}</p>
-            <p className="text-2xl text-green-500">{product?.price} 포인트</p>
+            <p className="text-2xl text-[#0FBA7E]">{product?.price} 포인트</p>
           </div>
           <hr />
         </div>
-        <ProductDetailDescription
+        <PointDescription
           description={product?.description}
           price={product?.price}
           remainingQuantity={product?.stockQuantity}
@@ -60,7 +60,7 @@ const ProductDetail = () => {
           isLoading={isLoading}
         />
         <DeliveryAddress pointProductId={pointProductId} />
-        <ProductDetailFooter
+        <ExchangeProduct
           availablePoint={availablePoint}
           deductPoint={deductPoint}
           onExchange={handleExchangePoint}

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-interface ProductDetailLabelProps {
+interface PointOverviewProps {
   label: string
   point: string | number | undefined
   valueClassName?: string
@@ -12,7 +12,7 @@ interface ProductDetailLabelProps {
   selectedQuantity?: number
 }
 
-const ProductDetailLabel = ({
+const PointOverview = ({
   label,
   point,
   valueClassName = '',
@@ -20,7 +20,7 @@ const ProductDetailLabel = ({
   remainingQuantity = 0,
   onQuantityChange,
   selectedQuantity = 1,
-}: ProductDetailLabelProps) => {
+}: PointOverviewProps) => {
   const [selectedCount, setSelectedCount] = useState(selectedQuantity)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -88,4 +88,4 @@ const ProductDetailLabel = ({
   )
 }
 
-export default ProductDetailLabel
+export default PointOverview

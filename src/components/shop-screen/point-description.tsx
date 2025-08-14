@@ -1,7 +1,7 @@
 import Loading from '../common/loading'
-import ProductDetailLabel from './product-detail-label'
+import PointOverview from './point-overview'
 
-interface ProductDetailDescriptionProps {
+interface PointDescriptionProps {
   description: string | undefined
   price: number | undefined
   remainingQuantity: number | undefined
@@ -11,7 +11,7 @@ interface ProductDetailDescriptionProps {
   isLoading: boolean
 }
 
-const ProductDetailDescription = ({
+const PointDescription = ({
   description,
   price,
   remainingQuantity,
@@ -19,7 +19,7 @@ const ProductDetailDescription = ({
   onQuantityChange,
   availablePoint,
   isLoading,
-}: ProductDetailDescriptionProps) => {
+}: PointDescriptionProps) => {
   const availablePurchaseCount = Math.floor(availablePoint / (price ?? 1))
   const selectableCount = Math.min(availablePurchaseCount, remainingQuantity ?? 0)
   const finalCount = Math.min(selectableCount, 5)
@@ -36,12 +36,12 @@ const ProductDetailDescription = ({
       <p className="text-xl">제품 설명</p>
       <p className="p-4">{description}</p>
       <hr />
-      <ProductDetailLabel
+      <PointOverview
         label="사용 가능 포인트"
         point={`${availablePoint}p`}
         valueClassName="text-green-500"
       />
-      <ProductDetailLabel
+      <PointOverview
         label="수량 선택"
         point={availablePoint}
         valueClassName="text-green-500"
@@ -50,15 +50,11 @@ const ProductDetailDescription = ({
         onQuantityChange={onQuantityChange}
         selectedQuantity={selectedQuantity}
       />
-      <ProductDetailLabel
-        label="차감 포인트"
-        point={`${deductPoint}p`}
-        valueClassName="text-red-500"
-      />
-      <ProductDetailLabel label="총 보유 포인트" point={textIfDoneExchangingPoint} />
+      <PointOverview label="차감 포인트" point={`${deductPoint}p`} valueClassName="text-red-500" />
+      <PointOverview label="총 보유 포인트" point={textIfDoneExchangingPoint} />
       <hr />
     </div>
   )
 }
 
-export default ProductDetailDescription
+export default PointDescription

@@ -1,4 +1,4 @@
-import useProducts from '@/hooks/use-products'
+import useProducts from '@/hooks/product/use-products'
 import { CircleAlert } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../common/loading'
@@ -45,7 +45,7 @@ const ProductList = () => {
               {product?.name}
             </p>
             <p className="md:text-md text-xs text-gray-500">{product?.sellingStatus}</p>
-            <p className="text-lg font-bold text-green-600 md:text-xl">{product?.price}p</p>
+            <p className="text-lg font-bold text-[#0FBA7E] md:text-xl">{product?.price}p</p>
           </div>
         )
       })}

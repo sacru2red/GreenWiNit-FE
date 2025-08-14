@@ -1,17 +1,13 @@
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
 
-interface ProductDetailFooterProps {
+interface ExchangeProductProps {
   availablePoint: number
   deductPoint: number
   onExchange: () => void
 }
 
-const ProductDetailFooter = ({
-  availablePoint,
-  deductPoint,
-  onExchange,
-}: ProductDetailFooterProps) => {
+const ExchangeProduct = ({ availablePoint, deductPoint, onExchange }: ExchangeProductProps) => {
   const isDisabled = availablePoint < deductPoint
 
   return (
@@ -34,4 +30,4 @@ const ProductDetailFooter = ({
   )
 }
 
-export default ProductDetailFooter
+export default ExchangeProduct

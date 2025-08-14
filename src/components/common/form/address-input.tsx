@@ -1,7 +1,8 @@
-import { ComponentProps, Fragment, useRef, useState } from 'react'
+import { ComponentProps, Fragment, useEffect, useRef, useState } from 'react'
 import DaumPostcodeEmbed from 'react-daum-postcode'
 import Input from './input'
 import { Dialog, DialogContent } from '../../ui/dialog'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 export type AddressState = null | {
   roadAddress: string
@@ -27,6 +28,20 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
     sigungu: value?.sigungu ?? '',
   })
   const detailAddressRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (value === null) {
+      setInnerValue({
+        roadAddress: '',
+        roadnameCode: '',
+        zonecode: '',
+        detailAddress: '',
+        sigungu: '',
+      })
+    } else if (value) {
+      setInnerValue(value)
+    }
+  }, [value])
 
   const onComplete: ComponentProps<typeof DaumPostcodeEmbed>['onComplete'] = (data) => {
     setOpenDialog(false)
@@ -66,19 +81,7 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
               e.stopPropagation()
               return
             }
-            /*
-            setInnerValue((prev) => {
-              if (prev == null) {
-                return null
-              }
-              const nextAddressState: AddressState = {
-                ...prev,
-                detailAddress: e.target.value,
-              }
-              onChange(nextAddressState)
-              return nextAddressState
-            })
-            */
+
             setInnerValue((prev) => {
               if (prev === null) return null
               return {
@@ -102,6 +105,7 @@ const AddressInput = ({ value, onChange, ...restProps }: AddressInputProps) => {
       </div>
       <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
         <DialogContent className="min-w-[400px]">
+          <DialogTitle className="text-lg">주소지 검색</DialogTitle>
           <DaumPostcodeEmbed {...restProps} onComplete={onComplete} autoClose={false} />
         </DialogContent>
       </Dialog>

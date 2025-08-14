@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
-import CategoryLabel from '@/components/post-screen/category-label'
 import { usePost } from '@/hooks/post/use-post'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Loading from '@/components/common/loading'
 import { CircleAlert } from 'lucide-react'
+import CategoryName from '@/components/post-screen/category-name'
 
 const PostDetail = () => {
   const { postId } = useParams<{ postId: string }>()
@@ -36,11 +36,11 @@ const PostDetail = () => {
         </div>
         <div className="flex flex-row items-center justify-between p-4">
           <div className="text-xl font-bold">{post.title}</div>
-          <CategoryLabel categoryName={post.infoCategoryName} />
+          <CategoryName category={post.infoCategoryName} />
         </div>
         <div className="flex flex-col text-start">
-          <p className="border-b-2 px-4 pt-4 text-xl font-bold text-black">소개</p>
-          <p className="p-4 wrap-anywhere whitespace-break-spaces text-gray-500">{post.content}</p>
+          <p className="text-secondary border-b-2 px-4 pt-4 text-xl font-bold">소개</p>
+          <p className="text-tertiary p-4 wrap-anywhere whitespace-break-spaces">{post.content}</p>
         </div>
       </PageLayOut.BodySection>
     </PageLayOut.Container>

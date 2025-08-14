@@ -17,9 +17,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
 
   const { data: userAddressData, isLoading } = useAddress()
 
-  const hasAddress = Boolean(
-    userAddressData && userAddressData !== null && userAddressData !== undefined,
-  )
+  const hasAddress = Boolean(userAddressData)
 
   const handleAddressClick = () => {
     if (!pointProductId) {
