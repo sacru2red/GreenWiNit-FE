@@ -35,7 +35,7 @@ const EnrollAddress = () => {
     },
   })
   const errors = formState.errors
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(true)
   const { data: deliveryAddress, isLoading: addressLoading } = useAddress()
 
   useEffect(() => {
@@ -131,7 +131,6 @@ const EnrollAddress = () => {
               name="address"
               rules={{ required: '주소를 입력해주세요.' }}
               render={({ field }) => {
-                console.log('주소 확인', field)
                 return <AddressInput {...field} />
               }}
             />
@@ -144,8 +143,7 @@ const EnrollAddress = () => {
         {isModalOpen === true ? (
           <ConfirmDialog
             isOpen={isModalOpen}
-            description="배송지 저장이 완료되었습니다."
-            paragraph="이제 상품을 교환할 수 있습니다!"
+            description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
             setIsOpen={setIsModalOpen}
             onConfirm={handleConfirm}
           />

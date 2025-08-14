@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import React from 'react'
 
 type ConfirmDialogProps = {
   isOpen: boolean
@@ -26,14 +27,19 @@ function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="gap-6 p-10">
+      <DialogContent className="gap-6 p-10" showCloseButton={false}>
         {title && (
           <DialogTitle className="flex items-center justify-center text-center text-lg font-semibold">
             {title}
           </DialogTitle>
         )}
-        <DialogDescription className="text-secondary-foreground flex items-center justify-center text-center text-base whitespace-pre-line">
-          {description}
+        <DialogDescription className="text-secondary-foreground text-center text-base">
+          {description.split('\\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < description.split('\\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
           {paragraph && <p className="text-lighter-gray text-xs">{paragraph}</p>}
         </DialogDescription>
         <DialogFooter className="flex flex-row items-center gap-4 sm:justify-center">
