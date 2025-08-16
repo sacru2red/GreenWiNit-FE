@@ -1,11 +1,11 @@
-import AddressInput, { AddressState } from '../../../../components/common/form/address-input'
-import { useEffect, useState } from 'react'
+import AddressInput from '../../../../components/common/form/address-input'
+import { useState, useEffect } from 'react'
 import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
-import { UpdateAddressDto } from '@/types/addresses'
+import { AddressDto, ClientAddressForm } from '@/types/addresses'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { toast } from 'sonner'
@@ -15,19 +15,12 @@ import ErrorMessage from '@/components/common/form/error-message'
 import useAddress from '@/hooks/use-adress'
 import NoticeDialog from '@/components/common/modal/notice-dialog'
 
-interface FormData {
-  name: string
-  phone: string
-  address: AddressState
-}
-
 const EnrollAddress = () => {
   const [searchParams] = useSearchParams()
-  const mode = searchParams.get('mode') || 'add'
+  const mode = searchParams.get('mode')?.split('/')[0] || 'add'
   const isEditMode = mode === 'edit'
   const navigate = useNavigate()
-
-  const { register, handleSubmit, control, formState, setError, reset } = useForm<FormData>({
+  const { register, handleSubmit, control, formState, setValue } = useForm<ClientAddressForm>({
     defaultValues: {
       name: '',
       phone: '',
@@ -36,39 +29,61 @@ const EnrollAddress = () => {
   })
   const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { data: deliveryAddress, isLoading: addressLoading } = useAddress()
+  const [showEditsuccess, setShowEditSuccess] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+
+  const { data: deliveryAddress } = useAddress()
+  const [originalClientData, setOriginalClientData] = useState<ClientAddressForm | null>(null)
 
   useEffect(() => {
-    if (isEditMode && deliveryAddress && !addressLoading) {
-      reset({
-        name: deliveryAddress.name || '',
-        phone: deliveryAddress.phone || '',
-        address: deliveryAddress.address || null,
+    if (isEditMode && deliveryAddress) {
+      setValue('name', deliveryAddress.name)
+      setValue('phone', deliveryAddress.phone)
+
+      /*
+        build error -> 우편번호 api에서는 zonecode,
+        백엔드 api에서는 zipCode를 요구함
+      */
+      if (deliveryAddress.address) {
+        const transformedAddress = {
+          ...deliveryAddress.address,
+          zipCode: deliveryAddress.address.zonecode,
+        }
+        setValue('address', transformedAddress)
+      }
+
+      setOriginalClientData({
+        name: deliveryAddress.name,
+        phone: deliveryAddress.phone,
+        address: deliveryAddress.address,
       })
     }
-  }, [isEditMode, deliveryAddress, addressLoading, reset])
+  }, [deliveryAddress, setValue, isEditMode])
 
-  const submitHandler: SubmitHandler<FormData> = async (formData) => {
-    if (formData.address === null) {
-      toast.error('배송지 정보를 입력해주세요.')
-      return
+  /* 배송지 수정 성공 시 안내 문구 띄우는 로직*/
+  useEffect(() => {
+    if (formState.isSubmitSuccessful && isEditMode) {
+      setIsVisible(true)
+      setShowEditSuccess(true)
+
+      const fadeTimer = setTimeout(() => {
+        setIsVisible(false)
+      }, 2000)
+
+      const timer = setTimeout(() => {
+        setShowEditSuccess(false)
+      }, 3000)
+
+      return () => {
+        clearTimeout(fadeTimer)
+        clearTimeout(timer)
+      }
     }
-    const isValidPhoneNumber =
-      /^0\d{1,2}-\d{3,4}-\d{4}$/.test(formData.phone) || /^0\d{8,10}$/.test(formData.phone)
-    console.log('isValidPhoneNumber', isValidPhoneNumber)
-    if (!isValidPhoneNumber) {
-      setError('phone', { message: '전화번호 형식에 맞지 않습니다.' })
-      return
-    }
-    /**
-     * 02-111-1234 (9)
-     * 051-123-1234 (10)
-     * 02-1111-1234 (10)
-     * 051-1234-1234 (11)
-     * 010-1234-1234 (11)
-     */
-    const formattedPhoneNumber = formData.phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
-      console.log('match', match)
+    return () => {}
+  }, [formState.isSubmitSuccessful, isEditMode])
+
+  const formatPhoneNumber = (phone: string): string => {
+    return phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
       if (match.startsWith('02')) {
         return `${match.slice(0, 2)}-${match.length === 9 ? `${match.slice(2, 5)}-${match.slice(5)}` : `${match.slice(2, 6)}-${match.slice(6)}`}`
       }
@@ -80,28 +95,63 @@ const EnrollAddress = () => {
       }
       return match
     })
+  }
 
-    const serverAddressForm: UpdateAddressDto = {
-      recipientName: formData.name,
-      phoneNumber: formattedPhoneNumber,
-      roadAddress: formData.address.roadAddress,
-      detailAddress: formData.address.detailAddress,
-      zipCode: formData.address.zonecode,
+  const clientToServerFormat = (clientData: ClientAddressForm): AddressDto | null => {
+    if (clientData.address === null) return null
+
+    return {
+      recipientName: clientData.name,
+      phoneNumber: formatPhoneNumber(clientData.phone),
+      roadAddress: clientData.address.roadAddress,
+      detailAddress: clientData.address.detailAddress,
+      zipCode: clientData.address.zonecode,
+    }
+  }
+
+  const submitHandler: SubmitHandler<ClientAddressForm> = async (formData) => {
+    if (formData.address === null) {
+      toast.error('배송지 정보를 입력해주세요.')
+      return
     }
 
-    await addressApi
-      .saveAddress(serverAddressForm)
-      .then(() => {
+    try {
+      if (isEditMode) {
+        if (!originalClientData) {
+          toast.error('기존 주소 정보가 없습니다')
+          return
+        }
+
+        const serverData = clientToServerFormat(formData)
+        const originalServerData = clientToServerFormat(originalClientData)
+
+        if (!serverData || !originalServerData) {
+          toast.error('주소 정보를 확인해주세요.')
+          return
+        }
+
+        await addressApi.updateAddress(serverData)
         setIsModalOpen(true)
-      })
-      .catch((error) => {
-        toast.error(error.message)
-      })
+      } else {
+        const serverData = clientToServerFormat(formData)
+        if (!serverData) {
+          toast.error('주소 정보를 확인해주세요.')
+          return
+        }
+
+        await addressApi.saveAddress(serverData)
+        setIsModalOpen(true)
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다')
+    }
   }
 
   const handleConfirm = () => {
     navigate(-1)
   }
+
+  console.log(`모드 이름 : ${mode} 수정모드 확인 : ${isEditMode}`)
 
   return (
     <PageLayOut.Container>
@@ -115,6 +165,7 @@ const EnrollAddress = () => {
             <InputLabel required={true}>이름</InputLabel>
             <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
             <ErrorMessage name="name" errors={errors} />
+
             <InputLabel required={true}>전화번호</InputLabel>
             <Input
               type="text"
@@ -122,9 +173,14 @@ const EnrollAddress = () => {
               inputMode="tel"
               {...register('phone', {
                 required: '전화번호를 입력해주세요.',
+                pattern: {
+                  value: /^(0\d{1,2}-\d{3,4}-\d{4}|0\d{8,10})$/,
+                  message: '전화번호 형식에 맞지 않습니다.',
+                },
               })}
             />
             <ErrorMessage name="phone" errors={errors} />
+
             <InputLabel required={true}>주소</InputLabel>
             <Controller
               control={control}
@@ -136,18 +192,27 @@ const EnrollAddress = () => {
             />
             <ErrorMessage name="address" errors={errors} />
           </div>
-          <Button type="submit" className="mt-auto">
-            저장하기
-          </Button>
+          <div className="mt-auto">
+            {showEditsuccess && (
+              <div
+                className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
+              >
+                수정이 완료되었습니다.
+              </div>
+            )}
+            <Button type="submit" className="w-full">
+              저장하기
+            </Button>
+          </div>
         </form>
-        {isModalOpen === true ? (
+        {isModalOpen && (
           <NoticeDialog
             isOpen={isModalOpen}
             description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
             setIsOpen={setIsModalOpen}
             onConfirm={handleConfirm}
           />
-        ) : null}
+        )}
       </PageLayOut.BodySection>
       <PageLayOut.FooterSection>
         <BottomNavigation />
