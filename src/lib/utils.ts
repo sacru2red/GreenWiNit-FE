@@ -1,4 +1,4 @@
-import { AddressResponse } from '@/api/address'
+import { ServerAddress } from '@/api/address'
 import { ClientAddress } from '@/types/addresses'
 import { clsx, type ClassValue } from 'clsx'
 import { ForwardedRef } from 'react'
@@ -29,15 +29,15 @@ export function initHistoryAndLocation(to: string = '/') {
   window.history.pushState(null, '', to)
 }
 
-export const serverToClientAddress = (serverAddress: AddressResponse): ClientAddress => {
+export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
   return {
-    id: serverAddress.result.deliveryAddressId,
-    name: serverAddress.result.recipientName,
-    phone: serverAddress.result.phoneNumber,
+    id: serverAddress.deliveryAddressId,
+    name: serverAddress.recipientName,
+    phone: serverAddress.phoneNumber,
     address: {
-      roadAddress: serverAddress.result.roadAddress,
-      zoneCode: serverAddress.result.zipCode,
-      detailAddress: serverAddress.result.detailAddress,
+      roadAddress: serverAddress.roadAddress,
+      zoneCode: serverAddress.zipCode,
+      detailAddress: serverAddress.detailAddress,
     },
   }
 }

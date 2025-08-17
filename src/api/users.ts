@@ -1,7 +1,7 @@
 import { API_URL } from '@/constant/network'
 import { stringify } from '@/lib/query-string'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
-import { BaseApiResponse } from '@/types/api'
+import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
@@ -95,27 +95,27 @@ export const usersApi = {
   },
 }
 
-type GetMyInfoResponse = BaseApiResponse<{
+type GetMyInfoResponse = ApiResponse<{
   userChallengeCount: number
   userTotalPoints: number
   userLevel: number
 }>
 
-type GetMyPointsResponse = BaseApiResponse<{
+type GetMyPointsResponse = ApiResponse<{
   currentBalance: number
   totalEarned: number
   totalSpent: number
 }>
 
-type GetMyPointsHistoryResponse = BaseApiResponse<{
+type GetMyPointsHistoryResponse = ApiResponse<{
   hasNext: boolean
   nextCursor: number
   content: PointHistory[]
 }>
 
-type PostWithdrawResponse = BaseApiResponse<undefined>
+type PostWithdrawResponse = ApiResponse<undefined>
 
-type PutUserProfileResponse = BaseApiResponse<{
+type PutUserProfileResponse = ApiResponse<{
   nickname: string
   profileImageUrl: string
 }>

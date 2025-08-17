@@ -1,5 +1,5 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { CertifiedChallenges, Challenge as ChallengeType } from '@/api/challenges'
+import { CertifiedChallenges, ChallengeFoo as ChallengeType } from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Dispatch, SetStateAction } from 'react'
 import Challenge from '@/components/common/challenge'

@@ -13,7 +13,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: Challenge[]
+            content: ChallengeFoo[]
           }
         }
       | {
@@ -32,7 +32,7 @@ export const challengesApi = {
           result: {
             hasNext: boolean
             nextCursor: number | null
-            content: Challenge[]
+            content: ChallengeFoo[]
           }
         }
       | {
@@ -187,26 +187,16 @@ type BaseResponse<T> = {
   result?: T
 }
 
-export interface Challenge {
+export interface ChallengeFoo {
   id: number
   challengeName: string
-  /**
-   * '2025-08-03T13:25:09.938Z'
-   */
-  beginDateTime: string
-  /**
-   * '2025-08-03T13:25:09.938Z'
-   */
-  endDateTime: string
+  beginDate: string
+  endDate: string
   /**
    * 'https://example.com/image.jpg'
    */
   challengeImage: string
   point: number
-  /**
-   * @TODO fix under line
-   */
-  type?: 'PERSONAL' | 'TEAM'
 }
 
 export interface ChallengeDetailResponse {
@@ -245,7 +235,7 @@ export interface ChallengeDetailResponse {
 export type JoinedChallengesMineReponse = BaseResponse<{
   hasNext: boolean
   nextCursor: number | null
-  content: Challenge[]
+  content: ChallengeFoo[]
 }>
 
 export interface ChallengeTeamsElement {

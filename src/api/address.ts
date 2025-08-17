@@ -2,7 +2,7 @@ import { API_URL } from '@/constant/network'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { serverToClientAddress } from '@/lib/utils'
 import { ClientAddress, UpdateAddressDto } from '@/types/addresses'
-import { BaseApiResponse } from '@/types/api'
+import { ApiResponse } from '@/types/api'
 
 export const addressApi = {
   getAddress: async () => {
@@ -14,6 +14,12 @@ export const addressApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
       .then((data) => serverToClientAddress(data))
   },
   updateAddress: async (id: number, body: Partial<ClientAddress>) => {
@@ -26,6 +32,12 @@ export const addressApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
       .then((data) => serverToClientAddress(data))
   },
   saveAddress: async (data: UpdateAddressDto) => {
@@ -38,6 +50,12 @@ export const addressApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
       .then((data) => serverToClientAddress(data))
   },
 }
@@ -50,4 +68,4 @@ export type ServerAddress = {
   detailAddress: string
   zipCode: string
 }
-export type AddressResponse = BaseApiResponse<ServerAddress>
+export type AddressResponse = ApiResponse<ServerAddress>
