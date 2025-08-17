@@ -131,7 +131,6 @@ const EnrollAddress = () => {
         }
 
         await addressApi.updateAddress(serverData)
-        setIsModalOpen(true)
       } else {
         const serverData = clientToServerFormat(formData)
         if (!serverData) {
