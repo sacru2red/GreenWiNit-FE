@@ -28,7 +28,7 @@ export function initHistoryAndLocation(to: string = '/') {
   window.history.pushState(null, '', to)
 }
 
-export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddress => {
+export const serverToClientAddress = (serverAddress: ServerAddress) => {
   return {
     id: serverAddress.deliveryAddressId,
     name: serverAddress.recipientName,
@@ -40,7 +40,7 @@ export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddre
       sigungu: '',
       roadnameCode: '',
     },
-  }
+  } satisfies ClientAddress
 }
 
 export function mergeRefs<T>(...refs: (ForwardedRef<T> | undefined)[]) {
