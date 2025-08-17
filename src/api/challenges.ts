@@ -147,7 +147,8 @@ export const challengesApi = {
       body: JSON.stringify(omit(team, ['id'])),
     })
   },
-  submitChallenge: async (
+  // @MEMO v2 작업완료
+  submitIndividualChallenge: async (
     challengeId: number,
     body: {
       date: string
@@ -155,9 +156,15 @@ export const challengesApi = {
       review: string
     },
   ) => {
-    await fetch(`${API_URL}/challenges/${challengeId}/certifications`, {
+    return await fetch(`${API_URL}/certifications/challenges/personal/${challengeId}`, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        ...omit(body, ['date']),
+        challengeDate: body.date,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
   },
   getCertifiedChallengesMine: async ({

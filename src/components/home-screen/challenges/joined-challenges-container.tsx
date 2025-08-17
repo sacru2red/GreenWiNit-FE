@@ -4,15 +4,14 @@ import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
 
 function JoinedChallengesContainer() {
   const navigate = useNavigate()
-  const { challengeType, setChallengeType, data, isLoading } = useJoinedChallenges()
-  if (isLoading) return <div>데이터 불러오는 중...</div>
-
+  const { challengeType, setChallengeType, data } = useJoinedChallenges()
   const challenges = data?.result?.content
 
-  const isPersonal = challengeType === 'individual'
-  const handleNavigate = (challengeId: number, teamId?: number) => {
-    if (isPersonal) navigate({ to: `/challenges/${challengeId}/submit/individual` })
-    else navigate({ to: `/challenges/${challengeId}/submit/teams/${teamId}` })
+  const handleNavigate = (challengeId: number) => {
+    if (challengeType === 'individual') {
+      return navigate({ to: `/challenges/${challengeId}/submit/individual` })
+    }
+    return navigate({ to: `/challenges/${challengeId}/teams` })
   }
 
   return (

@@ -11,7 +11,7 @@ interface FilteredChallengesDisplayProps<
   challengeType: ChallengeType
   setChallengeType: Dispatch<SetStateAction<ChallengeType>>
   challenges?: T[]
-  handleNavigate: (challengeId: number, teamId?: number) => void
+  handleNavigate: (challengeId: number) => void
 }
 
 function FilteredChallengesDisplay<T extends CommonChallenge | GetCertifiedChallengesMineElement>({
@@ -39,14 +39,7 @@ function FilteredChallengesDisplay<T extends CommonChallenge | GetCertifiedChall
             <CarouselContent className="-ml-4 items-start justify-start">
               {challenges.map((challenge) => (
                 <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
-                  <Challenge
-                    challenge={challenge}
-                    onClick={
-                      challengeType === 'individual'
-                        ? () => handleNavigate(challenge.id)
-                        : () => handleNavigate(challenge.id, 0) //@TODO challenge.teamId 생기면 0이 대체될 예정
-                    }
-                  />
+                  <Challenge challenge={challenge} onClick={() => handleNavigate(challenge.id)} />
                 </CarouselItem>
               ))}
             </CarouselContent>
