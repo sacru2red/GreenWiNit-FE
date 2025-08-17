@@ -1,11 +1,5 @@
 import { AddressState } from '@/components/common/form/address-input'
 
-export type AddressForm = {
-  name: string
-  phone: string
-  address: AddressState
-}
-
 export type ServerAddress = {
   deliveryAddressId: number
   recipientName: string
