@@ -60,4 +60,4 @@ export const addressApi = {
   },
 }
 
-export type AddressResponse = ApiResponse<ServerAddress>
+type AddressResponse = ApiResponse<ServerAddress>
