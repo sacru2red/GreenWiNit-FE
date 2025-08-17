@@ -2,6 +2,7 @@ import { API_URL } from '@/constant/network'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { omit } from 'es-toolkit'
+import { ApiResponse } from '@/types/api'
 
 export const challengesApi = {
   getIndividualChallenges: async (cursor?: number | null) => {
@@ -181,12 +182,6 @@ export const challengesApi = {
   },
 }
 
-type BaseResponse<T> = {
-  success: boolean
-  message: string
-  result?: T
-}
-
 export interface ChallengeFoo {
   id: number
   challengeName: string
@@ -232,7 +227,7 @@ export interface ChallengeDetailResponse {
   type?: 'PERSONAL' | 'TEAM'
 }
 
-export type JoinedChallengesMineReponse = BaseResponse<{
+export type JoinedChallengesMineReponse = ApiResponse<{
   hasNext: boolean
   nextCursor: number | null
   content: ChallengeFoo[]
@@ -315,13 +310,13 @@ export type CertifiedChallenges = {
   status: 'PENDING' | 'PAID' | 'REJECTED'
 }
 
-type PostChallengeCertRes = BaseResponse<{
+type PostChallengeCertRes = ApiResponse<{
   certificationId: number
 }>
 
-export type GetCertChallengeDetailsRes = BaseResponse<CertifiedChallenges & { certifiedAt: string }>
+export type GetCertChallengeDetailsRes = ApiResponse<CertifiedChallenges & { certifiedAt: string }>
 
-export type GetChallengeCertRes = BaseResponse<{
+export type GetChallengeCertRes = ApiResponse<{
   hasNext: boolean
   nextCursor: number
   content: CertifiedChallenges[]

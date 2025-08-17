@@ -1,5 +1,6 @@
 import { API_URL } from '@/constant/network'
 import { stringify } from '@/lib/query-string'
+import { ApiResponse } from '@/types/api'
 
 export const certificationApi = {
   getChallengeCertDetails: async (certId: number) => {
@@ -29,12 +30,6 @@ export const certificationApi = {
   },
 }
 
-type BaseResponse<T> = {
-  success: boolean
-  message: string
-  result?: T
-}
-
 type Content = {
   id: number
   memberId: number
@@ -46,17 +41,17 @@ type Content = {
   status: string
 }
 
-type PostChallengeCertRes = BaseResponse<{
+type PostChallengeCertRes = ApiResponse<{
   certificationId: number
 }>
 
-type GetChallengeCertDetailsRes = BaseResponse<{
+type GetChallengeCertDetailsRes = ApiResponse<{
   result: Content & {
     certifiedAt: string // ISO 문자열
   }
 }>
 
-type GetChallengeCertRes = BaseResponse<{
+type GetChallengeCertRes = ApiResponse<{
   result: {
     hasNext: boolean
     nextCursor: number
