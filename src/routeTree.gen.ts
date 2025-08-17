@@ -15,11 +15,13 @@ import { Route as R500RouteImport } from './routes/500'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TermsIndexRouteImport } from './routes/terms/index'
+import { Route as PostsIndexRouteImport } from './routes/posts/index'
 import { Route as PointShopIndexRouteImport } from './routes/point-shop/index'
 import { Route as MyPageIndexRouteImport } from './routes/my-page/index'
 import { Route as MyPageWithdrawRouteImport } from './routes/my-page/withdraw'
 import { Route as MyPageMyPointsRouteImport } from './routes/my-page/my-points'
 import { Route as MyPageEditProfileRouteImport } from './routes/my-page/edit-profile'
+import { Route as PostsIdIndexRouteImport } from './routes/posts/$id/index'
 import { Route as MyPageChallengesCertifiedRouteImport } from './routes/my-page/challenges/certified'
 import { Route as ChallengesChallengeIdDetailRouteImport } from './routes/challenges/$challenge-id/detail'
 import { Route as ChallengesChallengeIdTeamsIndexRouteImport } from './routes/challenges/$challenge-id/teams/index'
@@ -65,6 +67,11 @@ const TermsIndexRoute = TermsIndexRouteImport.update({
   path: '/terms/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostsIndexRoute = PostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PointShopIndexRoute = PointShopIndexRouteImport.update({
   id: '/point-shop/',
   path: '/point-shop/',
@@ -88,6 +95,11 @@ const MyPageMyPointsRoute = MyPageMyPointsRouteImport.update({
 const MyPageEditProfileRoute = MyPageEditProfileRouteImport.update({
   id: '/my-page/edit-profile',
   path: '/my-page/edit-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
+  id: '/posts/$id/',
+  path: '/posts/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyPageChallengesCertifiedRoute =
@@ -185,9 +197,11 @@ export interface FileRoutesByFullPath {
   '/my-page/withdraw': typeof MyPageWithdrawRoute
   '/my-page': typeof MyPageIndexRoute
   '/point-shop': typeof PointShopIndexRoute
+  '/posts': typeof PostsIndexRoute
   '/terms': typeof TermsIndexRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/my-page/challenges/certified': typeof MyPageChallengesCertifiedRoute
+  '/posts/$id': typeof PostsIdIndexRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
@@ -212,9 +226,11 @@ export interface FileRoutesByTo {
   '/my-page/withdraw': typeof MyPageWithdrawRoute
   '/my-page': typeof MyPageIndexRoute
   '/point-shop': typeof PointShopIndexRoute
+  '/posts': typeof PostsIndexRoute
   '/terms': typeof TermsIndexRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/my-page/challenges/certified': typeof MyPageChallengesCertifiedRoute
+  '/posts/$id': typeof PostsIdIndexRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
@@ -240,9 +256,11 @@ export interface FileRoutesById {
   '/my-page/withdraw': typeof MyPageWithdrawRoute
   '/my-page/': typeof MyPageIndexRoute
   '/point-shop/': typeof PointShopIndexRoute
+  '/posts/': typeof PostsIndexRoute
   '/terms/': typeof TermsIndexRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/my-page/challenges/certified': typeof MyPageChallengesCertifiedRoute
+  '/posts/$id/': typeof PostsIdIndexRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
@@ -269,9 +287,11 @@ export interface FileRouteTypes {
     | '/my-page/withdraw'
     | '/my-page'
     | '/point-shop'
+    | '/posts'
     | '/terms'
     | '/challenges/$challenge-id/detail'
     | '/my-page/challenges/certified'
+    | '/posts/$id'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
     | '/challenges/$challenge-id/teams/join'
@@ -296,9 +316,11 @@ export interface FileRouteTypes {
     | '/my-page/withdraw'
     | '/my-page'
     | '/point-shop'
+    | '/posts'
     | '/terms'
     | '/challenges/$challenge-id/detail'
     | '/my-page/challenges/certified'
+    | '/posts/$id'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
     | '/challenges/$challenge-id/teams/join'
@@ -323,9 +345,11 @@ export interface FileRouteTypes {
     | '/my-page/withdraw'
     | '/my-page/'
     | '/point-shop/'
+    | '/posts/'
     | '/terms/'
     | '/challenges/$challenge-id/detail'
     | '/my-page/challenges/certified'
+    | '/posts/$id/'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
     | '/challenges/$challenge-id/teams/join'
@@ -351,9 +375,11 @@ export interface RootRouteChildren {
   MyPageWithdrawRoute: typeof MyPageWithdrawRoute
   MyPageIndexRoute: typeof MyPageIndexRoute
   PointShopIndexRoute: typeof PointShopIndexRoute
+  PostsIndexRoute: typeof PostsIndexRoute
   TermsIndexRoute: typeof TermsIndexRoute
   ChallengesChallengeIdDetailRoute: typeof ChallengesChallengeIdDetailRoute
   MyPageChallengesCertifiedRoute: typeof MyPageChallengesCertifiedRoute
+  PostsIdIndexRoute: typeof PostsIdIndexRoute
   ChallengesChallengeIdSubmitIndividualRoute: typeof ChallengesChallengeIdSubmitIndividualRoute
   ChallengesChallengeIdTeamsEnrollRoute: typeof ChallengesChallengeIdTeamsEnrollRoute
   ChallengesChallengeIdTeamsJoinRoute: typeof ChallengesChallengeIdTeamsJoinRoute
@@ -412,6 +438,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/point-shop/': {
       id: '/point-shop/'
       path: '/point-shop'
@@ -445,6 +478,13 @@ declare module '@tanstack/react-router' {
       path: '/my-page/edit-profile'
       fullPath: '/my-page/edit-profile'
       preLoaderRoute: typeof MyPageEditProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/$id/': {
+      id: '/posts/$id/'
+      path: '/posts/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-page/challenges/certified': {
@@ -559,9 +599,11 @@ const rootRouteChildren: RootRouteChildren = {
   MyPageWithdrawRoute: MyPageWithdrawRoute,
   MyPageIndexRoute: MyPageIndexRoute,
   PointShopIndexRoute: PointShopIndexRoute,
+  PostsIndexRoute: PostsIndexRoute,
   TermsIndexRoute: TermsIndexRoute,
   ChallengesChallengeIdDetailRoute: ChallengesChallengeIdDetailRoute,
   MyPageChallengesCertifiedRoute: MyPageChallengesCertifiedRoute,
+  PostsIdIndexRoute: PostsIdIndexRoute,
   ChallengesChallengeIdSubmitIndividualRoute:
     ChallengesChallengeIdSubmitIndividualRoute,
   ChallengesChallengeIdTeamsEnrollRoute: ChallengesChallengeIdTeamsEnrollRoute,

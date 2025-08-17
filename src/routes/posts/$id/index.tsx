@@ -1,13 +1,17 @@
-import { useParams } from 'react-router-dom'
 import { usePost } from '@/hooks/post/use-post'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Loading from '@/components/common/loading'
 import { CircleAlert } from 'lucide-react'
 import CategoryName from '@/components/post-screen/category-name'
+import { createFileRoute } from '@tanstack/react-router'
 
-const PostDetail = () => {
-  const { postId } = useParams<{ postId: string }>()
+export const Route = createFileRoute('/posts/$id/')({
+  component: PostDetail,
+})
+
+function PostDetail() {
+  const postId = Route.useParams().id
   const { isLoading, data } = usePost(postId)
   const post = data?.result
 

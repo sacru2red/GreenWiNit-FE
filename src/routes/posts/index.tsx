@@ -10,6 +10,11 @@ import { CircleAlert } from 'lucide-react'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 import Loading from '@/components/common/loading'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/posts/')({
+  component: Posts,
+})
 
 /**
  * 실제 화면상에서 "정보공유"에 해당하는 페이지
