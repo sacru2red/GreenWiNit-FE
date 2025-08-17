@@ -15,7 +15,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
 
   const pointProductId = propPointProductId || params.pointProductId
 
-  const { data: userAddressData, isLoading } = useAddress()
+  const { data: userAddressData } = useAddress()
 
   const hasAddress = Boolean(userAddressData)
 
@@ -28,14 +28,13 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
     const state = { from: location.pathname + location.search }
 
     if (hasAddress) {
-      navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=edit`, { state })
+      navigate(
+        `/point-shop/product/${pointProductId}/enroll-address?mode=edit/${userAddressData?.id}`,
+        { state },
+      )
     } else {
       navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=add`, { state })
     }
-  }
-
-  if (isLoading) {
-    return <div>주소 정보를 불러오는 중...</div>
   }
 
   return (
