@@ -1,5 +1,10 @@
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import { createFileRoute } from '@tanstack/react-router'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { TERMS } from '@/constant/terms'
+
+export const Route = createFileRoute('/terms/')({
+  component: Terms,
+})
 
 function Terms() {
   return (

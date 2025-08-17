@@ -3,7 +3,12 @@ import PointHistoryContainer from '@/components/my-page-screen/point-history-con
 import PointOverview from '@/components/my-page-screen/point-overview'
 import useUserName from '@/hooks/use-user-name'
 import { useUserPoints } from '@/hooks/use-user-points'
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/my-page/my-points')({
+  component: MyPoints,
+})
 
 function MyPoints() {
   const userName = useUserName()

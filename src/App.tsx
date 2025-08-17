@@ -32,7 +32,7 @@ import EnrollAddress from './pages/point-shop/products/[pointProductId]/enroll-a
 import Signup from './routes/signup'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Posts from './pages/posts'
-import Terms from '@/pages/terms'
+import Terms from '@/routes/terms'
 
 const queryClient = new QueryClient()
 

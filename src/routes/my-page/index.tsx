@@ -2,9 +2,14 @@ import { usersApi } from '@/api/users'
 import UserCard from '@/components/common/user-card'
 import { Card, CardAction, CardContent } from '@/components/ui/card'
 import { initHistoryAndLocation } from '@/lib/utils'
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { authStore } from '@/store/auth-store'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/my-page/')({
+  component: MyPage,
+})
 
 function MyPage() {
   const navigate = useNavigate()
@@ -47,9 +52,9 @@ function MyPage() {
     {
       category: '환경설정',
       items: [
-        { title: '약관 및 정책', action: () => navigate('/terms') },
-        { title: '회원정보수정', action: () => navigate('/my-page/edit-profile') },
-        { title: '회원탈퇴', action: () => navigate('/my-page/withdraw') },
+        { title: '약관 및 정책', action: () => navigate({ to: '/terms' }) },
+        { title: '회원정보수정', action: () => navigate({ to: '/my-page/edit-profile' }) },
+        { title: '회원탈퇴', action: () => navigate({ to: '/my-page/withdraw' }) },
         {
           title: '로그아웃',
           action: async () => {

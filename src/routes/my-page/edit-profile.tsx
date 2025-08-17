@@ -1,5 +1,10 @@
 import EditProfileForm from '@/components/edit-profile-screen/edit-profile-form'
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/my-page/edit-profile')({
+  component: EditProfile,
+})
 
 function EditProfile() {
   return (

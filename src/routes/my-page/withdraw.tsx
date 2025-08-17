@@ -1,7 +1,7 @@
 import WithDrawCaution from '@/components/withdraw-screen/withdraw-caution'
 import WithdrawReasonField from '@/components/withdraw-screen/withdraw-reason-field'
 import NoticeMessage from '@/components/withdraw-screen/notice-message'
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { FieldErrors, useForm } from 'react-hook-form'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { useRef, useState } from 'react'
@@ -10,18 +10,11 @@ import { usersApi } from '@/api/users'
 import { initHistoryAndLocation } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { createFileRoute } from '@tanstack/react-router'
 
-export type Reasons =
-  | 'SERVICE_DISSATISFACTION'
-  | 'POLICY_DISAGREEMENT'
-  | 'PRIVACY_CONCERN'
-  | 'PRIVACY_PROTECTION'
-  | 'OTHER'
-
-export interface WithDrawnFormState {
-  reasonType: string | string[]
-  customReason: string | null
-}
+export const Route = createFileRoute('/my-page/withdraw')({
+  component: WithDraw,
+})
 
 function WithDraw() {
   const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -94,6 +87,18 @@ function WithDraw() {
       )}
     </>
   )
+}
+
+export type Reasons =
+  | 'SERVICE_DISSATISFACTION'
+  | 'POLICY_DISAGREEMENT'
+  | 'PRIVACY_CONCERN'
+  | 'PRIVACY_PROTECTION'
+  | 'OTHER'
+
+export interface WithDrawnFormState {
+  reasonType: string | string[]
+  customReason: string | null
 }
 
 export default WithDraw

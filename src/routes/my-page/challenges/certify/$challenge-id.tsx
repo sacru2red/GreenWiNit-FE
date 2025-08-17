@@ -1,10 +1,14 @@
-import { useParams } from 'react-router-dom'
 import { useCertifiedChallengeDetails } from '@/hooks/challenge/use-certified-challenge-details'
 import Row from '@/components/common/form/row'
-import MyPageLayout from '@/pages/my-page/my-page-layout'
+import MyPageLayout from '@/components/my-page-screen/my-page-layout'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/my-page/challenges/certify/$challenge-id')({
+  component: CertifiedChallengeDetails,
+})
 
 function CertifiedChallengeDetails() {
-  const { challengeId } = useParams<{ challengeId: string }>()
+  const challengeId = Number(Route.useParams()['challenge-id'])
   const { data, isLoading } = useCertifiedChallengeDetails(Number(challengeId))
 
   if (isLoading) return <div>데이터를 불러오는 중...</div>
