@@ -5,12 +5,15 @@ import PageLayOut from '@/components/common/page-layout'
 import useProduct from '@/hooks/product/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import Loading from '@/components/common/loading'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
-const ProductDetail = () => {
-  const params = useParams<{ pointProductId: string }>()
-  const pointProductId = params.pointProductId
+export const Route = createFileRoute('/point-shop/products/$pointProduct-id/detail')({
+  component: ProductDetail,
+})
+
+function ProductDetail() {
+  const pointProductId = Route.useParams()['pointProduct-id']
   const navigate = useNavigate()
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)

@@ -1,9 +1,14 @@
+import { createFileRoute } from '@tanstack/react-router'
 import BottomNavigation from '@/components/common/bottom-navigation'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import ProductList from '@/components/shop-screen/product-list'
 import UserStatusbar from '@/components/shop-screen/user-statusbar'
 import { useUserStatus } from '@/hooks/use-user-status'
+
+export const Route = createFileRoute('/point-shop/')({
+  component: PointShop,
+})
 
 function PointShop() {
   const { data: userStatus } = useUserStatus()

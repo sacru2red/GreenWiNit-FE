@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
 import { useCertifiedChallenges } from '@/hooks/challenge/use-certified-challenges'
 
@@ -11,7 +11,7 @@ function CertifiedChallengesContainer() {
   if (!challenges) return <div>인증한 챌린지가 없습니다.</div>
 
   const handleNavigate = (challengeId: number) => {
-    navigate(`/my-page/challenges/certify/${challengeId}`)
+    navigate({ to: `/my-page/challenges/certify/${challengeId}` })
   }
 
   return (

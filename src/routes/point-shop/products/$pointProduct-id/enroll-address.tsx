@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Input from '@/components/common/form/input'
 import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { addressApi } from '@/api/addresses'
 import { ClientAddress } from '@/types/addresses'
 import PageLayOut from '@/components/common/page-layout'
@@ -15,11 +15,19 @@ import ErrorMessage from '@/components/common/form/error-message'
 import useAddress from '@/hooks/use-adress'
 import NoticeDialog from '@/components/common/modal/notice-dialog'
 
-const EnrollAddress = () => {
-  const [searchParams] = useSearchParams()
-  const mode = searchParams.get('mode')?.split('/')[0] || 'add'
+export const Route = createFileRoute('/point-shop/products/$pointProduct-id/enroll-address')({
+  component: EnrollAddress,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      mode: search['mode'],
+    }
+  },
+})
+
+function EnrollAddress() {
+  const { mode } = Route.useSearch()
   const isEditMode = mode === 'edit'
-  const navigate = useNavigate()
+  const router = useRouter()
   const { register, handleSubmit, control, formState, setValue } = useForm<ClientAddressForm>({
     defaultValues: {
       name: '',
@@ -135,7 +143,7 @@ const EnrollAddress = () => {
   }
 
   const handleConfirm = () => {
-    navigate(-1)
+    router.history.back()
   }
 
   console.log(`모드 이름 : ${mode} 수정모드 확인 : ${isEditMode}`)
@@ -182,7 +190,7 @@ const EnrollAddress = () => {
           <div className="mt-auto">
             {showEditsuccess && (
               <div
-                className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
+                className={`transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
               >
                 수정이 완료되었습니다.
               </div>
