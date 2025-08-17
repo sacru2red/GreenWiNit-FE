@@ -8,9 +8,8 @@ function JoinedChallengesContainer() {
   if (isLoading) return <div>데이터 불러오는 중...</div>
 
   const challenges = data?.result?.content
-  if (!challenges) return <div>챌린지에 참여해주세요.</div>
 
-  const isPersonal = challengeType === 0
+  const isPersonal = challengeType === 'individual'
   const handleNavigate = (challengeId: number, teamId?: number) => {
     if (isPersonal) navigate({ to: `/challenges/${challengeId}/submit/individual` })
     else navigate({ to: `/challenges/${challengeId}/submit/teams/${teamId}` })
@@ -20,7 +19,7 @@ function JoinedChallengesContainer() {
     <FilteredChallengesDisplay
       challengeType={challengeType}
       setChallengeType={setChallengeType}
-      challenges={challenges}
+      challenges={challenges ?? []}
       handleNavigate={handleNavigate}
     />
   )

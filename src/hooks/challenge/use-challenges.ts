@@ -1,8 +1,9 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
+import { ChallengeType } from '@/types/challenge'
 import { useQuery } from '@tanstack/react-query'
 
 export const useChallenges = (apiParams: {
-  challengeType: 'individual' | 'team'
+  challengeType: ChallengeType
   cursor?: number | null
   pageSize?: number
 }) => {

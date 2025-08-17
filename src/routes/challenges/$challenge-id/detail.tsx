@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useState } from 'react'
-import { toast } from 'sonner'
+import { showMessageIfExists } from '@/lib/error'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
@@ -33,7 +33,11 @@ function ChallengeDetail() {
   const { data: challenge } = useChallenge({ id: challengeId, type: challengeType })
 
   const { mutate: joinChallenge } = useMutation({
-    mutationFn: (pId: number) => challengesApi.joinChallenge(pId),
+    mutationFn: () =>
+      challengesApi.joinChallenge({
+        id: challengeId,
+        challengeType,
+      }),
     onSuccess: () => {
       setOpenSuccessDialog(true)
       queryClient.invalidateQueries({
@@ -45,7 +49,7 @@ function ChallengeDetail() {
     },
     onError(error) {
       console.error(error)
-      toast.error(error.message)
+      showMessageIfExists(error)
     },
   })
 
@@ -101,10 +105,7 @@ function ChallengeDetail() {
         <Button
           className="mt-auto"
           onClick={() => {
-            if (challengeId == null) {
-              return
-            }
-            joinChallenge(challengeId)
+            joinChallenge()
           }}
         >
           챌린지 참여하기
@@ -114,7 +115,7 @@ function ChallengeDetail() {
         <BottomNavigation />
       </PageLayOut.FooterSection>
       <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
-        <DialogContent className="flex flex-col gap-3">
+        <DialogContent className="flex !min-w-60 flex-col gap-3">
           <DialogDescription className="text-center !text-lg !text-black">
             챌린지 참여 완료
           </DialogDescription>

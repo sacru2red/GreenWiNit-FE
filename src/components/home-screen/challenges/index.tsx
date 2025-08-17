@@ -48,7 +48,10 @@ const Challenges = () => {
                       setIsWarnNotLoggedInDialogOpen(true)
                       return
                     }
-                    navigate({ to: `/challenges/${challenge.id}/detail` })
+                    navigate({
+                      to: `/challenges/${challenge.id}/detail`,
+                      search: { challengeType: tab },
+                    })
                   }}
                 />
               </CarouselItem>

@@ -1,7 +1,8 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
+import { ChallengeType } from '@/types/challenge'
 import { useQuery } from '@tanstack/react-query'
 
-const useChallenge = (apiParams: { id: number | undefined; type: 'individual' | 'team' }) => {
+const useChallenge = (apiParams: { id: number | undefined; type: ChallengeType }) => {
   const { id, type } = apiParams
 
   return useQuery({

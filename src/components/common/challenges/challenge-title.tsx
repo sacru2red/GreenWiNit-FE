@@ -1,9 +1,10 @@
 import LogoIcon from '@/components/common/logo-icon'
 import useChallenge from '@/hooks/challenge/use-challenge'
+import { ChallengeType } from '@/types/challenge'
 
 interface ChallengeTitleProps {
   challengeId?: number
-  challengeType: 'individual' | 'team'
+  challengeType: ChallengeType
 }
 
 const ChallengeTitle = ({ challengeId, challengeType }: ChallengeTitleProps) => {

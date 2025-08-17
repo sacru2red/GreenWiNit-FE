@@ -3,6 +3,8 @@ import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { omit } from 'es-toolkit'
 import { ApiResponse, CursorPaginatedResponse } from '@/types/api'
+import { throwResponseStatusThenChaining } from '@/lib/network'
+import { ChallengeType } from '@/types/challenge'
 
 export const challengesApi = {
   // @MEMO v2 작업완료
@@ -39,27 +41,43 @@ export const challengesApi = {
     const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor, pageSize })}`)
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
+  // @MEMO v2 작업완료
   getJoinedChallengesMine: async ({
     cursor,
     challengeType,
+    pageSize,
   }: {
     cursor?: number | null
-    challengeType: 'individual' | 'team'
+    challengeType: ChallengeType
+    pageSize?: number | null | undefined
   }) => {
-    const response = await fetch(
-      `${API_URL}/my/challenges/${challengeType === 'individual' ? 'personal' : 'team'}?${stringify({ cursor })}`,
+    return await fetch(
+      `${API_URL}/challenges/${challengeType === 'individual' ? 'personal' : 'team'}/me?${stringify({ cursor, size: pageSize })}`,
     )
-    return response.json() as Promise<JoinedChallengesMineReponse>
+      .then((res) => {
+        return res.json() as Promise<JoinedChallengesMineReponse>
+      })
+      .then((res) => {
+        return {
+          ...res,
+          result: {
+            ...res.result,
+            content: res.result?.content.map((item) => ({
+              ...item,
+              point: item.challengePoint,
+            })),
+          },
+        }
+      })
   },
-  joinChallenge: async (id: number) => {
-    return fetch(`${API_URL}/challenges/${id}/participate`, {
-      method: 'POST',
-    }).then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText)
-      }
-      return res.json()
-    })
+  // @MEMO v2 작업완료
+  joinChallenge: async ({ id, challengeType }: { id: number; challengeType: ChallengeType }) => {
+    return fetch(
+      `${API_URL}/challenges/${challengeType === 'individual' ? 'personal' : 'team'}/${id}/participate`,
+      {
+        method: 'POST',
+      },
+    ).then(throwResponseStatusThenChaining)
   },
   getJoinedTeamsMine: async (id: number) => {
     // @TODO replace API
@@ -149,7 +167,7 @@ export const challengesApi = {
   }: {
     cursor?: number | null
     pageSize?: number
-    challengeType: 'individual' | 'team'
+    challengeType: ChallengeType
   }) => {
     const response = await fetch(
       `${API_URL}/certifications/challenges/me?${stringify({ cursor, size: pageSize, type: challengeType === 'team' ? 'T' : 'P' })}`,
@@ -186,9 +204,6 @@ export interface CommonChallenge {
   challengeName: string
   beginDate: string
   endDate: string
-  /**
-   * 'https://example.com/image.jpg'
-   */
   challengeImage: string
   point: number
 }
@@ -238,11 +253,15 @@ export interface ChallengeDetailResponse {
   type?: 'PERSONAL' | 'TEAM'
 }
 
-export type JoinedChallengesMineReponse = ApiResponse<{
-  hasNext: boolean
-  nextCursor: number | null
-  content: CommonChallenge[]
-}>
+interface JoinedChallengesMineReponseElement {
+  id: number
+  challengeName: string
+  beginDate: string
+  endDate: string
+  challengeImage: string
+  challengePoint: number
+}
+type JoinedChallengesMineReponse = CursorPaginatedResponse<JoinedChallengesMineReponseElement>
 
 export interface ChallengeTeamsElement {
   id: number
@@ -334,7 +353,7 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     cursor,
     pageSize,
   }: {
-    challengeType: 'individual' | 'team'
+    challengeType: ChallengeType
     cursor?: number | null | undefined
     pageSize?: number | null | undefined
   }) =>
@@ -346,10 +365,17 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
   listJoinedMine: ({
     cursor,
     challengeType,
+    pageSize,
   }: {
     cursor?: number | null
-    challengeType: 'individual' | 'team'
-  }) => ['list', 'my-joined', { challengeType, cursor: cursor ?? undefined }] as const,
+    challengeType: ChallengeType
+    pageSize?: number | null | undefined
+  }) =>
+    [
+      'list',
+      'my-joined',
+      { challengeType, cursor: cursor ?? undefined, pageSize: pageSize ?? undefined },
+    ] as const,
   certifiedDetail: ({ certId }: { certId: number }) =>
     ['my-certified', 'details', { certId }] as const,
   listCertifiedMine: ({
@@ -357,15 +383,10 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     challengeType,
   }: {
     cursor?: number | null
-    challengeType: 'individual' | 'team'
+    challengeType: ChallengeType
   }) => ['list', 'my-certified', { challengeType, cursor: cursor ?? undefined }] as const,
-  detail: ({
-    id,
-    challengeType,
-  }: {
-    id: number | undefined
-    challengeType: 'individual' | 'team'
-  }) => [challengeType, { id: id ?? undefined }] as const,
+  detail: ({ id, challengeType }: { id: number | undefined; challengeType: ChallengeType }) =>
+    [challengeType, { id: id ?? undefined }] as const,
   team: (challengeId: number | undefined, teamId: number | undefined) =>
     [challengeId, 'teams', teamId] as const,
   teams: (challengeId: number | undefined) => [challengeId, 'teams'] as const,
