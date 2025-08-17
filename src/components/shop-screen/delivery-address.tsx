@@ -10,9 +10,9 @@ interface DeliveryAddressProps {
 
 const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddressProps = {}) => {
   const navigate = useNavigate()
-  const params = useParams({ from: '/point-shop/products/$pointProduct-id/detail' })
+  const params = useParams({ from: '/point-shop/products/$point-product-id/detail' })
 
-  const pointProductId = propPointProductId || params['pointProduct-id']
+  const pointProductId = propPointProductId || params['point-product-id']
 
   const { data: userAddressData } = useAddress()
 
@@ -26,14 +26,14 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
 
     if (hasAddress) {
       navigate({
-        to: '/point-shop/products/$pointProduct-id/enroll-address',
-        params: { 'pointProduct-id': pointProductId },
+        to: '/point-shop/products/$point-product-id/enroll-address',
+        params: { 'point-product-id': pointProductId },
         search: { mode: 'edit' },
       })
     } else {
       navigate({
-        to: '/point-shop/products/$pointProduct-id/enroll-address',
-        params: { 'pointProduct-id': pointProductId },
+        to: '/point-shop/products/$point-product-id/enroll-address',
+        params: { 'point-product-id': pointProductId },
         search: { mode: 'add' },
       })
     }

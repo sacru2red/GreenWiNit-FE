@@ -8,12 +8,12 @@ import { useState } from 'react'
 import Loading from '@/components/common/loading'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/point-shop/products/$pointProduct-id/detail')({
+export const Route = createFileRoute('/point-shop/products/$point-product-id/detail')({
   component: ProductDetail,
 })
 
 function ProductDetail() {
-  const pointProductId = Route.useParams()['pointProduct-id']
+  const pointProductId = Route.useParams()['point-product-id']
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)
 

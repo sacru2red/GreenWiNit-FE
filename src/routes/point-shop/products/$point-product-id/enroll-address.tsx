@@ -15,7 +15,7 @@ import ErrorMessage from '@/components/common/form/error-message'
 import useAddress from '@/hooks/use-adress'
 import NoticeDialog from '@/components/common/modal/notice-dialog'
 
-export const Route = createFileRoute('/point-shop/products/$pointProduct-id/enroll-address')({
+export const Route = createFileRoute('/point-shop/products/$point-product-id/enroll-address')({
   component: EnrollAddress,
   validateSearch: (search: Record<string, unknown>) => {
     return {

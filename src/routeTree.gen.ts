@@ -25,8 +25,8 @@ import { Route as PostsIdIndexRouteImport } from './routes/posts/$id/index'
 import { Route as MyPageChallengesCertifiedRouteImport } from './routes/my-page/challenges/certified'
 import { Route as ChallengesChallengeIdDetailRouteImport } from './routes/challenges/$challenge-id/detail'
 import { Route as ChallengesChallengeIdTeamsIndexRouteImport } from './routes/challenges/$challenge-id/teams/index'
-import { Route as PointShopProductsPointProductIdEnrollAddressRouteImport } from './routes/point-shop/products/$pointProduct-id/enroll-address'
-import { Route as PointShopProductsPointProductIdDetailRouteImport } from './routes/point-shop/products/$pointProduct-id/detail'
+import { Route as PointShopProductsPointProductIdEnrollAddressRouteImport } from './routes/point-shop/products/$point-product-id/enroll-address'
+import { Route as PointShopProductsPointProductIdDetailRouteImport } from './routes/point-shop/products/$point-product-id/detail'
 import { Route as MyPageChallengesCertifyChallengeIdRouteImport } from './routes/my-page/challenges/certify/$challenge-id'
 import { Route as ChallengesUserMeJoinedRouteImport } from './routes/challenges/user/me/joined'
 import { Route as ChallengesChallengeIdTeamsJoinRouteImport } from './routes/challenges/$challenge-id/teams/join'
@@ -122,14 +122,14 @@ const ChallengesChallengeIdTeamsIndexRoute =
   } as any)
 const PointShopProductsPointProductIdEnrollAddressRoute =
   PointShopProductsPointProductIdEnrollAddressRouteImport.update({
-    id: '/point-shop/products/$pointProduct-id/enroll-address',
-    path: '/point-shop/products/$pointProduct-id/enroll-address',
+    id: '/point-shop/products/$point-product-id/enroll-address',
+    path: '/point-shop/products/$point-product-id/enroll-address',
     getParentRoute: () => rootRouteImport,
   } as any)
 const PointShopProductsPointProductIdDetailRoute =
   PointShopProductsPointProductIdDetailRouteImport.update({
-    id: '/point-shop/products/$pointProduct-id/detail',
-    path: '/point-shop/products/$pointProduct-id/detail',
+    id: '/point-shop/products/$point-product-id/detail',
+    path: '/point-shop/products/$point-product-id/detail',
     getParentRoute: () => rootRouteImport,
   } as any)
 const MyPageChallengesCertifyChallengeIdRoute =
@@ -207,8 +207,8 @@ export interface FileRoutesByFullPath {
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
   '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
   '/my-page/challenges/certify/$challenge-id': typeof MyPageChallengesCertifyChallengeIdRoute
-  '/point-shop/products/$pointProduct-id/detail': typeof PointShopProductsPointProductIdDetailRoute
-  '/point-shop/products/$pointProduct-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
+  '/point-shop/products/$point-product-id/detail': typeof PointShopProductsPointProductIdDetailRoute
+  '/point-shop/products/$point-product-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
   '/challenges/$challenge-id/teams': typeof ChallengesChallengeIdTeamsIndexRoute
   '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
   '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
@@ -236,8 +236,8 @@ export interface FileRoutesByTo {
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
   '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
   '/my-page/challenges/certify/$challenge-id': typeof MyPageChallengesCertifyChallengeIdRoute
-  '/point-shop/products/$pointProduct-id/detail': typeof PointShopProductsPointProductIdDetailRoute
-  '/point-shop/products/$pointProduct-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
+  '/point-shop/products/$point-product-id/detail': typeof PointShopProductsPointProductIdDetailRoute
+  '/point-shop/products/$point-product-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
   '/challenges/$challenge-id/teams': typeof ChallengesChallengeIdTeamsIndexRoute
   '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
   '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
@@ -266,8 +266,8 @@ export interface FileRoutesById {
   '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
   '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
   '/my-page/challenges/certify/$challenge-id': typeof MyPageChallengesCertifyChallengeIdRoute
-  '/point-shop/products/$pointProduct-id/detail': typeof PointShopProductsPointProductIdDetailRoute
-  '/point-shop/products/$pointProduct-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
+  '/point-shop/products/$point-product-id/detail': typeof PointShopProductsPointProductIdDetailRoute
+  '/point-shop/products/$point-product-id/enroll-address': typeof PointShopProductsPointProductIdEnrollAddressRoute
   '/challenges/$challenge-id/teams/': typeof ChallengesChallengeIdTeamsIndexRoute
   '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
   '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
@@ -297,8 +297,8 @@ export interface FileRouteTypes {
     | '/challenges/$challenge-id/teams/join'
     | '/challenges/user/me/joined'
     | '/my-page/challenges/certify/$challenge-id'
-    | '/point-shop/products/$pointProduct-id/detail'
-    | '/point-shop/products/$pointProduct-id/enroll-address'
+    | '/point-shop/products/$point-product-id/detail'
+    | '/point-shop/products/$point-product-id/enroll-address'
     | '/challenges/$challenge-id/teams'
     | '/challenges/$challenge-id/submit/team/$team-id'
     | '/challenges/$challenge-id/teams/$team-id/joined'
@@ -326,8 +326,8 @@ export interface FileRouteTypes {
     | '/challenges/$challenge-id/teams/join'
     | '/challenges/user/me/joined'
     | '/my-page/challenges/certify/$challenge-id'
-    | '/point-shop/products/$pointProduct-id/detail'
-    | '/point-shop/products/$pointProduct-id/enroll-address'
+    | '/point-shop/products/$point-product-id/detail'
+    | '/point-shop/products/$point-product-id/enroll-address'
     | '/challenges/$challenge-id/teams'
     | '/challenges/$challenge-id/submit/team/$team-id'
     | '/challenges/$challenge-id/teams/$team-id/joined'
@@ -355,8 +355,8 @@ export interface FileRouteTypes {
     | '/challenges/$challenge-id/teams/join'
     | '/challenges/user/me/joined'
     | '/my-page/challenges/certify/$challenge-id'
-    | '/point-shop/products/$pointProduct-id/detail'
-    | '/point-shop/products/$pointProduct-id/enroll-address'
+    | '/point-shop/products/$point-product-id/detail'
+    | '/point-shop/products/$point-product-id/enroll-address'
     | '/challenges/$challenge-id/teams/'
     | '/challenges/$challenge-id/submit/team/$team-id'
     | '/challenges/$challenge-id/teams/$team-id/joined'
@@ -508,17 +508,17 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChallengesChallengeIdTeamsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/point-shop/products/$pointProduct-id/enroll-address': {
-      id: '/point-shop/products/$pointProduct-id/enroll-address'
-      path: '/point-shop/products/$pointProduct-id/enroll-address'
-      fullPath: '/point-shop/products/$pointProduct-id/enroll-address'
+    '/point-shop/products/$point-product-id/enroll-address': {
+      id: '/point-shop/products/$point-product-id/enroll-address'
+      path: '/point-shop/products/$point-product-id/enroll-address'
+      fullPath: '/point-shop/products/$point-product-id/enroll-address'
       preLoaderRoute: typeof PointShopProductsPointProductIdEnrollAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/point-shop/products/$pointProduct-id/detail': {
-      id: '/point-shop/products/$pointProduct-id/detail'
-      path: '/point-shop/products/$pointProduct-id/detail'
-      fullPath: '/point-shop/products/$pointProduct-id/detail'
+    '/point-shop/products/$point-product-id/detail': {
+      id: '/point-shop/products/$point-product-id/detail'
+      path: '/point-shop/products/$point-product-id/detail'
+      fullPath: '/point-shop/products/$point-product-id/detail'
       preLoaderRoute: typeof PointShopProductsPointProductIdDetailRouteImport
       parentRoute: typeof rootRouteImport
     }
