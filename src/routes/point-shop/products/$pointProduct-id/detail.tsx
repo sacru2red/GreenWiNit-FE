@@ -6,7 +6,7 @@ import useProduct from '@/hooks/product/use-product'
 import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import Loading from '@/components/common/loading'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/point-shop/products/$pointProduct-id/detail')({
   component: ProductDetail,
@@ -14,7 +14,6 @@ export const Route = createFileRoute('/point-shop/products/$pointProduct-id/deta
 
 function ProductDetail() {
   const pointProductId = Route.useParams()['pointProduct-id']
-  const navigate = useNavigate()
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)
 
@@ -30,7 +29,8 @@ function ProductDetail() {
   }
 
   const handleExchangePoint = () => {
-    navigate('/buy')
+    // https://docs.google.com/presentation/d/1pbZdY3SoAVvmvmz9FbINwfLaJ-JMv37inoXZFIvgUaw/edit?slide=id.g36dc7146b90_2_61#slide=id.g36dc7146b90_2_61
+    // @TODO 구현빠진부분 추가
   }
 
   if (isLoading) {
