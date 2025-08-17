@@ -1,3 +1,4 @@
+import Required from '@/components/common/required'
 import { WithDrawnFormState } from '@/pages/my-page/withdraw'
 import { UseFormRegister } from 'react-hook-form'
 
@@ -9,7 +10,7 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
   return (
     <section className="flex flex-col gap-4 px-4 py-6">
       <h3 className="flex items-center self-start font-bold">
-        탈퇴 이유를 선택해주세요 <span className="text-error ml-1">*</span>
+        탈퇴 이유를 선택해주세요 <Required />
       </h3>
       <ul className="flex flex-col gap-5">
         {reasons.map((el, index) => (

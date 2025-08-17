@@ -52,14 +52,14 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
             ref={ref}
             id={id}
             type="text"
-            placeholder={mode === 'new' ? '새 닉네임을 입력해주세요.' : '닉네임 입력'}
+            placeholder="새 닉네임을 입력해주세요."
             className="flex-1 px-3 py-4 text-sm focus:outline-none"
             {...props}
           />
           <button
             type="button"
             onClick={handleClick}
-            className="hover:bg-mountain_meadow rounded-r-md bg-gray-300 px-8 text-sm text-white"
+            className="hover:bg-mountain_meadow/80 bg-mountain_meadow rounded-r-md px-8 text-sm text-white"
           >
             중복 확인
           </button>

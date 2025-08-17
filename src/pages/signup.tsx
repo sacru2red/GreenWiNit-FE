@@ -90,7 +90,11 @@ const Signup = () => {
               />
             )}
           ></Controller>
-          <Button type="submit" className="mt-auto">
+          <Button
+            type="submit"
+            className="mt-auto"
+            variant={isNicknameDuplicated ? 'default' : 'disabled'}
+          >
             제출
           </Button>
         </form>
