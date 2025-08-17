@@ -59,7 +59,7 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
           <button
             type="button"
             onClick={handleClick}
-            className="hover:bg-mountain_meadow rounded-r-md bg-gray-300 px-8 text-sm text-white"
+            className="hover:bg-mountain_meadow/80 bg-mountain_meadow rounded-r-md px-8 text-sm text-white"
           >
             중복 확인
           </button>

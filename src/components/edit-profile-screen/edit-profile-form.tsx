@@ -105,7 +105,7 @@ function EditProfileForm() {
         </fieldset>
         <fieldset className="mt-auto flex w-full">
           <legend className="sr-only">제출</legend>
-          <SubmitEditButton />
+          <SubmitEditButton isNicknameDuplicated={isNicknameDuplicated} />
         </fieldset>
       </form>
       {showConfirmModal && (
