@@ -72,7 +72,7 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
           </PopoverContent>
         </Popover>
       ) : null}
-      <LogoIcon size="large" className="border-1 bg-white" />
+      <LogoIcon size="large" className="border bg-white" />
       <span className="text-mountain_meadow-700 text-2xl font-bold">{team.groupName}</span>
       <Dialog
         open={showConfirmDeletingDialog}
