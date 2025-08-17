@@ -1,5 +1,5 @@
 import { MouseEventHandler, useState, useCallback, MouseEvent } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import PostIcon from './post.svg?react'
 import HomeIcon from './home.svg?react'
 import ShopIcon from './shop.svg?react'
@@ -39,7 +39,7 @@ function BottomNavigation({ containerClassName }: BottomNavigationProps) {
   }, [myPageClickCount, lastClickTime])
 
   const handleItemClick = (moveTo: string) => (e: MouseEvent<HTMLButtonElement>) => {
-    navigate(moveTo)
+    navigate({ to: moveTo })
 
     if (moveTo === '/my-page') {
       handleMyPageClick(e)

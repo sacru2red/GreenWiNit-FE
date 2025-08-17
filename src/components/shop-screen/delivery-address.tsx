@@ -1,8 +1,8 @@
 import useAddress from '@/hooks/use-adress'
 import { Plus } from 'lucide-react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Fragment } from 'react'
 import { Button } from '../ui/button'
+import { useNavigate, useParams } from '@tanstack/react-router'
 
 interface DeliveryAddressProps {
   pointProductId?: string | undefined
@@ -10,10 +10,9 @@ interface DeliveryAddressProps {
 
 const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddressProps = {}) => {
   const navigate = useNavigate()
-  const location = useLocation()
-  const params = useParams<{ pointProductId: string }>()
+  const params = useParams({ from: '/point-shop/products/$pointProduct-id/detail' })
 
-  const pointProductId = propPointProductId || params.pointProductId
+  const pointProductId = propPointProductId || params['pointProduct-id']
 
   const { data: userAddressData } = useAddress()
 
@@ -25,12 +24,18 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
       return
     }
 
-    const state = { from: location.pathname + location.search }
-
     if (hasAddress) {
-      navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=edit`, { state })
+      navigate({
+        to: '/point-shop/products/$pointProduct-id/enroll-address',
+        params: { 'pointProduct-id': pointProductId },
+        search: { mode: 'edit' },
+      })
     } else {
-      navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=add`, { state })
+      navigate({
+        to: '/point-shop/products/$pointProduct-id/enroll-address',
+        params: { 'pointProduct-id': pointProductId },
+        search: { mode: 'add' },
+      })
     }
   }
 

@@ -11,6 +11,7 @@ import { initHistoryAndLocation } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { createFileRoute } from '@tanstack/react-router'
+import { WithDrawnFormState } from '@/types/withdraw'
 
 export const Route = createFileRoute('/my-page/withdraw')({
   component: WithDraw,
@@ -95,10 +96,5 @@ export type Reasons =
   | 'PRIVACY_CONCERN'
   | 'PRIVACY_PROTECTION'
   | 'OTHER'
-
-export interface WithDrawnFormState {
-  reasonType: string | string[]
-  customReason: string | null
-}
 
 export default WithDraw

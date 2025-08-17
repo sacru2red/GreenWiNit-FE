@@ -1,7 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter } from '../ui/dialog'
 import { Button } from '../ui/button'
-import { useNavigate } from 'react-router-dom'
-import { stringify } from '@/lib/query-string'
+import { useNavigate } from '@tanstack/react-router'
 
 interface WarnNotLoggedInProps {
   isOpen: boolean
@@ -33,7 +32,7 @@ const WarnNotLoggedIn = ({
             onClick={() => {
               onOpenChange(false)
               if (backButtonAction === 'back') {
-                navigate(-1)
+                window.history.back()
               }
             }}
           >
@@ -42,7 +41,7 @@ const WarnNotLoggedIn = ({
           <Button
             size="flex"
             onClick={() =>
-              navigate(`/login?${stringify({ message: infoMessageAfterRedirecting })}`)
+              navigate({ to: '/login', search: { message: infoMessageAfterRedirecting } })
             }
           >
             확인

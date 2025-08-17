@@ -3,7 +3,7 @@ import Tab from '@/components/home-screen/challenges/tab'
 import { TabProps } from '@/components/home-screen/challenges/type'
 import { useChallenges } from '@/hooks/challenge/use-challenges'
 import Challenge from '@/components/common/challenge'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import { Info as InfoOutlineIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
@@ -48,7 +48,7 @@ const Challenges = () => {
                       setIsWarnNotLoggedInDialogOpen(true)
                       return
                     }
-                    navigate(`/challenges/${challenge.id}/detail`)
+                    navigate({ to: `/challenges/${challenge.id}/detail` })
                   }}
                 />
               </CarouselItem>

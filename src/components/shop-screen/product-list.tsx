@@ -1,13 +1,13 @@
 import useProducts from '@/hooks/product/use-products'
 import { CircleAlert } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import Loading from '../common/loading'
 
 const ProductList = () => {
   const navigate = useNavigate()
 
   const handleProductClick = (productId: number) => {
-    navigate(`product/${productId}`)
+    navigate({ to: `/point-shop/product/${productId}` })
   }
 
   const { data: products, isLoading } = useProducts()

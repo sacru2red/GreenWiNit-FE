@@ -1,5 +1,5 @@
 import Required from '@/components/common/required'
-import { WithDrawnFormState } from '@/pages/my-page/withdraw'
+import { WithDrawnFormState } from '@/types/withdraw'
 import { UseFormRegister } from 'react-hook-form'
 
 interface WithdrawReasonFieldProps {
