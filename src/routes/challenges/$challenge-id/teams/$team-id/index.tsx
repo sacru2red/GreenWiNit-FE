@@ -11,12 +11,16 @@ import { toast } from 'sonner'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
-const TeamDetail = () => {
-  const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = Number(params.challengeId)
-  const teamId = Number(params.teamId)
+export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/')({
+  component: TeamDetail,
+})
+
+function TeamDetail() {
+  const params = Route.useParams()
+  const challengeId = Number(params['challenge-id'])
+  const teamId = Number(params['team-id'])
 
   const queryClient = useQueryClient()
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
@@ -82,7 +86,7 @@ const TeamDetail = () => {
             오픈채팅방을 통해 이야기를 나눠요.
           </DialogDescription>
           <div className="flex w-full flex-row justify-center">
-            <Button size="sm" onClick={() => navigate(`/challenges/${challengeId}/teams`)}>
+            <Button size="sm" onClick={() => navigate({ to: `/challenges/${challengeId}/teams` })}>
               확인
             </Button>
           </div>

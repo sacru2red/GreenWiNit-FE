@@ -2,20 +2,21 @@ import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
-import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { dayjs } from '@/constant/globals'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
-dayjs.extend(customParseFormat)
+export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/modify')({
+  component: TeamModify,
+})
 
-const TeamModify = () => {
-  const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = Number(params.challengeId)
-  const teamId = Number(params.teamId)
+function TeamModify() {
+  const params = Route.useParams()
+  const challengeId = Number(params['challenge-id'])
+  const teamId = Number(params['team-id'])
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data, isLoading } = useChallengesTeam(challengeId, teamId)
@@ -48,7 +49,7 @@ const TeamModify = () => {
       queryClient.invalidateQueries({
         queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
       })
-      navigate(`/challenges/${challengeId}/teams`)
+      navigate({ to: `/challenges/${challengeId}/teams` })
     },
     onError(error) {
       console.error(error)

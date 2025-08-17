@@ -2,8 +2,13 @@ import BottomNavigation from '@/components/common/bottom-navigation'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import JoinedChallengesContainer from '@/components/home-screen/challenges/joined-challenges-container'
+import { createFileRoute } from '@tanstack/react-router'
 
-const JoinedChallenges = () => {
+export const Route = createFileRoute('/challenges/user/me/joined')({
+  component: JoinedChallenges,
+})
+
+function JoinedChallenges() {
   return (
     <PageLayOut.Container>
       <PageLayOut.HeaderSection>

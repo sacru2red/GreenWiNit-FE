@@ -1,6 +1,6 @@
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
-import { useNavigate, useParams } from 'react-router-dom'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import BottomNavigation from '@/components/common/bottom-navigation'
@@ -13,9 +13,12 @@ import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
 
-const ChallengeDetail = () => {
-  const params = useParams<{ challengeId: string }>()
-  const challengeId = Number(params.challengeId)
+export const Route = createFileRoute('/challenges/$challenge-id/detail')({
+  component: ChallengeDetail,
+})
+
+function ChallengeDetail() {
+  const challengeId = Number(Route.useParams()['challenge-id'])
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
   const queryClient = useQueryClient()
@@ -61,7 +64,7 @@ const ChallengeDetail = () => {
                 <span className="text-card-base">
                   {challenge == null
                     ? null
-                    : `${dayjs(challenge.beginDateTime).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('YYYY.MM.DD')}`}
+                    : `${dayjs(challenge.beginDateTime).format(`YYYY.MM.DD`)} ~ ${dayjs(challenge.endDateTime).format(`YYYY.MM.DD`)}`}
                 </span>
               </p>
             </div>
@@ -111,7 +114,7 @@ const ChallengeDetail = () => {
             챌린지를 인증해보세요!
           </DialogDescription>
           <div className="flex w-full flex-row justify-center">
-            <Button size="sm" onClick={() => navigate('/challenges/user/me/joined')}>
+            <Button size="sm" onClick={() => navigate({ to: '/challenges/user/me/joined' })}>
               확인
             </Button>
           </div>

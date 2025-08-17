@@ -5,15 +5,18 @@ import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useParams } from 'react-router-dom'
 import { SquareCheckBig } from 'lucide-react'
 import { Users as GroupsIcon } from 'lucide-react'
 import BottomNavigation from '@/components/common/bottom-navigation'
 import TeamCard from '@/components/common/teams/team-card'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
-const ChallengesTeam = () => {
-  const params = useParams<{ challengeId: string }>()
-  const challengeId = Number(params.challengeId)
+export const Route = createFileRoute('/challenges/$challenge-id/teams/')({
+  component: ChallengesTeam,
+})
+
+function ChallengesTeam() {
+  const challengeId = Number(Route.useParams()['challenge-id'])
   const { data: challenge } = useChallenge(challengeId)
   const navigate = useNavigate()
 
@@ -39,7 +42,13 @@ const ChallengesTeam = () => {
         {joinedTeams?.length ? (
           <div className="flex flex-col gap-4">
             {joinedTeams.map((team) => (
-              <TeamCard key={team.id} team={team} onClick={() => navigate(`./${team.id}/joined`)} />
+              <TeamCard
+                key={team.id}
+                team={team}
+                onClick={() =>
+                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}/joined` })
+                }
+              />
             ))}
           </div>
         ) : (
@@ -52,10 +61,16 @@ const ChallengesTeam = () => {
           </div>
         )}
         <div className="mt-auto flex w-full gap-2">
-          <Button size="flex" onClick={() => navigate(`./join`)}>
+          <Button
+            size="flex"
+            onClick={() => navigate({ to: `/challenges/${challengeId}/teams/join` })}
+          >
             <SquareCheckBig />팀 선택하기
           </Button>
-          <Button size="flex" onClick={() => navigate(`./enroll`)}>
+          <Button
+            size="flex"
+            onClick={() => navigate({ to: `/challenges/${challengeId}/teams/enroll` })}
+          >
             <GroupsIcon />팀 등록하기
           </Button>
         </div>

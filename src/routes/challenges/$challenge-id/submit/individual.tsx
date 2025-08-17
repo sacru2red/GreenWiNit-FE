@@ -2,7 +2,6 @@ import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import Required from '@/components/common/required'
 import Input from '@/components/common/form/input'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import DatePickerSingle from '@/components/common/form/date-picker-single'
@@ -15,8 +14,13 @@ import ReviewRow from '@/components/submit-screen/review-row'
 import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
 import useChallenge from '@/hooks/challenge/use-challenge'
+import { createFileRoute } from '@tanstack/react-router'
 
-const ChallengeSubmitIndividual = () => {
+export const Route = createFileRoute('/challenges/$challenge-id/submit/individual')({
+  component: ChallengeSubmitIndividual,
+})
+
+function ChallengeSubmitIndividual() {
   const f = useForm<FormState>({
     defaultValues: {
       date: null,
@@ -25,8 +29,7 @@ const ChallengeSubmitIndividual = () => {
     },
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
-  const params = useParams<{ challengeId: string }>()
-  const challengeId = Number(params.challengeId)
+  const challengeId = Number(Route.useParams()['challenge-id'])
   const { data: challenge } = useChallenge(challengeId)
 
   const onSubmit: SubmitHandler<FormState> = (data) => {

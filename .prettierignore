@@ -4,3 +4,4 @@ coverage
 dist
 
 wrangler.jsonc
+routeTree.gen.ts

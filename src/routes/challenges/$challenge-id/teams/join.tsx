@@ -3,12 +3,15 @@ import TeamCard from '@/components/common/teams/team-card'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import useChallengesTeams from '@/hooks/challenge/use-challenges-teams'
-import { useNavigate, useParams } from 'react-router-dom'
 import BottomNavigation from '@/components/common/bottom-navigation'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
-const JoinTeam = () => {
-  const params = useParams<{ challengeId: string }>()
-  const challengeId = Number(params.challengeId)
+export const Route = createFileRoute('/challenges/$challenge-id/teams/join')({
+  component: JoinTeam,
+})
+
+function JoinTeam() {
+  const challengeId = Number(Route.useParams()['challenge-id'])
 
   const navigate = useNavigate()
   const { data } = useChallengesTeams(challengeId)
@@ -28,7 +31,7 @@ const JoinTeam = () => {
               <TeamCard
                 key={team.id}
                 onClick={() => {
-                  navigate(`/challenges/${challengeId}/teams/${team.id}`)
+                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}` })
                 }}
                 team={team}
               />

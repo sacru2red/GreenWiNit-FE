@@ -6,16 +6,20 @@ import Overview from '@/components/common/teams/overview'
 import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/ui/button'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
-import { useNavigate, useParams } from 'react-router-dom'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/joined')({
+  component: ManageTeam,
+})
 
 /**
  *
  * index 페이지와 비슷하지만, manage 기능이 가능한 페이지
  */
-const ManageTeam = () => {
-  const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = Number(params.challengeId)
-  const teamId = Number(params.teamId)
+function ManageTeam() {
+  const params = Route.useParams()
+  const challengeId = Number(params['challenge-id'])
+  const teamId = Number(params['team-id'])
 
   const navigate = useNavigate()
 
@@ -46,7 +50,7 @@ const ManageTeam = () => {
           <div className="mt-auto flex w-full">
             <Button
               size="flex"
-              onClick={() => navigate(`/challenges/${challengeId}/submit/teams/${teamId}`)}
+              onClick={() => navigate({ to: `/challenges/${challengeId}/submit/teams/${teamId}` })}
             >
               챌린지 인증하기
             </Button>

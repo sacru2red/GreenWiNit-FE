@@ -1,6 +1,5 @@
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -10,10 +9,13 @@ import ImageRow from '@/components/submit-screen/image-row'
 import ReviewRow from '@/components/submit-screen/review-row'
 import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
+import { createFileRoute } from '@tanstack/react-router'
 
-type FormState = Pick<FormStateDefault, 'image' | 'review'>
+export const Route = createFileRoute('/challenges/$challenge-id/submit/team/$team-id')({
+  component: ChallengeSubmitTeam,
+})
 
-const ChallengeSubmitTeam = () => {
+function ChallengeSubmitTeam() {
   const f = useForm<FormState>({
     defaultValues: {
       image: null,
@@ -21,8 +23,7 @@ const ChallengeSubmitTeam = () => {
     },
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
-  const params = useParams<{ challengeId: string; teamId: string }>()
-  const challengeId = Number(params.challengeId)
+  const challengeId = Number(Route.useParams()['challenge-id'])
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     const { image, review } = data
@@ -65,5 +66,7 @@ const ChallengeSubmitTeam = () => {
     </PageLayOut.Container>
   )
 }
+
+type FormState = Pick<FormStateDefault, 'image' | 'review'>
 
 export default ChallengeSubmitTeam

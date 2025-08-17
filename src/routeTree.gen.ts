@@ -11,6 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChallengesChallengeIdDetailRouteImport } from './routes/challenges/$challenge-id/detail'
+import { Route as ChallengesChallengeIdTeamsIndexRouteImport } from './routes/challenges/$challenge-id/teams/index'
+import { Route as ChallengesUserMeJoinedRouteImport } from './routes/challenges/user/me/joined'
+import { Route as ChallengesChallengeIdTeamsJoinRouteImport } from './routes/challenges/$challenge-id/teams/join'
+import { Route as ChallengesChallengeIdTeamsEnrollRouteImport } from './routes/challenges/$challenge-id/teams/enroll'
+import { Route as ChallengesChallengeIdSubmitIndividualRouteImport } from './routes/challenges/$challenge-id/submit/individual'
+import { Route as ChallengesChallengeIdTeamsTeamIdIndexRouteImport } from './routes/challenges/$challenge-id/teams/$team-id/index'
+import { Route as ChallengesChallengeIdTeamsTeamIdModifyRouteImport } from './routes/challenges/$challenge-id/teams/$team-id/modify'
+import { Route as ChallengesChallengeIdTeamsTeamIdJoinedRouteImport } from './routes/challenges/$challenge-id/teams/$team-id/joined'
+import { Route as ChallengesChallengeIdSubmitTeamTeamIdRouteImport } from './routes/challenges/$challenge-id/submit/team/$team-id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -22,31 +32,167 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChallengesChallengeIdDetailRoute =
+  ChallengesChallengeIdDetailRouteImport.update({
+    id: '/challenges/$challenge-id/detail',
+    path: '/challenges/$challenge-id/detail',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdTeamsIndexRoute =
+  ChallengesChallengeIdTeamsIndexRouteImport.update({
+    id: '/challenges/$challenge-id/teams/',
+    path: '/challenges/$challenge-id/teams/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesUserMeJoinedRoute = ChallengesUserMeJoinedRouteImport.update({
+  id: '/challenges/user/me/joined',
+  path: '/challenges/user/me/joined',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChallengesChallengeIdTeamsJoinRoute =
+  ChallengesChallengeIdTeamsJoinRouteImport.update({
+    id: '/challenges/$challenge-id/teams/join',
+    path: '/challenges/$challenge-id/teams/join',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdTeamsEnrollRoute =
+  ChallengesChallengeIdTeamsEnrollRouteImport.update({
+    id: '/challenges/$challenge-id/teams/enroll',
+    path: '/challenges/$challenge-id/teams/enroll',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdSubmitIndividualRoute =
+  ChallengesChallengeIdSubmitIndividualRouteImport.update({
+    id: '/challenges/$challenge-id/submit/individual',
+    path: '/challenges/$challenge-id/submit/individual',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdTeamsTeamIdIndexRoute =
+  ChallengesChallengeIdTeamsTeamIdIndexRouteImport.update({
+    id: '/challenges/$challenge-id/teams/$team-id/',
+    path: '/challenges/$challenge-id/teams/$team-id/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdTeamsTeamIdModifyRoute =
+  ChallengesChallengeIdTeamsTeamIdModifyRouteImport.update({
+    id: '/challenges/$challenge-id/teams/$team-id/modify',
+    path: '/challenges/$challenge-id/teams/$team-id/modify',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdTeamsTeamIdJoinedRoute =
+  ChallengesChallengeIdTeamsTeamIdJoinedRouteImport.update({
+    id: '/challenges/$challenge-id/teams/$team-id/joined',
+    path: '/challenges/$challenge-id/teams/$team-id/joined',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ChallengesChallengeIdSubmitTeamTeamIdRoute =
+  ChallengesChallengeIdSubmitTeamTeamIdRouteImport.update({
+    id: '/challenges/$challenge-id/submit/team/$team-id',
+    path: '/challenges/$challenge-id/submit/team/$team-id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
+  '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
+  '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
+  '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
+  '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
+  '/challenges/$challenge-id/teams': typeof ChallengesChallengeIdTeamsIndexRoute
+  '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
+  '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
+  '/challenges/$challenge-id/teams/$team-id/modify': typeof ChallengesChallengeIdTeamsTeamIdModifyRoute
+  '/challenges/$challenge-id/teams/$team-id': typeof ChallengesChallengeIdTeamsTeamIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
+  '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
+  '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
+  '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
+  '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
+  '/challenges/$challenge-id/teams': typeof ChallengesChallengeIdTeamsIndexRoute
+  '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
+  '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
+  '/challenges/$challenge-id/teams/$team-id/modify': typeof ChallengesChallengeIdTeamsTeamIdModifyRoute
+  '/challenges/$challenge-id/teams/$team-id': typeof ChallengesChallengeIdTeamsTeamIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
+  '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
+  '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
+  '/challenges/$challenge-id/teams/join': typeof ChallengesChallengeIdTeamsJoinRoute
+  '/challenges/user/me/joined': typeof ChallengesUserMeJoinedRoute
+  '/challenges/$challenge-id/teams/': typeof ChallengesChallengeIdTeamsIndexRoute
+  '/challenges/$challenge-id/submit/team/$team-id': typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
+  '/challenges/$challenge-id/teams/$team-id/joined': typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
+  '/challenges/$challenge-id/teams/$team-id/modify': typeof ChallengesChallengeIdTeamsTeamIdModifyRoute
+  '/challenges/$challenge-id/teams/$team-id/': typeof ChallengesChallengeIdTeamsTeamIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/challenges/$challenge-id/detail'
+    | '/challenges/$challenge-id/submit/individual'
+    | '/challenges/$challenge-id/teams/enroll'
+    | '/challenges/$challenge-id/teams/join'
+    | '/challenges/user/me/joined'
+    | '/challenges/$challenge-id/teams'
+    | '/challenges/$challenge-id/submit/team/$team-id'
+    | '/challenges/$challenge-id/teams/$team-id/joined'
+    | '/challenges/$challenge-id/teams/$team-id/modify'
+    | '/challenges/$challenge-id/teams/$team-id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/' | '/login'
+  to:
+    | '/'
+    | '/login'
+    | '/challenges/$challenge-id/detail'
+    | '/challenges/$challenge-id/submit/individual'
+    | '/challenges/$challenge-id/teams/enroll'
+    | '/challenges/$challenge-id/teams/join'
+    | '/challenges/user/me/joined'
+    | '/challenges/$challenge-id/teams'
+    | '/challenges/$challenge-id/submit/team/$team-id'
+    | '/challenges/$challenge-id/teams/$team-id/joined'
+    | '/challenges/$challenge-id/teams/$team-id/modify'
+    | '/challenges/$challenge-id/teams/$team-id'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/challenges/$challenge-id/detail'
+    | '/challenges/$challenge-id/submit/individual'
+    | '/challenges/$challenge-id/teams/enroll'
+    | '/challenges/$challenge-id/teams/join'
+    | '/challenges/user/me/joined'
+    | '/challenges/$challenge-id/teams/'
+    | '/challenges/$challenge-id/submit/team/$team-id'
+    | '/challenges/$challenge-id/teams/$team-id/joined'
+    | '/challenges/$challenge-id/teams/$team-id/modify'
+    | '/challenges/$challenge-id/teams/$team-id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  ChallengesChallengeIdDetailRoute: typeof ChallengesChallengeIdDetailRoute
+  ChallengesChallengeIdSubmitIndividualRoute: typeof ChallengesChallengeIdSubmitIndividualRoute
+  ChallengesChallengeIdTeamsEnrollRoute: typeof ChallengesChallengeIdTeamsEnrollRoute
+  ChallengesChallengeIdTeamsJoinRoute: typeof ChallengesChallengeIdTeamsJoinRoute
+  ChallengesUserMeJoinedRoute: typeof ChallengesUserMeJoinedRoute
+  ChallengesChallengeIdTeamsIndexRoute: typeof ChallengesChallengeIdTeamsIndexRoute
+  ChallengesChallengeIdSubmitTeamTeamIdRoute: typeof ChallengesChallengeIdSubmitTeamTeamIdRoute
+  ChallengesChallengeIdTeamsTeamIdJoinedRoute: typeof ChallengesChallengeIdTeamsTeamIdJoinedRoute
+  ChallengesChallengeIdTeamsTeamIdModifyRoute: typeof ChallengesChallengeIdTeamsTeamIdModifyRoute
+  ChallengesChallengeIdTeamsTeamIdIndexRoute: typeof ChallengesChallengeIdTeamsTeamIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +211,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/challenges/$challenge-id/detail': {
+      id: '/challenges/$challenge-id/detail'
+      path: '/challenges/$challenge-id/detail'
+      fullPath: '/challenges/$challenge-id/detail'
+      preLoaderRoute: typeof ChallengesChallengeIdDetailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/': {
+      id: '/challenges/$challenge-id/teams/'
+      path: '/challenges/$challenge-id/teams'
+      fullPath: '/challenges/$challenge-id/teams'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/user/me/joined': {
+      id: '/challenges/user/me/joined'
+      path: '/challenges/user/me/joined'
+      fullPath: '/challenges/user/me/joined'
+      preLoaderRoute: typeof ChallengesUserMeJoinedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/join': {
+      id: '/challenges/$challenge-id/teams/join'
+      path: '/challenges/$challenge-id/teams/join'
+      fullPath: '/challenges/$challenge-id/teams/join'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsJoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/enroll': {
+      id: '/challenges/$challenge-id/teams/enroll'
+      path: '/challenges/$challenge-id/teams/enroll'
+      fullPath: '/challenges/$challenge-id/teams/enroll'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsEnrollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/submit/individual': {
+      id: '/challenges/$challenge-id/submit/individual'
+      path: '/challenges/$challenge-id/submit/individual'
+      fullPath: '/challenges/$challenge-id/submit/individual'
+      preLoaderRoute: typeof ChallengesChallengeIdSubmitIndividualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/$team-id/': {
+      id: '/challenges/$challenge-id/teams/$team-id/'
+      path: '/challenges/$challenge-id/teams/$team-id'
+      fullPath: '/challenges/$challenge-id/teams/$team-id'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsTeamIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/$team-id/modify': {
+      id: '/challenges/$challenge-id/teams/$team-id/modify'
+      path: '/challenges/$challenge-id/teams/$team-id/modify'
+      fullPath: '/challenges/$challenge-id/teams/$team-id/modify'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsTeamIdModifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/teams/$team-id/joined': {
+      id: '/challenges/$challenge-id/teams/$team-id/joined'
+      path: '/challenges/$challenge-id/teams/$team-id/joined'
+      fullPath: '/challenges/$challenge-id/teams/$team-id/joined'
+      preLoaderRoute: typeof ChallengesChallengeIdTeamsTeamIdJoinedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/challenges/$challenge-id/submit/team/$team-id': {
+      id: '/challenges/$challenge-id/submit/team/$team-id'
+      path: '/challenges/$challenge-id/submit/team/$team-id'
+      fullPath: '/challenges/$challenge-id/submit/team/$team-id'
+      preLoaderRoute: typeof ChallengesChallengeIdSubmitTeamTeamIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  ChallengesChallengeIdDetailRoute: ChallengesChallengeIdDetailRoute,
+  ChallengesChallengeIdSubmitIndividualRoute:
+    ChallengesChallengeIdSubmitIndividualRoute,
+  ChallengesChallengeIdTeamsEnrollRoute: ChallengesChallengeIdTeamsEnrollRoute,
+  ChallengesChallengeIdTeamsJoinRoute: ChallengesChallengeIdTeamsJoinRoute,
+  ChallengesUserMeJoinedRoute: ChallengesUserMeJoinedRoute,
+  ChallengesChallengeIdTeamsIndexRoute: ChallengesChallengeIdTeamsIndexRoute,
+  ChallengesChallengeIdSubmitTeamTeamIdRoute:
+    ChallengesChallengeIdSubmitTeamTeamIdRoute,
+  ChallengesChallengeIdTeamsTeamIdJoinedRoute:
+    ChallengesChallengeIdTeamsTeamIdJoinedRoute,
+  ChallengesChallengeIdTeamsTeamIdModifyRoute:
+    ChallengesChallengeIdTeamsTeamIdModifyRoute,
+  ChallengesChallengeIdTeamsTeamIdIndexRoute:
+    ChallengesChallengeIdTeamsTeamIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
