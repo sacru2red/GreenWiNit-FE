@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import { useJoinedChallenges } from '@/hooks/challenge/use-joined-challenges'
 import FilteredChallengesDisplay from '@/components/filtered-challenges-display'
 
@@ -12,8 +12,8 @@ function JoinedChallengesContainer() {
 
   const isPersonal = challengeType === 0
   const handleNavigate = (challengeId: number, teamId?: number) => {
-    if (isPersonal) navigate(`/challenges/${challengeId}/submit/individual`)
-    else navigate(`/challenges/${challengeId}/submit/teams/${teamId}`)
+    if (isPersonal) navigate({ to: `/challenges/${challengeId}/submit/individual` })
+    else navigate({ to: `/challenges/${challengeId}/submit/teams/${teamId}` })
   }
 
   return (

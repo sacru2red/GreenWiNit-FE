@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { ChevronLeft as ChevronLeftIcon } from 'lucide-react'
 import { ComponentProps, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from '@tanstack/react-router'
 
 const pageHeaderSectionVariants = cva(
   'bg-white relative flex flex-row w-full items-center justify-center h-12 border-b border-b-[#F0F0F0]',
@@ -22,11 +22,11 @@ const PageHeaderSection = ({ className, ...props }: PageHeaderSectionProps) => {
 }
 
 const BackIcon = (props: ComponentProps<typeof ChevronLeftIcon>) => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const defaultClickHandler = useCallback(() => {
-    navigate(-1)
-  }, [navigate])
+    router.history.back()
+  }, [router])
 
   return (
     <ChevronLeftIcon

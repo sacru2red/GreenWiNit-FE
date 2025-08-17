@@ -9,7 +9,7 @@ import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
@@ -17,11 +17,10 @@ import { Button } from '@/components/ui/button'
 interface OverviewProps {
   team: TeamDetailResponse
   allowManage?: boolean
+  challengeId: number
 }
 
-const Overview = ({ team, allowManage = false }: OverviewProps) => {
-  const params = useParams<{ challengeId: string }>()
-  const challengeId = Number(params.challengeId)
+const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [showConfirmDeletingDialog, setShowConfirmDeletingDialog] = useState(false)
@@ -35,7 +34,7 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
       queryClient.invalidateQueries({
         queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
       })
-      navigate(`/challenges/${challengeId}/teams`)
+      navigate({ to: `/challenges/${challengeId}/teams` })
     },
   })
 
@@ -57,7 +56,9 @@ const Overview = ({ team, allowManage = false }: OverviewProps) => {
               {/* @TODO attach click event handler to move page */}
               <button
                 className="px-4 py-1 text-sm focus-visible:outline-0"
-                onClick={() => navigate(`/challenges/${challengeId}/teams/${team.id}/modify`)}
+                onClick={() =>
+                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}/modify` })
+                }
               >
                 수정하기
               </button>

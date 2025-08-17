@@ -1,6 +1,6 @@
 import { API_URL } from '@/constant/network'
 import { stringify } from '@/lib/query-string'
-import { WithDrawnFormState } from '@/pages/my-page/withdraw'
+import { WithDrawnFormState } from '@/types/withdraw'
 import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import CategoryName from './category-name'
 
 type PostItemProps = {
@@ -13,9 +13,9 @@ const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemPr
   const navigate = useNavigate()
 
   const handleClickCard = () => {
-    const cardData = { id, categoryName, title, content, thumbnailUrl }
-    navigate(`/posts/${id}`, {
-      state: { cardData },
+    navigate({
+      to: '/posts/$id',
+      params: { id },
     })
   }
 

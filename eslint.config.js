@@ -48,5 +48,8 @@ export default tseslint.config(
       'no-restricted-syntax': 'off',
     },
   },
+  {
+    ignores: ['src/routeTree.gen.ts'],
+  },
   eslintConfigPrettier,
 )

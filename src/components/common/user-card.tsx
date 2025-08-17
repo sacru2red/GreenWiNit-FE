@@ -1,5 +1,5 @@
 import { useUserStatus } from '@/hooks/use-user-status'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import LogoIcon from './logo-icon'
 import { Separator } from '@/components/ui/separator'
 import useUserName from '@/hooks/use-user-name'
@@ -14,7 +14,7 @@ const UserCard = () => {
   const userEmail = useUserEmail()
 
   const handleLoginClick = () => {
-    navigate('/login')
+    navigate({ to: '/login' })
   }
 
   const { data } = useUserStatus({ enabled: !!accessToken })
