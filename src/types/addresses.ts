@@ -8,12 +8,8 @@ export type ServerAddress = {
   zipCode: string
 }
 
-export type AddressDto = Omit<ServerAddress, 'deliveryAddressId'>
-
 export type ClientAddress = {
   name: string
   phone: string
   address: AddressState | null
 }
-
-export type ClientAddressForm = Omit<ClientAddress, 'id'>

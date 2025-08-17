@@ -5,7 +5,7 @@ import InputLabel from '../../../../components/common/form/input-label'
 import BottomNavigation from '../../../../components/common/bottom-navigation'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { addressApi } from '@/api/address'
-import { AddressDto, ClientAddressForm } from '@/types/addresses'
+import { ClientAddress } from '@/types/addresses'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { toast } from 'sonner'
@@ -97,47 +97,35 @@ const EnrollAddress = () => {
     })
   }
 
-  const clientToServerFormat = (clientData: ClientAddressForm): AddressDto | null => {
-    if (clientData.address === null) return null
-
-    return {
-      recipientName: clientData.name,
-      phoneNumber: formatPhoneNumber(clientData.phone),
-      roadAddress: clientData.address.roadAddress,
-      detailAddress: clientData.address.detailAddress,
-      zipCode: clientData.address.zonecode,
-    }
-  }
-
-  const submitHandler: SubmitHandler<ClientAddressForm> = async (formData) => {
-    if (formData.address === null) {
+  const submitHandler: SubmitHandler<ClientAddressForm> = async (submittedFormData) => {
+    const address = submittedFormData.address
+    if (address === null) {
       toast.error('배송지 정보를 입력해주세요.')
       return
     }
 
+    if (isEditMode) {
+      if (!originalClientData) {
+        toast.error('기존 주소 정보가 없습니다')
+        return
+      }
+
+      if (originalClientData.address == null) {
+        toast.error('주소 정보를 확인해주세요.')
+        return
+      }
+    }
     try {
+      const serverData = {
+        recipientName: submittedFormData.name,
+        phoneNumber: formatPhoneNumber(submittedFormData.phone),
+        roadAddress: address.roadAddress,
+        detailAddress: address.detailAddress,
+        zipCode: address.zonecode,
+      }
       if (isEditMode) {
-        if (!originalClientData) {
-          toast.error('기존 주소 정보가 없습니다')
-          return
-        }
-
-        const serverData = clientToServerFormat(formData)
-        const originalServerData = clientToServerFormat(originalClientData)
-
-        if (!serverData || !originalServerData) {
-          toast.error('주소 정보를 확인해주세요.')
-          return
-        }
-
         await addressApi.updateAddress(serverData)
       } else {
-        const serverData = clientToServerFormat(formData)
-        if (!serverData) {
-          toast.error('주소 정보를 확인해주세요.')
-          return
-        }
-
         await addressApi.saveAddress(serverData)
         setIsModalOpen(true)
       }
@@ -219,5 +207,7 @@ const EnrollAddress = () => {
     </PageLayOut.Container>
   )
 }
+
+type ClientAddressForm = Omit<ClientAddress, 'id'>
 
 export default EnrollAddress
