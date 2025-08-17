@@ -8,7 +8,9 @@ interface WithdrawReasonFieldProps {
 function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
   return (
     <section className="flex flex-col gap-4 px-4 py-6">
-      <h3 className="self-start font-bold">탈퇴 이유를 선택해주세요</h3>
+      <h3 className="flex items-center self-start font-bold">
+        탈퇴 이유를 선택해주세요 <span className="text-error ml-1">*</span>
+      </h3>
       <ul className="flex flex-col gap-5">
         {reasons.map((el, index) => (
           <li key={index}>
@@ -17,7 +19,10 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
                 type="checkbox"
                 className="peer hidden"
                 value={el.name}
-                {...register('reasonType')}
+                {...register('reasonType', {
+                  validate: (v) =>
+                    (Array.isArray(v) && v.length > 0) || '탈퇴 이유를 하나 이상 선택해주세요.',
+                })}
               />
               <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[#DDDDDD] peer-checked:border-[#3A9B6E]" />
               <img
@@ -31,7 +36,14 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
               <textarea
                 className="placeholder:text-lighter-gray mt-5 h-24 w-full resize-none rounded-md border-1 border-[#DDDDDD] bg-[#f9f9f9] p-3 placeholder:text-sm focus:outline-none"
                 placeholder="기타 이유를 입력해주세요"
-                {...register('customReason')}
+                {...register('customReason', {
+                  validate: (value, formValues) => {
+                    const list = Array.from(formValues.reasonType)
+                    return list.includes('OTHER')
+                      ? !!value?.trim() || '기타 이유를 입력해주세요.'
+                      : true
+                  },
+                })}
               />
             )}
           </li>
