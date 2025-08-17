@@ -2,7 +2,7 @@ import WithDrawCaution from '@/components/withdraw-screen/withdraw-caution'
 import WithdrawReasonField from '@/components/withdraw-screen/withdraw-reason-field'
 import NoticeMessage from '@/components/withdraw-screen/notice-message'
 import MyPageLayout from '@/pages/my-page/my-page-layout'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { useRef, useState } from 'react'
 import ResultNoticeDialog from '@/components/common/modal/notice-dialog'
@@ -19,7 +19,7 @@ export type Reasons =
   | 'OTHER'
 
 export interface WithDrawnFormState {
-  reasonType: string
+  reasonType: string | string[]
   customReason: string | null
 }
 
@@ -43,35 +43,32 @@ function WithDraw() {
     }
   }
 
-  const onSubmit = (data: WithDrawnFormState) => {
-    if (!data.reasonType[0]) {
-      toast.error('탈퇴 이유를 선택해 주세요!')
-      return
-    }
+  const onValid = (data: WithDrawnFormState) => {
+    console.log('hi')
 
     if (!cautionIsChecked) {
       toast.error('동의 항목에 체크해 주세요.')
       return
     }
 
-    if (data.reasonType.includes('OTHER') && !data.customReason) {
-      toast.error('기타 이유를 입력해주세요.')
-      return
-    }
-
-    if (!data.reasonType.includes('OTHER') && !data.customReason) {
-      data.customReason = null
-    }
-
     dataRef.current = data
     setShowConfirmModal(true)
+  }
+
+  const onInvalid = (errors: FieldErrors<WithDrawnFormState>) => {
+    if (errors.reasonType) {
+      toast.error(errors.reasonType.message)
+    }
+    if (errors.customReason) {
+      toast.error(errors.customReason.message)
+    }
   }
 
   return (
     <>
       <MyPageLayout title="회원 탈퇴">
         <NoticeMessage />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onValid, onInvalid)}>
           <WithdrawReasonField register={register} />
           <WithDrawCaution setChecked={setCautionIsChecked} />
           <div className="flex px-4 py-6">
@@ -85,7 +82,7 @@ function WithDraw() {
         <ConfirmDialog
           isOpen={showConfirmModal}
           setIsOpen={setShowConfirmModal}
-          description={`회원 탈퇴 시, 30일 이내에\n재가입이 불가능합니다.`}
+          description={`회원 탈퇴 시,\n 재가입이 불가능합니다.`}
           onConfirm={onConfirm}
         />
       )}

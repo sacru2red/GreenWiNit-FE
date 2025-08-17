@@ -26,7 +26,7 @@ function MyPageLayout({
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection
         bg={background === 'green' ? 'theme' : 'form'}
-        className={`m-0 h-[calc(100vh-48px)] ${className}`}
+        className={`m-0 ${className}`}
       >
         {children}
       </PageLayOut.BodySection>
