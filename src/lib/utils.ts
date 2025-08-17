@@ -1,5 +1,4 @@
-import { ServerAddress } from '@/api/address'
-import { ClientAddress } from '@/types/addresses'
+import { ClientAddress, ServerAddress } from '@/types/addresses'
 import { clsx, type ClassValue } from 'clsx'
 import { ForwardedRef } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -36,8 +35,10 @@ export const serverToClientAddress = (serverAddress: ServerAddress): ClientAddre
     phone: serverAddress.phoneNumber,
     address: {
       roadAddress: serverAddress.roadAddress,
-      zoneCode: serverAddress.zipCode,
+      zonecode: serverAddress.zipCode,
       detailAddress: serverAddress.detailAddress,
+      sigungu: '',
+      roadnameCode: '',
     },
   }
 }
