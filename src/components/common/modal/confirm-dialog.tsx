@@ -26,13 +26,13 @@ function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="gap-6 p-10" showCloseButton={false}>
+      <DialogContent className="gap-6 p-8" showCloseButton={false}>
         {title && (
           <DialogTitle className="flex items-center justify-center text-center text-lg font-semibold">
             {title}
           </DialogTitle>
         )}
-        <DialogDescription className="text-secondary-foreground text-center text-base">
+        <DialogDescription className="text-secondary-foreground text-center text-base whitespace-pre-wrap">
           {description}
           {paragraph && <p className="text-lighter-gray text-xs">{paragraph}</p>}
         </DialogDescription>
