@@ -28,10 +28,7 @@ const DeliveryAddress = ({ pointProductId: propPointProductId }: DeliveryAddress
     const state = { from: location.pathname + location.search }
 
     if (hasAddress) {
-      navigate(
-        `/point-shop/product/${pointProductId}/enroll-address?mode=edit/${userAddressData?.id}`,
-        { state },
-      )
+      navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=edit`, { state })
     } else {
       navigate(`/point-shop/product/${pointProductId}/enroll-address?mode=add`, { state })
     }

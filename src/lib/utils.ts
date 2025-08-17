@@ -30,7 +30,6 @@ export function initHistoryAndLocation(to: string = '/') {
 
 export const serverToClientAddress = (serverAddress: ServerAddress) => {
   return {
-    id: serverAddress.deliveryAddressId,
     name: serverAddress.recipientName,
     phone: serverAddress.phoneNumber,
     address: {

@@ -1,7 +1,6 @@
 import { AddressState } from '@/components/common/form/address-input'
 
 export type ServerAddress = {
-  deliveryAddressId: number
   recipientName: string
   phoneNumber: string
   roadAddress: string
@@ -12,7 +11,6 @@ export type ServerAddress = {
 export type AddressDto = Omit<ServerAddress, 'deliveryAddressId'>
 
 export type ClientAddress = {
-  id: number
   name: string
   phone: string
   address: AddressState | null
