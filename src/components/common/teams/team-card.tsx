@@ -9,8 +9,9 @@ interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
 
 const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
   const isJoinAllowed =
-    team.maxParticipants <= team.currentParticipants &&
-    dayjs(team.challengeDate).isSameOrBefore(today, 'D')
+    (team.maxParticipants <= team.currentParticipants &&
+      dayjs(team.challengeDate).isSameOrBefore(today, 'D')) ||
+    ('leaderMe' in team && team.leaderMe)
 
   return (
     <button
@@ -33,7 +34,8 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
             <div className="flex gap-2">
               <span className="text-title-smaller">시간</span>
               <span className="text-lighter-gray">
-                {dayjs(team.startTime).format('HH:mm')} ~ {dayjs(team.endTime).format('HH:mm')}
+                {dayjs(team.startTime, 'HH:mm:ss').format('HH:mm')} ~{' '}
+                {dayjs(team.endTime, 'HH:mm:ss').format('HH:mm')}
               </span>
             </div>
             {'leaderMe' in team && team.leaderMe ? (

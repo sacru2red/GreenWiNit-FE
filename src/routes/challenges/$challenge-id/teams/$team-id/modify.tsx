@@ -31,13 +31,17 @@ function TeamModify() {
       await challengesApi.modifyTeam({
         ...rest,
         id,
-        groupBeginDateTime: dayjs(rest.startAt).toISOString(),
-        groupEndDateTime: dayjs(rest.endAt).toISOString(),
+        beginDateTime: dayjs(rest.startAt).toISOString(),
+        endDateTime: dayjs(rest.endAt).toISOString(),
         groupName: rest.name,
         roadAddress: rest.address.roadAddress,
         detailAddress: rest.address.detailAddress,
-        groupDescription: rest.description,
+        description: rest.description,
         maxParticipants: rest.maxMemberCount,
+        startTime: dayjs(team.startAt).format('HH:mm'),
+        endTime: dayjs(team.endAt).format('HH:mm'),
+        sigungu: team.address.sigungu,
+        challengeData: dayjs(team.date).format('YYYY-MM-DD'),
       })
     },
     onSuccess: () => {

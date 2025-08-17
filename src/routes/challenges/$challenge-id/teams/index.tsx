@@ -41,7 +41,7 @@ function ChallengesTeam() {
       <PageLayOut.BodySection>
         <ChallengeTitle challengeId={challengeId} challengeType={CHALLENGE_TYPE} />
         {joinedTeams?.length ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-4">
             {joinedTeams.map((team) => (
               <TeamCard
                 key={team.id}

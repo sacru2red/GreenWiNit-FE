@@ -131,11 +131,15 @@ export const challengesApi = {
         }
     >
   },
+  // @MEMO v2 작업완료
   enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
     return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
       method: 'POST',
       body: JSON.stringify(team),
-    })
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(throwResponseStatusThenChaining)
   },
   deleteTeam: async (teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
@@ -144,7 +148,10 @@ export const challengesApi = {
     return fetch(`${API_URL}/challenges/groups/${team.id}`, {
       method: 'PUT',
       body: JSON.stringify(omit(team, ['id'])),
-    })
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(throwResponseStatusThenChaining)
   },
   // @MEMO v2 작업완료
   submitIndividualChallenge: async (
@@ -287,7 +294,7 @@ export interface ChallengeTeamsCommonElement {
   createdDate: string
 }
 
-export interface TeamCreateRequestDto {
+interface TeamCreateRequestDto {
   /**
    * '강남구 러닝 그룹'
    */
@@ -301,9 +308,13 @@ export interface TeamCreateRequestDto {
    */
   detailAddress: string
   /**
+   * ex) 강남구
+   */
+  sigungu: string
+  /**
    * '매주 화, 목 저녁 7시에 모여서 5km 러닝합니다.'
    */
-  groupDescription: string
+  description: string
   /**
    * 'https://open.kakao.com/o/abc123'
    */
@@ -311,12 +322,19 @@ export interface TeamCreateRequestDto {
   /**
    * '2025-08-03T18:22:28.234Z'
    */
-  groupBeginDateTime: string
+  beginDateTime: string
   /**
    * '2025-08-03T18:22:28.234Z'
    */
-  groupEndDateTime: string
+  endDateTime: string
   maxParticipants: number
+
+  /** 오타 */
+  challengeData: string
+  /** hh:mm */
+  startTime: string
+  /** hh:mm */
+  endTime: string
 }
 
 export interface TeamModifyRequestDto extends TeamCreateRequestDto {
