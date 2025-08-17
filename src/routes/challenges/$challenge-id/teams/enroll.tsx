@@ -3,13 +3,13 @@ import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/enroll')({
   component: TeamEnroll,

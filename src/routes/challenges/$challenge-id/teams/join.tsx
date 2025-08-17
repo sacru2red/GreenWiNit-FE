@@ -3,8 +3,8 @@ import TeamCard from '@/components/common/teams/team-card'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import useChallengesTeams from '@/hooks/challenge/use-challenges-teams'
-import BottomNavigation from '@/components/common/bottom-navigation'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import BottomNavigation from '@/components/common/bottom-navigation'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/join')({
   component: JoinTeam,

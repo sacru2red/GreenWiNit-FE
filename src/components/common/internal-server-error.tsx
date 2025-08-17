@@ -40,8 +40,8 @@ const InternalServerErrorWithoutRouter = () => {
 }
 
 const InternalServerErrorInRouter = () => {
-  const location = useLocation()
   const router = useRouter()
+  const location = useLocation()
 
   return (
     <div className="flex w-full flex-row justify-center gap-4">

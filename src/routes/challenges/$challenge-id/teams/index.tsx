@@ -5,11 +5,11 @@ import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SquareCheckBig } from 'lucide-react'
 import { Users as GroupsIcon } from 'lucide-react'
 import BottomNavigation from '@/components/common/bottom-navigation'
 import TeamCard from '@/components/common/teams/team-card'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/')({
   component: ChallengesTeam,

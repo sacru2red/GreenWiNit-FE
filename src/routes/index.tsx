@@ -30,8 +30,8 @@ function Home() {
   const isLoggedIn = useIsLoggedIn()
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
-  const setAccessToken = authStore((state) => state.setAccessToken)
   const search = Route.useSearch()
+  const setAccessToken = authStore((state) => state.setAccessToken)
 
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {

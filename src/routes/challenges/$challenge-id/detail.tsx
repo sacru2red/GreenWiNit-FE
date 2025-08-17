@@ -64,7 +64,7 @@ function ChallengeDetail() {
                 <span className="text-card-base">
                   {challenge == null
                     ? null
-                    : `${dayjs(challenge.beginDateTime).format(`YYYY.MM.DD`)} ~ ${dayjs(challenge.endDateTime).format(`YYYY.MM.DD`)}`}
+                    : `${dayjs(challenge.beginDateTime).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('YYYY.MM.DD')}`}
                 </span>
               </p>
             </div>
