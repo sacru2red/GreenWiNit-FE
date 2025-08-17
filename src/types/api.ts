@@ -25,6 +25,25 @@ export type PaginatedResponse<E = never, S = never, F = CommonFailureMessage> = 
   F
 >
 
+export type CursorPaginatedData<E> = {
+  content: E[]
+} & (
+  | {
+      hasNext: true
+      nextCursor: number
+    }
+  | {
+      hasNext: false
+      nextCursor: null
+    }
+)
+
+export type CursorPaginatedResponse<E = never, S = never, F = CommonFailureMessage> = ApiResponse<
+  CursorPaginatedData<E>,
+  S,
+  F
+>
+
 export type CommonFailureMessage =
   | '접근이 거부되었습니다.'
   | '요청하신 페이지를 찾을 수 없습니다.'

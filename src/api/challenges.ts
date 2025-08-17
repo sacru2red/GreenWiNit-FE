@@ -2,45 +2,27 @@ import { API_URL } from '@/constant/network'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { stringify } from '@/lib/query-string'
 import { omit } from 'es-toolkit'
-import { ApiResponse } from '@/types/api'
+import { ApiResponse, CursorPaginatedResponse } from '@/types/api'
 
 export const challengesApi = {
   getIndividualChallenges: async (cursor?: number | null) => {
     const response = await fetch(`${API_URL}/challenges/personal?${stringify({ cursor })}`)
     return response.json() as Promise<
-      | {
-          success: true
-          message: string
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: ChallengeFoo[]
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
+      ApiResponse<{
+        hasNext: boolean
+        nextCursor: number | null
+        content: CommonChallenge[]
+      }>
     >
   },
   getTeamChallenges: async (cursor?: number | null) => {
     const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor })}`)
     return response.json() as Promise<
-      | {
-          success: true
-          message: string
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: ChallengeFoo[]
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
+      ApiResponse<{
+        hasNext: boolean
+        nextCursor: number | null
+        content: CommonChallenge[]
+      }>
     >
   },
   getJoinedChallengesMine: async ({
@@ -156,19 +138,30 @@ export const challengesApi = {
   },
   getCertifiedChallengesMine: async ({
     cursor,
+    pageSize,
     challengeType,
   }: {
     cursor?: number | null
+    pageSize?: number
     challengeType: 'individual' | 'team'
   }) => {
     const response = await fetch(
-      `${API_URL}/my/challenges/certifications/${challengeType === 'individual' ? 'personal' : 'team'}?${String({ cursor })}`,
+      `${API_URL}/certifications/challenges/me?${stringify({ cursor, size: pageSize, type: challengeType === 'team' ? 'T' : 'P' })}`,
     )
-    return response.json() as Promise<GetChallengeCertRes>
+    return response.json() as Promise<CursorPaginatedResponse<GetCertifiedChallengesMineElement>>
   },
   getCertifiedChallengeDetails: async (certId: number) => {
-    const response = await fetch(`${API_URL}/my/challenges/certifications/${certId}`)
-    return response.json() as Promise<GetCertChallengeDetailsRes>
+    const response = await fetch(`${API_URL}/certifications/challenges/${certId}`)
+    return response.json() as Promise<
+      ApiResponse<{
+        id: number
+        challengeName: string
+        certifiedDate: string
+        imageUrl: string
+        review: string
+        certificationStatus: '인증 요청'
+      }>
+    >
   },
   postChallengeCertify: async (challengeId: number, body: PostChallengeCertifyRequestBody) => {
     const response = await fetch(`${API_URL}/challenges/${challengeId}/certifications`, {
@@ -182,7 +175,7 @@ export const challengesApi = {
   },
 }
 
-export interface ChallengeFoo {
+export interface CommonChallenge {
   id: number
   challengeName: string
   beginDate: string
@@ -230,7 +223,7 @@ export interface ChallengeDetailResponse {
 export type JoinedChallengesMineReponse = ApiResponse<{
   hasNext: boolean
   nextCursor: number | null
-  content: ChallengeFoo[]
+  content: CommonChallenge[]
 }>
 
 export interface ChallengeTeamsElement {
@@ -296,36 +289,23 @@ export interface TeamDetailResponse {
   isParticipant: boolean
 }
 
-export type CertifiedChallenges = {
-  id: number
-  memberId: number
-  memberNickname: string
-  memberEmail: string
-  certificationImageUrl: string
-  challengeId: number
-  challengeTitle: string
-  challengeCode: string // 'CH-P-20250109-143521-A3FV'
-  certificationReview: string
-  certifiedDate: string
-  status: 'PENDING' | 'PAID' | 'REJECTED'
-}
-
 type PostChallengeCertRes = ApiResponse<{
   certificationId: number
-}>
-
-export type GetCertChallengeDetailsRes = ApiResponse<CertifiedChallenges & { certifiedAt: string }>
-
-export type GetChallengeCertRes = ApiResponse<{
-  hasNext: boolean
-  nextCursor: number
-  content: CertifiedChallenges[]
 }>
 
 interface PostChallengeCertifyRequestBody {
   certificationDate: string
   certificationImageUrl: string
   certificationReview: string
+}
+
+export interface GetCertifiedChallengesMineElement {
+  id: number
+  challengeName: string
+  certifiedDate: string
+  certificationStatus: string
+  // https://github.com/GreenWiNit/backend/issues/267
+  challengeImage: string
 }
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'
