@@ -72,7 +72,7 @@ function MyPage() {
               key={i}
               className="border-lighter-gray-border h-fit rounded-2xl border-1 bg-white p-0"
             >
-              <CardContent className="flex flex-col">
+              <CardContent className="flex flex-col px-0">
                 <button className="flex w-full flex-row items-center justify-center p-4 font-bold">
                   {el.category}
                 </button>
