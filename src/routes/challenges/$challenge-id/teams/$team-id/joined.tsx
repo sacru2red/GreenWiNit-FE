@@ -42,7 +42,7 @@ function ManageTeam() {
         <PageTitle>팀 정보</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
-        <Overview team={team} allowManage />
+        <Overview team={team} allowManage challengeId={challengeId} />
         <div className="flex flex-1 flex-col gap-4 p-4">
           <MemberCount team={team} />
           <Description team={team} />

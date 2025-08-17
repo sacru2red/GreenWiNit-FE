@@ -2,31 +2,38 @@ import HeaderSectionMiddle from '@/components/common/header-section-middle'
 import GoogleWideButton from '@/components/login-screen/google-wide-button'
 import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
 import NaverWideButton from '@/components/login-screen/naver-wide-button'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 export const Route = createFileRoute('/login')({
   component: Login,
+  validateSearch: (search: Record<string, unknown>) => {
+    const message = typeof search['message'] === 'string' ? search['message'] : undefined
+    const errorName = typeof search['error'] === 'string' ? search['error'] : undefined
+
+    return {
+      message,
+      errorName,
+    }
+  },
 })
 
 function Login() {
+  const navigate = useNavigate()
   // URL에서 쿼리 파라미터 확인
-  const urlParams = new URLSearchParams(window.location.search)
-  const errorName = urlParams.get('error')
-  const message = urlParams.get('message')
+  const search = Route.useSearch()
+  const errorName = search?.errorName
+  const message = search?.message
 
   useEffect(() => {
     if (errorName && message) {
       toast.error(message)
-      // URL에서 쿼리 파라미터 제거
-      window.history.replaceState({}, '', window.location.pathname)
     } else if (message) {
       toast.info(message)
-      // URL에서 쿼리 파라미터 제거
-      window.history.replaceState({}, '', window.location.pathname)
     }
-  }, [errorName, message])
+    navigate({ to: '/login', search: { errorName: undefined, message: undefined } })
+  }, [errorName, message, navigate])
 
   const warnItsDeveloping = () => {
     toast.error('해당 소셜미디어 로그인은 개발 중입니다.')

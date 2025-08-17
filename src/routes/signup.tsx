@@ -12,14 +12,18 @@ import { toast } from 'sonner'
 
 export const Route = createFileRoute('/signup')({
   component: Signup,
+  validateSearch: (search: Record<string, unknown>) => {
+    if (typeof search['tempToken'] === 'string') {
+      return { tempToken: search['tempToken'] }
+    }
+    return { tempToken: undefined }
+  },
 })
 
 function Signup() {
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
-
-  // URL에서 쿼리 파라미터 확인
-  const urlParams = new URLSearchParams(window.location.search)
-  const tempToken = urlParams.get('tempToken')
+  const search = Route.useSearch()
+  const tempToken = search?.tempToken
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')

@@ -17,11 +17,10 @@ import { Button } from '@/components/ui/button'
 interface OverviewProps {
   team: TeamDetailResponse
   allowManage?: boolean
+  challengeId: number
 }
 
-const Overview = ({ team, allowManage = false }: OverviewProps) => {
-  // URL에서 challengeId 추출
-  const challengeId = Number(window.location.pathname.split('/')[2])
+const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [showConfirmDeletingDialog, setShowConfirmDeletingDialog] = useState(false)

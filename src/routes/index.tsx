@@ -12,6 +12,14 @@ import PageLayOut from '@/components/common/page-layout'
 
 export const Route = createFileRoute('/')({
   component: Home,
+  validateSearch: (search: Record<string, unknown>) => {
+    if (typeof search['accessToken'] === 'string') {
+      return { accessToken: search['accessToken'] }
+    }
+    return {
+      accessToken: undefined,
+    }
+  },
 })
 
 function Home() {
@@ -19,6 +27,7 @@ function Home() {
   const navigate = useNavigate()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
   const setAccessToken = authStore((state) => state.setAccessToken)
+  const search = Route.useSearch()
 
   const handleClickJoinedChallengeButton = () => {
     if (!isLoggedIn) {
@@ -26,21 +35,19 @@ function Home() {
       return
     }
 
-    // @TODO toggle it
-    // navigate({ to: '/challenges/user/me/joined' })
+    navigate({ to: '/challenges/user/me/joined' })
   }
 
   useEffect(() => {
     // URL에서 accessToken 쿼리 파라미터 확인
-    const urlParams = new URLSearchParams(window.location.search)
-    const accessToken = urlParams.get('accessToken')
+    const accessToken = search?.accessToken
 
     if (accessToken) {
       setAccessToken(accessToken)
       // 쿼리 파라미터 제거
-      navigate({ to: '/', search: {} })
+      navigate({ to: '/', search: { accessToken: undefined } })
     }
-  }, [setAccessToken, navigate])
+  }, [setAccessToken, navigate, search?.accessToken])
 
   return (
     <PageLayOut.Container>

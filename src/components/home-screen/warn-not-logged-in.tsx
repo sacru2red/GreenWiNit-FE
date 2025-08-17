@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogFooter } from '../ui/dialog'
 import { Button } from '../ui/button'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 
 interface WarnNotLoggedInProps {
   isOpen: boolean
@@ -18,6 +18,7 @@ const WarnNotLoggedIn = ({
   backButtonAction = 'close',
 }: WarnNotLoggedInProps) => {
   const navigate = useNavigate()
+  const router = useRouter()
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -32,7 +33,7 @@ const WarnNotLoggedIn = ({
             onClick={() => {
               onOpenChange(false)
               if (backButtonAction === 'back') {
-                window.history.back()
+                router.history.back()
               }
             }}
           >
