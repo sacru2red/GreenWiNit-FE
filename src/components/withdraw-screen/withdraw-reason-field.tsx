@@ -29,7 +29,7 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
             </label>
             {el.name === 'OTHER' && (
               <textarea
-                className="placeholder:text-lighter-gray mt-5 h-24 w-full resize-none rounded-md border-1 border-[#DDDDDD] bg-[#f9f9f9] p-3 placeholder:text-sm focus:outline-none"
+                className="placeholder:text-lighter-gray mt-5 h-24 w-full resize-none rounded-md border border-[#DDDDDD] bg-[#f9f9f9] p-3 placeholder:text-sm focus:outline-none"
                 placeholder="기타 이유를 입력해주세요"
                 {...register('customReason')}
               />

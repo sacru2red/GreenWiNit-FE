@@ -10,7 +10,7 @@ function PointOverview({ points }: PointOverviewProps) {
   const { currentBalance = 0, totalEarned = 0, totalSpent = 0 } = points ?? {}
 
   return (
-    <section className="text-secondary-foreground border-lighter-gray-border flex w-full flex-col justify-between gap-6 border-1 bg-white px-4 py-6">
+    <section className="text-secondary-foreground border-lighter-gray-border flex w-full flex-col justify-between gap-6 border bg-white px-4 py-6">
       <div className="flex flex-col gap-2">
         <span className="text-sm">총 보유 포인트</span>
         <span className="text-4xl font-bold">{currentBalance}</span>
