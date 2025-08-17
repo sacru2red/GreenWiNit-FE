@@ -6,9 +6,16 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
+type LoginSearch =
+  | undefined
+  | {
+      message?: string | undefined
+      errorName?: string | undefined
+    }
+
 export const Route = createFileRoute('/login')({
   component: Login,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): LoginSearch => {
     const message = typeof search['message'] === 'string' ? search['message'] : undefined
     const errorName = typeof search['error'] === 'string' ? search['error'] : undefined
 

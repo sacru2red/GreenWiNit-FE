@@ -10,15 +10,19 @@ import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 import { authStore } from '@/store/auth-store'
 import PageLayOut from '@/components/common/page-layout'
 
+type HomeSearch =
+  | undefined
+  | {
+      accessToken?: string | undefined
+    }
+
 export const Route = createFileRoute('/')({
   component: Home,
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): HomeSearch => {
     if (typeof search['accessToken'] === 'string') {
       return { accessToken: search['accessToken'] }
     }
-    return {
-      accessToken: undefined,
-    }
+    return undefined
   },
 })
 
@@ -45,7 +49,7 @@ function Home() {
     if (accessToken) {
       setAccessToken(accessToken)
       // 쿼리 파라미터 제거
-      navigate({ to: '/', search: { accessToken: undefined } })
+      navigate({ to: '/' })
     }
   }, [setAccessToken, navigate, search?.accessToken])
 
