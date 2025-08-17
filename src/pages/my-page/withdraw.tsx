@@ -44,8 +44,6 @@ function WithDraw() {
   }
 
   const onValid = (data: WithDrawnFormState) => {
-    console.log('hi')
-
     if (!cautionIsChecked) {
       toast.error('동의 항목에 체크해 주세요.')
       return

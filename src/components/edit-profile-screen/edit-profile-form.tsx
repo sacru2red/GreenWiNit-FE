@@ -92,6 +92,7 @@ function EditProfileForm() {
               name="nickname"
               render={({ field }) => (
                 <InputNickname
+                  mode="edit"
                   value={field.value ?? ''}
                   onChange={(e) => {
                     field.onChange(e)

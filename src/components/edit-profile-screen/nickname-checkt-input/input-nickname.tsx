@@ -52,7 +52,7 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
             ref={ref}
             id={id}
             type="text"
-            placeholder={mode === 'new' ? '새 닉네임을 입력해주세요.' : '닉네임 입력'}
+            placeholder={mode === 'edit' ? '새 닉네임을 입력해주세요.' : '닉네임을 입력해주세요.'}
             className="flex-1 px-3 py-4 text-sm focus:outline-none"
             {...props}
           />
