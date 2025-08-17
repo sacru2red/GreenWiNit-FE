@@ -4,13 +4,22 @@ import react from '@vitejs/plugin-react'
 // https://ko.vite.dev/config/#using-environment-variables-in-config
 import { defineConfig, loadEnv } from 'vite'
 import svgr from 'vite-plugin-svgr'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    plugins: [react(), svgr(), tailwindcss()],
+    plugins: [
+      tanstackRouter({
+        target: 'react',
+        autoCodeSplitting: true,
+      }),
+      react(),
+      svgr(),
+      tailwindcss(),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

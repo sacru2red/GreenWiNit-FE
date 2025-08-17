@@ -1,0 +1,54 @@
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import '../index.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Toaster } from '@/components/ui/sonner'
+import NotFound from '@/pages/404'
+import InternalServerError from '@/pages/500'
+import { useEffect, useState } from 'react'
+import SplashScreen from '@/components/splash-screen'
+import { cn } from '@/lib/utils'
+
+const queryClient = new QueryClient()
+
+export const Route = createRootRoute({
+  component: () => (
+    <QueryClientProvider client={queryClient}>
+      <RootElement />
+      <Toaster position="top-center" swipeDirections={['bottom', 'left', 'right', 'top']} />
+      <TanStackRouterDevtools />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  ),
+  notFoundComponent: () => {
+    return <NotFound />
+  },
+  errorComponent: ({ error: _error }) => {
+    return <InternalServerError />
+  },
+})
+
+const RootElement = () => {
+  const [showSplashScreen, setShowSplashScreen] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSplashScreen(false)
+    }, 1500)
+  }, [])
+
+  return (
+    <div className="bg-mountain_meadow-0 outline-mountain_meadow relative flex aspect-[375/812] h-full justify-self-center outline-1 max-[375px]:aspect-auto max-[375px]:w-full">
+      {showSplashScreen ? (
+        <div
+          className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
+        >
+          <SplashScreen />
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </div>
+  )
+}
