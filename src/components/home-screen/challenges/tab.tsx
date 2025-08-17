@@ -29,12 +29,8 @@ const tabItemVariants = cva('h-full w-full p-2 font-bold border-transparent bord
 
 type TabItemProps = VariantProps<typeof tabItemVariants> & React.HTMLAttributes<HTMLButtonElement>
 
-const TabItem = ({ className, isActive, ...props }: TabItemProps) => {
-  return (
-    <button {...props} className={cn(tabItemVariants({ isActive }), className)}>
-      {props.children}
-    </button>
-  )
+const TabItem = ({ className, isActive, ...restProps }: TabItemProps) => {
+  return <button {...restProps} className={cn(tabItemVariants({ isActive }), className)} />
 }
 
 export default Tab

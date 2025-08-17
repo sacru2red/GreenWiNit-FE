@@ -116,20 +116,11 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<ChallengeTeamsCommonElement>>
   },
-  getChallengesTeam: async (challengeId: number, teamId: number) => {
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/groups/${teamId}`)
-    return response.json() as Promise<
-      | {
-          success: true
-          message: string
-          result: TeamDetailResponse
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
-    >
+  // @MEMO v2 작업완료
+  getChallengesTeam: async (teamId: number) => {
+    return await fetch(`${API_URL}/challenges/groups/${teamId}`).then((res) => {
+      return res.json() as Promise<ApiResponse<TeamDetailResponse>>
+    })
   },
   // @MEMO v2 작업완료
   enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
@@ -344,16 +335,14 @@ export interface TeamModifyRequestDto extends TeamCreateRequestDto {
 export interface TeamDetailResponse {
   id: number
   groupName: string
-  groupAddress: string
-  groupDescription: string
-  openChatUrl: string
-  groupBeginDateTime: string
-  groupEndDateTime: string
   currentParticipants: number
-  maxParticipants: number
-  groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
-  isLeader: boolean
-  isParticipant: boolean
+  description: string
+  challengeDate: string
+  startTime: string
+  endTime: string
+  fullAddress: string
+  openChatUrl: string
+  participating: boolean
 }
 
 type PostChallengeCertRes = ApiResponse<{
@@ -417,8 +406,7 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
   }) => ['list', 'my-certified', { challengeType, cursor: cursor ?? undefined }] as const,
   detail: ({ id, challengeType }: { id: number | undefined; challengeType: ChallengeType }) =>
     [challengeType, { id: id ?? undefined }] as const,
-  team: (challengeId: number | undefined, teamId: number | undefined) =>
-    [challengeId, 'teams', teamId] as const,
+  team: (teamId: number | undefined) => ['teams', teamId] as const,
   teams: ({
     challengeId,
     cursor,
