@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
+import { ChallengeType } from '@/types/challenge'
 
 export const useJoinedChallenges = () => {
-  const [challengeType, setChallengeType] = useState<0 | 1>(0)
-  const challengeTypeString = challengeType === 0 ? 'individual' : 'team'
+  const [challengeType, setChallengeType] = useState<ChallengeType>('individual')
 
   const queryKey = challengesQueryKeys.challenges.listJoinedMine({
-    challengeType: challengeTypeString,
+    challengeType,
   }).queryKey
 
   const queryFn = () =>
     challengesApi.getJoinedChallengesMine({
-      challengeType: challengeTypeString,
+      challengeType,
       cursor: null,
     })
 
@@ -25,6 +25,5 @@ export const useJoinedChallenges = () => {
     ...queryResult,
     challengeType,
     setChallengeType,
-    challengeTypeString,
   }
 }

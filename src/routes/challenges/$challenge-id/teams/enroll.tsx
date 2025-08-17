@@ -25,13 +25,17 @@ function TeamEnroll() {
     mutationFn: (team: FormState) =>
       challengesApi.enrollTeam(challengeId, {
         ...team,
-        groupBeginDateTime: dayjs(team.startAt).format('HH:mm'),
-        groupEndDateTime: dayjs(team.endAt).format('HH:mm'),
+        beginDateTime: dayjs(team.startAt).format('YYYY-MM-DD HH:mm'),
+        endDateTime: dayjs(team.endAt).format('YYYY-MM-DD HH:mm'),
         groupName: team.name,
         roadAddress: team.address.roadAddress,
         detailAddress: team.address.detailAddress,
-        groupDescription: team.description,
+        description: team.description,
         maxParticipants: team.maxMemberCount,
+        startTime: dayjs(team.startAt).format('HH:mm'),
+        endTime: dayjs(team.endAt).format('HH:mm'),
+        sigungu: team.address.sigungu,
+        challengeData: dayjs(team.date).format('YYYY-MM-DD'),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -40,7 +44,10 @@ function TeamEnroll() {
         }).queryKey,
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       setShowConfirmDialog(true)
     },

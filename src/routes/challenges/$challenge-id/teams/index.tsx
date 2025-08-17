@@ -3,13 +3,13 @@ import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { Button } from '@/components/ui/button'
-import useChallenge from '@/hooks/challenge/use-challenge'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SquareCheckBig } from 'lucide-react'
 import { Users as GroupsIcon } from 'lucide-react'
 import BottomNavigation from '@/components/common/bottom-navigation'
 import TeamCard from '@/components/common/teams/team-card'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/')({
   component: ChallengesTeam,
@@ -17,19 +17,20 @@ export const Route = createFileRoute('/challenges/$challenge-id/teams/')({
 
 function ChallengesTeam() {
   const challengeId = Number(Route.useParams()['challenge-id'])
-  const { data: challenge } = useChallenge(challengeId)
   const navigate = useNavigate()
+  const [pagination, _setPagination] = useState<{ cursor: number | null; pageSize: number | null }>(
+    {
+      cursor: null,
+      pageSize: null,
+    },
+  )
 
   const { data: joinedTeams } = useQuery({
     queryKey: challengesQueryKeys.challenges.joinedTeams(challengeId).queryKey,
-    queryFn: () => challengesApi.getJoinedTeamsMine(challengeId),
+    queryFn: () => challengesApi.getJoinedTeamsMine({ challengeId, ...pagination }),
     enabled: challengeId != null,
     select: (data) => data.result?.content ?? [],
   })
-
-  if (challengeId == null || challenge == null || challenge.type !== 'TEAM') {
-    return <div>Service Unavailable</div>
-  }
 
   return (
     <PageLayOut.Container>
@@ -38,9 +39,9 @@ function ChallengesTeam() {
         <PageTitle>나의 팀</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} />
+        <ChallengeTitle challengeId={challengeId} challengeType={CHALLENGE_TYPE} />
         {joinedTeams?.length ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 py-4">
             {joinedTeams.map((team) => (
               <TeamCard
                 key={team.id}
@@ -81,5 +82,6 @@ function ChallengesTeam() {
     </PageLayOut.Container>
   )
 }
+const CHALLENGE_TYPE = 'team'
 
 export default ChallengesTeam

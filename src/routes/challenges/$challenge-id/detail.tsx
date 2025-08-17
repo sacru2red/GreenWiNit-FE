@@ -8,13 +8,19 @@ import dayjs from 'dayjs'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useState } from 'react'
-import { toast } from 'sonner'
+import { showMessageIfExists } from '@/lib/error'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
+import { validateSearchChallengeType } from '@/lib/router'
 
 export const Route = createFileRoute('/challenges/$challenge-id/detail')({
   component: ChallengeDetail,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      challengeType: validateSearchChallengeType(search),
+    }
+  },
 })
 
 function ChallengeDetail() {
@@ -22,24 +28,32 @@ function ChallengeDetail() {
   const navigate = useNavigate()
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false)
   const queryClient = useQueryClient()
+  const { challengeType } = Route.useSearch()
 
-  const { data: challenge } = useChallenge(challengeId)
+  const { data: challenge } = useChallenge({ id: challengeId, type: challengeType })
 
   const { mutate: joinChallenge } = useMutation({
-    mutationFn: (pId: number) => challengesApi.joinChallenge(pId),
+    mutationFn: () =>
+      challengesApi.joinChallenge({
+        id: challengeId,
+        challengeType,
+      }),
     onSuccess: () => {
       setOpenSuccessDialog(true)
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType,
+        }).queryKey,
       })
     },
     onError(error) {
       console.error(error)
-      toast.error(error.message)
+      showMessageIfExists(error)
     },
   })
 
-  const typeKo = challenge?.type === 'PERSONAL' ? '개인' : '팀'
+  const typeKo = challengeType === 'individual' ? '개인' : '팀'
 
   return (
     <PageLayOut.Container>
@@ -48,10 +62,10 @@ function ChallengeDetail() {
         <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} />
+        <ChallengeTitle challengeId={challengeId} challengeType={challengeType} />
         <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
           <img
-            src={challenge?.imageUrl || DEFAULT_CHALLENGE_IMAGE}
+            src={challenge?.challengeImage || DEFAULT_CHALLENGE_IMAGE}
             alt="challenge image"
             className="w-full rounded-xl object-cover"
           />
@@ -64,7 +78,7 @@ function ChallengeDetail() {
                 <span className="text-card-base">
                   {challenge == null
                     ? null
-                    : `${dayjs(challenge.beginDateTime).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDateTime).format('YYYY.MM.DD')}`}
+                    : `${dayjs(challenge.beginDate).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDate).format('YYYY.MM.DD')}`}
                 </span>
               </p>
             </div>
@@ -73,7 +87,7 @@ function ChallengeDetail() {
                 참여방법
                 <br />
                 <span className="text-card-base">
-                  {challenge == null ? null : challenge.content}
+                  {challenge == null ? null : challenge.challengeContent}
                 </span>
               </p>
             </div>
@@ -82,7 +96,7 @@ function ChallengeDetail() {
                 포인트
                 <br />
                 <span className="text-card-base">
-                  {challenge == null ? null : `${challenge.point}P (1회 인증 기준)`}
+                  {challenge == null ? null : `${challenge.challengePoint}P (1회 인증 기준)`}
                 </span>
               </p>
             </div>
@@ -91,10 +105,7 @@ function ChallengeDetail() {
         <Button
           className="mt-auto"
           onClick={() => {
-            if (challengeId == null) {
-              return
-            }
-            joinChallenge(challengeId)
+            joinChallenge()
           }}
         >
           챌린지 참여하기
@@ -104,7 +115,7 @@ function ChallengeDetail() {
         <BottomNavigation />
       </PageLayOut.FooterSection>
       <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
-        <DialogContent className="flex flex-col gap-3">
+        <DialogContent className="flex !min-w-60 flex-col gap-3">
           <DialogDescription className="text-center !text-lg !text-black">
             챌린지 참여 완료
           </DialogDescription>

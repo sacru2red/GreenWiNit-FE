@@ -26,7 +26,7 @@ function TeamDetail() {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const navigate = useNavigate()
 
-  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(teamId)
   const team = data?.result
   const { mutate: joinTeam } = useMutation({
     mutationFn: () => challengesApi.joinTeam(challengeId, teamId),
@@ -37,7 +37,10 @@ function TeamDetail() {
         }).queryKey,
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(Number(challengeId)).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       setOpenConfirmDialog(true)
     },

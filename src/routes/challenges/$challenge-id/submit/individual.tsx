@@ -15,6 +15,9 @@ import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { createFileRoute } from '@tanstack/react-router'
+import { throwResponseStatusThenChaining } from '@/lib/network'
+import { showMessageIfExists } from '@/lib/error'
+import { dayjs } from '@/constant/globals'
 
 export const Route = createFileRoute('/challenges/$challenge-id/submit/individual')({
   component: ChallengeSubmitIndividual,
@@ -30,7 +33,8 @@ function ChallengeSubmitIndividual() {
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const challengeId = Number(Route.useParams()['challenge-id'])
-  const { data: challenge } = useChallenge(challengeId)
+
+  const { data: challenge } = useChallenge({ id: challengeId, type: CHALLENGE_TYPE })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     const { date, image, review } = data
@@ -42,14 +46,16 @@ function ChallengeSubmitIndividual() {
     }
 
     challengesApi
-      .submitChallenge(challengeId, {
-        date: date.toISOString(),
+      .submitIndividualChallenge(challengeId, {
+        date: dayjs(date).format('YYYY-MM-DD'),
         imageUrl: image,
         review,
       })
+      .then(throwResponseStatusThenChaining)
       .then(() => {
         setOpenConfirmDialog(true)
       })
+      .catch(showMessageIfExists)
   }
 
   return (
@@ -107,5 +113,6 @@ function ChallengeSubmitIndividual() {
     </PageLayOut.Container>
   )
 }
+const CHALLENGE_TYPE = 'individual'
 
 export default ChallengeSubmitIndividual

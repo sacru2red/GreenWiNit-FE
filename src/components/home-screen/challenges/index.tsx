@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 
 const Challenges = () => {
   const [tab, setTab] = useState<TabProps['tab']>('individual')
-  const { data: challenges } = useChallenges(tab)
+  const { data: challenges } = useChallenges({ challengeType: tab })
   const navigate = useNavigate()
   const isLoggedIn = useIsLoggedIn()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
@@ -48,7 +48,10 @@ const Challenges = () => {
                       setIsWarnNotLoggedInDialogOpen(true)
                       return
                     }
-                    navigate({ to: `/challenges/${challenge.id}/detail` })
+                    navigate({
+                      to: `/challenges/${challenge.id}/detail`,
+                      search: { challengeType: tab },
+                    })
                   }}
                 />
               </CarouselItem>

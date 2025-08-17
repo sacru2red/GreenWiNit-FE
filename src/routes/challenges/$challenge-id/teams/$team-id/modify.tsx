@@ -19,7 +19,7 @@ function TeamModify() {
   const teamId = Number(params['team-id'])
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(teamId)
   const team = data?.result
 
   const { mutate: modifyTeam } = useMutation({
@@ -31,13 +31,17 @@ function TeamModify() {
       await challengesApi.modifyTeam({
         ...rest,
         id,
-        groupBeginDateTime: dayjs(rest.startAt).toISOString(),
-        groupEndDateTime: dayjs(rest.endAt).toISOString(),
+        beginDateTime: dayjs(rest.startAt).toISOString(),
+        endDateTime: dayjs(rest.endAt).toISOString(),
         groupName: rest.name,
         roadAddress: rest.address.roadAddress,
         detailAddress: rest.address.detailAddress,
-        groupDescription: rest.description,
+        description: rest.description,
         maxParticipants: rest.maxMemberCount,
+        startTime: dayjs(team.startAt).format('HH:mm'),
+        endTime: dayjs(team.endAt).format('HH:mm'),
+        sigungu: team.address.sigungu,
+        challengeData: dayjs(team.date).format('YYYY-MM-DD'),
       })
     },
     onSuccess: () => {
@@ -47,7 +51,10 @@ function TeamModify() {
         }).queryKey,
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       navigate({ to: `/challenges/${challengeId}/teams` })
     },
@@ -84,18 +91,20 @@ function TeamModify() {
             ...team,
             id: team.id.toString(),
             name: team.groupName,
+            // https://github.com/GreenWiNit/backend/issues/271
             address: {
-              roadAddress: team.groupAddress,
+              roadAddress: team.fullAddress.split(' ')[0] || '',
               roadnameCode: '',
               zonecode: '',
-              detailAddress: team.groupAddress,
-              sigungu: '',
+              detailAddress: team.fullAddress.split(' ')[1] || '',
+              sigungu: team.fullAddress.split(' ')[2] || '',
             },
-            description: team.groupDescription,
-            date: dayjs(team.groupBeginDateTime).toDate(),
-            startAt: dayjs(team.groupBeginDateTime).toDate(),
-            endAt: dayjs(team.groupEndDateTime).toDate(),
-            maxMemberCount: team.maxParticipants,
+            description: team.description,
+            date: dayjs(team.challengeDate).toDate(),
+            startAt: dayjs(team.startTime, 'HH:mm:ss').toDate(),
+            endAt: dayjs(team.endTime, 'HH:mm:ss').toDate(),
+            // https://github.com/GreenWiNit/backend/issues/271
+            maxMemberCount: team.currentParticipants,
             openChatUrl: team.openChatUrl,
           }}
         />

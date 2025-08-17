@@ -1,4 +1,6 @@
+import { ChallengeType } from '@/types/challenge'
+
 export interface TabProps {
-  tab: 'individual' | 'team'
-  setTab: (tab: 'individual' | 'team') => void
+  tab: ChallengeType
+  setTab: (tab: ChallengeType) => void
 }

@@ -32,7 +32,7 @@ function ChallengeSubmitTeam() {
     }
 
     challengesApi
-      .submitChallenge(challengeId, {
+      .submitIndividualChallenge(challengeId, {
         // @CHECK 현재 시간으로 제출하는 것이 맞는지 확인
         date: new Date().toISOString(),
         imageUrl: image,

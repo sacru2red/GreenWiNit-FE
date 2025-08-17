@@ -23,7 +23,7 @@ function ManageTeam() {
 
   const navigate = useNavigate()
 
-  const { data, isLoading } = useChallengesTeam(challengeId, teamId)
+  const { data, isLoading } = useChallengesTeam(teamId)
   const team = data?.result
 
   if (isLoading) {
