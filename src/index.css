@@ -1,4 +1,6 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @font-face {
   font-family: 'Greenwinit-logo';
@@ -26,6 +28,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/**
+ * 스크롤바 스타일 통일
+ */
+html {
+  scrollbar-width: auto;
+  scrollbar-gutter: auto;
+  scrollbar-color: auto;
+}
+/* 혹시 나중에 진짜 스타일링을 하고 싶은 경우를 위해 남겨둠 */
+/* ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-mountain_meadow);
+} */
+
+/**
+ * 터치가능한 기기인지 감지
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer
+ * https://caniuse.com/css-media-interaction
+ */
+@media (pointer: coarse) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--color-mountain_meadow);
+  }
+}
+
 html,
 body {
   margin: 0;
@@ -39,6 +71,23 @@ body {
   background-color: white;
 }
 
+#root {
+  height: 100dvh;
+  width: 100dvw;
+  margin: 0;
+  padding: 0rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+
+  @media (max-width: 375px) {
+    justify-self: flex-start;
+    align-self: flex-start;
+  }
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -46,6 +95,113 @@ h1 {
 
 button {
   cursor: pointer;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-error: var(--error);
+}
+@theme {
+  /* min-screen */
+  --breakpoint-ms: 375px;
+
+  --color-mountain_meadow: #0fba7e;
+  --color-mountain_meadow-0: #f5f9f7;
+  --color-mountain_meadow-100: #c0f9e7;
+  --color-mountain_meadow-200: #93f4d6;
+  --color-mountain_meadow-300: #5decc2;
+  --color-mountain_meadow-400: #35e5ad;
+  --color-mountain_meadow-500: #0fba7e;
+  --color-mountain_meadow-600: #0c9b69;
+  --color-mountain_meadow-700: #097953;
+  --color-mountain_meadow-800: #065a3f;
+  --color-card: #f5f9f7;
+  --color-card-head: #1e6f5c;
+  --color-card-base: #555555;
+
+  --color-title-smaller: #404040;
+  --color-light-gray: #757575;
+  --color-lighter-gray: #808080;
+  --color-lighter-gray-border: #e0e0e0;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --error: #fa4d56;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 /**
@@ -104,34 +260,4 @@ button {
   transform: translateY(var(--translate-y)) rotateX(var(--rotation)) scale(var(--scale));
   opacity: var(--opacity);
   transform-style: preserve-3d;
-}
-
-/**
- * 스크롤바 스타일 통일
- */
-html {
-  scrollbar-width: auto;
-  scrollbar-gutter: auto;
-  scrollbar-color: auto;
-}
-/* 혹시 나중에 진짜 스타일링을 하고 싶은 경우를 위해 남겨둠 */
-/* ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--color-mountain_meadow);
-} */
-
-/**
- * 터치가능한 기기인지 감지
- * https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer
- * https://caniuse.com/css-media-interaction
- */
-@media (pointer: coarse) {
-  html {
-    scrollbar-width: thin;
-    scrollbar-gutter: stable;
-    scrollbar-color: var(--color-mountain_meadow);
-  }
 }
