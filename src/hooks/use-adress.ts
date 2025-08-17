@@ -1,4 +1,4 @@
-import { addressApi } from '@/api/address'
+import { addressApi } from '@/api/addresses'
 import { useQuery } from '@tanstack/react-query'
 
 const useAddress = () => {

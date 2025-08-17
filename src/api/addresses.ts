@@ -1,8 +1,8 @@
 import { API_URL } from '@/constant/network'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { serverToClientAddress } from '@/lib/utils'
-import { AddressDto, ServerAddress } from '@/types/addresses'
-import { BaseApiResponse } from '@/types/api'
+import { ServerAddress } from '@/types/addresses'
+import { ApiResponse } from '@/types/api'
 
 export const addressApi = {
   getAddress: async () => {
@@ -14,9 +14,15 @@ export const addressApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<AddressResponse>)
-      .then((data) => serverToClientAddress(data.result))
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
+      .then((data) => serverToClientAddress(data))
   },
-  updateAddress: async (body: AddressDto) => {
+  updateAddress: async (body: AddressUpdateDto) => {
     return await fetch(`${API_URL}/deliveries/addresses/me`, {
       method: 'PUT',
       headers: {
@@ -25,9 +31,16 @@ export const addressApi = {
       body: JSON.stringify(body),
     })
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() as Promise<BaseResponse>)
+      .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
+      .then((data) => serverToClientAddress(data))
   },
-  saveAddress: async (data: AddressDto) => {
+  saveAddress: async (data: AddressCreateDto) => {
     return await fetch(`${API_URL}/deliveries/addresses`, {
       method: 'POST',
       headers: {
@@ -37,12 +50,16 @@ export const addressApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => {
+        if (res.success) {
+          return res.result
+        }
+        throw new Error(res.message)
+      })
+      .then((data) => serverToClientAddress(data))
   },
 }
 
-export type AddressResponse = BaseApiResponse<ServerAddress>
-
-type BaseResponse = {
-  success: boolean
-  message: string
-}
+type AddressResponse = ApiResponse<ServerAddress>
+type AddressCreateDto = ServerAddress
+type AddressUpdateDto = ServerAddress

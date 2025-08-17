@@ -31,12 +31,12 @@ function CertifiedChallengeDetails() {
         </Row>
         <Row>
           <h3>대표 이미지</h3>
-          <img src={info.certificationImageUrl} alt="대표 이미지" width={340} height={160} />
+          <img src={info.imageUrl} alt="대표 이미지" width={340} height={160} />
         </Row>
         <Row>
           <h3>간단한 후기를 남겨주세요.</h3>
           <div className="min-h-20 w-full rounded-[10px] border border-[#c0c0c0] bg-white p-4 text-start">
-            <span className="text-secondary-foreground text-sm">{info.certificationReview}</span>
+            <span className="text-secondary-foreground text-sm">{info.review}</span>
           </div>
         </Row>
       </div>
