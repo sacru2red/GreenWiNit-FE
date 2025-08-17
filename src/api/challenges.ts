@@ -5,25 +5,39 @@ import { omit } from 'es-toolkit'
 import { ApiResponse, CursorPaginatedResponse } from '@/types/api'
 
 export const challengesApi = {
-  getIndividualChallenges: async (cursor?: number | null) => {
-    const response = await fetch(`${API_URL}/challenges/personal?${stringify({ cursor })}`)
-    return response.json() as Promise<
-      ApiResponse<{
-        hasNext: boolean
-        nextCursor: number | null
-        content: CommonChallenge[]
-      }>
-    >
+  // @MEMO v2 작업완료
+  getIndividualChallenges: async ({
+    cursor,
+    pageSize,
+  }: {
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  } = {}) => {
+    const response = await fetch(
+      `${API_URL}/challenges/personal?${stringify({ cursor, pageSize })}`,
+    )
+    return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
-  getTeamChallenges: async (cursor?: number | null) => {
-    const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor })}`)
-    return response.json() as Promise<
-      ApiResponse<{
-        hasNext: boolean
-        nextCursor: number | null
-        content: CommonChallenge[]
-      }>
-    >
+  // @MEMO v2 작업완료
+  getIndividualChallengeDetail: async (id: number) => {
+    const response = await fetch(`${API_URL}/challenges/personal/${id}`)
+    return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
+  },
+  // @MEMO v2 작업완료
+  getTeamChallengeDetail: async (id: number) => {
+    const response = await fetch(`${API_URL}/challenges/team/${id}`)
+    return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
+  },
+  // @MEMO v2 작업완료
+  getTeamChallenges: async ({
+    cursor,
+    pageSize,
+  }: {
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  } = {}) => {
+    const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor, pageSize })}`)
+    return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
   getJoinedChallengesMine: async ({
     cursor,
@@ -36,14 +50,6 @@ export const challengesApi = {
       `${API_URL}/my/challenges/${challengeType === 'individual' ? 'personal' : 'team'}?${stringify({ cursor })}`,
     )
     return response.json() as Promise<JoinedChallengesMineReponse>
-  },
-  getChallengeDetail: async (id: number) => {
-    const response = await fetch(`${API_URL}/challenges/${id}`)
-    return response.json() as Promise<{
-      success: true
-      message: string
-      result: ChallengeDetailResponse
-    }>
   },
   joinChallenge: async (id: number) => {
     return fetch(`${API_URL}/challenges/${id}/participate`, {
@@ -187,6 +193,18 @@ export interface CommonChallenge {
   point: number
 }
 
+interface CommonChallengeDetail {
+  id: number
+  title: string
+  beginDate: string
+  endDate: string
+  challengeImage: string
+  challengePoint: number
+  participating: boolean
+  // https://github.com/GreenWiNit/backend/issues/269
+  challengeContent: string
+}
+
 export interface ChallengeDetailResponse {
   id: 0
   /**
@@ -310,13 +328,21 @@ export interface GetCertifiedChallengesMineElement {
 
 export const CHALLENGE_ROOT_QUERY_KEY = 'challenges'
 const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
+  individual: ['individual'] as const,
   list: ({
     challengeType,
     cursor,
+    pageSize,
   }: {
     challengeType: 'individual' | 'team'
-    cursor?: number | null
-  }) => ['list', { challengeType, cursor: cursor ?? undefined }] as const,
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  }) =>
+    [
+      challengeType,
+      'list',
+      { cursor: cursor ?? undefined, pageSize: pageSize ?? undefined },
+    ] as const,
   listJoinedMine: ({
     cursor,
     challengeType,
@@ -333,7 +359,13 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     cursor?: number | null
     challengeType: 'individual' | 'team'
   }) => ['list', 'my-certified', { challengeType, cursor: cursor ?? undefined }] as const,
-  detail: (id: number | undefined) => ['detail', id] as const,
+  detail: ({
+    id,
+    challengeType,
+  }: {
+    id: number | undefined
+    challengeType: 'individual' | 'team'
+  }) => [challengeType, { id: id ?? undefined }] as const,
   team: (challengeId: number | undefined, teamId: number | undefined) =>
     [challengeId, 'teams', teamId] as const,
   teams: (challengeId: number | undefined) => [challengeId, 'teams'] as const,

@@ -24,7 +24,7 @@ function JoinTeam() {
         <PageTitle>팀 선택하기</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} />
+        <ChallengeTitle challengeId={challengeId} challengeType="team" />
         <div className="flex flex-1 flex-col gap-4">
           {teams.length ? (
             teams.map((team) => (

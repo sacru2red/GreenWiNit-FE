@@ -40,7 +40,10 @@ function TeamEnroll() {
         }).queryKey,
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       setShowConfirmDialog(true)
     },

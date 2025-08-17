@@ -15,9 +15,15 @@ import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { createFileRoute } from '@tanstack/react-router'
+import { validateSearchChallengeType } from '@/lib/router'
 
 export const Route = createFileRoute('/challenges/$challenge-id/submit/individual')({
   component: ChallengeSubmitIndividual,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      challengeType: validateSearchChallengeType(search),
+    }
+  },
 })
 
 function ChallengeSubmitIndividual() {
@@ -30,7 +36,8 @@ function ChallengeSubmitIndividual() {
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const challengeId = Number(Route.useParams()['challenge-id'])
-  const { data: challenge } = useChallenge(challengeId)
+  const { challengeType } = Route.useSearch()
+  const { data: challenge } = useChallenge({ id: challengeId, type: challengeType })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
     const { date, image, review } = data

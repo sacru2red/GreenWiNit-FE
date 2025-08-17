@@ -32,7 +32,10 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
         queryKey: [CHALLENGE_ROOT_QUERY_KEY],
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(challengeId).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       navigate({ to: `/challenges/${challengeId}/teams` })
     },

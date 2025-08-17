@@ -17,7 +17,7 @@ export const Route = createFileRoute('/challenges/$challenge-id/teams/')({
 
 function ChallengesTeam() {
   const challengeId = Number(Route.useParams()['challenge-id'])
-  const { data: challenge } = useChallenge(challengeId)
+  const { data: challenge } = useChallenge({ id: challengeId, type: CHALLENGE_TYPE })
   const navigate = useNavigate()
 
   const { data: joinedTeams } = useQuery({
@@ -27,7 +27,7 @@ function ChallengesTeam() {
     select: (data) => data.result?.content ?? [],
   })
 
-  if (challengeId == null || challenge == null || challenge.type !== 'TEAM') {
+  if (challengeId == null || challenge == null) {
     return <div>Service Unavailable</div>
   }
 
@@ -38,7 +38,7 @@ function ChallengesTeam() {
         <PageTitle>나의 팀</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} />
+        <ChallengeTitle challengeId={challengeId} challengeType={CHALLENGE_TYPE} />
         {joinedTeams?.length ? (
           <div className="flex flex-col gap-4">
             {joinedTeams.map((team) => (
@@ -81,5 +81,6 @@ function ChallengesTeam() {
     </PageLayOut.Container>
   )
 }
+const CHALLENGE_TYPE = 'team'
 
 export default ChallengesTeam

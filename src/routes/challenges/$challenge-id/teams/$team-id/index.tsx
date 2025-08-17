@@ -37,7 +37,10 @@ function TeamDetail() {
         }).queryKey,
       })
       queryClient.invalidateQueries({
-        queryKey: challengesQueryKeys.challenges.detail(Number(challengeId)).queryKey,
+        queryKey: challengesQueryKeys.challenges.detail({
+          id: challengeId,
+          challengeType: 'team',
+        }).queryKey,
       })
       setOpenConfirmDialog(true)
     },

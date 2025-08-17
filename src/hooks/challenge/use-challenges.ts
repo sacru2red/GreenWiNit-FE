@@ -1,20 +1,39 @@
 import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import { useQuery } from '@tanstack/react-query'
 
-export const useChallenges = (challengeType: 'individual' | 'team', cursor?: number | null) => {
+export const useChallenges = (apiParams: {
+  challengeType: 'individual' | 'team'
+  cursor?: number | null
+  pageSize?: number
+}) => {
+  const { challengeType, cursor, pageSize } = apiParams
+
   return useQuery({
     queryKey: challengesQueryKeys.challenges.list({
       challengeType,
       cursor: cursor ?? null,
+      pageSize,
     }).queryKey,
     queryFn: (ctx) => {
-      const [, , , { challengeType, cursor: cursorFromQueryKey }] = ctx.queryKey
+      const [
+        ,
+        ,
+        challengeTypeFromQueryKey,
+        ,
+        { cursor: cursorFromQueryKey, pageSize: pageSizeFromQueryKey },
+      ] = ctx.queryKey
 
-      if (challengeType === 'individual') {
-        return challengesApi.getIndividualChallenges(cursorFromQueryKey)
+      if (challengeTypeFromQueryKey === 'individual') {
+        return challengesApi.getIndividualChallenges({
+          cursor: cursorFromQueryKey,
+          pageSize: pageSizeFromQueryKey,
+        })
       }
 
-      return challengesApi.getTeamChallenges(cursorFromQueryKey)
+      return challengesApi.getTeamChallenges({
+        cursor: cursorFromQueryKey,
+        pageSize: pageSizeFromQueryKey,
+      })
     },
     select: (data) => {
       if (data.success) {

@@ -3,10 +3,11 @@ import useChallenge from '@/hooks/challenge/use-challenge'
 
 interface ChallengeTitleProps {
   challengeId?: number
+  challengeType: 'individual' | 'team'
 }
 
-const ChallengeTitle = ({ challengeId }: ChallengeTitleProps) => {
-  const { data: challenge } = useChallenge(challengeId)
+const ChallengeTitle = ({ challengeId, challengeType }: ChallengeTitleProps) => {
+  const { data: challenge } = useChallenge({ id: challengeId, type: challengeType })
 
   return (
     <div className="flex flex-row items-center justify-start gap-1.5">
