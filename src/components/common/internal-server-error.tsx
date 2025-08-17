@@ -1,7 +1,7 @@
 import { Button as OriginalButton } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ComponentProps } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
 
 export default function InternalServerError() {
   const isInRouter = useIsInRouter()
@@ -40,8 +40,8 @@ const InternalServerErrorWithoutRouter = () => {
 }
 
 const InternalServerErrorInRouter = () => {
-  const navigate = useNavigate()
   const location = useLocation()
+  const router = useRouter()
 
   return (
     <div className="flex w-full flex-row justify-center gap-4">
@@ -50,7 +50,7 @@ const InternalServerErrorInRouter = () => {
           새로고침
         </Button>
       ) : null}
-      <Button type="button" onClick={() => navigate(-1)} size="flex">
+      <Button type="button" onClick={() => router.history.back()} size="flex">
         이전 페이지
       </Button>
     </div>

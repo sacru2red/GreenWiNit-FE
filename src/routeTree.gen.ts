@@ -9,7 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as R500RouteImport } from './routes/500'
+import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChallengesChallengeIdDetailRouteImport } from './routes/challenges/$challenge-id/detail'
 import { Route as ChallengesChallengeIdTeamsIndexRouteImport } from './routes/challenges/$challenge-id/teams/index'
@@ -22,9 +25,24 @@ import { Route as ChallengesChallengeIdTeamsTeamIdModifyRouteImport } from './ro
 import { Route as ChallengesChallengeIdTeamsTeamIdJoinedRouteImport } from './routes/challenges/$challenge-id/teams/$team-id/joined'
 import { Route as ChallengesChallengeIdSubmitTeamTeamIdRouteImport } from './routes/challenges/$challenge-id/submit/team/$team-id'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R500Route = R500RouteImport.update({
+  id: '/500',
+  path: '/500',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -94,7 +112,10 @@ const ChallengesChallengeIdSubmitTeamTeamIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/500': typeof R500Route
   '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
@@ -108,7 +129,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/500': typeof R500Route
   '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
@@ -123,7 +147,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/500': typeof R500Route
   '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/challenges/$challenge-id/detail': typeof ChallengesChallengeIdDetailRoute
   '/challenges/$challenge-id/submit/individual': typeof ChallengesChallengeIdSubmitIndividualRoute
   '/challenges/$challenge-id/teams/enroll': typeof ChallengesChallengeIdTeamsEnrollRoute
@@ -139,7 +166,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/404'
+    | '/500'
     | '/login'
+    | '/signup'
     | '/challenges/$challenge-id/detail'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
@@ -153,7 +183,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/404'
+    | '/500'
     | '/login'
+    | '/signup'
     | '/challenges/$challenge-id/detail'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
@@ -167,7 +200,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/404'
+    | '/500'
     | '/login'
+    | '/signup'
     | '/challenges/$challenge-id/detail'
     | '/challenges/$challenge-id/submit/individual'
     | '/challenges/$challenge-id/teams/enroll'
@@ -182,7 +218,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R404Route: typeof R404Route
+  R500Route: typeof R500Route
   LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
   ChallengesChallengeIdDetailRoute: typeof ChallengesChallengeIdDetailRoute
   ChallengesChallengeIdSubmitIndividualRoute: typeof ChallengesChallengeIdSubmitIndividualRoute
   ChallengesChallengeIdTeamsEnrollRoute: typeof ChallengesChallengeIdTeamsEnrollRoute
@@ -197,11 +236,32 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/500': {
+      id: '/500'
+      path: '/500'
+      fullPath: '/500'
+      preLoaderRoute: typeof R500RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -286,7 +346,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R404Route: R404Route,
+  R500Route: R500Route,
   LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
   ChallengesChallengeIdDetailRoute: ChallengesChallengeIdDetailRoute,
   ChallengesChallengeIdSubmitIndividualRoute:
     ChallengesChallengeIdSubmitIndividualRoute,

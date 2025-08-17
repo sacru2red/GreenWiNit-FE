@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { usersApi } from '@/api/users'
 import AppTitle from '@/components/common/app-title'
 import InputProfileImage from '@/components/common/input-profile-image'
@@ -7,18 +8,18 @@ import { Button } from '@/components/ui/button'
 import { initHistoryAndLocation } from '@/lib/utils'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
-interface FormState {
-  profileImage: string | null
-  nickname: string | null
-}
-const Signup = () => {
-  const [searchParams] = useSearchParams()
+export const Route = createFileRoute('/signup')({
+  component: Signup,
+})
+
+function Signup() {
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
 
-  const tempToken = searchParams.get('tempToken')
+  // URL에서 쿼리 파라미터 확인
+  const urlParams = new URLSearchParams(window.location.search)
+  const tempToken = urlParams.get('tempToken')
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')
@@ -101,6 +102,11 @@ const Signup = () => {
       </PageLayOut.BodySection>
     </PageLayOut.Container>
   )
+}
+
+interface FormState {
+  profileImage: string | null
+  nickname: string | null
 }
 
 export default Signup

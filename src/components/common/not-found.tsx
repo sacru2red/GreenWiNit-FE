@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
+import { Button } from '../ui/button'
 
 export default function NotFound() {
   const navigate = useNavigate()
@@ -22,7 +22,12 @@ export default function NotFound() {
         문의 바랍니다.
       </p>
       <div className="flex w-full flex-row justify-center">
-        <Button type="button" onClick={() => navigate('/')} size="flex" className="h-fit max-w-40">
+        <Button
+          type="button"
+          onClick={() => navigate({ to: '/' })}
+          size="flex"
+          className="h-fit max-w-40"
+        >
           홈으로
         </Button>
       </div>
