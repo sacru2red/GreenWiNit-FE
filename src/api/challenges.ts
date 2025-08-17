@@ -79,25 +79,21 @@ export const challengesApi = {
       },
     ).then(throwResponseStatusThenChaining)
   },
-  getJoinedTeamsMine: async (id: number) => {
-    // @TODO replace API
-    // https://github.com/GreenWiNit/backend/issues/188
-    const response = await fetch(`${API_URL}/challenges/${id}/groups`)
+  // @MEMO v2 작업완료
+  getJoinedTeamsMine: async ({
+    challengeId,
+    cursor,
+    pageSize,
+  }: {
+    challengeId: number
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  }) => {
+    const response = await fetch(
+      `${API_URL}/challenges/${challengeId}/groups/me?${stringify({ cursor, pageSize })}`,
+    )
     return response.json() as Promise<
-      | {
-          success: true
-          message: string
-          result: {
-            hasNext: boolean
-            nextCursor: number | null
-            content: Array<ChallengeTeamsElement>
-          }
-        }
-      | {
-          success: false
-          message: string
-          result: null
-        }
+      CursorPaginatedResponse<ChallengeTeamsCommonElement & { leaderMe: boolean }>
     >
   },
   joinTeam: async (_challengeId: number, teamId: number) => {
@@ -105,17 +101,20 @@ export const challengesApi = {
       method: 'POST',
     })
   },
-  getChallengesTeams: async (id: number) => {
-    const response = await fetch(`${API_URL}/challenges/${id}/groups`)
-    return response.json() as Promise<{
-      success: true
-      message: string
-      result: {
-        hasNext: boolean
-        nextCursor: number | null
-        content: Array<ChallengeTeamsElement>
-      } | null
-    }>
+  // @MEMO v2 작업완료
+  getChallengesTeams: async ({
+    challengeId,
+    cursor,
+    pageSize,
+  }: {
+    challengeId: number
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  }) => {
+    const response = await fetch(
+      `${API_URL}/challenges/${challengeId}/groups?${stringify({ cursor, pageSize })}`,
+    )
+    return response.json() as Promise<CursorPaginatedResponse<ChallengeTeamsCommonElement>>
   },
   getChallengesTeam: async (challengeId: number, teamId: number) => {
     const response = await fetch(`${API_URL}/challenges/${challengeId}/groups/${teamId}`)
@@ -270,16 +269,22 @@ interface JoinedChallengesMineReponseElement {
 }
 type JoinedChallengesMineReponse = CursorPaginatedResponse<JoinedChallengesMineReponseElement>
 
-export interface ChallengeTeamsElement {
+export interface ChallengeTeamsCommonElement {
   id: number
   groupName: string
-  groupAddress: string
-  groupBeginDateTime: string
-  groupEndDateTime: string
+  /**
+   * ex) 강남구
+   */
+  signungu: string
+  challengeDate: string
+  startTime: string
+  endTime: string
   currentParticipants: number
   maxParticipants: number
-  groupStatus: 'RECRUITING' | 'IN_PROGRESS' | 'COMPLETED'
-  isLeader: boolean
+  /**
+   * '2025-08-03T18:22:28.234Z'
+   */
+  createdDate: string
 }
 
 export interface TeamCreateRequestDto {
@@ -396,7 +401,20 @@ const challengesKey = createQueryKeys(CHALLENGE_ROOT_QUERY_KEY, {
     [challengeType, { id: id ?? undefined }] as const,
   team: (challengeId: number | undefined, teamId: number | undefined) =>
     [challengeId, 'teams', teamId] as const,
-  teams: (challengeId: number | undefined) => [challengeId, 'teams'] as const,
+  teams: ({
+    challengeId,
+    cursor,
+    pageSize,
+  }: {
+    challengeId: number | undefined
+    cursor?: number | null | undefined
+    pageSize?: number | null | undefined
+  }) =>
+    [
+      challengeId,
+      'teams',
+      { cursor: cursor ?? undefined, pageSize: pageSize ?? undefined },
+    ] as const,
   joinedTeams: (challengeId: number | undefined) => [challengeId, 'teams', 'joined'] as const,
 })
 

@@ -1,14 +1,16 @@
-import { ChallengeTeamsElement } from '@/api/challenges'
+import { ChallengeTeamsCommonElement } from '@/api/challenges'
 import { cn } from '@/lib/utils'
-import dayjs from 'dayjs'
+import dayjs from '@/constant/globals'
 
-interface TeamCardProps {
-  team: ChallengeTeamsElement
+interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
+  team: T
   onClick?: () => void
 }
 
-const TeamCard = ({ team, onClick }: TeamCardProps) => {
-  const isJoinAllowed = team.groupStatus === 'RECRUITING'
+const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
+  const isJoinAllowed =
+    team.maxParticipants <= team.currentParticipants &&
+    dayjs(team.challengeDate).isSameOrBefore(today, 'D')
 
   return (
     <button
@@ -23,7 +25,7 @@ const TeamCard = ({ team, onClick }: TeamCardProps) => {
         <div className="flex flex-row items-center justify-between gap-1">
           <span className="text-title-smaller text-lg font-bold">{team.groupName}</span>
           <span className="text-lighter-gray">
-            {dayjs(team.groupBeginDateTime).format('YYYY.MM.DD')}
+            {dayjs(team.challengeDate).format('YYYY.MM.DD')}
           </span>
         </div>
         <div className="flex flex-col items-start gap-1">
@@ -31,16 +33,17 @@ const TeamCard = ({ team, onClick }: TeamCardProps) => {
             <div className="flex gap-2">
               <span className="text-title-smaller">시간</span>
               <span className="text-lighter-gray">
-                {dayjs(team.groupBeginDateTime).format('HH:mm')} ~{' '}
-                {dayjs(team.groupEndDateTime).format('HH:mm')}
+                {dayjs(team.startTime).format('HH:mm')} ~ {dayjs(team.endTime).format('HH:mm')}
               </span>
             </div>
-            {team.isLeader && <span className="text-mountain_meadow font-bold">팀장</span>}
+            {'leaderMe' in team && team.leaderMe ? (
+              <span className="text-mountain_meadow font-bold">팀장</span>
+            ) : null}
           </div>
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex gap-2">
               <span className="text-title-smaller">장소</span>
-              <span className="text-lighter-gray">{team.groupAddress}</span>
+              <span className="text-lighter-gray">{team.signungu}</span>
             </div>
             <div className="flex gap-2">
               <span className="text-title-smaller">인원</span>
@@ -54,5 +57,6 @@ const TeamCard = ({ team, onClick }: TeamCardProps) => {
     </button>
   )
 }
+const today = dayjs()
 
 export default TeamCard

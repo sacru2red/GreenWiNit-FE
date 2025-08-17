@@ -5,6 +5,7 @@ import PageTitle from '@/components/common/page-title'
 import useChallengesTeams from '@/hooks/challenge/use-challenges-teams'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import BottomNavigation from '@/components/common/bottom-navigation'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/join')({
   component: JoinTeam,
@@ -12,9 +13,15 @@ export const Route = createFileRoute('/challenges/$challenge-id/teams/join')({
 
 function JoinTeam() {
   const challengeId = Number(Route.useParams()['challenge-id'])
+  const [pagination, _setPagination] = useState<{ cursor: number | null; pageSize: number | null }>(
+    {
+      cursor: null,
+      pageSize: null,
+    },
+  )
 
   const navigate = useNavigate()
-  const { data } = useChallengesTeams(challengeId)
+  const { data } = useChallengesTeams({ challengeId, ...pagination })
   const teams = data?.result?.content ?? []
 
   return (
