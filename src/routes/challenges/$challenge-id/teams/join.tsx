@@ -31,7 +31,7 @@ function JoinTeam() {
           <PageLayOut.HeaderSection.BackIcon />
           <PageTitle>팀 선택하기</PageTitle>
         </PageLayOut.HeaderSection>
-        <PageLayOut.BodySection>
+        <PageLayOut.BodySection className="gap-4">
           <ChallengeTitle challengeId={challengeId} challengeType="team" />
           <div className="flex flex-1 flex-col gap-4">
             {teams.length ? (

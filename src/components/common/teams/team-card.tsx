@@ -9,7 +9,7 @@ interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
 
 const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
   const isJoinAllowed =
-    (team.maxParticipants <= team.currentParticipants &&
+    (team.maxParticipants >= team.currentParticipants &&
       dayjs(team.challengeDate).isSameOrBefore(today, 'D')) ||
     ('leaderMe' in team && team.leaderMe)
 
@@ -18,7 +18,7 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
       onClick={onClick}
       disabled={!isJoinAllowed}
       className={cn(
-        'overflow-hidden rounded-lg bg-white',
+        'overflow-hidden rounded-lg bg-white shadow-md',
         !isJoinAllowed && '!cursor-not-allowed bg-[#d9d9d9]',
       )}
     >
