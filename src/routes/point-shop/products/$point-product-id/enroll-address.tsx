@@ -186,7 +186,7 @@ function EnrollAddress() {
               />
               <ErrorMessage name="address" errors={errors} />
             </div>
-            <div className="mt-auto">
+            <div className="mt-42">
               {showEditsuccess && (
                 <div
                   className={`transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
