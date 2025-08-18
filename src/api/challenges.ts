@@ -164,6 +164,20 @@ export const challengesApi = {
       },
     })
   },
+  // @MEMO v2 작업완료
+  submitTeamChallenge: async (params: { teamId: number; imageUrl: string; review: string }) => {
+    return await fetch(`${API_URL}/certifications/challenges/team/${params.teamId}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        imageUrl: params.imageUrl,
+        review: params.review,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+  // @MEMO v2 작업완료
   getCertifiedChallengesMine: async ({
     cursor,
     pageSize,
@@ -178,6 +192,7 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<GetCertifiedChallengesMineElement>>
   },
+  // @MEMO v2 작업완료
   getCertifiedChallengeDetails: async (certId: number) => {
     const response = await fetch(`${API_URL}/certifications/challenges/${certId}`)
     return response.json() as Promise<
@@ -187,19 +202,9 @@ export const challengesApi = {
         certifiedDate: string
         imageUrl: string
         review: string
-        certificationStatus: '인증 요청'
+        certificationStatus: '인증 요청' | '지급' | '미지급'
       }>
     >
-  },
-  postChallengeCertify: async (challengeId: number, body: PostChallengeCertifyRequestBody) => {
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/certifications`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return response.json() as Promise<PostChallengeCertRes>
   },
 }
 
@@ -343,16 +348,6 @@ export interface TeamDetailResponse {
   fullAddress: string
   openChatUrl: string
   participating: boolean
-}
-
-type PostChallengeCertRes = ApiResponse<{
-  certificationId: number
-}>
-
-interface PostChallengeCertifyRequestBody {
-  certificationDate: string
-  certificationImageUrl: string
-  certificationReview: string
 }
 
 export interface GetCertifiedChallengesMineElement {

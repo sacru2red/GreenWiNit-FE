@@ -18,6 +18,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { showMessageIfExists } from '@/lib/error'
 import { dayjs } from '@/constant/globals'
+import { useMutation } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/challenges/$challenge-id/submit/individual')({
   component: ChallengeSubmitIndividual,
@@ -35,27 +36,33 @@ function ChallengeSubmitIndividual() {
   const challengeId = Number(Route.useParams()['challenge-id'])
 
   const { data: challenge } = useChallenge({ id: challengeId, type: CHALLENGE_TYPE })
+  const { mutate: submitChallenge } = useMutation({
+    mutationFn: async (data: FormState) => {
+      const { date, image, review } = data
+      if (date == null) {
+        throw new Error('date is required')
+      }
+      if (image == null) {
+        throw new Error('image is required')
+      }
+      return await challengesApi
+        .submitIndividualChallenge(challengeId, {
+          date: dayjs(date).format('YYYY-MM-DD'),
+          imageUrl: image,
+          review,
+        })
+        .then(throwResponseStatusThenChaining)
+    },
+    onSuccess: () => {
+      setOpenConfirmDialog(true)
+    },
+    onError: (error) => {
+      showMessageIfExists(error)
+    },
+  })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    const { date, image, review } = data
-    if (date == null) {
-      throw new Error('date is required')
-    }
-    if (image == null) {
-      throw new Error('image is required')
-    }
-
-    challengesApi
-      .submitIndividualChallenge(challengeId, {
-        date: dayjs(date).format('YYYY-MM-DD'),
-        imageUrl: image,
-        review,
-      })
-      .then(throwResponseStatusThenChaining)
-      .then(() => {
-        setOpenConfirmDialog(true)
-      })
-      .catch(showMessageIfExists)
+    submitChallenge(data)
   }
 
   return (
