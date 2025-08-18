@@ -216,39 +216,6 @@ interface CommonChallengeDetail {
   challengeContent: string
 }
 
-export interface ChallengeDetailResponse {
-  id: 0
-  /**
-   * challengeName
-   */
-  title: string
-  /**
-   * '2025-08-03T13:41:48.131Z'
-   */
-  beginDateTime: string
-  /**
-   * '2025-08-03T13:41:48.131Z'
-   */
-  endDateTime: string
-  /**
-   * challengeImage
-   */
-  imageUrl: string
-  point: number
-  /**
-   * @TODO fix type
-   */
-  participationStatus: 'NOT_LOGGED_IN'
-  /**
-   * @TODO fix under line
-   */
-  content?: string
-  /**
-   * @TODO fix under line
-   */
-  type?: 'PERSONAL' | 'TEAM'
-}
-
 interface JoinedChallengesMineReponseElement {
   id: number
   challengeName: string
