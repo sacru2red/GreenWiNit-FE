@@ -10,6 +10,9 @@ import ReviewRow from '@/components/submit-screen/review-row'
 import DoneDialog from '@/components/submit-screen/done-dialog'
 import { challengesApi } from '@/api/challenges'
 import { createFileRoute } from '@tanstack/react-router'
+import { useMutation } from '@tanstack/react-query'
+import { throwResponseStatusThenChaining } from '@/lib/network'
+import { showMessageIfExists } from '@/lib/error'
 
 export const Route = createFileRoute('/challenges/$challenge-id/submit/team/$team-id')({
   component: ChallengeSubmitTeam,
@@ -23,24 +26,33 @@ function ChallengeSubmitTeam() {
     },
   })
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
-  const challengeId = Number(Route.useParams()['challenge-id'])
+  const params = Route.useParams()
+  const teamId = Number(params['team-id'])
+
+  const { mutate: submitChallenge } = useMutation({
+    mutationFn: async (data: FormState) => {
+      const { image, review } = data
+      if (image == null) {
+        throw new Error('image is required')
+      }
+      return await challengesApi
+        .submitTeamChallenge({
+          teamId,
+          imageUrl: image,
+          review,
+        })
+        .then(throwResponseStatusThenChaining)
+    },
+    onSuccess: () => {
+      setOpenConfirmDialog(true)
+    },
+    onError: (error) => {
+      showMessageIfExists(error)
+    },
+  })
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    const { image, review } = data
-    if (image == null) {
-      throw new Error('image is required')
-    }
-
-    challengesApi
-      .submitIndividualChallenge(challengeId, {
-        // @CHECK 현재 시간으로 제출하는 것이 맞는지 확인
-        date: new Date().toISOString(),
-        imageUrl: image,
-        review,
-      })
-      .then(() => {
-        setOpenConfirmDialog(true)
-      })
+    submitChallenge(data)
   }
 
   return (

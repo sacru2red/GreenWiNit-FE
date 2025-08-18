@@ -56,6 +56,9 @@ function TeamModify() {
           challengeType: 'team',
         }).queryKey,
       })
+      queryClient.invalidateQueries({
+        queryKey: challengesQueryKeys.challenges.team(teamId).queryKey,
+      })
       navigate({ to: `/challenges/${challengeId}/teams` })
     },
     onError(error) {
@@ -89,22 +92,20 @@ function TeamModify() {
           onSubmit={onSubmit}
           initialData={{
             ...team,
-            id: team.id.toString(),
+            id: team.id,
             name: team.groupName,
-            // https://github.com/GreenWiNit/backend/issues/271
             address: {
-              roadAddress: team.fullAddress.split(' ')[0] || '',
+              roadAddress: team.roadAddress,
               roadnameCode: '',
               zonecode: '',
-              detailAddress: team.fullAddress.split(' ')[1] || '',
-              sigungu: team.fullAddress.split(' ')[2] || '',
+              detailAddress: team.detailAddress,
+              sigungu: team.sigungu,
             },
             description: team.description,
             date: dayjs(team.challengeDate).toDate(),
             startAt: dayjs(team.startTime, 'HH:mm:ss').toDate(),
             endAt: dayjs(team.endTime, 'HH:mm:ss').toDate(),
-            // https://github.com/GreenWiNit/backend/issues/271
-            maxMemberCount: team.currentParticipants,
+            maxMemberCount: team.maxParticipants,
             openChatUrl: team.openChatUrl,
           }}
         />

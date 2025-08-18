@@ -5,8 +5,10 @@ import MemberCount from '@/components/common/teams/member-count'
 import Overview from '@/components/common/teams/overview'
 import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/ui/button'
+import dayjs from '@/constant/globals'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/joined')({
   component: ManageTeam,
@@ -42,6 +44,7 @@ function ManageTeam() {
         <PageTitle>팀 정보</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+        {/* @TODO apply https://github.com/GreenWiNit/backend/issues/274 */}
         <Overview team={team} allowManage challengeId={challengeId} />
         <div className="flex flex-1 flex-col gap-4 p-4">
           <MemberCount team={team} />
@@ -50,7 +53,15 @@ function ManageTeam() {
           <div className="mt-auto flex w-full">
             <Button
               size="flex"
-              onClick={() => navigate({ to: `/challenges/${challengeId}/submit/teams/${teamId}` })}
+              onClick={() => {
+                if (dayjs(team.challengeDate).isAfter(dayjs())) {
+                  toast.error(
+                    `팀 챌린지 날짜(${dayjs(team.challengeDate).format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
+                  )
+                  return
+                }
+                navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
+              }}
             >
               챌린지 인증하기
             </Button>

@@ -7,7 +7,6 @@ import { throwResponseStatusThenChaining } from '@/lib/network'
 import { ChallengeType } from '@/types/challenge'
 
 export const challengesApi = {
-  // @MEMO v2 작업완료
   getIndividualChallenges: async ({
     cursor,
     pageSize,
@@ -20,17 +19,14 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
-  // @MEMO v2 작업완료
   getIndividualChallengeDetail: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/personal/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
-  // @MEMO v2 작업완료
   getTeamChallengeDetail: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/team/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
-  // @MEMO v2 작업완료
   getTeamChallenges: async ({
     cursor,
     pageSize,
@@ -41,7 +37,6 @@ export const challengesApi = {
     const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor, pageSize })}`)
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
-  // @MEMO v2 작업완료
   getJoinedChallengesMine: async ({
     cursor,
     challengeType,
@@ -70,7 +65,6 @@ export const challengesApi = {
         }
       })
   },
-  // @MEMO v2 작업완료
   joinChallenge: async ({ id, challengeType }: { id: number; challengeType: ChallengeType }) => {
     return fetch(
       `${API_URL}/challenges/${challengeType === 'individual' ? 'personal' : 'team'}/${id}/participate`,
@@ -79,7 +73,6 @@ export const challengesApi = {
       },
     ).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   getJoinedTeamsMine: async ({
     challengeId,
     cursor,
@@ -99,9 +92,8 @@ export const challengesApi = {
   joinTeam: async (_challengeId: number, teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, {
       method: 'POST',
-    })
+    }).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   getChallengesTeams: async ({
     challengeId,
     cursor,
@@ -116,13 +108,11 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<ChallengeTeamsCommonElement>>
   },
-  // @MEMO v2 작업완료
   getChallengesTeam: async (teamId: number) => {
     return await fetch(`${API_URL}/challenges/groups/${teamId}`).then((res) => {
       return res.json() as Promise<ApiResponse<TeamDetailResponse>>
     })
   },
-  // @MEMO v2 작업완료
   enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
     return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
       method: 'POST',
@@ -133,7 +123,9 @@ export const challengesApi = {
     }).then(throwResponseStatusThenChaining)
   },
   deleteTeam: async (teamId: number) => {
-    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' }).then(
+      throwResponseStatusThenChaining,
+    )
   },
   modifyTeam: async (team: TeamModifyRequestDto) => {
     return fetch(`${API_URL}/challenges/groups/${team.id}`, {
@@ -144,7 +136,6 @@ export const challengesApi = {
       },
     }).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   submitIndividualChallenge: async (
     challengeId: number,
     body: {
@@ -158,6 +149,18 @@ export const challengesApi = {
       body: JSON.stringify({
         ...omit(body, ['date']),
         challengeDate: body.date,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+  submitTeamChallenge: async (params: { teamId: number; imageUrl: string; review: string }) => {
+    return await fetch(`${API_URL}/certifications/challenges/team/${params.teamId}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        imageUrl: params.imageUrl,
+        review: params.review,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -178,8 +181,8 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<GetCertifiedChallengesMineElement>>
   },
-  getCertifiedChallengeDetails: async (certId: number) => {
-    const response = await fetch(`${API_URL}/certifications/challenges/${certId}`)
+  getCertifiedChallengeDetails: async (certificationId: number) => {
+    const response = await fetch(`${API_URL}/certifications/challenges/${certificationId}`)
     return response.json() as Promise<
       ApiResponse<{
         id: number
@@ -187,19 +190,9 @@ export const challengesApi = {
         certifiedDate: string
         imageUrl: string
         review: string
-        certificationStatus: '인증 요청'
+        certificationStatus: '인증 요청' | '지급' | '미지급'
       }>
     >
-  },
-  postChallengeCertify: async (challengeId: number, body: PostChallengeCertifyRequestBody) => {
-    const response = await fetch(`${API_URL}/challenges/${challengeId}/certifications`, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return response.json() as Promise<PostChallengeCertRes>
   },
 }
 
@@ -220,7 +213,6 @@ interface CommonChallengeDetail {
   challengeImage: string
   challengePoint: number
   participating: boolean
-  // https://github.com/GreenWiNit/backend/issues/269
   challengeContent: string
 }
 
@@ -329,30 +321,24 @@ interface TeamCreateRequestDto {
 }
 
 export interface TeamModifyRequestDto extends TeamCreateRequestDto {
-  id: string
+  id: number
 }
 
 export interface TeamDetailResponse {
   id: number
   groupName: string
   currentParticipants: number
+  maxParticipants: number
   description: string
   challengeDate: string
   startTime: string
   endTime: string
+  roadAddress: string
+  detailAddress: string
+  sigungu: string
   fullAddress: string
   openChatUrl: string
   participating: boolean
-}
-
-type PostChallengeCertRes = ApiResponse<{
-  certificationId: number
-}>
-
-interface PostChallengeCertifyRequestBody {
-  certificationDate: string
-  certificationImageUrl: string
-  certificationReview: string
 }
 
 export interface GetCertifiedChallengesMineElement {

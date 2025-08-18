@@ -1,5 +1,5 @@
 export interface FormState {
-  id: string | null
+  id: number | null
   name: string
   date: Date | null
   startAt: Date | null
