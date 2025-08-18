@@ -313,7 +313,6 @@ export interface GetCertifiedChallengesMineElement {
   challengeName: string
   certifiedDate: string
   certificationStatus: string
-  // https://github.com/GreenWiNit/backend/issues/267
   challengeImage: string
 }
 
