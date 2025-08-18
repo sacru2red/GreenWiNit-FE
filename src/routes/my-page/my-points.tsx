@@ -5,6 +5,7 @@ import useUserName from '@/hooks/use-user-name'
 import { useUserPoints } from '@/hooks/use-user-points'
 import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { createFileRoute } from '@tanstack/react-router'
+import Loading from '@/components/common/loading'
 
 export const Route = createFileRoute('/my-page/my-points')({
   component: MyPoints,
@@ -15,7 +16,7 @@ function MyPoints() {
   const { data: getPointsReponse } = useUserPoints()
   const points = getPointsReponse?.result
 
-  if (!points) return <div>데이터 로딩중...</div>
+  if (!points) return <Loading />
 
   return (
     <MyPageLayout title="포인트 현황" background="green" className="p-0">
