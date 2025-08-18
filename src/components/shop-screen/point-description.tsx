@@ -20,7 +20,7 @@ const PointDescription = ({
   availablePoint,
   isLoading,
 }: PointDescriptionProps) => {
-  const availablePurchaseCount = Math.floor(availablePoint / (price ?? 1))
+  const availablePurchaseCount = Math.max(Math.floor(availablePoint / (price ?? 1)), 5)
   const selectableCount = Math.min(availablePurchaseCount, remainingQuantity ?? 0)
   const finalCount = Math.min(selectableCount, 5)
 
@@ -33,13 +33,13 @@ const PointDescription = ({
 
   return (
     <div className="flex flex-col p-4 text-center">
-      <p className="text-xl">제품 설명</p>
+      <p className="text-2xl font-extrabold">제품 설명</p>
       <p className="p-4">{description}</p>
       <hr />
       <PointOverview
         label="사용 가능 포인트"
         point={`${availablePoint}p`}
-        valueClassName="text-green-500"
+        valueClassName="text-mountain_meadow"
       />
       <PointOverview
         label="수량 선택"
@@ -51,7 +51,11 @@ const PointDescription = ({
         selectedQuantity={selectedQuantity}
       />
       <PointOverview label="차감 포인트" point={`${deductPoint}p`} valueClassName="text-red-500" />
-      <PointOverview label="총 보유 포인트" point={textIfDoneExchangingPoint} />
+      <PointOverview
+        label="총 보유 포인트"
+        point={textIfDoneExchangingPoint}
+        valueClassName="text-mountain_meadow"
+      />
       <hr />
     </div>
   )

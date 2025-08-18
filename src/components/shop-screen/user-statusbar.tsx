@@ -1,9 +1,17 @@
+import { useNavigate } from '@tanstack/react-router'
+
 interface UserStatusbarProps {
   point: number
   availablePoint: number
 }
 
 const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
+  const navigate = useNavigate()
+
+  const handleButtonClick = () => {
+    navigate({ to: '/my-page/my-points' })
+  }
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className="flex w-full items-center justify-between px-4 pt-4">
@@ -11,7 +19,10 @@ const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
           <p className="mb-1 text-xs text-gray-500">나의 포인트</p>
           <p className="text-2xl font-semibold text-black">{point}</p>
         </div>
-        <button className="text-md rounded-lg bg-[#E8F5E9] px-4 py-2 text-green-700 md:text-base">
+        <button
+          className="text-md rounded-lg bg-[#E8F5E9] px-4 py-2 text-green-700 md:text-base"
+          onClick={handleButtonClick}
+        >
           포인트 내역
         </button>
       </div>

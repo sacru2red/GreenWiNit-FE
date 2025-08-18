@@ -7,6 +7,11 @@ import { useUserStatus } from '@/hooks/use-user-status'
 import { useState } from 'react'
 import Loading from '@/components/common/loading'
 import { createFileRoute } from '@tanstack/react-router'
+import useAddress from '@/hooks/use-adress'
+import NoticeDialog from '@/components/common/modal/notice-dialog'
+import { pointApi } from '@/api/points'
+import { toast } from 'sonner'
+import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 
 export const Route = createFileRoute('/point-shop/products/$point-product-id/detail')({
   component: ProductDetail,
@@ -16,21 +21,56 @@ function ProductDetail() {
   const pointProductId = Route.useParams()['point-product-id']
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const [showNoticeDialog, setShowNoticeDialog] = useState(false)
+  const [isExchanging, setIsExchanging] = useState(false)
 
   const { data: product, isLoading: productLoading } = useProduct(pointProductId)
   const { data: userStatus, isLoading: userLoading } = useUserStatus()
+  const { data: user } = useAddress()
 
   const isLoading = productLoading || userLoading
   const availablePoint = userStatus?.result?.userTotalPoints ?? 0
   const deductPoint = isLoading ? 0 : selectedQuantity * (product?.price ?? 0)
 
-  const handleQuantityChange = (newQuantity: number) => {
-    setSelectedQuantity(newQuantity)
+  const handleExchangeButton = () => {
+    setShowConfirmDialog(true)
   }
 
-  const handleExchangePoint = () => {
-    // https://docs.google.com/presentation/d/1pbZdY3SoAVvmvmz9FbINwfLaJ-JMv37inoXZFIvgUaw/edit?slide=id.g36dc7146b90_2_61#slide=id.g36dc7146b90_2_61
-    // @TODO 구현빠진부분 추가
+  const handleConfirm = async () => {
+    setIsExchanging(true)
+
+    if (user === undefined) {
+      return
+    }
+
+    const exchangeData = {
+      deliveryAddressId: user.id,
+      orderItemId: parseInt(pointProductId),
+      quantity: selectedQuantity,
+    }
+
+    pointApi
+      .exchangeProduct(exchangeData)
+      .then(() => {
+        setShowConfirmDialog(false)
+        setShowNoticeDialog(true)
+      })
+      .catch((error) => {
+        toast.error('교환 실패:', error)
+      })
+      .finally(() => {
+        setIsExchanging(false)
+      })
+  }
+
+  const handleExchange = async () => {
+    setShowNoticeDialog(false)
+    window.location.reload()
+  }
+
+  const handleQuantityChange = (newQuantity: number) => {
+    setSelectedQuantity(newQuantity)
   }
 
   if (isLoading) {
@@ -50,7 +90,7 @@ function ProductDetail() {
             </div>
             <div className="px-4 py-2 text-left font-bold">
               <p className="text-xl text-black">{product?.name}</p>
-              <p className="text-2xl text-[#0FBA7E]">{product?.price} 포인트</p>
+              <p className="text-mountain_meadow text-2xl">{product?.price} 포인트</p>
             </div>
             <hr />
           </div>
@@ -67,7 +107,26 @@ function ProductDetail() {
           <ExchangeProduct
             availablePoint={availablePoint}
             deductPoint={deductPoint}
-            onExchange={handleExchangePoint}
+            handleClick={handleExchangeButton}
+          />
+          <ConfirmDialog
+            isOpen={showConfirmDialog}
+            setIsOpen={setShowConfirmDialog}
+            description={`이름 ${user?.name}\n 전화번호 ${user?.phone}\n 주소 ${user?.address.roadAddress}\n ${user?.address.detailAddress}`}
+            paragraph="수정이 불가능하니 리워드 수령 정보를 다시 확인해주세요."
+            onConfirm={handleConfirm}
+            isPending={isExchanging}
+          />
+          <NoticeDialog
+            isOpen={showNoticeDialog}
+            setIsOpen={setShowNoticeDialog}
+            description={`
+              교환 신청이 완료되었습니다!\n
+              [마이페이지] -> [포인트내역]에서\n
+              확인할 수 있어요\n
+              배송까지 소요될 예정입니다.\n
+            `}
+            onConfirm={handleExchange}
           />
         </PageLayOut.BodySection>
       </PageLayOut.ScrollableContent>

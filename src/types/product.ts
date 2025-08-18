@@ -10,3 +10,9 @@ export type ProdcutDetailType = Product & {
   description: string
   stockQuantity: number
 }
+
+export type ExchangeProduct = {
+  deliveryAddressId: number
+  orderItemId: number
+  quantity: number
+}
