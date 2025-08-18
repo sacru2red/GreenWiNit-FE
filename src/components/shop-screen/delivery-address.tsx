@@ -2,7 +2,7 @@ import useAddress from '@/hooks/use-adress'
 import { Plus } from 'lucide-react'
 import { useNavigate, useParams } from '@tanstack/react-router'
 import { Fragment } from 'react'
-import { Button } from '../ui/button'
+import { Button } from '@/components/common/button'
 
 interface DeliveryAddressProps {
   pointProductId?: string | undefined

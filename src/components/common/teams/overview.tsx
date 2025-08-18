@@ -6,13 +6,13 @@ import {
 } from '@/api/challenges'
 import LogoIcon from '../logo-icon'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Separator } from '@/components/ui/separator'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/popover'
+import { Separator } from '@/components/shadcn/separator'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
+import { Button } from '@/components/common/button'
 
 interface OverviewProps {
   team: TeamDetailResponse

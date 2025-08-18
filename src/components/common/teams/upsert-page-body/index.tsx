@@ -5,7 +5,7 @@ import DatePickerSingle from '@/components/common/form/date-picker-single'
 import { omit } from 'es-toolkit'
 import TimeInput from '@/components/common/form/time-input'
 import AddressInput from '@/components/common/form/address-input'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/common/button'
 import { FormState, UpsertPageBodyProps } from './types'
 import Row from '@/components/common/form/row'
 

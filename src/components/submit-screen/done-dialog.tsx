@@ -1,5 +1,5 @@
-import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription } from '@/components/shadcn/dialog'
+import { Button } from '@/components/common/button'
 import { useNavigate } from '@tanstack/react-router'
 
 interface DoneDialogProps {

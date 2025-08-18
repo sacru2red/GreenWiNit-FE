@@ -1,4 +1,4 @@
-import { Button as OriginalButton } from '@/components/ui/button'
+import { Button as OriginalButton } from '@/components/common/button'
 import { cn } from '@/lib/utils'
 import { ComponentProps } from 'react'
 import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'

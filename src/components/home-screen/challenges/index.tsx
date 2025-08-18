@@ -5,10 +5,10 @@ import { useChallenges } from '@/hooks/challenge/use-challenges'
 import Challenge from '@/components/common/challenge'
 import { useNavigate } from '@tanstack/react-router'
 import { Info as InfoOutlineIcon } from 'lucide-react'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/shadcn/tooltip'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import WarnNotLoggedIn from '../warn-not-logged-in'
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/shadcn/carousel'
 import { cn } from '@/lib/utils'
 
 const Challenges = () => {

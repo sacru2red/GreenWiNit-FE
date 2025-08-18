@@ -1,4 +1,4 @@
-import { Textarea as ShadcnTextarea } from '@/components/ui/textarea'
+import { Textarea as ShadcnTextarea } from '@/components/shadcn/textarea'
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { ComponentProps } from 'react'

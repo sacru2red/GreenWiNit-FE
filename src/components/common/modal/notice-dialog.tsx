@@ -4,8 +4,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+} from '@/components/shadcn/dialog'
+import { Button } from '@/components/common/button'
 import React from 'react'
 
 interface NoticeDialogProps {
