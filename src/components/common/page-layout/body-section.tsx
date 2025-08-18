@@ -8,7 +8,7 @@ const pageBodySectionVariants = cva('flex flex-1 flex-col mt-2 mb-2 p-4 w-full r
       zero: 'p-0',
     },
     bg: {
-      theme: 'bg-card',
+      theme: 'bg-white',
       form: 'bg-white',
     },
   },

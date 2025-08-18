@@ -62,9 +62,9 @@ function ChallengeDetail() {
           <PageLayOut.HeaderSection.BackIcon />
           <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
         </PageLayOut.HeaderSection>
-        <PageLayOut.BodySection>
+        <PageLayOut.BodySection className="gap-3">
           <ChallengeTitle challengeId={challengeId} challengeType={challengeType} />
-          <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
+          <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow">
             <img
               src={challenge?.challengeImage || DEFAULT_CHALLENGE_IMAGE}
               alt="challenge image"

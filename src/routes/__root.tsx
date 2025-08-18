@@ -39,7 +39,7 @@ const RootElement = () => {
   }, [])
 
   return (
-    <div className="bg-mountain_meadow-0 relative flex h-full w-[var(--app-width)] justify-self-center">
+    <div className="relative flex h-full w-[var(--app-width)] justify-self-center bg-white">
       {showSplashScreen ? (
         <div
           className={`flex h-full flex-1 opacity-100 transition-all duration-500 ${cn(showSplashScreen ? 'overflow-hidden' : null)}`}
