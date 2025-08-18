@@ -23,7 +23,7 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
   return (
     <div
       className={cn(
-        'flex flex-1 basis-[164px] flex-col overflow-hidden rounded-xl bg-white shadow-lg',
+        'border-lighter-gray-border flex flex-1 basis-[164px] flex-col overflow-hidden rounded-xl border bg-white',
         onClick ? 'cursor-pointer' : null,
         className,
       )}
