@@ -25,8 +25,27 @@ const InputNickname = forwardRef<HTMLInputElement, InputNicknameProps>(
     const handleClick = async () => {
       const nickname = props.value as string
 
+      // 1. 빈값 검사
       if (!nickname) {
         toast.error('닉네임을 입력해 주세요.')
+        return
+      }
+
+      // 2. 띄어쓰기 검사
+      if (/\s/.test(nickname)) {
+        toast.error('띄어쓰기를 포함할 수 없습니다.')
+        return
+      }
+
+      // 3. 길이 제한 검사
+      if (nickname.length > 20) {
+        toast.error('닉네임은 20자 이내로 입력해주세요.')
+        return
+      }
+
+      // 4. 특수문자/이모지 검사
+      if (!/^[\p{L}\p{N}]+$/u.test(nickname)) {
+        toast.error('특수문자와 이모지는 사용할 수 없습니다.')
         return
       }
 
