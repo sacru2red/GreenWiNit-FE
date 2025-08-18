@@ -7,7 +7,6 @@ import { throwResponseStatusThenChaining } from '@/lib/network'
 import { ChallengeType } from '@/types/challenge'
 
 export const challengesApi = {
-  // @MEMO v2 작업완료
   getIndividualChallenges: async ({
     cursor,
     pageSize,
@@ -20,17 +19,14 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
-  // @MEMO v2 작업완료
   getIndividualChallengeDetail: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/personal/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
-  // @MEMO v2 작업완료
   getTeamChallengeDetail: async (id: number) => {
     const response = await fetch(`${API_URL}/challenges/team/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
-  // @MEMO v2 작업완료
   getTeamChallenges: async ({
     cursor,
     pageSize,
@@ -41,7 +37,6 @@ export const challengesApi = {
     const response = await fetch(`${API_URL}/challenges/team?${stringify({ cursor, pageSize })}`)
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
-  // @MEMO v2 작업완료
   getJoinedChallengesMine: async ({
     cursor,
     challengeType,
@@ -70,7 +65,6 @@ export const challengesApi = {
         }
       })
   },
-  // @MEMO v2 작업완료
   joinChallenge: async ({ id, challengeType }: { id: number; challengeType: ChallengeType }) => {
     return fetch(
       `${API_URL}/challenges/${challengeType === 'individual' ? 'personal' : 'team'}/${id}/participate`,
@@ -79,7 +73,6 @@ export const challengesApi = {
       },
     ).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   getJoinedTeamsMine: async ({
     challengeId,
     cursor,
@@ -96,13 +89,11 @@ export const challengesApi = {
       CursorPaginatedResponse<ChallengeTeamsCommonElement & { leaderMe: boolean }>
     >
   },
-  // @MEMO v2 작업완료
   joinTeam: async (_challengeId: number, teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, {
       method: 'POST',
     }).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   getChallengesTeams: async ({
     challengeId,
     cursor,
@@ -117,13 +108,11 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<ChallengeTeamsCommonElement>>
   },
-  // @MEMO v2 작업완료
   getChallengesTeam: async (teamId: number) => {
     return await fetch(`${API_URL}/challenges/groups/${teamId}`).then((res) => {
       return res.json() as Promise<ApiResponse<TeamDetailResponse>>
     })
   },
-  // @MEMO v2 작업완료
   enrollTeam: async (challengeId: number, team: TeamCreateRequestDto) => {
     return fetch(`${API_URL}/challenges/${challengeId}/groups`, {
       method: 'POST',
@@ -133,13 +122,11 @@ export const challengesApi = {
       },
     }).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   deleteTeam: async (teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' }).then(
       throwResponseStatusThenChaining,
     )
   },
-  // @MEMO v2 작업완료
   modifyTeam: async (team: TeamModifyRequestDto) => {
     return fetch(`${API_URL}/challenges/groups/${team.id}`, {
       method: 'PUT',
@@ -149,7 +136,6 @@ export const challengesApi = {
       },
     }).then(throwResponseStatusThenChaining)
   },
-  // @MEMO v2 작업완료
   submitIndividualChallenge: async (
     challengeId: number,
     body: {
@@ -169,7 +155,6 @@ export const challengesApi = {
       },
     })
   },
-  // @MEMO v2 작업완료
   submitTeamChallenge: async (params: { teamId: number; imageUrl: string; review: string }) => {
     return await fetch(`${API_URL}/certifications/challenges/team/${params.teamId}`, {
       method: 'POST',
@@ -182,7 +167,6 @@ export const challengesApi = {
       },
     })
   },
-  // @MEMO v2 작업완료
   getCertifiedChallengesMine: async ({
     cursor,
     pageSize,
@@ -197,7 +181,6 @@ export const challengesApi = {
     )
     return response.json() as Promise<CursorPaginatedResponse<GetCertifiedChallengesMineElement>>
   },
-  // @MEMO v2 작업완료
   getCertifiedChallengeDetails: async (certificationId: number) => {
     const response = await fetch(`${API_URL}/certifications/challenges/${certificationId}`)
     return response.json() as Promise<
