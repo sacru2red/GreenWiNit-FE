@@ -216,39 +216,6 @@ interface CommonChallengeDetail {
   challengeContent: string
 }
 
-export interface ChallengeDetailResponse {
-  id: 0
-  /**
-   * challengeName
-   */
-  title: string
-  /**
-   * '2025-08-03T13:41:48.131Z'
-   */
-  beginDateTime: string
-  /**
-   * '2025-08-03T13:41:48.131Z'
-   */
-  endDateTime: string
-  /**
-   * challengeImage
-   */
-  imageUrl: string
-  point: number
-  /**
-   * @TODO fix type
-   */
-  participationStatus: 'NOT_LOGGED_IN'
-  /**
-   * @TODO fix under line
-   */
-  content?: string
-  /**
-   * @TODO fix under line
-   */
-  type?: 'PERSONAL' | 'TEAM'
-}
-
 interface JoinedChallengesMineReponseElement {
   id: number
   challengeName: string
@@ -311,9 +278,7 @@ interface TeamCreateRequestDto {
    */
   endDateTime: string
   maxParticipants: number
-
-  /** 오타 */
-  challengeData: string
+  challengeDate: string
   /** hh:mm */
   startTime: string
   /** hh:mm */
@@ -346,7 +311,6 @@ export interface GetCertifiedChallengesMineElement {
   challengeName: string
   certifiedDate: string
   certificationStatus: string
-  // https://github.com/GreenWiNit/backend/issues/267
   challengeImage: string
 }
 
