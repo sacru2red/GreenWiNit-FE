@@ -96,10 +96,11 @@ export const challengesApi = {
       CursorPaginatedResponse<ChallengeTeamsCommonElement & { leaderMe: boolean }>
     >
   },
+  // @MEMO v2 작업완료
   joinTeam: async (_challengeId: number, teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, {
       method: 'POST',
-    })
+    }).then(throwResponseStatusThenChaining)
   },
   // @MEMO v2 작업완료
   getChallengesTeams: async ({

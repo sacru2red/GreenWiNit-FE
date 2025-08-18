@@ -7,7 +7,7 @@ import Overview from '@/components/common/teams/overview'
 import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/ui/button'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
-import { toast } from 'sonner'
+import { showMessageIfExists } from '@/lib/error'
 import { Dialog, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -46,7 +46,7 @@ function TeamDetail() {
     },
     onError(error) {
       console.error(error)
-      toast.error(error.message)
+      showMessageIfExists(error)
     },
   })
 

@@ -44,6 +44,7 @@ function ManageTeam() {
         <PageTitle>팀 정보</PageTitle>
       </PageLayOut.HeaderSection>
       <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+        {/* @TODO apply https://github.com/GreenWiNit/backend/issues/274 */}
         <Overview team={team} allowManage challengeId={challengeId} />
         <div className="flex flex-1 flex-col gap-4 p-4">
           <MemberCount team={team} />
