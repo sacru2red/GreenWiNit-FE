@@ -31,8 +31,8 @@ function TeamModify() {
       await challengesApi.modifyTeam({
         ...rest,
         id,
-        beginDateTime: dayjs(rest.startAt).toISOString(),
-        endDateTime: dayjs(rest.endAt).toISOString(),
+        beginDateTime: dayjs(rest.startAt).format('YYYY-MM-DD HH:mm'),
+        endDateTime: dayjs(rest.endAt).format('YYYY-MM-DD HH:mm'),
         groupName: rest.name,
         roadAddress: rest.address.roadAddress,
         detailAddress: rest.address.detailAddress,
