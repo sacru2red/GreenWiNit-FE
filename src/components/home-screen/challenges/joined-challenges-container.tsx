@@ -20,6 +20,7 @@ function JoinedChallengesContainer() {
       setChallengeType={setChallengeType}
       challenges={challenges ?? []}
       handleNavigate={handleNavigate}
+      useCarousel={false}
     />
   )
 }
