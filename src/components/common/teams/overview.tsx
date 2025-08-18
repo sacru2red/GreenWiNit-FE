@@ -11,7 +11,13 @@ import { Separator } from '@/components/shadcn/separator'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+} from '@/components/shadcn/dialog'
 import { Button } from '@/components/common/button'
 
 interface OverviewProps {
@@ -85,8 +91,10 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
         open={showConfirmDeletingDialog}
         onOpenChange={() => setShowConfirmDeletingDialog(false)}
       >
-        <DialogTitle>팀 삭제</DialogTitle>
         <DialogContent className="flex flex-col gap-6">
+          <DialogHeader>
+            <DialogTitle>팀 삭제</DialogTitle>
+          </DialogHeader>
           <DialogDescription className="text-center !text-sm">
             팀을 삭제하시겠습니까?
             <br />
