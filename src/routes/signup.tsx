@@ -4,7 +4,7 @@ import AppTitle from '@/components/common/app-title'
 import InputProfileImage from '@/components/common/input-profile-image'
 import PageLayOut from '@/components/common/page-layout'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
-import { Button } from '@/components/shadcn/button'
+import { Button } from '@/components/common/button'
 import { initHistoryAndLocation } from '@/lib/utils'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
@@ -98,7 +98,7 @@ function Signup() {
           <Button
             type="submit"
             className="mt-auto"
-            variant={isNicknameDuplicated ? 'default' : 'disabled'}
+            variant={isNicknameDuplicated ? 'disabled' : null}
           >
             제출
           </Button>

@@ -1,4 +1,4 @@
-import { Button } from '@/components/shadcn/button'
+import { Button } from '@/components/common/button'
 
 const PersonalInquiryButton = () => {
   return (

@@ -1,4 +1,4 @@
-import { Button } from '@/components/shadcn/button'
+import { Button } from '@/components/common/button'
 import { Dialog, DialogContent } from '@/components/shadcn/dialog'
 import { ComponentProps, Fragment, useState } from 'react'
 import Input from '../input'

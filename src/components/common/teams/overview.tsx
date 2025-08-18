@@ -12,7 +12,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/shadcn/dialog'
-import { Button } from '@/components/shadcn/button'
+import { Button } from '@/components/common/button'
 
 interface OverviewProps {
   team: TeamDetailResponse
