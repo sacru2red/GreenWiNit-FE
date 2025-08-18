@@ -63,13 +63,15 @@ function TeamEnroll() {
 
   return (
     <PageLayOut.Container bg="form">
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>팀 등록하기</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <UpsertPageBody mode="enroll" onSubmit={onSubmit} />
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>팀 등록하기</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <UpsertPageBody mode="enroll" onSubmit={onSubmit} />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="flex flex-col gap-4">
           <DialogDescription className="text-bold text-center !text-xl !text-black">

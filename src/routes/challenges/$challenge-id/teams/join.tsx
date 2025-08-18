@@ -26,38 +26,40 @@ function JoinTeam() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>팀 선택하기</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} challengeType="team" />
-        <div className="flex flex-1 flex-col gap-4">
-          {teams.length ? (
-            teams.map((team) => (
-              <TeamCard
-                key={team.id}
-                onClick={() => {
-                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}` })
-                }}
-                team={team}
-              />
-            ))
-          ) : (
-            <div className="flex flex-1 flex-col">
-              <div className="flex flex-1 items-center justify-center">
-                <p className="text-bold text-lg text-[#c0c0c0]">
-                  아직 등록된 팀이 없습니다.
-                  <br />
-                  [홈] - [참여 챌린지]에서
-                  <br />
-                  가장 먼저 팀을 등록해주세요!
-                </p>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>팀 선택하기</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <ChallengeTitle challengeId={challengeId} challengeType="team" />
+          <div className="flex flex-1 flex-col gap-4">
+            {teams.length ? (
+              teams.map((team) => (
+                <TeamCard
+                  key={team.id}
+                  onClick={() => {
+                    navigate({ to: `/challenges/${challengeId}/teams/${team.id}` })
+                  }}
+                  team={team}
+                />
+              ))
+            ) : (
+              <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 items-center justify-center">
+                  <p className="text-bold text-lg text-[#c0c0c0]">
+                    아직 등록된 팀이 없습니다.
+                    <br />
+                    [홈] - [참여 챌린지]에서
+                    <br />
+                    가장 먼저 팀을 등록해주세요!
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </PageLayOut.BodySection>
+            )}
+          </div>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

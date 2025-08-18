@@ -57,23 +57,25 @@ function ChallengeSubmitTeam() {
 
   return (
     <PageLayOut.Container bg="form">
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>팀 챌린지 인증</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4">
-          <ImageRow control={f.control} purpose="challenge" />
-          <ReviewRow control={f.control} />
-          <Button
-            variant={f.formState.isValid ? 'default' : 'disabled'}
-            className="mt-auto text-lg"
-            type="submit"
-          >
-            제출하기
-          </Button>
-        </form>
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>팀 챌린지 인증</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <form onSubmit={f.handleSubmit(onSubmit)} className="flex flex-1 flex-col gap-4">
+            <ImageRow control={f.control} purpose="challenge" />
+            <ReviewRow control={f.control} />
+            <Button
+              variant={f.formState.isValid ? 'default' : 'disabled'}
+              className="mt-auto text-lg"
+              type="submit"
+            >
+              제출하기
+            </Button>
+          </form>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <DoneDialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog} />
     </PageLayOut.Container>
   )

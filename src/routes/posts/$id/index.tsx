@@ -30,23 +30,27 @@ function PostDetail() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>활동 상세</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection padding="zero" className="m-0">
-        <div className="w-full bg-green-50">
-          <img src={post.imageurl} className="w-full" />
-        </div>
-        <div className="flex flex-row items-center justify-between p-4">
-          <div className="text-xl font-bold">{post.title}</div>
-          <CategoryName category={post.infoCategoryName} />
-        </div>
-        <div className="flex flex-col text-start">
-          <p className="text-secondary border-b-2 px-4 pt-4 text-xl font-bold">소개</p>
-          <p className="text-tertiary p-4 wrap-anywhere whitespace-break-spaces">{post.content}</p>
-        </div>
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>활동 상세</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection padding="zero" className="m-0">
+          <div className="w-full bg-green-50">
+            <img src={post.imageurl} className="w-full" />
+          </div>
+          <div className="flex flex-row items-center justify-between p-4">
+            <div className="text-xl font-bold">{post.title}</div>
+            <CategoryName category={post.infoCategoryName} />
+          </div>
+          <div className="flex flex-col text-start">
+            <p className="text-secondary border-b-2 px-4 pt-4 text-xl font-bold">소개</p>
+            <p className="text-tertiary p-4 wrap-anywhere whitespace-break-spaces">
+              {post.content}
+            </p>
+          </div>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
     </PageLayOut.Container>
   )
 }

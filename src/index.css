@@ -81,6 +81,8 @@ body {
   justify-content: center;
   align-self: center;
   justify-self: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media (max-width: 375px) {
     justify-self: flex-start;
@@ -193,6 +195,8 @@ button {
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --error: #fa4d56;
+
+  --app-width: 375px;
 }
 
 @layer base {

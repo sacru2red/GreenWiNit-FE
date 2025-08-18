@@ -5,7 +5,7 @@ import { ComponentProps, useCallback } from 'react'
 import { useRouter } from '@tanstack/react-router'
 
 const pageHeaderSectionVariants = cva(
-  'bg-white relative flex flex-row w-full items-center justify-center h-12 border-b border-b-[#F0F0F0]',
+  'bg-white relative flex flex-row w-full items-center justify-center h-12 border-b border-b-[#F0F0F0] flex-shrink-0',
   {
     variants: {},
     defaultVariants: {},

@@ -39,36 +39,38 @@ function ProductDetail() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection padding="zero" className="m-0">
-        <div className="relative w-full">
-          <div className="flex h-75 w-full justify-center bg-gray-100 p-4">
-            <img src={product?.thumbnailUrl} alt="Product" />
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection padding="zero" className="m-0">
+          <div className="relative w-full">
+            <div className="flex h-75 w-full justify-center bg-gray-100 p-4">
+              <img src={product?.thumbnailUrl} alt="Product" />
+            </div>
+            <div className="px-4 py-2 text-left font-bold">
+              <p className="text-xl text-black">{product?.name}</p>
+              <p className="text-2xl text-[#0FBA7E]">{product?.price} 포인트</p>
+            </div>
+            <hr />
           </div>
-          <div className="px-4 py-2 text-left font-bold">
-            <p className="text-xl text-black">{product?.name}</p>
-            <p className="text-2xl text-[#0FBA7E]">{product?.price} 포인트</p>
-          </div>
-          <hr />
-        </div>
-        <PointDescription
-          description={product?.description}
-          price={product?.price}
-          remainingQuantity={product?.stockQuantity}
-          selectedQuantity={selectedQuantity}
-          onQuantityChange={handleQuantityChange}
-          availablePoint={availablePoint}
-          isLoading={isLoading}
-        />
-        <DeliveryAddress pointProductId={pointProductId} />
-        <ExchangeProduct
-          availablePoint={availablePoint}
-          deductPoint={deductPoint}
-          onExchange={handleExchangePoint}
-        />
-      </PageLayOut.BodySection>
+          <PointDescription
+            description={product?.description}
+            price={product?.price}
+            remainingQuantity={product?.stockQuantity}
+            selectedQuantity={selectedQuantity}
+            onQuantityChange={handleQuantityChange}
+            availablePoint={availablePoint}
+            isLoading={isLoading}
+          />
+          <DeliveryAddress pointProductId={pointProductId} />
+          <ExchangeProduct
+            availablePoint={availablePoint}
+            deductPoint={deductPoint}
+            onExchange={handleExchangePoint}
+          />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
     </PageLayOut.Container>
   )
 }

@@ -34,48 +34,50 @@ function ChallengesTeam() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>나의 팀</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} challengeType={CHALLENGE_TYPE} />
-        {joinedTeams?.length ? (
-          <div className="flex flex-col gap-4 py-4">
-            {joinedTeams.map((team) => (
-              <TeamCard
-                key={team.id}
-                team={team}
-                onClick={() =>
-                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}/joined` })
-                }
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-1 flex-col">
-            <div className="flex flex-1 items-center justify-center">
-              <span className="text-bold text-lg text-[#c0c0c0]">
-                팀을 선택하거나 등록해주세요.
-              </span>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>나의 팀</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <ChallengeTitle challengeId={challengeId} challengeType={CHALLENGE_TYPE} />
+          {joinedTeams?.length ? (
+            <div className="flex flex-col gap-4 py-4">
+              {joinedTeams.map((team) => (
+                <TeamCard
+                  key={team.id}
+                  team={team}
+                  onClick={() =>
+                    navigate({ to: `/challenges/${challengeId}/teams/${team.id}/joined` })
+                  }
+                />
+              ))}
             </div>
+          ) : (
+            <div className="flex flex-1 flex-col">
+              <div className="flex flex-1 items-center justify-center">
+                <span className="text-bold text-lg text-[#c0c0c0]">
+                  팀을 선택하거나 등록해주세요.
+                </span>
+              </div>
+            </div>
+          )}
+          <div className="mt-auto flex w-full gap-2">
+            <Button
+              size="flex"
+              onClick={() => navigate({ to: `/challenges/${challengeId}/teams/join` })}
+            >
+              <SquareCheckBig />팀 선택하기
+            </Button>
+            <Button
+              size="flex"
+              onClick={() => navigate({ to: `/challenges/${challengeId}/teams/enroll` })}
+            >
+              <GroupsIcon />팀 등록하기
+            </Button>
           </div>
-        )}
-        <div className="mt-auto flex w-full gap-2">
-          <Button
-            size="flex"
-            onClick={() => navigate({ to: `/challenges/${challengeId}/teams/join` })}
-          >
-            <SquareCheckBig />팀 선택하기
-          </Button>
-          <Button
-            size="flex"
-            onClick={() => navigate({ to: `/challenges/${challengeId}/teams/enroll` })}
-          >
-            <GroupsIcon />팀 등록하기
-          </Button>
-        </div>
-      </PageLayOut.BodySection>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const pageContainerVariants = cva('flex h-full h-m-[100dvh] w-full flex-col', {
+const pageContainerVariants = cva('flex h-dvh w-full flex-col', {
   variants: {
     bg: {
-      theme: 'bg-card',
+      theme: 'bg-white',
       form: 'bg-white',
     },
   },

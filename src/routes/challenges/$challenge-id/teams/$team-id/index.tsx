@@ -61,23 +61,25 @@ function TeamDetail() {
 
   return (
     <PageLayOut.Container bg="form">
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>팀 정보</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
-        <Overview team={team} challengeId={challengeId} />
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <MemberCount team={team} />
-          <Description team={team} />
-          <PropertyList team={team} />
-          <div className="mt-auto flex w-full">
-            <Button size="flex" onClick={() => joinTeam()}>
-              팀 가입신청
-            </Button>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>팀 정보</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+          <Overview team={team} challengeId={challengeId} />
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <MemberCount team={team} />
+            <Description team={team} />
+            <PropertyList team={team} />
+            <div className="mt-auto flex w-full">
+              <Button size="flex" onClick={() => joinTeam()}>
+                팀 가입신청
+              </Button>
+            </div>
           </div>
-        </div>
-      </PageLayOut.BodySection>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <Dialog open={openConfirmDialog} onOpenChange={setOpenConfirmDialog}>
         <DialogContent className="flex flex-col gap-3">
           <DialogDescription className="text-center !text-lg !text-black">
