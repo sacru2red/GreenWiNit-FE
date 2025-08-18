@@ -136,6 +136,7 @@ export const challengesApi = {
   deleteTeam: async (teamId: number) => {
     return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
   },
+  // @MEMO v2 작업완료
   modifyTeam: async (team: TeamModifyRequestDto) => {
     return fetch(`${API_URL}/challenges/groups/${team.id}`, {
       method: 'PUT',
@@ -335,17 +336,21 @@ interface TeamCreateRequestDto {
 }
 
 export interface TeamModifyRequestDto extends TeamCreateRequestDto {
-  id: string
+  id: number
 }
 
 export interface TeamDetailResponse {
   id: number
   groupName: string
   currentParticipants: number
+  maxParticipants: number
   description: string
   challengeDate: string
   startTime: string
   endTime: string
+  roadAddress: string
+  detailAddress: string
+  sigungu: string
   fullAddress: string
   openChatUrl: string
   participating: boolean
