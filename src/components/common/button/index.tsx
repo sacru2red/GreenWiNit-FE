@@ -49,6 +49,7 @@ function Button({
         buttonVariants({ variant, size, className }),
       )}
       {...props}
+      disabled={props.disabled || variant === 'disabled'}
     />
   )
 }
