@@ -1,25 +1,22 @@
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
-const pageBodySectionVariants = cva(
-  'flex flex-1 flex-col overflow-y-auto mt-2 mb-2 p-4 w-full relative',
-  {
-    variants: {
-      padding: {
-        default: 'p-4',
-        zero: 'p-0',
-      },
-      bg: {
-        theme: 'bg-card',
-        form: 'bg-white',
-      },
+const pageBodySectionVariants = cva('flex flex-1 flex-col mt-2 mb-2 p-4 w-full relative', {
+  variants: {
+    padding: {
+      default: 'p-4',
+      zero: 'p-0',
     },
-    defaultVariants: {
-      padding: 'default',
-      bg: 'theme',
+    bg: {
+      theme: 'bg-card',
+      form: 'bg-white',
     },
   },
-)
+  defaultVariants: {
+    padding: 'default',
+    bg: 'theme',
+  },
+})
 
 type PageBodySectionProps = VariantProps<typeof pageBodySectionVariants> &
   React.HTMLAttributes<HTMLDivElement>

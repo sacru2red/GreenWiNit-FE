@@ -55,22 +55,24 @@ function Home() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <AppTitle className="!text-3xl" />
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection padding="zero">
-        <div className="flex flex-col gap-4 p-4">
-          <UserCard />
-          <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
-            참여 챌린지
-          </Button>
-          <WarnNotLoggedIn
-            isOpen={isWarnNotLoggedInDialogOpen}
-            onOpenChange={setIsWarnNotLoggedInDialogOpen}
-          />
-        </div>
-        <Challenges />
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <AppTitle className="!text-3xl" />
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection padding="zero">
+          <div className="flex flex-col gap-4 p-4">
+            <UserCard />
+            <Button size="flex" onClick={handleClickJoinedChallengeButton} className="mt-6">
+              참여 챌린지
+            </Button>
+            <WarnNotLoggedIn
+              isOpen={isWarnNotLoggedInDialogOpen}
+              onOpenChange={setIsWarnNotLoggedInDialogOpen}
+            />
+          </div>
+          <Challenges />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>
