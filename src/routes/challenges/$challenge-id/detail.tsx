@@ -6,7 +6,13 @@ import { challengesApi, challengesQueryKeys } from '@/api/challenges'
 import BottomNavigation from '@/components/common/bottom-navigation'
 import dayjs from 'dayjs'
 import { Button } from '@/components/common/button'
-import { Dialog, DialogContent, DialogDescription } from '@/components/shadcn/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/shadcn/dialog'
 import { useState } from 'react'
 import { showMessageIfExists } from '@/lib/error'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'
@@ -118,9 +124,9 @@ function ChallengeDetail() {
       </PageLayOut.FooterSection>
       <Dialog open={openSuccessDialog} onOpenChange={() => setOpenSuccessDialog(false)}>
         <DialogContent className="flex !min-w-60 flex-col gap-3">
-          <DialogDescription className="text-center !text-lg !text-black">
-            챌린지 참여 완료
-          </DialogDescription>
+          <DialogHeader>
+            <DialogTitle className="text-center">챌린지 참여 완료</DialogTitle>
+          </DialogHeader>
           <DialogDescription className="!text-light-gray text-center !text-sm">
             [홈] -&gt; [참여 챌린지]에서
             <br />
