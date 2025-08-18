@@ -198,8 +198,8 @@ export const challengesApi = {
     return response.json() as Promise<CursorPaginatedResponse<GetCertifiedChallengesMineElement>>
   },
   // @MEMO v2 작업완료
-  getCertifiedChallengeDetails: async (certId: number) => {
-    const response = await fetch(`${API_URL}/certifications/challenges/${certId}`)
+  getCertifiedChallengeDetails: async (certificationId: number) => {
+    const response = await fetch(`${API_URL}/certifications/challenges/${certificationId}`)
     return response.json() as Promise<
       ApiResponse<{
         id: number
@@ -230,7 +230,6 @@ interface CommonChallengeDetail {
   challengeImage: string
   challengePoint: number
   participating: boolean
-  // https://github.com/GreenWiNit/backend/issues/269
   challengeContent: string
 }
 
