@@ -7,7 +7,7 @@ const ProductList = () => {
   const navigate = useNavigate()
 
   const handleProductClick = (productId: number) => {
-    navigate({ to: `/point-shop/product/${productId}` })
+    navigate({ to: `/point-shop/products/${productId}/detail` })
   }
 
   const { data: products, isLoading } = useProducts()
@@ -45,7 +45,9 @@ const ProductList = () => {
               {product?.name}
             </p>
             <p className="md:text-md text-xs text-gray-500">{product?.sellingStatus}</p>
-            <p className="text-lg font-bold text-[#0FBA7E] md:text-xl">{product?.price}p</p>
+            <p className="text-lg font-bold text-[var(--color-mountain_meadow)] md:text-xl">
+              {product?.price}p
+            </p>
           </div>
         )
       })}

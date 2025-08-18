@@ -12,20 +12,22 @@ const ExchangeProduct = ({ availablePoint, deductPoint, onExchange }: ExchangePr
 
   return (
     <div className="w-full">
-      <p className="px-2 pt-4 text-sm">
-        * 본 리워드는 봉사형 프로젝트 굿즈로 환불 및 교환이 불가능합니다. <br />
-        제품 불량 및 파손 시에는 [1:1문의]를 통해 연락주세요.
+      <p className="px-4 pt-4 text-sm whitespace-pre-line">
+        * 본 리워드는 봉사프로젝트 굿즈로 환불과 교환이 불가능합니다. 제품 불량 및 파손 시에는
+        [1:1문의]를 통해 연락주세요.
       </p>
-      <Button
-        onClick={onExchange}
-        className={cn(
-          'm-4 min-w-90 rounded-md px-4 py-4 font-bold text-white',
-          isDisabled && 'bg-gray-400 text-gray-600',
-        )}
-        disabled={isDisabled}
-      >
-        포인트 교환하기
-      </Button>
+      <div className="w-full p-4">
+        <Button
+          onClick={onExchange}
+          className={cn(
+            'w-full rounded-md p-4 font-bold text-white',
+            isDisabled && 'bg-gray-400 text-gray-600',
+          )}
+          disabled={isDisabled}
+        >
+          포인트 교환하기
+        </Button>
+      </div>
     </div>
   )
 }
