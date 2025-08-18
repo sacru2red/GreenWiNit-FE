@@ -42,33 +42,35 @@ function Posts() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageTitle>정보공유</PageTitle>
-      </PageLayOut.HeaderSection>
-      <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="flex flex-col gap-4 overflow-y-auto p-4">
-          {filteredPosts ? (
-            filteredPosts.map((item) => (
-              <PostItem
-                key={item.id}
-                id={item.id}
-                categoryName={item.infoCategoryName}
-                title={item.title}
-                content={item.content}
-                thumbnailUrl={item.imageurl}
-              />
-            ))
-          ) : (
-            <div className="flex h-full flex-col items-center justify-center gap-4">
-              <CircleAlert size={32} color="gray" />
-              <div className="font-bold text-gray-400">공유된 포스트를 찾을 수 없어요.</div>
-            </div>
-          )}
-        </div>
-      )}
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageTitle>정보공유</PageTitle>
+        </PageLayOut.HeaderSection>
+        <CategoryTab onTabChange={setActiveTab} activeTab={activeTab} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="flex flex-col gap-4 overflow-y-auto p-4">
+            {filteredPosts ? (
+              filteredPosts.map((item) => (
+                <PostItem
+                  key={item.id}
+                  id={item.id}
+                  categoryName={item.infoCategoryName}
+                  title={item.title}
+                  content={item.content}
+                  thumbnailUrl={item.imageurl}
+                />
+              ))
+            ) : (
+              <div className="flex h-full flex-col items-center justify-center gap-4">
+                <CircleAlert size={32} color="gray" />
+                <div className="font-bold text-gray-400">공유된 포스트를 찾을 수 없어요.</div>
+              </div>
+            )}
+          </div>
+        )}
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

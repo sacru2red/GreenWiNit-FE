@@ -11,13 +11,15 @@ export const Route = createFileRoute('/challenges/user/me/joined')({
 function JoinedChallenges() {
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>참여 챌린지</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <JoinedChallengesContainer />
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>참여 챌린지</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <JoinedChallengesContainer />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

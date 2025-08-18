@@ -39,35 +39,37 @@ function ManageTeam() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>팀 정보</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
-        {/* @TODO apply https://github.com/GreenWiNit/backend/issues/274 */}
-        <Overview team={team} allowManage challengeId={challengeId} />
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <MemberCount team={team} />
-          <Description team={team} />
-          <PropertyList team={team} />
-          <div className="mt-auto flex w-full">
-            <Button
-              size="flex"
-              onClick={() => {
-                if (dayjs(team.challengeDate).isAfter(dayjs())) {
-                  toast.error(
-                    `팀 챌린지 날짜(${dayjs(team.challengeDate).format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
-                  )
-                  return
-                }
-                navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
-              }}
-            >
-              챌린지 인증하기
-            </Button>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>팀 정보</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
+          {/* @TODO apply https://github.com/GreenWiNit/backend/issues/274 */}
+          <Overview team={team} allowManage challengeId={challengeId} />
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <MemberCount team={team} />
+            <Description team={team} />
+            <PropertyList team={team} />
+            <div className="mt-auto flex w-full">
+              <Button
+                size="flex"
+                onClick={() => {
+                  if (dayjs(team.challengeDate).isAfter(dayjs())) {
+                    toast.error(
+                      `팀 챌린지 날짜(${dayjs(team.challengeDate).format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
+                    )
+                    return
+                  }
+                  navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
+                }}
+              >
+                챌린지 인증하기
+              </Button>
+            </div>
           </div>
-        </div>
-      </PageLayOut.BodySection>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
     </PageLayOut.Container>
   )
 }

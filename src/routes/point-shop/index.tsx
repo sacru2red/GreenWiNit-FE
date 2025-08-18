@@ -16,13 +16,15 @@ function PointShop() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageTitle>포인트상점</PageTitle>
-      </PageLayOut.HeaderSection>
-      <UserStatusbar point={userTotalPoints ?? 0} availablePoint={userTotalPoints ?? 0} />
-      <PageLayOut.BodySection>
-        <ProductList />
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageTitle>포인트상점</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection className="p-0">
+          <UserStatusbar point={userTotalPoints ?? 0} availablePoint={userTotalPoints ?? 0} />
+          <ProductList />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

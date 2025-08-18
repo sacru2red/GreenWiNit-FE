@@ -150,65 +150,67 @@ function EnrollAddress() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>{isEditMode ? '배송지 정보 수정' : '배송지 정보 입력'}</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col">
-          <div className="flex flex-col text-start">
-            <InputLabel required={true}>이름</InputLabel>
-            <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
-            <ErrorMessage name="name" errors={errors} />
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>{isEditMode ? '배송지 정보 수정' : '배송지 정보 입력'}</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <form onSubmit={handleSubmit(submitHandler)} className="flex flex-1 flex-col">
+            <div className="flex flex-col text-start">
+              <InputLabel required={true}>이름</InputLabel>
+              <Input type="text" {...register('name', { required: '이름을 입력해주세요.' })} />
+              <ErrorMessage name="name" errors={errors} />
 
-            <InputLabel required={true}>전화번호</InputLabel>
-            <Input
-              type="text"
-              placeholder="010-XXXX-XXXX"
-              inputMode="tel"
-              {...register('phone', {
-                required: '전화번호를 입력해주세요.',
-                pattern: {
-                  value: /^(0\d{1,2}-\d{3,4}-\d{4}|0\d{8,10})$/,
-                  message: '전화번호 형식에 맞지 않습니다.',
-                },
-              })}
-            />
-            <ErrorMessage name="phone" errors={errors} />
+              <InputLabel required={true}>전화번호</InputLabel>
+              <Input
+                type="text"
+                placeholder="010-XXXX-XXXX"
+                inputMode="tel"
+                {...register('phone', {
+                  required: '전화번호를 입력해주세요.',
+                  pattern: {
+                    value: /^(0\d{1,2}-\d{3,4}-\d{4}|0\d{8,10})$/,
+                    message: '전화번호 형식에 맞지 않습니다.',
+                  },
+                })}
+              />
+              <ErrorMessage name="phone" errors={errors} />
 
-            <InputLabel required={true}>주소</InputLabel>
-            <Controller
-              control={control}
-              name="address"
-              rules={{ required: '주소를 입력해주세요.' }}
-              render={({ field }) => {
-                return <AddressInput {...field} />
-              }}
+              <InputLabel required={true}>주소</InputLabel>
+              <Controller
+                control={control}
+                name="address"
+                rules={{ required: '주소를 입력해주세요.' }}
+                render={({ field }) => {
+                  return <AddressInput {...field} />
+                }}
+              />
+              <ErrorMessage name="address" errors={errors} />
+            </div>
+            <div className="mt-auto">
+              {showEditsuccess && (
+                <div
+                  className={`transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
+                >
+                  수정이 완료되었습니다.
+                </div>
+              )}
+              <Button type="submit" className="w-full">
+                저장하기
+              </Button>
+            </div>
+          </form>
+          {isModalOpen && (
+            <NoticeDialog
+              isOpen={isModalOpen}
+              description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
+              setIsOpen={setIsModalOpen}
+              onConfirm={handleConfirm}
             />
-            <ErrorMessage name="address" errors={errors} />
-          </div>
-          <div className="mt-auto">
-            {showEditsuccess && (
-              <div
-                className={`transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
-              >
-                수정이 완료되었습니다.
-              </div>
-            )}
-            <Button type="submit" className="w-full">
-              저장하기
-            </Button>
-          </div>
-        </form>
-        {isModalOpen && (
-          <NoticeDialog
-            isOpen={isModalOpen}
-            description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
-            setIsOpen={setIsModalOpen}
-            onConfirm={handleConfirm}
-          />
-        )}
-      </PageLayOut.BodySection>
+          )}
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

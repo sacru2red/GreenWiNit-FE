@@ -63,47 +63,49 @@ function Signup() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <AppTitle className="!text-3xl" />
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <form
-          className="flex h-full w-full flex-col justify-center gap-8"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Controller
-            control={control}
-            name="profileImage"
-            render={({ field }) => (
-              <div className="self-center">
-                <InputProfileImage value={field.value} onChange={field.onChange} />
-              </div>
-            )}
-          />
-          <Controller
-            control={control}
-            name="nickname"
-            rules={{ required: '닉네임을 입력해주세요.' }}
-            render={({ field }) => (
-              <InputNickname
-                value={field.value ?? ''}
-                onChange={(e) => {
-                  field.onChange(e)
-                  setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
-                }}
-                setIsNicknameDuplicated={setIsNicknameDuplicated}
-              />
-            )}
-          ></Controller>
-          <Button
-            type="submit"
-            className="mt-auto"
-            variant={isNicknameDuplicated ? 'disabled' : null}
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <AppTitle className="!text-3xl" />
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <form
+            className="flex h-full w-full flex-col justify-center gap-8"
+            onSubmit={handleSubmit(onSubmit)}
           >
-            제출
-          </Button>
-        </form>
-      </PageLayOut.BodySection>
+            <Controller
+              control={control}
+              name="profileImage"
+              render={({ field }) => (
+                <div className="self-center">
+                  <InputProfileImage value={field.value} onChange={field.onChange} />
+                </div>
+              )}
+            />
+            <Controller
+              control={control}
+              name="nickname"
+              rules={{ required: '닉네임을 입력해주세요.' }}
+              render={({ field }) => (
+                <InputNickname
+                  value={field.value ?? ''}
+                  onChange={(e) => {
+                    field.onChange(e)
+                    setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                  }}
+                  setIsNicknameDuplicated={setIsNicknameDuplicated}
+                />
+              )}
+            ></Controller>
+            <Button
+              type="submit"
+              className="mt-auto"
+              variant={isNicknameDuplicated ? 'disabled' : null}
+            >
+              제출
+            </Button>
+          </form>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
     </PageLayOut.Container>
   )
 }

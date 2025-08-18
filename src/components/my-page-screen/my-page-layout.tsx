@@ -20,16 +20,18 @@ function MyPageLayout({
 }: MyPageLayoutProps) {
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>{title}</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection
-        bg={background === 'green' ? 'theme' : 'form'}
-        className={`m-0 ${className}`}
-      >
-        {children}
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>{title}</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection
+          bg={background === 'green' ? 'theme' : 'form'}
+          className={`m-0 ${className}`}
+        >
+          {children}
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       {showBottomNavigation && (
         <PageLayOut.FooterSection>
           <BottomNavigation />

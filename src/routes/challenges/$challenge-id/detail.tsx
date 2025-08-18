@@ -57,60 +57,62 @@ function ChallengeDetail() {
 
   return (
     <PageLayOut.Container>
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <ChallengeTitle challengeId={challengeId} challengeType={challengeType} />
-        <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
-          <img
-            src={challenge?.challengeImage || DEFAULT_CHALLENGE_IMAGE}
-            alt="challenge image"
-            className="w-full rounded-xl object-cover"
-          />
-          <div className="flex flex-col items-start gap-2">
-            <h3 className="text-lg font-bold">기본정보</h3>
-            <div className="bg-card w-full items-center justify-center p-4">
-              <p className="text-card-head text-start">
-                기간
-                <br />
-                <span className="text-card-base">
-                  {challenge == null
-                    ? null
-                    : `${dayjs(challenge.beginDate).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDate).format('YYYY.MM.DD')}`}
-                </span>
-              </p>
-            </div>
-            <div className="bg-card w-full items-center justify-center p-4">
-              <p className="text-card-head text-start">
-                참여방법
-                <br />
-                <span className="text-card-base">
-                  {challenge == null ? null : challenge.challengeContent}
-                </span>
-              </p>
-            </div>
-            <div className="bg-card w-full items-center justify-center p-4">
-              <p className="text-card-head text-start wrap-anywhere whitespace-break-spaces">
-                포인트
-                <br />
-                <span className="text-card-base">
-                  {challenge == null ? null : `${challenge.challengePoint}P (1회 인증 기준)`}
-                </span>
-              </p>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>{`${typeKo} 챌린지 상세보기`}</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <ChallengeTitle challengeId={challengeId} challengeType={challengeType} />
+          <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4">
+            <img
+              src={challenge?.challengeImage || DEFAULT_CHALLENGE_IMAGE}
+              alt="challenge image"
+              className="w-full rounded-xl object-cover"
+            />
+            <div className="flex flex-col items-start gap-2">
+              <h3 className="text-lg font-bold">기본정보</h3>
+              <div className="bg-card w-full items-center justify-center p-4">
+                <p className="text-card-head text-start">
+                  기간
+                  <br />
+                  <span className="text-card-base">
+                    {challenge == null
+                      ? null
+                      : `${dayjs(challenge.beginDate).format('YYYY.MM.DD')} ~ ${dayjs(challenge.endDate).format('YYYY.MM.DD')}`}
+                  </span>
+                </p>
+              </div>
+              <div className="bg-card w-full items-center justify-center p-4">
+                <p className="text-card-head text-start">
+                  참여방법
+                  <br />
+                  <span className="text-card-base">
+                    {challenge == null ? null : challenge.challengeContent}
+                  </span>
+                </p>
+              </div>
+              <div className="bg-card w-full items-center justify-center p-4">
+                <p className="text-card-head text-start wrap-anywhere whitespace-break-spaces">
+                  포인트
+                  <br />
+                  <span className="text-card-base">
+                    {challenge == null ? null : `${challenge.challengePoint}P (1회 인증 기준)`}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <Button
-          className="mt-auto"
-          onClick={() => {
-            joinChallenge()
-          }}
-        >
-          챌린지 참여하기
-        </Button>
-      </PageLayOut.BodySection>
+          <Button
+            className="mt-auto"
+            onClick={() => {
+              joinChallenge()
+            }}
+          >
+            챌린지 참여하기
+          </Button>
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>

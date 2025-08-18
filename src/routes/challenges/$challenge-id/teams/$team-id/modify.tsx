@@ -82,34 +82,36 @@ function TeamModify() {
 
   return (
     <PageLayOut.Container bg="form">
-      <PageLayOut.HeaderSection>
-        <PageLayOut.HeaderSection.BackIcon />
-        <PageTitle>수정하기</PageTitle>
-      </PageLayOut.HeaderSection>
-      <PageLayOut.BodySection>
-        <UpsertPageBody
-          mode="modify"
-          onSubmit={onSubmit}
-          initialData={{
-            ...team,
-            id: team.id,
-            name: team.groupName,
-            address: {
-              roadAddress: team.roadAddress,
-              roadnameCode: '',
-              zonecode: '',
-              detailAddress: team.detailAddress,
-              sigungu: team.sigungu,
-            },
-            description: team.description,
-            date: dayjs(team.challengeDate).toDate(),
-            startAt: dayjs(team.startTime, 'HH:mm:ss').toDate(),
-            endAt: dayjs(team.endTime, 'HH:mm:ss').toDate(),
-            maxMemberCount: team.maxParticipants,
-            openChatUrl: team.openChatUrl,
-          }}
-        />
-      </PageLayOut.BodySection>
+      <PageLayOut.ScrollableContent>
+        <PageLayOut.HeaderSection>
+          <PageLayOut.HeaderSection.BackIcon />
+          <PageTitle>수정하기</PageTitle>
+        </PageLayOut.HeaderSection>
+        <PageLayOut.BodySection>
+          <UpsertPageBody
+            mode="modify"
+            onSubmit={onSubmit}
+            initialData={{
+              ...team,
+              id: team.id,
+              name: team.groupName,
+              address: {
+                roadAddress: team.roadAddress,
+                roadnameCode: '',
+                zonecode: '',
+                detailAddress: team.detailAddress,
+                sigungu: team.sigungu,
+              },
+              description: team.description,
+              date: dayjs(team.challengeDate).toDate(),
+              startAt: dayjs(team.startTime, 'HH:mm:ss').toDate(),
+              endAt: dayjs(team.endTime, 'HH:mm:ss').toDate(),
+              maxMemberCount: team.maxParticipants,
+              openChatUrl: team.openChatUrl,
+            }}
+          />
+        </PageLayOut.BodySection>
+      </PageLayOut.ScrollableContent>
     </PageLayOut.Container>
   )
 }
