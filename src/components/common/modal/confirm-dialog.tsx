@@ -4,8 +4,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+} from '@/components/shadcn/dialog'
+import { Button } from '@/components/shadcn/button'
 
 type ConfirmDialogProps = {
   isOpen: boolean

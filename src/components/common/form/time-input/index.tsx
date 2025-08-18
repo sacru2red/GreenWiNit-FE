@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Button } from '@/components/shadcn/button'
+import { Dialog, DialogContent } from '@/components/shadcn/dialog'
 import { ComponentProps, Fragment, useState } from 'react'
 import Input from '../input'
 import dayjs from 'dayjs'

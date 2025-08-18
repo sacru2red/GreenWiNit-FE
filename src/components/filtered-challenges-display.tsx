@@ -1,4 +1,4 @@
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/shadcn/carousel'
 import { CommonChallenge, GetCertifiedChallengesMineElement } from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Dispatch, SetStateAction } from 'react'

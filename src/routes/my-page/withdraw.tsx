@@ -9,7 +9,7 @@ import ResultNoticeDialog from '@/components/common/modal/notice-dialog'
 import { usersApi } from '@/api/users'
 import { initHistoryAndLocation } from '@/lib/utils'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/shadcn/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { WithDrawnFormState } from '@/types/withdraw'
 

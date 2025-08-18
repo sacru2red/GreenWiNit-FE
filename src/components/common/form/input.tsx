@@ -1,4 +1,4 @@
-import { Input as ShadcnInput } from '@/components/ui/input'
+import { Input as ShadcnInput } from '@/components/shadcn/input'
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { ComponentProps } from 'react'

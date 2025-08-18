@@ -1,5 +1,5 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter } from '../ui/dialog'
-import { Button } from '../ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogFooter } from '@/components/shadcn/dialog'
+import { Button } from '@/components/shadcn/button'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 
 interface WarnNotLoggedInProps {

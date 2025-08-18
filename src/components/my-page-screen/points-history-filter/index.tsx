@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/shadcn/dialog'
 import { PointFilterType } from '@/types/points'
 import { useQueryClient } from '@tanstack/react-query'
 import { PointsHistoryFilterProps } from './types'

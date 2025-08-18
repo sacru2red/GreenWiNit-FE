@@ -1,6 +1,6 @@
 import { usersApi } from '@/api/users'
 import UserCard from '@/components/common/user-card'
-import { Card, CardAction, CardContent } from '@/components/ui/card'
+import { Card, CardAction, CardContent } from '@/components/shadcn/card'
 import { initHistoryAndLocation } from '@/lib/utils'
 import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { authStore } from '@/store/auth-store'

@@ -1,7 +1,7 @@
 import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/shadcn/button'
 import 'react-datepicker/dist/react-datepicker.css'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormState as FormStateDefault } from '@/components/submit-screen/type'
