@@ -81,6 +81,8 @@ body {
   justify-content: center;
   align-self: center;
   justify-self: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media (max-width: 375px) {
     justify-self: flex-start;
