@@ -64,7 +64,7 @@ function ChallengeDetail() {
         </PageLayOut.HeaderSection>
         <PageLayOut.BodySection className="gap-3">
           <ChallengeTitle challengeId={challengeId} challengeType={challengeType} />
-          <div className="flex w-full flex-col gap-4 rounded-xl bg-white p-4 shadow">
+          <div className="border-lighter-gray-border flex w-full flex-col gap-4 rounded-xl border bg-white p-4 shadow-lg">
             <img
               src={challenge?.challengeImage || DEFAULT_CHALLENGE_IMAGE}
               alt="challenge image"
