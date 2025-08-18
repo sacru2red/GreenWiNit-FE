@@ -16,7 +16,7 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
     image: challenge.challengeImage,
     subText:
       'beginDate' in challenge
-        ? `${dayjs(challenge.beginDate).format('YY.MM.DD')} ~ ${dayjs(challenge.endDate).format('MM.DD')}`
+        ? `${challenge.currentParticipant}명 / ${dayjs(challenge.beginDate).format('YY.MM.DD')} ~ ${dayjs(challenge.endDate).format('MM.DD')}`
         : dayjs(challenge.certifiedDate).format('YY.MM.DD'),
   }
 
