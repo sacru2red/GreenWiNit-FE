@@ -10,7 +10,7 @@ interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
 const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
   const isJoinAllowed =
     (team.maxParticipants >= team.currentParticipants &&
-      dayjs(team.challengeDate).isSameOrBefore(today, 'D')) ||
+      dayjs(team.challengeDate).isSameOrAfter(today, 'D')) ||
     ('leaderMe' in team && team.leaderMe)
 
   return (

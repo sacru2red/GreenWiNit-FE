@@ -7,7 +7,13 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import dayjs from 'dayjs'
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogDescription } from '@/components/shadcn/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/shadcn/dialog'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 
@@ -74,9 +80,9 @@ function TeamEnroll() {
       </PageLayOut.ScrollableContent>
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="flex flex-col gap-4">
-          <DialogDescription className="text-bold text-center !text-xl !text-black">
-            팀 등록 완료
-          </DialogDescription>
+          <DialogHeader>
+            <DialogTitle>팀 등록 완료</DialogTitle>
+          </DialogHeader>
           <DialogDescription className="!text-title-smaller text-center !text-sm">
             [홈] -&gt; [나의 챌린지]에서 확인하세요!
             <br />

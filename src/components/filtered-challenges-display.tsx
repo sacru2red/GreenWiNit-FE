@@ -1,27 +1,34 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/shadcn/carousel'
-import { CommonChallenge, GetCertifiedChallengesMineElement } from '@/api/challenges'
+import {
+  GetCertifiedChallengesMineElement,
+  JoinedChallengesMineReponseElement,
+} from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Dispatch, SetStateAction } from 'react'
 import Challenge from '@/components/common/challenge'
 import { ChallengeType } from '@/types/challenge'
 
 interface FilteredChallengesDisplayProps<
-  T extends CommonChallenge | GetCertifiedChallengesMineElement,
+  T extends GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement,
 > {
   challengeType: ChallengeType
   setChallengeType: Dispatch<SetStateAction<ChallengeType>>
   challenges?: T[]
   handleNavigate: (challengeId: number) => void
+  useCarousel?: boolean
 }
 
-function FilteredChallengesDisplay<T extends CommonChallenge | GetCertifiedChallengesMineElement>({
+function FilteredChallengesDisplay<
+  T extends GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement,
+>({
   challengeType,
   setChallengeType,
   challenges,
   handleNavigate,
+  useCarousel = true,
 }: FilteredChallengesDisplayProps<T>) {
   return (
-    <section className="flex w-full flex-1 flex-col gap-4 p-4">
+    <section className="flex w-full flex-1 flex-col gap-4">
       <div className="flex w-fit flex-row items-center justify-center rounded-xl border bg-gray-200">
         <ChallengeTypeSwitch
           on={challengeType === 'individual'}
@@ -35,15 +42,28 @@ function FilteredChallengesDisplay<T extends CommonChallenge | GetCertifiedChall
       </div>
       <div className="flex h-full flex-row items-start justify-start">
         {challenges?.length ? (
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-4 items-start justify-start">
+          useCarousel ? (
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-4 items-start justify-start">
+                {challenges.map((challenge) => (
+                  <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
+                    <Challenge challenge={challenge} onClick={() => handleNavigate(challenge.id)} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          ) : (
+            <div className="flex w-full flex-row flex-wrap items-start justify-start gap-4">
               {challenges.map((challenge) => (
-                <CarouselItem key={challenge.id} className="max-w-[200px] pb-1 pl-4">
-                  <Challenge challenge={challenge} onClick={() => handleNavigate(challenge.id)} />
-                </CarouselItem>
+                <Challenge
+                  key={challenge.id}
+                  challenge={challenge}
+                  onClick={() => handleNavigate(challenge.id)}
+                  className="flex-grow-[0] basis-[160px]"
+                />
               ))}
-            </CarouselContent>
-          </Carousel>
+            </div>
+          )
         ) : (
           <p className="w-full self-center text-center text-xl whitespace-pre-line">
             {`[홈]-[${challengeType === 'individual' ? '개인' : '팀'} 챌린지]에서\n새로운 챌린지에 참여해주세요.`}
