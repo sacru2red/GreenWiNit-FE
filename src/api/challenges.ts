@@ -278,9 +278,7 @@ interface TeamCreateRequestDto {
    */
   endDateTime: string
   maxParticipants: number
-
-  /** 오타 */
-  challengeData: string
+  challengeDate: string
   /** hh:mm */
   startTime: string
   /** hh:mm */

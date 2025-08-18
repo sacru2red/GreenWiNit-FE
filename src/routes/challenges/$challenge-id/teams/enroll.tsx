@@ -35,7 +35,7 @@ function TeamEnroll() {
         startTime: dayjs(team.startAt).format('HH:mm'),
         endTime: dayjs(team.endAt).format('HH:mm'),
         sigungu: team.address.sigungu,
-        challengeData: dayjs(team.date).format('YYYY-MM-DD'),
+        challengeDate: dayjs(team.date).format('YYYY-MM-DD'),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
