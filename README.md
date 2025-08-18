@@ -33,7 +33,6 @@ GreenWiNit은 웹 기반의 환경 챌린지형 커뮤니티 플랫폼입니다.
 ```bash
 src/
 ├── api/
-├── assets/
 ├── components/
 ├── constant/
 ├── hooks/
