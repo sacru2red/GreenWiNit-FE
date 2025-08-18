@@ -203,6 +203,7 @@ export interface CommonChallenge {
   endDate: string
   challengeImage: string
   point: number
+  currentParticipant: number
 }
 
 interface CommonChallengeDetail {
