@@ -1,7 +1,7 @@
 import { API_URL } from '@/constant/network'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { serverToClientAddress } from '@/lib/utils'
-import { ServerAddress } from '@/types/addresses'
+import { GetServerAddress, ServerAddress } from '@/types/addresses'
 import { ApiResponse } from '@/types/api'
 
 export const addressApi = {
@@ -13,7 +13,7 @@ export const addressApi = {
       },
     })
       .then(throwResponseStatusThenChaining)
-      .then((res) => res.json() as Promise<AddressResponse>)
+      .then((res) => res.json() as Promise<GetAddressResponse>)
       .then((res) => {
         if (res.success) {
           return res.result
@@ -38,7 +38,6 @@ export const addressApi = {
         }
         throw new Error(res.message)
       })
-      .then((data) => serverToClientAddress(data))
   },
   saveAddress: async (data: AddressCreateDto) => {
     return await fetch(`${API_URL}/deliveries/addresses`, {
@@ -56,10 +55,10 @@ export const addressApi = {
         }
         throw new Error(res.message)
       })
-      .then((data) => serverToClientAddress(data))
   },
 }
 
+type GetAddressResponse = ApiResponse<GetServerAddress>
 type AddressResponse = ApiResponse<ServerAddress>
 type AddressCreateDto = ServerAddress
 type AddressUpdateDto = ServerAddress

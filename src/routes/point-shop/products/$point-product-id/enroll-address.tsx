@@ -138,15 +138,13 @@ function EnrollAddress() {
         setIsModalOpen(true)
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다')
+      console.error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다')
     }
   }
 
   const handleConfirm = () => {
     router.history.back()
   }
-
-  console.log(`모드 이름 : ${mode} 수정모드 확인 : ${isEditMode}`)
 
   return (
     <PageLayOut.Container>

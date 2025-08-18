@@ -20,7 +20,7 @@ const PointDescription = ({
   availablePoint,
   isLoading,
 }: PointDescriptionProps) => {
-  const availablePurchaseCount = Math.floor(availablePoint / (price ?? 1))
+  const availablePurchaseCount = Math.max(Math.floor(availablePoint / (price ?? 1)), 5)
   const selectableCount = Math.min(availablePurchaseCount, remainingQuantity ?? 0)
   const finalCount = Math.min(selectableCount, 5)
 

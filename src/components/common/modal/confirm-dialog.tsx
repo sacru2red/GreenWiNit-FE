@@ -14,6 +14,7 @@ type ConfirmDialogProps = {
   paragraph?: string
   setIsOpen: (open: boolean) => void
   onConfirm: () => void
+  isPending?: boolean
 }
 
 function ConfirmDialog({
@@ -23,6 +24,7 @@ function ConfirmDialog({
   paragraph,
   setIsOpen,
   onConfirm,
+  isPending,
 }: ConfirmDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +47,7 @@ function ConfirmDialog({
           >
             취소
           </Button>
-          <Button size="flex" onClick={onConfirm} className="h-10 px-4 py-2.5">
+          <Button size="flex" onClick={onConfirm} disabled={isPending} className="h-10 px-4 py-2.5">
             확인
           </Button>
         </DialogFooter>

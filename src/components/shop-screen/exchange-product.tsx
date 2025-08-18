@@ -4,10 +4,10 @@ import { Button } from '@/components/common/button'
 interface ExchangeProductProps {
   availablePoint: number
   deductPoint: number
-  onExchange: () => void
+  handleClick: () => void
 }
 
-const ExchangeProduct = ({ availablePoint, deductPoint, onExchange }: ExchangeProductProps) => {
+const ExchangeProduct = ({ availablePoint, deductPoint, handleClick }: ExchangeProductProps) => {
   const isDisabled = availablePoint < deductPoint
 
   return (
@@ -18,7 +18,7 @@ const ExchangeProduct = ({ availablePoint, deductPoint, onExchange }: ExchangePr
       </p>
       <div className="w-full p-4">
         <Button
-          onClick={onExchange}
+          onClick={handleClick}
           className={cn(
             'w-full rounded-md p-4 font-bold text-white',
             isDisabled && 'bg-gray-400 text-gray-600',
