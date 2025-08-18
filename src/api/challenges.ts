@@ -133,8 +133,11 @@ export const challengesApi = {
       },
     }).then(throwResponseStatusThenChaining)
   },
+  // @MEMO v2 작업완료
   deleteTeam: async (teamId: number) => {
-    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' })
+    return fetch(`${API_URL}/challenges/groups/${teamId}`, { method: 'DELETE' }).then(
+      throwResponseStatusThenChaining,
+    )
   },
   // @MEMO v2 작업완료
   modifyTeam: async (team: TeamModifyRequestDto) => {
