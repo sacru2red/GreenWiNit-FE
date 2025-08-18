@@ -1,11 +1,14 @@
-import { CommonChallenge, GetCertifiedChallengesMineElement } from '@/api/challenges'
+import {
+  GetCertifiedChallengesMineElement,
+  JoinedChallengesMineReponseElement,
+} from '@/api/challenges'
 import { cn } from '@/lib/utils'
 import { MouseEventHandler } from 'react'
 import dayjs from 'dayjs'
 import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
 
 interface ChallengeProps {
-  challenge: CommonChallenge | GetCertifiedChallengesMineElement
+  challenge: GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement
   onClick?: MouseEventHandler<HTMLDivElement>
   className?: string
 }
@@ -15,9 +18,9 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
     title: challenge.challengeName,
     image: challenge.challengeImage,
     subText:
-      'beginDate' in challenge
-        ? `${challenge.currentParticipant}명 / ${dayjs(challenge.beginDate).format('YY.MM.DD')} ~ ${dayjs(challenge.endDate).format('MM.DD')}`
-        : dayjs(challenge.certifiedDate).format('YY.MM.DD'),
+      'certifiedDate' in challenge
+        ? dayjs(challenge.certifiedDate).format('YY.MM.DD')
+        : `${challenge.currentParticipant}명 / ${dayjs(challenge.beginDate).format('YY.MM.DD')} ~ ${dayjs(challenge.endDate).format('MM.DD')}`,
   }
 
   return (

@@ -1,12 +1,15 @@
 import { Carousel, CarouselContent, CarouselItem } from '@/components/shadcn/carousel'
-import { CommonChallenge, GetCertifiedChallengesMineElement } from '@/api/challenges'
+import {
+  GetCertifiedChallengesMineElement,
+  JoinedChallengesMineReponseElement,
+} from '@/api/challenges'
 import { ChallengeTypeSwitch } from '@/components/challenge-type-switch'
 import { Dispatch, SetStateAction } from 'react'
 import Challenge from '@/components/common/challenge'
 import { ChallengeType } from '@/types/challenge'
 
 interface FilteredChallengesDisplayProps<
-  T extends CommonChallenge | GetCertifiedChallengesMineElement,
+  T extends GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement,
 > {
   challengeType: ChallengeType
   setChallengeType: Dispatch<SetStateAction<ChallengeType>>
@@ -14,7 +17,9 @@ interface FilteredChallengesDisplayProps<
   handleNavigate: (challengeId: number) => void
 }
 
-function FilteredChallengesDisplay<T extends CommonChallenge | GetCertifiedChallengesMineElement>({
+function FilteredChallengesDisplay<
+  T extends GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement,
+>({
   challengeType,
   setChallengeType,
   challenges,

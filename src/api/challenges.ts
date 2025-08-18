@@ -48,22 +48,9 @@ export const challengesApi = {
   }) => {
     return await fetch(
       `${API_URL}/challenges/${challengeType === 'individual' ? 'personal' : 'team'}/me?${stringify({ cursor, size: pageSize })}`,
-    )
-      .then((res) => {
-        return res.json() as Promise<JoinedChallengesMineReponse>
-      })
-      .then((res) => {
-        return {
-          ...res,
-          result: {
-            ...res.result,
-            content: res.result?.content.map((item) => ({
-              ...item,
-              point: item.challengePoint,
-            })),
-          },
-        }
-      })
+    ).then((res) => {
+      return res.json() as Promise<JoinedChallengesMineReponse>
+    })
   },
   joinChallenge: async ({ id, challengeType }: { id: number; challengeType: ChallengeType }) => {
     return fetch(
@@ -217,13 +204,14 @@ interface CommonChallengeDetail {
   challengeContent: string
 }
 
-interface JoinedChallengesMineReponseElement {
+export interface JoinedChallengesMineReponseElement {
   id: number
   challengeName: string
   beginDate: string
   endDate: string
   challengeImage: string
   challengePoint: number
+  currentParticipant: number
 }
 type JoinedChallengesMineReponse = CursorPaginatedResponse<JoinedChallengesMineReponseElement>
 
