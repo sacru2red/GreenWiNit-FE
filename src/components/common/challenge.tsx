@@ -1,4 +1,5 @@
 import {
+  CommonChallenge,
   GetCertifiedChallengesMineElement,
   JoinedChallengesMineReponseElement,
 } from '@/api/challenges'
@@ -8,7 +9,10 @@ import dayjs from 'dayjs'
 import { DEFAULT_CHALLENGE_IMAGE } from '@/constant/challenge'
 
 interface ChallengeProps {
-  challenge: GetCertifiedChallengesMineElement | JoinedChallengesMineReponseElement
+  challenge:
+    | GetCertifiedChallengesMineElement
+    | JoinedChallengesMineReponseElement
+    | CommonChallenge
   onClick?: MouseEventHandler<HTMLDivElement>
   className?: string
 }
