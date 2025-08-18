@@ -1,4 +1,4 @@
-import { useRouter } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 
 interface UserStatusbarProps {
   point: number
@@ -6,10 +6,10 @@ interface UserStatusbarProps {
 }
 
 const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
-  const router = useRouter()
+  const navigate = useNavigate()
 
   const handleButtonClick = () => {
-    router.navigate({ to: '/my-page/my-points' })
+    navigate({ to: '/my-page/my-points' })
   }
 
   return (

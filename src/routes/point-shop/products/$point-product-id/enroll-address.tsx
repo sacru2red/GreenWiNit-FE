@@ -39,6 +39,7 @@ function EnrollAddress() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showEditsuccess, setShowEditSuccess] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isEditSubmitted, setIsEditSubmitted] = useState(false)
 
   const { data: deliveryAddress } = useAddress()
   const [originalClientData, setOriginalClientData] = useState<ClientAddressForm | null>(null)
@@ -70,7 +71,7 @@ function EnrollAddress() {
 
   /* 배송지 수정 성공 시 안내 문구 띄우는 로직*/
   useEffect(() => {
-    if (formState.isSubmitSuccessful && isEditMode) {
+    if (isEditSubmitted && isEditMode) {
       setIsVisible(true)
       setShowEditSuccess(true)
 
@@ -80,6 +81,7 @@ function EnrollAddress() {
 
       const timer = setTimeout(() => {
         setShowEditSuccess(false)
+        setIsEditSubmitted((prev) => !prev)
       }, 3000)
 
       return () => {
@@ -88,7 +90,7 @@ function EnrollAddress() {
       }
     }
     return () => {}
-  }, [formState.isSubmitSuccessful, isEditMode])
+  }, [isEditSubmitted, isEditMode])
 
   const formatPhoneNumber = (phone: string): string => {
     return phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
@@ -133,12 +135,13 @@ function EnrollAddress() {
       }
       if (isEditMode) {
         await addressApi.updateAddress(serverData)
+        setIsEditSubmitted((prev) => !prev)
       } else {
         await addressApi.saveAddress(serverData)
         setIsModalOpen(true)
       }
     } catch (error) {
-      console.error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다')
+      toast.error(error instanceof Error ? error.message : '예상치 못한 오류가 발생했습니다')
     }
   }
 
@@ -186,10 +189,10 @@ function EnrollAddress() {
               />
               <ErrorMessage name="address" errors={errors} />
             </div>
-            <div className="mt-42">
+            <div className="relative mt-auto">
               {showEditsuccess && (
                 <div
-                  className={`transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring mb-2 flex justify-center rounded-md p-2 text-center text-white`}
+                  className={`absolute -top-14 w-full transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring flex justify-center rounded-md p-2 text-center text-white`}
                 >
                   수정이 완료되었습니다.
                 </div>

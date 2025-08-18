@@ -39,7 +39,7 @@ const PointDescription = ({
       <PointOverview
         label="사용 가능 포인트"
         point={`${availablePoint}p`}
-        valueClassName="text-[var(--color-mountain_meadow)]"
+        valueClassName="text-mountain_meadow"
       />
       <PointOverview
         label="수량 선택"
@@ -54,7 +54,7 @@ const PointDescription = ({
       <PointOverview
         label="총 보유 포인트"
         point={textIfDoneExchangingPoint}
-        valueClassName="text-[var(--color-mountain_meadow)]"
+        valueClassName="text-mountain_meadow"
       />
       <hr />
     </div>

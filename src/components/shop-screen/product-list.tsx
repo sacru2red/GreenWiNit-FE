@@ -45,9 +45,7 @@ const ProductList = () => {
               {product?.name}
             </p>
             <p className="md:text-md text-xs text-gray-500">{product?.sellingStatus}</p>
-            <p className="text-lg font-bold text-[var(--color-mountain_meadow)] md:text-xl">
-              {product?.price}p
-            </p>
+            <p className="text-mountain_meadow text-lg font-bold md:text-xl">{product?.price}p</p>
           </div>
         )
       })}

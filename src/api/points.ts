@@ -7,7 +7,6 @@ export const pointApi = {
   exchangeProduct: async (body: ExchangeProductDto) => {
     /* 멱등 키 생성 (uuid 이용) */
     const idempotencyKey = crypto.randomUUID()
-    console.log(idempotencyKey)
 
     return await fetch(`${API_URL}/orders/point-products/single`, {
       method: 'POST',
