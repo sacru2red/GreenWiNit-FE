@@ -83,8 +83,8 @@ function TeamEnroll() {
           <DialogHeader>
             <DialogTitle>팀 등록 완료</DialogTitle>
           </DialogHeader>
-          <DialogDescription className="!text-title-smaller text-center !text-sm">
-            [홈] -&gt; [나의 챌린지]에서 확인하세요!
+          <DialogDescription className="!text-title-smaller text-center !text-sm text-nowrap">
+            [홈] -&gt; [참여 챌린지] -&gt; [나의 팀]에서 확인하세요!
             <br />
             오픈 채팅방을 통해 이야기를 나눠요.
           </DialogDescription>
