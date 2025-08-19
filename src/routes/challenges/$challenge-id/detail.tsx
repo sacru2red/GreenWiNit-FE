@@ -93,8 +93,8 @@ function ChallengeDetail() {
                 <p className="text-card-head text-start">
                   참여방법
                   <br />
-                  <span className="text-card-base">
-                    {challenge == null ? null : challenge.challengeContent}
+                  <span className="text-card-base whitespace-pre-line">
+                    {challenge?.challengeContent}
                   </span>
                 </p>
               </div>
