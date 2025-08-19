@@ -20,11 +20,11 @@ export const challengesApi = {
     return response.json() as Promise<CursorPaginatedResponse<CommonChallenge>>
   },
   getIndividualChallengeDetail: async (id: number) => {
-    const response = await fetch(`${API_URL}/challenges/personal/${id}`)
+    const response = await fetch(`${API_URL}/v2/challenges/personal/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
   getTeamChallengeDetail: async (id: number) => {
-    const response = await fetch(`${API_URL}/challenges/team/${id}`)
+    const response = await fetch(`${API_URL}/v2/challenges/team/${id}`)
     return response.json() as Promise<ApiResponse<CommonChallengeDetail>>
   },
   getTeamChallenges: async ({
