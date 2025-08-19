@@ -63,7 +63,7 @@ function Login() {
   return (
     <div className="relative flex w-full flex-1 flex-col items-center justify-start gap-12">
       <HeaderSectionMiddle />
-      <div className="short:bottom-4 short:pb-0 absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
+      <div className="min-short:bottom-4 short:bottom-[8vh] short:pb-0 absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
         <KakaoWideButton onClick={warnItsDeveloping} />
         <GoogleWideButton onClick={processGoogleLogin} />
         <NaverWideButton onClick={warnItsDeveloping} />
