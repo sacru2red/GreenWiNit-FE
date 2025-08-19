@@ -65,10 +65,10 @@ export const usersApi = {
       },
     })
   },
-  withdraw: async ({ reasonType, customReason }: WithDrawnFormState) => {
+  withdraw: async ({ reasonTypes, customReason }: WithDrawnFormState) => {
     return fetch(`${API_URL}/members/withdraw`, {
       method: 'POST',
-      body: JSON.stringify({ reasonType, customReason }),
+      body: JSON.stringify({ reasonTypes, customReason }),
       headers: {
         'Content-Type': 'application/json',
       },
