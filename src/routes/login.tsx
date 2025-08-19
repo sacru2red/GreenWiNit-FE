@@ -63,11 +63,11 @@ function Login() {
   return (
     <div className="relative flex w-full flex-1 flex-col items-center justify-start gap-12">
       <HeaderSectionMiddle />
-      <div className="absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
+      <div className="short:bottom-4 short:pb-0 absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
         <KakaoWideButton onClick={warnItsDeveloping} />
         <GoogleWideButton onClick={processGoogleLogin} />
         <NaverWideButton onClick={warnItsDeveloping} />
-        <p className="text-light-gray mt-4 text-center text-sm">
+        <p className="text-light-gray short:mt-0 mt-4 text-center text-sm">
           간편하게 로그인하고
           <br />
           환경 챌린지에 참여하세요!
