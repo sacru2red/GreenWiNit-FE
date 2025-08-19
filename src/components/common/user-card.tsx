@@ -5,6 +5,7 @@ import { Separator } from '@/components/shadcn/separator'
 import useUserName from '@/hooks/use-user-name'
 import { authStore } from '@/store/auth-store'
 import useUserEmail from '@/hooks/use-user-email'
+import useUserProfileImageUrl from '@/hooks/use-user-profile-image-url'
 
 const UserCard = () => {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ const UserCard = () => {
   const accessToken = authStore((state) => state.accessToken)
   const userName = useUserName()
   const userEmail = useUserEmail()
+  const userProfileImageUrl = useUserProfileImageUrl()
 
   const handleLoginClick = () => {
     navigate({ to: '/login' })
@@ -42,7 +44,7 @@ const UserCard = () => {
   return (
     <div className="border-lighter-gray-border flex flex-col items-center rounded-2xl border bg-white">
       <div className="flex w-full items-center gap-8 px-5 py-4">
-        <LogoIcon size="large" />
+        <LogoIcon size="large" profileImage={userProfileImageUrl} />
         {!userName ? (
           <button onClick={handleLoginClick} className="text-start text-lg font-bold">
             로그인이 필요합니다.
