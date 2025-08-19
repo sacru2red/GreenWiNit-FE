@@ -1,4 +1,4 @@
 export interface WithDrawnFormState {
-  reasonType: string | string[]
+  reasonTypes: string[]
   customReason: string | null
 }
