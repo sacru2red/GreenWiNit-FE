@@ -46,6 +46,23 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
     }
   }
 
+  const handleTouchChange = (type: 'hour' | 'minute' | 'ampm', direction: 'up' | 'down') => {
+    if (type === 'hour') {
+      setSelectedHour((selectedHour) => {
+        const newHour = direction === 'up' ? (selectedHour + 1) % 12 : (selectedHour - 1 + 12) % 12
+        return newHour
+      })
+    } else if (type === 'minute') {
+      setSelectedMinute((selectedMinute) => {
+        const newMinute =
+          direction === 'up' ? (selectedMinute + 1) % 60 : (selectedMinute - 1 + 60) % 60
+        return newMinute
+      })
+    } else if (type === 'ampm') {
+      setSelectedAMPM(selectedAMPM === 'AM' ? 'PM' : 'AM')
+    }
+  }
+
   return (
     <div className="relative flex items-center justify-center" ref={ref}>
       <div className="absolute inset-0 flex flex-col justify-center">
@@ -55,6 +72,7 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
         items={hours}
         selectedValue={selectedHour}
         onWheel={(e) => handleWheel(e, 'hour')}
+        onTouchChange={(direction: 'up' | 'down') => handleTouchChange('hour', direction)}
         onClickWheelItem={setSelectedHour}
         isHour
       />
@@ -62,6 +80,7 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
         items={minutes}
         selectedValue={selectedMinute}
         onWheel={(e) => handleWheel(e, 'minute')}
+        onTouchChange={(direction: 'up' | 'down') => handleTouchChange('minute', direction)}
         padLeft
         onClickWheelItem={setSelectedMinute}
       />
@@ -69,6 +88,7 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
         items={ampm}
         selectedValue={selectedAMPM}
         onWheel={(e) => handleWheel(e, 'ampm')}
+        onTouchChange={(direction: 'up' | 'down') => handleTouchChange('ampm', direction)}
         onClickWheelItem={setSelectedAMPM}
       />
     </div>
