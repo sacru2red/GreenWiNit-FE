@@ -93,7 +93,9 @@ function ChallengeDetail() {
                 <p className="text-card-head text-start">
                   참여방법
                   <br />
-                  <span className="text-card-base">{challenge?.challengeContent}</span>
+                  <span className="text-card-base whitespace-pre-line">
+                    {challenge?.challengeContent}
+                  </span>
                 </p>
               </div>
               <div className="bg-card w-full items-center justify-center p-4">
