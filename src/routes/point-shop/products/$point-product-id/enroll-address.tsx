@@ -37,9 +37,6 @@ function EnrollAddress() {
   })
   const errors = formState.errors
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [showEditsuccess, setShowEditSuccess] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [isEditSubmitted, setIsEditSubmitted] = useState(false)
 
   const { data: deliveryAddress } = useAddress()
   const [originalClientData, setOriginalClientData] = useState<ClientAddressForm | null>(null)
@@ -68,29 +65,6 @@ function EnrollAddress() {
       })
     }
   }, [deliveryAddress, setValue, isEditMode])
-
-  /* 배송지 수정 성공 시 안내 문구 띄우는 로직*/
-  useEffect(() => {
-    if (isEditSubmitted && isEditMode) {
-      setIsVisible(true)
-      setShowEditSuccess(true)
-
-      const fadeTimer = setTimeout(() => {
-        setIsVisible(false)
-      }, 2000)
-
-      const timer = setTimeout(() => {
-        setShowEditSuccess(false)
-        setIsEditSubmitted((prev) => !prev)
-      }, 3000)
-
-      return () => {
-        clearTimeout(fadeTimer)
-        clearTimeout(timer)
-      }
-    }
-    return () => {}
-  }, [isEditSubmitted, isEditMode])
 
   const formatPhoneNumber = (phone: string): string => {
     return phone.replace(/(\D)/g, '').replace(/^(\d)+$/, (match) => {
@@ -135,7 +109,7 @@ function EnrollAddress() {
       }
       if (isEditMode) {
         await addressApi.updateAddress(serverData)
-        setIsEditSubmitted((prev) => !prev)
+        toast.success('배송지 정보가 저장되었습니다.')
       } else {
         await addressApi.saveAddress(serverData)
         setIsModalOpen(true)
@@ -190,13 +164,6 @@ function EnrollAddress() {
               <ErrorMessage name="address" errors={errors} />
             </div>
             <div className="relative mt-auto">
-              {showEditsuccess && (
-                <div
-                  className={`absolute -top-14 w-full transition-opacity duration-500 ${isVisible ? `opacity-100` : `opacity-0`} bg-ring flex justify-center rounded-md p-2 text-center text-white`}
-                >
-                  수정이 완료되었습니다.
-                </div>
-              )}
               <Button type="submit" className="w-full">
                 저장하기
               </Button>
