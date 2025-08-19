@@ -1,9 +1,9 @@
 import { usersApi, usersQueryKeys } from '@/api/users'
+import { Button } from '@/components/common/button'
 import InputProfileImage from '@/components/common/input-profile-image'
 import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
-import SubmitEditButton from '@/components/edit-profile-screen/submit-edit-button'
 import useUserMe from '@/hooks/use-user-me'
 import { useQueryClient } from '@tanstack/react-query'
 import { Fragment, useEffect, useState } from 'react'
@@ -17,8 +17,14 @@ export interface FormState {
 
 function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
+  const [changedFields, setChangedFields] = useState({
+    nickname: false,
+    profileImage: false,
+  })
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const isNicknameValid = changedFields.nickname && isNicknameDuplicated
+  const isImageValid = changedFields.profileImage
   const { data: me } = useUserMe({ refetchOnWindowFocus: false, refetchOnMount: false })
   const userNickname = me?.result?.nickname ?? null
   const qc = useQueryClient()
@@ -40,12 +46,12 @@ function EditProfileForm() {
   }, [me, reset])
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
-    if (!data.nickname) {
+    if (!data.profileImage && !data.nickname) {
       toast.error('닉네임을 입력해 주세요.')
       return
     }
 
-    if (!isNicknameDuplicated) {
+    if (changedFields.nickname && !isNicknameDuplicated) {
       toast.error('닉네임 중복 체크를 해주세요.')
       return
     }
@@ -55,7 +61,7 @@ function EditProfileForm() {
   }
 
   const updateNickname = async () => {
-    if (!pendingData?.nickname) return
+    if (!pendingData) return
 
     const res = await usersApi.putUserProfile(pendingData.nickname, pendingData.profileImage ?? '')
     if (res.success) {
@@ -78,7 +84,13 @@ function EditProfileForm() {
             name="profileImage"
             render={({ field }) => (
               <div className="self-center">
-                <InputProfileImage value={field.value} onChange={field.onChange} />
+                <InputProfileImage
+                  value={field.value}
+                  onChange={(e) => {
+                    field.onChange(e)
+                    setChangedFields((prev) => ({ ...prev, profileImage: true }))
+                  }}
+                />
               </div>
             )}
           />
@@ -97,6 +109,7 @@ function EditProfileForm() {
                   onChange={(e) => {
                     field.onChange(e)
                     setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                    setChangedFields((prev) => ({ ...prev, nickname: true }))
                   }}
                   setIsNicknameDuplicated={setIsNicknameDuplicated}
                 />
@@ -106,7 +119,13 @@ function EditProfileForm() {
         </fieldset>
         <fieldset className="mt-auto flex w-full">
           <legend className="sr-only">제출</legend>
-          <SubmitEditButton isNicknameDuplicated={isNicknameDuplicated} />
+          <Button
+            size="flex"
+            type="submit"
+            variant={isNicknameValid || isImageValid ? 'default' : 'disabled'}
+          >
+            수정하기
+          </Button>
         </fieldset>
       </form>
       {showConfirmModal && (
