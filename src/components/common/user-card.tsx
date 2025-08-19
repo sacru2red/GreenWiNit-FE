@@ -53,9 +53,13 @@ const UserCard = () => {
           <div className="flex flex-1 flex-col items-start gap-2">
             <strong className="text-xl font-bold">{userName}님</strong>
             {pathname === '/' ? (
-              <p className="text-start">환경 챌린지에 참여하고 포인트를 모아보세요</p>
+              <p className="text-start text-nowrap">
+                환경 챌린지에 참여하고
+                <br />
+                포인트를 모아보세요
+              </p>
             ) : (
-              <p className="text-light-gray text-start text-sm">{userEmail}</p>
+              <p className="text-light-gray text-start text-sm text-nowrap">{userEmail}</p>
             )}
           </div>
         )}

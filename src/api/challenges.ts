@@ -195,7 +195,7 @@ export interface CommonChallenge {
 
 interface CommonChallengeDetail {
   id: number
-  title: string
+  challengeName: string
   beginDate: string
   endDate: string
   challengeImage: string

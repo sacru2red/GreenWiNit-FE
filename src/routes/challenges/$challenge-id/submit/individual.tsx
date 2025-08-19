@@ -79,7 +79,7 @@ function ChallengeSubmitIndividual() {
                 제목
                 <Required />
               </h3>
-              <Input value={challenge?.title ?? ''} contentEditable={false} />
+              <Input value={challenge?.challengeName ?? ''} contentEditable={false} />
             </Row>
             <Row>
               <h3>
