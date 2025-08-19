@@ -31,13 +31,14 @@ function WithDraw() {
     const res = await usersApi.withdraw(dataRef.current)
 
     if (res.success) {
-      initHistoryAndLocation()
       setShowConfirmModal(false)
       setShowNoticeModal(true)
     }
   }
 
   const onValid = (data: WithDrawnFormState) => {
+    console.log(data)
+
     if (!cautionIsChecked) {
       toast.error('동의 항목에 체크해 주세요.')
       return
@@ -48,8 +49,8 @@ function WithDraw() {
   }
 
   const onInvalid = (errors: FieldErrors<WithDrawnFormState>) => {
-    if (errors.reasonType) {
-      toast.error(errors.reasonType.message)
+    if (errors.reasonTypes) {
+      toast.error(errors.reasonTypes.message)
     }
     if (errors.customReason) {
       toast.error(errors.customReason.message)
@@ -83,7 +84,10 @@ function WithDraw() {
           isOpen={showNoticeModal}
           setIsOpen={setShowNoticeModal}
           description={`회원 탈퇴가\n정상적으로 완료되었습니다.`}
-          onConfirm={() => setShowNoticeModal(false)}
+          onConfirm={() => {
+            initHistoryAndLocation()
+            setShowNoticeModal(false)
+          }}
         />
       )}
     </>

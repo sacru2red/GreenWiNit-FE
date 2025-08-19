@@ -20,7 +20,7 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
                 type="checkbox"
                 className="peer hidden"
                 value={el.name}
-                {...register('reasonType', {
+                {...register('reasonTypes', {
                   validate: (v) =>
                     (Array.isArray(v) && v.length > 0) || '탈퇴 이유를 하나 이상 선택해주세요.',
                 })}
@@ -39,7 +39,7 @@ function WithdrawReasonField({ register }: WithdrawReasonFieldProps) {
                 placeholder="기타 이유를 입력해주세요"
                 {...register('customReason', {
                   validate: (value, formValues) => {
-                    const list = Array.from(formValues.reasonType)
+                    const list = Array.from(formValues.reasonTypes)
                     return list.includes('OTHER')
                       ? !!value?.trim() || '기타 이유를 입력해주세요.'
                       : true
