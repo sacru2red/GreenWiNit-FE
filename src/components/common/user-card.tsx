@@ -6,6 +6,7 @@ import useUserName from '@/hooks/use-user-name'
 import { authStore } from '@/store/auth-store'
 import useUserEmail from '@/hooks/use-user-email'
 import useUserProfileImageUrl from '@/hooks/use-user-profile-image-url'
+import ProfileImage from '@/components/common/profile-image'
 
 const UserCard = () => {
   const navigate = useNavigate()
@@ -44,7 +45,11 @@ const UserCard = () => {
   return (
     <div className="border-lighter-gray-border flex flex-col items-center rounded-2xl border bg-white">
       <div className="flex w-full items-center gap-8 px-5 py-4">
-        <LogoIcon size="large" profileImage={userProfileImageUrl} />
+        {userProfileImageUrl ? (
+          <ProfileImage imageUrl={userProfileImageUrl} />
+        ) : (
+          <LogoIcon size="large" />
+        )}
         {!userName ? (
           <button onClick={handleLoginClick} className="text-start text-lg font-bold">
             로그인이 필요합니다.
