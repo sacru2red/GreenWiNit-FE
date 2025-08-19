@@ -18,6 +18,7 @@ const Challenges = () => {
   const isLoggedIn = useIsLoggedIn()
   const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
   const filteredChallenges = challenges
+  const [showTooltip, setShowTooltip] = useState(false)
 
   return (
     <div className="flex h-full flex-col">
@@ -25,9 +26,14 @@ const Challenges = () => {
       <div className="flex h-0 w-full flex-[1_1_auto] flex-col p-4 pt-8">
         <div className="flex flex-row items-center gap-1">
           <span className="text-title-smaller text-xl font-bold">{`${tab === 'individual' ? '개인' : '팀'} 챌린지`}</span>
-          <Tooltip>
+          <Tooltip onOpenChange={setShowTooltip} open={showTooltip}>
             <TooltipTrigger asChild>
-              <InfoOutlineIcon className="text-mountain_meadow" />
+              <InfoOutlineIcon
+                className="text-mountain_meadow"
+                onClick={() => {
+                  setShowTooltip((prev) => !prev)
+                }}
+              />
             </TooltipTrigger>
             <TooltipContent className="p-4 shadow-xl">
               <p className="text-center">
