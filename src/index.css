@@ -2,6 +2,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@config "../tailwind.config.js";
+
 @font-face {
   font-family: 'Greenwinit-logo';
   /**
