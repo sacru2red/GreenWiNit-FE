@@ -23,10 +23,7 @@ export const usersApi = {
     )
     return response.json() as Promise<GetMyPointsHistoryResponse>
   },
-  putUserProfile: async (
-    nickname: string | null,
-    profileImageUrl = 'https://www.greenwinit.store/img/logo-icon.png',
-  ) => {
+  putUserProfile: async (nickname: string | null, profileImageUrl: string | null) => {
     return await fetch(`${API_URL}/members/profile`, {
       method: 'PUT',
       body: JSON.stringify({ nickname, profileImageUrl }),
