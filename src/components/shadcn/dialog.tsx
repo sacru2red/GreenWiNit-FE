@@ -115,14 +115,44 @@ function DialogDescription({
 }
 
 export {
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   Dialog,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogClose,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogContent,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogDescription,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogFooter,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogHeader,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogOverlay,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogPortal,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogTitle,
+  /**
+   * @deprecated use src\components\common\modal\dialog.tsx
+   */
   DialogTrigger,
 }

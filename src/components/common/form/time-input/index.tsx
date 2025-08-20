@@ -1,5 +1,5 @@
 import { Button } from '@/components/common/button'
-import { Dialog, DialogContent } from '@/components/shadcn/dialog'
+import { Dialog, DialogContent } from '@/components/common/modal/dialog'
 import { ComponentProps, Fragment, useState } from 'react'
 import Input from '../input'
 import dayjs from 'dayjs'

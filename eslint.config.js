@@ -13,12 +13,23 @@ export default tseslint.config(
   reactRefresh.configs.vite,
   reactPlugin.configs.flat.recommended,
   reactPlugin.configs.flat['jsx-runtime'],
-  { ignores: ['dist/**/*'] },
+  {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  { ignores: ['dist/**/*', 'src/routeTree.gen.ts'] },
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
       '@typescript-eslint/no-unused-vars': [
@@ -40,6 +51,7 @@ export default tseslint.config(
           message: 'fetch 호출은 /src/api 디렉토리 내에서만 허용됩니다. API 모듈을 사용해주세요.',
         },
       ],
+      '@typescript-eslint/no-deprecated': 'error',
     },
   },
   {
@@ -47,9 +59,6 @@ export default tseslint.config(
     rules: {
       'no-restricted-syntax': 'off',
     },
-  },
-  {
-    ignores: ['src/routeTree.gen.ts'],
   },
   eslintConfigPrettier,
 )

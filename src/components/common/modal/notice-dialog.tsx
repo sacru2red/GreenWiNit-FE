@@ -4,7 +4,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
-} from '@/components/shadcn/dialog'
+} from '@/components/common/modal/dialog'
 import { Button } from '@/components/common/button'
 import React from 'react'
 
