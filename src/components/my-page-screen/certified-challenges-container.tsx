@@ -21,6 +21,7 @@ function CertifiedChallengesContainer() {
       setChallengeType={setChallengeType}
       challenges={challenges}
       handleNavigate={handleNavigate}
+      useCarousel={false}
     />
   )
 }
