@@ -22,6 +22,7 @@ export const Route = createFileRoute('/signup')({
 
 function Signup() {
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
+  console.log('isNicknameDuplicated', isNicknameDuplicated)
   const search = Route.useSearch()
   const tempToken = search?.tempToken
 
@@ -99,7 +100,7 @@ function Signup() {
             <Button
               type="submit"
               className="mt-auto"
-              variant={isNicknameDuplicated ? 'disabled' : null}
+              variant={isNicknameDuplicated ? 'disabled' : undefined}
             >
               제출
             </Button>
