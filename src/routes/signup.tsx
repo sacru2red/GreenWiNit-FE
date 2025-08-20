@@ -60,7 +60,7 @@ function Signup() {
       .signup({
         tempToken,
         nickname: data.nickname,
-        profileImageUrl: data.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
+        profileImageUrl: data.profileImage,
       })
       .then(() => {
         initHistoryAndLocation()

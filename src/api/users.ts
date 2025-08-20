@@ -57,7 +57,7 @@ export const usersApi = {
   }: {
     tempToken: string
     nickname: string
-    profileImageUrl: string
+    profileImageUrl: string | null
   }) => {
     return fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
