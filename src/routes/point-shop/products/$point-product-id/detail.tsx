@@ -112,20 +112,35 @@ function ProductDetail() {
           <ConfirmDialog
             isOpen={showConfirmDialog}
             setIsOpen={setShowConfirmDialog}
-            description={`이름 ${user?.name}\n 전화번호 ${user?.phone}\n 주소 ${user?.address.roadAddress}\n ${user?.address.detailAddress}`}
-            paragraph="수정이 불가능하니 리워드 수령 정보를 다시 확인해주세요."
+            description={
+              <div className="p-4 text-left">
+                <div>
+                  <strong>이름:</strong> {user?.name}
+                </div>
+                <div>
+                  <strong>전화번호:</strong> {user?.phone}
+                </div>
+                <div>
+                  <strong>주소:</strong> {user?.address.roadAddress}
+                </div>
+                <div>{user?.address.detailAddress}</div>
+              </div>
+            }
+            paragraph={`수정이 불가능하니\n 리워드 수령 정보를 다시 확인해주세요.`}
             onConfirm={handleConfirm}
             isPending={isExchanging}
           />
           <NoticeDialog
             isOpen={showNoticeDialog}
             setIsOpen={setShowNoticeDialog}
-            description={`
-              교환 신청이 완료되었습니다!\n
-              [마이페이지] -> [포인트내역]에서\n
-              확인할 수 있어요\n
-              배송까지 소요될 예정입니다.\n
-            `}
+            description={
+              <div className="p-4">
+                <p>교환 신청이 완료되었습니다!</p>
+                <p>[마이페이지] -{'>'} [포인트내역]에서</p>
+                <p>확인할 수 있어요</p>
+                <p>배송까지 2~3일 소요될 예정입니다.</p>
+              </div>
+            }
             onConfirm={handleExchange}
           />
         </PageLayOut.BodySection>

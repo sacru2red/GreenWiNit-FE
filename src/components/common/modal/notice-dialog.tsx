@@ -11,7 +11,7 @@ import React from 'react'
 interface NoticeDialogProps {
   isOpen: boolean
   title?: string
-  description: string
+  description: string | React.ReactNode
   paragraph?: string
   setIsOpen: (open: boolean) => void
   onConfirm: () => void
@@ -34,12 +34,7 @@ function NoticeDialog({
           </DialogTitle>
         )}
         <DialogDescription className="text-secondary-foreground flex flex-col items-center justify-center text-center text-base whitespace-pre-line">
-          {description.split('\\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              {index < description.split('\\n').length - 1 && <br />}
-            </React.Fragment>
-          ))}
+          {description}
           {paragraph && <p className="text-lighter-gray text-xs">{paragraph}</p>}
         </DialogDescription>
         <DialogFooter className="flex flex-row items-center gap-4 sm:justify-center">

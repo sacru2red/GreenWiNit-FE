@@ -52,7 +52,7 @@ const PointDescription = ({
       />
       <PointOverview label="차감 포인트" point={`${deductPoint}p`} valueClassName="text-red-500" />
       <PointOverview
-        label="총 보유 포인트"
+        label="남은 포인트"
         point={textIfDoneExchangingPoint}
         valueClassName="text-mountain_meadow"
       />
