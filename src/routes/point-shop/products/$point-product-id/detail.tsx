@@ -134,11 +134,11 @@ function ProductDetail() {
             isOpen={showNoticeDialog}
             setIsOpen={setShowNoticeDialog}
             description={
-              <div className="p-4">
-                <p>교환 신청이 완료되었습니다!</p>
-                <p>[마이페이지] -{'>'} [포인트내역]에서</p>
-                <p>확인할 수 있어요</p>
-                <p>배송까지 2~3일 소요될 예정입니다.</p>
+              <div>
+                <p className="mb-4 text-xl font-bold">교환 신청이 완료되었습니다!</p>
+                <p>[마이페이지] -{'>'} [포인트 현황]에서</p>
+                <p className="mb-4">확인할 수 있어요</p>
+                <p>배송까지 약 3~7일 소요될 예정입니다.</p>
               </div>
             }
             onConfirm={handleExchange}
