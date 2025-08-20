@@ -47,7 +47,7 @@ function EditProfileForm() {
     }
 
     if (formState.dirtyFields.nickname && !isNicknameDuplicated) {
-      toast.error('닉네임 중복 체크를 해주세요.')
+      toast.error('닉네임 중복확인을 해주세요')
       return
     }
 
