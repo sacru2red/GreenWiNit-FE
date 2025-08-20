@@ -4,6 +4,7 @@ import { WithDrawnFormState } from '@/types/withdraw'
 import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 
 export const usersApi = {
   getUserStatus: async () => {
@@ -32,7 +33,9 @@ export const usersApi = {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json() as Promise<PutUserProfileResponse>)
+    })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<PutUserProfileResponse>)
   },
   checkNicknameDuplicate: async (nickname: string) => {
     return await fetch(`${API_URL}/members/nickname-check`, {
@@ -41,7 +44,9 @@ export const usersApi = {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
+    })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
   },
   logout: async () => {
     return fetch(`${API_URL}/auth/logout`, {
@@ -72,7 +77,9 @@ export const usersApi = {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json() as Promise<PostWithdrawResponse>)
+    })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<PostWithdrawResponse>)
   },
   getUserMe: async () => {
     const response = await fetch(`${API_URL}/members/me`)

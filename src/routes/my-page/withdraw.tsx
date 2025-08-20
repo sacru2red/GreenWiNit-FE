@@ -12,6 +12,8 @@ import { toast } from 'sonner'
 import { Button } from '@/components/common/button'
 import { createFileRoute } from '@tanstack/react-router'
 import { WithDrawnFormState } from '@/types/withdraw'
+import { useMutation } from '@tanstack/react-query'
+import { showMessageIfExists } from '@/lib/error'
 
 export const Route = createFileRoute('/my-page/withdraw')({
   component: WithDraw,
@@ -25,15 +27,21 @@ function WithDraw() {
 
   const { register, handleSubmit } = useForm<WithDrawnFormState>()
 
-  const onConfirm = async () => {
-    if (!dataRef.current) return
-
-    const res = await usersApi.withdraw(dataRef.current)
-
-    if (res.success) {
+  const { mutateAsync: withdraw } = useMutation({
+    mutationFn: (data: WithDrawnFormState) => usersApi.withdraw(data),
+    onSuccess: () => {
       setShowConfirmModal(false)
       setShowNoticeModal(true)
-    }
+    },
+    onError: (err: Error) => {
+      console.error(err)
+      showMessageIfExists(err)
+    },
+  })
+
+  const onConfirm = async () => {
+    if (!dataRef.current) return
+    await withdraw(dataRef.current)
   }
 
   const onValid = (data: WithDrawnFormState) => {
