@@ -221,7 +221,7 @@ export interface ChallengeTeamsCommonElement {
   /**
    * ex) 강남구
    */
-  signungu: string
+  sigungu: string
   challengeDate: string
   startTime: string
   endTime: string

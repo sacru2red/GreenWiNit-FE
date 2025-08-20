@@ -13,6 +13,8 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
       dayjs(team.challengeDate).isSameOrAfter(today, 'D')) ||
     ('leaderMe' in team && team.leaderMe)
 
+  console.log('team', team)
+
   return (
     <button
       onClick={onClick}
@@ -45,7 +47,7 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
           <div className="flex w-full flex-row justify-between gap-2">
             <div className="flex gap-2">
               <span className="text-title-smaller">장소</span>
-              <span className="text-lighter-gray">{team.signungu}</span>
+              <span className="text-lighter-gray">{team.sigungu}</span>
             </div>
             <div className="flex gap-2">
               <span className="text-title-smaller">인원</span>
