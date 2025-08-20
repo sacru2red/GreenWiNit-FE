@@ -10,7 +10,7 @@ import { Button } from '@/components/common/button'
 type ConfirmDialogProps = {
   isOpen: boolean
   title?: string
-  description: string
+  description: string | React.ReactNode
   paragraph?: string
   setIsOpen: (open: boolean) => void
   onConfirm: () => void
