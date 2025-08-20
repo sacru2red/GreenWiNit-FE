@@ -5,6 +5,7 @@ import { omit } from 'es-toolkit'
 import { ApiResponse, CursorPaginatedResponse } from '@/types/api'
 import { throwResponseStatusThenChaining } from '@/lib/network'
 import { ChallengeType } from '@/types/challenge'
+import { CertificationStatus } from '@/types/certification'
 
 export const challengesApi = {
   getIndividualChallenges: async ({
@@ -300,7 +301,7 @@ export interface GetCertifiedChallengesMineElement {
   id: number
   challengeName: string
   certifiedDate: string
-  certificationStatus: string
+  certificationStatus: CertificationStatus
   challengeImage: string
 }
 
