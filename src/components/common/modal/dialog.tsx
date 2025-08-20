@@ -19,6 +19,7 @@ export function DialogContent({
   return <ShadcnDialogContent {...restProps} showCloseButton={showCloseButton} />
 }
 
+ 
 export const Dialog = ShadcnDialog
 export const DialogClose = ShadcnDialogClose
 export const DialogDescription = ShadcnDialogDescription
