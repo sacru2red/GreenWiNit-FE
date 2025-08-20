@@ -12,7 +12,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/shadcn/dialog'
+} from '@/components/common/modal/dialog'
 import { useState } from 'react'
 import { showMessageIfExists } from '@/lib/error'
 import ChallengeTitle from '@/components/common/challenges/challenge-title'

@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogHeader,
-} from '@/components/shadcn/dialog'
+} from '@/components/common/modal/dialog'
 import { Button } from '@/components/common/button'
 
 interface OverviewProps {

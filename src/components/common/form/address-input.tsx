@@ -1,7 +1,7 @@
 import { ComponentProps, Fragment, useEffect, useRef, useState } from 'react'
 import DaumPostcodeEmbed from 'react-daum-postcode'
 import Input from './input'
-import { Dialog, DialogContent } from '@/components/shadcn/dialog'
+import { Dialog, DialogContent } from '@/components/common/modal/dialog'
 import { DialogTitle } from '@radix-ui/react-dialog'
 
 export type AddressState = null | {

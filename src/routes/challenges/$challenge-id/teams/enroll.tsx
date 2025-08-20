@@ -13,7 +13,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/shadcn/dialog'
+} from '@/components/common/modal/dialog'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 

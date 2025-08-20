@@ -1,4 +1,9 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter } from '@/components/shadcn/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/common/modal/dialog'
 import { Button } from '@/components/common/button'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 
