@@ -293,6 +293,7 @@ export interface TeamDetailResponse {
   fullAddress: string
   openChatUrl: string
   participating: boolean
+  leaderMe: boolean
 }
 
 export interface GetCertifiedChallengesMineElement {
