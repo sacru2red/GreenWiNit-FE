@@ -4,6 +4,7 @@ import { WithDrawnFormState } from '@/types/withdraw'
 import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 
 export const usersApi = {
   getUserStatus: async () => {
@@ -22,17 +23,16 @@ export const usersApi = {
     )
     return response.json() as Promise<GetMyPointsHistoryResponse>
   },
-  putUserProfile: async (
-    nickname: string | null,
-    profileImageUrl = 'https://www.greenwinit.store/img/logo-icon.png',
-  ) => {
+  putUserProfile: async (nickname: string | null, profileImageUrl: string | null) => {
     return await fetch(`${API_URL}/members/profile`, {
       method: 'PUT',
       body: JSON.stringify({ nickname, profileImageUrl }),
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json() as Promise<PutUserProfileResponse>)
+    })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<PutUserProfileResponse>)
   },
   checkNicknameDuplicate: async (nickname: string) => {
     return await fetch(`${API_URL}/members/nickname-check`, {

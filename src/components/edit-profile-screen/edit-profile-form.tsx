@@ -5,7 +5,7 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import CurrentNickname from '@/components/edit-profile-screen/nickname-checkt-input/current-nickname'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import useUserMe from '@/hooks/use-user-me'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -17,24 +17,19 @@ export interface FormState {
 
 function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
-  const [changedFields, setChangedFields] = useState({
-    nickname: false,
-    profileImage: false,
-  })
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const isNicknameValid = changedFields.nickname && isNicknameDuplicated
-  const isImageValid = changedFields.profileImage
   const { data: me } = useUserMe({ refetchOnWindowFocus: false, refetchOnMount: false })
   const userNickname = me?.result?.nickname ?? null
   const qc = useQueryClient()
-
-  const { control, handleSubmit, reset } = useForm<FormState>({
+  const { control, handleSubmit, reset, formState } = useForm<FormState>({
     defaultValues: {
       nickname: null,
       profileImage: null,
     },
   })
+  const isNicknameValid = formState.dirtyFields.nickname && isNicknameDuplicated
+  const isImageValid = formState.dirtyFields.profileImage
 
   useEffect(() => {
     if (me) {
@@ -51,7 +46,7 @@ function EditProfileForm() {
       return
     }
 
-    if (changedFields.nickname && !isNicknameDuplicated) {
+    if (formState.dirtyFields.nickname && !isNicknameDuplicated) {
       toast.error('닉네임 중복 체크를 해주세요.')
       return
     }
@@ -60,19 +55,24 @@ function EditProfileForm() {
     setShowConfirmModal(true)
   }
 
-  const updateNickname = async () => {
-    if (!pendingData) return
+  const { mutate } = useMutation({
+    mutationFn: (vars: { nickname: string | null; profileImage: string | null }) =>
+      usersApi.putUserProfile(vars.nickname, vars.profileImage),
 
-    const res = await usersApi.putUserProfile(pendingData.nickname, pendingData.profileImage ?? '')
-    if (res.success) {
+    // 성공 시: 모달 닫기 + 캐시 무효화 + 토스트
+    onSuccess: async () => {
       setShowConfirmModal(false)
       await qc.invalidateQueries({
         queryKey: usersQueryKeys['users/me']['member'].queryKey,
         refetchType: 'active',
       })
       toast.success('회원정보가 수정되었습니다.')
-    }
-  }
+    },
+
+    onError: (err: Error) => {
+      toast.error(err?.message ?? '수정에 실패했습니다.')
+    },
+  })
 
   return (
     <Fragment>
@@ -88,7 +88,6 @@ function EditProfileForm() {
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(e)
-                    setChangedFields((prev) => ({ ...prev, profileImage: true }))
                   }}
                 />
               </div>
@@ -109,7 +108,6 @@ function EditProfileForm() {
                   onChange={(e) => {
                     field.onChange(e)
                     setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
-                    setChangedFields((prev) => ({ ...prev, nickname: true }))
                   }}
                   setIsNicknameDuplicated={setIsNicknameDuplicated}
                 />
@@ -133,7 +131,10 @@ function EditProfileForm() {
           isOpen={showConfirmModal}
           setIsOpen={setShowConfirmModal}
           description={`회원정보를\n 수정하시겠습니까?`}
-          onConfirm={updateNickname}
+          onConfirm={() => {
+            if (!pendingData) return
+            mutate(pendingData)
+          }}
         />
       )}
     </Fragment>
