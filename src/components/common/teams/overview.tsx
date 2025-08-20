@@ -50,22 +50,15 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
     },
   })
 
-  /**
-   * @deprecated
-   * @TODO replace this
-   */
-  const isLeader = true
-
   return (
     <div className="bg-card relative flex flex-col items-center gap-2 p-4">
-      {isLeader && allowManage ? (
+      {allowManage && team.leaderMe ? (
         <Popover>
           <PopoverTrigger asChild>
             <MoreHorizIcon className="absolute top-3 right-3 cursor-pointer" />
           </PopoverTrigger>
           <PopoverContent align="end" className="overlay-hidden w-auto p-0">
             <div className="flex flex-col">
-              {/* @TODO attach click event handler to move page */}
               <button
                 className="px-4 py-1 text-sm focus-visible:outline-0"
                 onClick={() =>
