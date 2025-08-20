@@ -13,7 +13,14 @@ export default tseslint.config(
   reactRefresh.configs.vite,
   reactPlugin.configs.flat.recommended,
   reactPlugin.configs.flat['jsx-runtime'],
-  { ignores: ['dist/**/*'] },
+  {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  { ignores: ['dist/**/*', 'src/routeTree.gen.ts'] },
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -47,9 +54,6 @@ export default tseslint.config(
     rules: {
       'no-restricted-syntax': 'off',
     },
-  },
-  {
-    ignores: ['src/routeTree.gen.ts'],
   },
   eslintConfigPrettier,
 )
