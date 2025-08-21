@@ -21,7 +21,9 @@ export const Route = createFileRoute('/signup')({
 })
 
 function Signup() {
+  // @TODO change to form state
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
+  // @TODO change to form state
   const [hasTriedDuplicateCheck, setHasTriedDuplicateCheck] = useState(false)
   const search = Route.useSearch()
   const tempToken = search?.tempToken
