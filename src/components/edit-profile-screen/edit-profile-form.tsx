@@ -55,7 +55,7 @@ function EditProfileForm() {
       return
     }
 
-    if (hasTriedDuplicateCheck) {
+    if (!isNicknameValid) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
