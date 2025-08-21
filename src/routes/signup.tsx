@@ -110,7 +110,7 @@ function Signup() {
             <Button
               type="submit"
               className="mt-auto"
-              variant={isNicknameDuplicated ? 'disabled' : undefined}
+              variant={!hasTriedDuplicateCheck || isNicknameDuplicated ? 'disabled' : undefined}
             >
               제출
             </Button>
