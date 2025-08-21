@@ -10,7 +10,7 @@ import { CircleAlert } from 'lucide-react'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
 import Loading from '@/components/common/loading'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/posts/')({
   component: Posts,
@@ -24,21 +24,10 @@ function Posts() {
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const filteredPosts =
     activeTab === '전체' ? posts : posts?.filter((item) => item.infoCategoryName === activeTab)
-
-  if (!isLoggedIn) {
-    return (
-      <WarnNotLoggedIn
-        isOpen={isModalOpen}
-        message={`로그인 후,\n정보공유를 확인할 수 있어요.`}
-        infoMessageAfterRedirecting="정보공유를 확인하기위해 로그인 해주세요."
-        onOpenChange={setIsModalOpen}
-        backButtonAction="back"
-      />
-    )
-  }
 
   return (
     <PageLayOut.Container>
@@ -60,6 +49,15 @@ function Posts() {
                   title={item.title}
                   content={item.content}
                   thumbnailUrl={item.imageurl}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      setIsModalOpen(true)
+                    }
+                    navigate({
+                      to: '/posts/$id',
+                      params: { id: item.id },
+                    })
+                  }}
                 />
               ))
             ) : (
@@ -74,6 +72,13 @@ function Posts() {
       <PageLayOut.FooterSection>
         <BottomNavigation />
       </PageLayOut.FooterSection>
+      <WarnNotLoggedIn
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        message={`로그인 후,\n정보공유를 확인할 수 있어요.`}
+        infoMessageAfterRedirecting="정보공유를 확인하기위해 로그인 해주세요."
+        backButtonAction="close"
+      />
     </PageLayOut.Container>
   )
 }
