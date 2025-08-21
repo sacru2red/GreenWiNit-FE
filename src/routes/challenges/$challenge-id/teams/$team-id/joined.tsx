@@ -5,7 +5,7 @@ import MemberCount from '@/components/common/teams/member-count'
 import Overview from '@/components/common/teams/overview'
 import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/common/button'
-import dayjs from '@/constant/globals'
+import { dayjs } from '@/constant/globals'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
@@ -55,11 +55,27 @@ function ManageTeam() {
               <Button
                 size="flex"
                 onClick={() => {
-                  if (dayjs(team.challengeDate).isAfter(dayjs())) {
+                  const challengeDateDayjs = dayjs(team.challengeDate)
+                  if (challengeDateDayjs.isAfter(dayjs())) {
                     toast.error(
-                      `팀 챌린지 날짜(${dayjs(team.challengeDate).format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
+                      `팀 챌린지 날짜(${challengeDateDayjs.format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
                     )
                     return
+                  }
+                  if (challengeDateDayjs.isSame(dayjs(), 'D')) {
+                    const challengeStartDateTime = dayjs(team.startTime, 'HH:mm:ss')
+                      .year(challengeDateDayjs.year())
+                      .month(challengeDateDayjs.month())
+                      .date(challengeDateDayjs.date())
+                    if (dayjs().isAfter(challengeStartDateTime)) {
+                      toast.error(
+                        `팀 시간(${challengeStartDateTime.format('HH:mm')}~${dayjs(
+                          team.endTime,
+                          'HH:mm:ss',
+                        ).format('HH:mm')})이 안에서 인증을 할 수 있습니다.`,
+                      )
+                      return
+                    }
                   }
                   navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
                 }}
