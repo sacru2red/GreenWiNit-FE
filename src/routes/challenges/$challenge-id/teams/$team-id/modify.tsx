@@ -8,6 +8,7 @@ import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { omit } from 'es-toolkit'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/modify')({
   component: TeamModify,
@@ -29,19 +30,17 @@ function TeamModify() {
         throw new Error('team.id is required')
       }
       await challengesApi.modifyTeam({
-        ...rest,
+        ...omit(rest, ['address', 'date', 'name']),
         id,
-        beginDateTime: dayjs(rest.startAt).format('YYYY-MM-DD HH:mm'),
-        endDateTime: dayjs(rest.endAt).format('YYYY-MM-DD HH:mm'),
         groupName: rest.name,
         roadAddress: rest.address.roadAddress,
         detailAddress: rest.address.detailAddress,
+        sigungu: rest.address.sigungu,
         description: rest.description,
-        maxParticipants: rest.maxMemberCount,
-        startTime: dayjs(team.startAt).format('HH:mm'),
-        endTime: dayjs(team.endAt).format('HH:mm'),
-        sigungu: team.address.sigungu,
         challengeDate: dayjs(team.date).format('YYYY-MM-DD'),
+        startTime: dayjs(team.startTime).format('HH:mm'),
+        endTime: dayjs(team.endTime).format('HH:mm'),
+        maxParticipants: rest.maxMemberCount,
       })
     },
     onSuccess: () => {
@@ -104,8 +103,8 @@ function TeamModify() {
               },
               description: team.description,
               date: dayjs(team.challengeDate).toDate(),
-              startAt: dayjs(team.startTime, 'HH:mm:ss').toDate(),
-              endAt: dayjs(team.endTime, 'HH:mm:ss').toDate(),
+              startTime: dayjs(team.startTime, 'HH:mm:ss').toDate(),
+              endTime: dayjs(team.endTime, 'HH:mm:ss').toDate(),
               maxMemberCount: team.maxParticipants,
               openChatUrl: team.openChatUrl,
             }}

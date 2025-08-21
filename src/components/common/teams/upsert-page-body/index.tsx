@@ -15,8 +15,8 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
       id: null,
       name: '',
       date: null,
-      startAt: null,
-      endAt: null,
+      startTime: null,
+      endTime: null,
       address: {
         roadAddress: '',
         roadnameCode: '',
@@ -63,7 +63,7 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
           </span>
           <Controller
             control={control}
-            name="startAt"
+            name="startTime"
             rules={{ required: true }}
             render={({ field }) => <TimeInput {...field} />}
           />
@@ -75,7 +75,7 @@ const UpsertPageBody = ({ onSubmit, mode, initialData }: UpsertPageBodyProps) =>
           </span>
           <Controller
             control={control}
-            name="endAt"
+            name="endTime"
             rules={{ required: true }}
             render={({ field }) => <TimeInput {...field} />}
           />

@@ -16,6 +16,7 @@ import {
 } from '@/components/common/modal/dialog'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
+import { omit } from 'es-toolkit'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/enroll')({
   component: TeamEnroll,
@@ -30,18 +31,16 @@ function TeamEnroll() {
   const { mutate: enrollTeam } = useMutation({
     mutationFn: (team: FormState) =>
       challengesApi.enrollTeam(challengeId, {
-        ...team,
-        beginDateTime: dayjs(team.startAt).format('YYYY-MM-DD HH:mm'),
-        endDateTime: dayjs(team.endAt).format('YYYY-MM-DD HH:mm'),
+        ...omit(team, ['id', 'address', 'date', 'name']),
         groupName: team.name,
         roadAddress: team.address.roadAddress,
         detailAddress: team.address.detailAddress,
-        description: team.description,
-        maxParticipants: team.maxMemberCount,
-        startTime: dayjs(team.startAt).format('HH:mm'),
-        endTime: dayjs(team.endAt).format('HH:mm'),
         sigungu: team.address.sigungu,
+        description: team.description,
         challengeDate: dayjs(team.date).format('YYYY-MM-DD'),
+        startTime: dayjs(team.startTime).format('HH:mm'),
+        endTime: dayjs(team.endTime).format('HH:mm'),
+        maxParticipants: team.maxMemberCount,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
