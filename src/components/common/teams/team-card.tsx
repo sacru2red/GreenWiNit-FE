@@ -13,8 +13,6 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
       dayjs(team.challengeDate).isSameOrAfter(today, 'D')) ||
     ('leaderMe' in team && team.leaderMe)
 
-  console.log('team', team)
-
   return (
     <button
       onClick={onClick}

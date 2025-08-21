@@ -67,12 +67,13 @@ function ManageTeam() {
                       .year(challengeDateDayjs.year())
                       .month(challengeDateDayjs.month())
                       .date(challengeDateDayjs.date())
+                    console.log(
+                      'challengeEndDateTime',
+                      challengeEndDateTime.format('YYYY-MM-DD HH:mm'),
+                    )
                     if (dayjs().isBefore(challengeEndDateTime)) {
                       toast.error(
-                        `팀 시간(${challengeEndDateTime.format('HH:mm')}~${dayjs(
-                          team.endTime,
-                          'HH:mm:ss',
-                        ).format('HH:mm')})이 이후부터 인증할 수 있습니다.`,
+                        `팀 활동 종료시간(${challengeEndDateTime.format('HH:mm')}) 이후부터 인증할 수 있습니다.`,
                       )
                       return
                     }
