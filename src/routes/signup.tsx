@@ -53,7 +53,7 @@ function Signup() {
       return
     }
 
-    if (hasTriedDuplicateCheck) {
+    if (!hasTriedDuplicateCheck) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
