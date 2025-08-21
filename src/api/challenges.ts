@@ -290,6 +290,7 @@ export interface TeamDetailResponse {
   openChatUrl: string
   participating: boolean
   leaderMe: boolean
+  certified: boolean
 }
 
 export interface GetCertifiedChallengesMineElement {
