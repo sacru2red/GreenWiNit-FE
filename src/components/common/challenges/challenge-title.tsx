@@ -13,7 +13,7 @@ const ChallengeTitle = ({ challengeId, challengeType }: ChallengeTitleProps) => 
   return (
     <div className="flex flex-row items-center justify-start gap-1.5">
       <LogoIcon size="small" className="border-none bg-transparent" />
-      <h2 className="text-xl font-bold">{challenge?.challengeName}</h2>
+      <h2 className="truncate text-xl font-bold">{challenge?.challengeName}</h2>
     </div>
   )
 }

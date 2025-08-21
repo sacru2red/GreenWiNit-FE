@@ -26,7 +26,7 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
     >
       <div className="flex flex-col gap-8 rounded-lg border border-gray-200 p-4">
         <div className="flex flex-row items-center justify-between gap-1">
-          <span className="text-title-smaller text-lg font-bold">{team.groupName}</span>
+          <span className="text-title-smaller truncate text-lg font-bold">{team.groupName}</span>
           <span className="text-lighter-gray">
             {dayjs(team.challengeDate).format('YYYY.MM.DD')}
           </span>
