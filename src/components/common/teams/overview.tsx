@@ -59,14 +59,17 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
           </PopoverTrigger>
           <PopoverContent align="end" className="overlay-hidden w-auto p-0">
             <div className="flex flex-col">
-              <button
-                className="px-4 py-1 text-sm focus-visible:outline-0"
-                onClick={() =>
-                  navigate({ to: `/challenges/${challengeId}/teams/${team.id}/modify` })
-                }
-              >
-                수정하기
-              </button>
+              {/**
+               * TS094
+               *    <button
+               *      className="px-4 py-1 text-sm focus-visible:outline-0"
+               *      onClick={() =>
+               *        navigate({ to: `/challenges/${challengeId}/teams/${team.id}/modify` })
+               *      }
+               *    >
+               *      수정하기
+               *    </button>
+               */}
               <Separator orientation="horizontal" />
               <button
                 className="px-4 py-1 text-sm focus-visible:outline-0"
