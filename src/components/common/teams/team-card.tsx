@@ -8,9 +8,14 @@ interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
 }
 
 const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
+  const challengeDateDayjs = dayjs(team.challengeDate)
+  const startTimeDayjs = dayjs(team.startTime, 'HH:mm:ss')
+    .year(challengeDateDayjs.year())
+    .month(challengeDateDayjs.month())
+    .date(challengeDateDayjs.date())
+  const startTimeIsBeforeNow = dayjs().isBefore(startTimeDayjs)
   const isJoinAllowed =
-    (team.maxParticipants >= team.currentParticipants &&
-      dayjs(team.challengeDate).isSameOrAfter(today, 'D')) ||
+    (team.maxParticipants >= team.currentParticipants && startTimeIsBeforeNow) ||
     ('leaderMe' in team && team.leaderMe)
 
   return (
@@ -59,6 +64,5 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
     </button>
   )
 }
-const today = dayjs()
 
 export default TeamCard
