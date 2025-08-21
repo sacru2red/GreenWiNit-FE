@@ -4,7 +4,6 @@ import {
   challengesQueryKeys,
   TeamDetailResponse,
 } from '@/api/challenges'
-import LogoIcon from '../profile-icon'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/popover'
 import { Separator } from '@/components/shadcn/separator'
@@ -21,6 +20,7 @@ import {
 import { Button } from '@/components/common/button'
 import dayjs from '@/constant/globals'
 import { toast } from 'sonner'
+import ProfileIcon from '@/components/common/profile-icon'
 
 interface OverviewProps {
   team: TeamDetailResponse
@@ -95,7 +95,7 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
           </PopoverContent>
         </Popover>
       ) : null}
-      <LogoIcon size="large" className="border bg-white" />
+      <ProfileIcon size="large" className="border bg-white" />
       <span className="text-mountain_meadow-700 text-2xl font-bold">{team.groupName}</span>
       <Dialog
         open={showConfirmDeletingDialog}
