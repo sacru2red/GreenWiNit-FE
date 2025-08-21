@@ -1,8 +1,10 @@
+import { CAUTIONS } from '@/constant/cautions'
+
 function WithDrawCaution({ setChecked }: { setChecked: (isChecked: boolean) => void }) {
   return (
     <section className="flex flex-col gap-4 px-4 py-6 text-start">
       <h3 className="font-bold">탈퇴 유의사항</h3>
-      <p className="text-lighter-gray text-xs">내용 추후 전달 받기로 함</p>
+      <p className="text-secondary-foreground text-sm whitespace-pre-wrap">{CAUTIONS}</p>
       <label className="relative flex cursor-pointer items-center gap-3">
         <input
           type="checkbox"
