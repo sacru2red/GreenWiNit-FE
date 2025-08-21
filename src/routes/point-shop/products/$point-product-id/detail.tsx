@@ -114,17 +114,13 @@ function ProductDetail() {
             isOpen={showConfirmDialog}
             setIsOpen={setShowConfirmDialog}
             description={
-              <div className="p-4 text-left">
-                <div>
-                  <strong>이름:</strong> {user?.name}
-                </div>
-                <div>
-                  <strong>전화번호:</strong> {user?.phone}
-                </div>
-                <div>
-                  <strong>주소:</strong> {user?.address.roadAddress}
-                </div>
-                <div>{user?.address.detailAddress}</div>
+              <div className="mb-4 w-48 text-left">
+                <p>
+                  <strong>이름:</strong> {user?.name} <br />
+                  <strong>전화번호:</strong> {user?.phone} <br />
+                  <strong>주소:</strong> {`${user?.address.roadAddress} `}
+                  {user?.address.detailAddress}
+                </p>
               </div>
             }
             paragraph={`수정이 불가능하니\n 리워드 수령 정보를 다시 확인해주세요.`}
@@ -135,11 +131,14 @@ function ProductDetail() {
             isOpen={showNoticeDialog}
             setIsOpen={setShowNoticeDialog}
             description={
-              <div>
-                <p className="mb-4 text-xl font-bold">교환 신청이 완료되었습니다!</p>
-                <p>[마이페이지] -{'>'} [포인트 현황]에서</p>
-                <p className="mb-4">확인할 수 있어요</p>
-                <p>배송까지 약 3~7일 소요될 예정입니다.</p>
+              <div className="w-48">
+                <p className="mb-4 font-bold whitespace-nowrap">교환 신청이 완료되었습니다!</p>
+                <p className="mb-4 text-xs">
+                  [마이페이지] -{'>'} [포인트 현황]에서
+                  <br />
+                  확인할 수 있어요
+                </p>
+                <p className="text-xs">배송까지 약 3~7일 소요될 예정입니다.</p>
               </div>
             }
             onConfirm={handleExchange}
