@@ -21,7 +21,9 @@ export const Route = createFileRoute('/signup')({
 })
 
 function Signup() {
+  // @TODO change to form state
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
+  // @TODO change to form state
   const [hasTriedDuplicateCheck, setHasTriedDuplicateCheck] = useState(false)
   const search = Route.useSearch()
   const tempToken = search?.tempToken
@@ -60,7 +62,7 @@ function Signup() {
       .signup({
         tempToken,
         nickname: data.nickname,
-        profileImageUrl: data.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
+        profileImageUrl: data.profileImage,
       })
       .then(() => {
         initHistoryAndLocation()
@@ -110,7 +112,7 @@ function Signup() {
             <Button
               type="submit"
               className="mt-auto"
-              variant={isNicknameDuplicated ? 'disabled' : undefined}
+              variant={!hasTriedDuplicateCheck || isNicknameDuplicated ? 'disabled' : undefined}
             >
               제출
             </Button>

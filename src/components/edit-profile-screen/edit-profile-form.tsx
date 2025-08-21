@@ -29,7 +29,7 @@ function EditProfileForm() {
       profileImage: null,
     },
   })
-  const isNicknameValid = formState.dirtyFields.nickname && isNicknameDuplicated
+  const isNicknameValid = formState.dirtyFields.nickname && !isNicknameDuplicated
   const isImageValid = formState.dirtyFields.profileImage
 
   useEffect(() => {
