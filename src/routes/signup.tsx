@@ -9,6 +9,7 @@ import { initHistoryAndLocation } from '@/lib/utils'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { authStore } from '@/store/auth-store'
 
 export const Route = createFileRoute('/signup')({
   component: Signup,
@@ -27,6 +28,8 @@ function Signup() {
   const [hasTriedDuplicateCheck, setHasTriedDuplicateCheck] = useState(false)
   const search = Route.useSearch()
   const tempToken = search?.tempToken
+  const setAccessToken = authStore((s) => s.setAccessToken)
+  const initAccessToken = authStore((s) => s.initAccessToken)
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')
@@ -53,7 +56,7 @@ function Signup() {
       return
     }
 
-    if (hasTriedDuplicateCheck) {
+    if (!hasTriedDuplicateCheck) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
@@ -64,10 +67,22 @@ function Signup() {
         nickname: data.nickname,
         profileImageUrl: data.profileImage,
       })
+      .then((res) => {
+        if ('accessToken' in res) {
+          setAccessToken(res.accessToken)
+        } else {
+          throw new Error(res.message)
+        }
+      })
+      .catch((err) => {
+        initAccessToken()
+        throw err
+      })
       .then(() => {
         initHistoryAndLocation()
       })
       .catch((err) => {
+        toast.error(err.message)
         console.error(err)
       })
   }

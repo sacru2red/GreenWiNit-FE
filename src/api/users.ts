@@ -66,6 +66,20 @@ export const usersApi = {
         'Content-Type': 'application/json',
       },
     })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => {
+        return res.json() as Promise<
+          | {
+              accessToken: string
+              memberKey: string
+              userName: string
+            }
+          | {
+              success: false
+              message: string
+            }
+        >
+      })
   },
   withdraw: async ({ reasonTypes, customReason }: WithDrawnFormState) => {
     return fetch(`${API_URL}/members/withdraw`, {
@@ -126,20 +140,14 @@ type PutUserProfileResponse = ApiResponse<{
 
 type CheckNicknameDuplicateReponse =
   | {
-      success: boolean
       message: string
       nickname: string
-      available: boolean
+      available: true
     }
   | {
-      success: false
+      nickname: string
       message: string
-      errors: [
-        {
-          fieldName: string
-          message: string
-        },
-      ]
+      available: false
     }
 
 const usersMeKey = createQueryKeys('users/me', {

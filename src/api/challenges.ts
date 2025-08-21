@@ -262,17 +262,12 @@ interface TeamCreateRequestDto {
   /**
    * '2025-08-03T18:22:28.234Z'
    */
-  beginDateTime: string
-  /**
-   * '2025-08-03T18:22:28.234Z'
-   */
-  endDateTime: string
-  maxParticipants: number
   challengeDate: string
   /** hh:mm */
   startTime: string
   /** hh:mm */
   endTime: string
+  maxParticipants: number
 }
 
 export interface TeamModifyRequestDto extends TeamCreateRequestDto {

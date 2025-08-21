@@ -1,6 +1,7 @@
 import HeaderSectionMiddle from '@/components/common/header-section-middle'
 import GoogleWideButton from '@/components/login-screen/google-wide-button'
 import KakaoWideButton from '@/components/login-screen/kakao-wide-button'
+import NaverWideButton from '@/components/login-screen/naver-wide-button'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
@@ -65,6 +66,7 @@ function Login() {
       <div className="min-short:bottom-4 short:bottom-[8vh] short:pb-0 absolute bottom-[10vh] flex w-full flex-col items-center justify-center gap-4 p-12">
         <KakaoWideButton onClick={mekeHandlerProcessLoginWithOAuth('kakao')} />
         <GoogleWideButton onClick={mekeHandlerProcessLoginWithOAuth('google')} />
+        <NaverWideButton onClick={mekeHandlerProcessLoginWithOAuth('naver')} />
         <p className="text-light-gray short:mt-0 mt-4 text-center text-sm">
           간편하게 로그인하고
           <br />

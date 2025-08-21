@@ -1,18 +1,24 @@
 import { useNavigate } from '@tanstack/react-router'
 import CategoryName from './category-name'
 
-type PostItemProps = {
+interface PostItemProps {
   id: string
   categoryName: string
   title: string
   content: string
   thumbnailUrl: string
+  onClick?: () => void
 }
 
-const PostItem = ({ id, categoryName, title, content, thumbnailUrl }: PostItemProps) => {
+const PostItem = ({ id, categoryName, title, content, thumbnailUrl, onClick }: PostItemProps) => {
   const navigate = useNavigate()
 
   const handleClickCard = () => {
+    if (onClick) {
+      onClick()
+      return
+    }
+
     navigate({
       to: '/posts/$id',
       params: { id },

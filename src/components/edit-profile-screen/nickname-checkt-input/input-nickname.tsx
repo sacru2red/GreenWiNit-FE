@@ -10,7 +10,12 @@ type InputNicknameProps = {
   setHasTriedDuplicateCheck: (isTrying: boolean) => void
 } & ComponentPropsWithRef<'input'>
 
-const InputNickname = ({ mode = 'new', setIsNicknameDuplicated, ...props }: InputNicknameProps) => {
+const InputNickname = ({
+  mode = 'new',
+  setIsNicknameDuplicated,
+  setHasTriedDuplicateCheck,
+  ...props
+}: InputNicknameProps) => {
   const id = useId()
 
   const labelContent =
@@ -26,7 +31,8 @@ const InputNickname = ({ mode = 'new', setIsNicknameDuplicated, ...props }: Inpu
   const { mutate: checkDuplicated } = useMutation({
     mutationFn: usersApi.checkNicknameDuplicate,
     onSuccess: (data) => {
-      if (data.success && data.available) {
+      setHasTriedDuplicateCheck(true)
+      if (data.available) {
         setIsNicknameDuplicated(false)
         toast.success('사용 가능한 닉네임입니다.')
       } else {

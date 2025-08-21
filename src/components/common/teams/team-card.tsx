@@ -5,23 +5,32 @@ import dayjs from '@/constant/globals'
 interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
   team: T
   onClick?: () => void
+  forceEnableButton?: boolean
 }
 
-const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: TeamCardProps<T>) => {
-  const isJoinAllowed =
-    (team.maxParticipants >= team.currentParticipants &&
-      dayjs(team.challengeDate).isSameOrAfter(today, 'D')) ||
-    ('leaderMe' in team && team.leaderMe)
-
-  console.log('team', team)
+const TeamCard = <T extends ChallengeTeamsCommonElement>({
+  team,
+  onClick,
+  forceEnableButton,
+}: TeamCardProps<T>) => {
+  const challengeDateDayjs = dayjs(team.challengeDate)
+  const startTimeDayjs = dayjs(team.startTime, 'HH:mm:ss')
+    .year(challengeDateDayjs.year())
+    .month(challengeDateDayjs.month())
+    .date(challengeDateDayjs.date())
+  const startTimeIsBeforeNow = dayjs().isBefore(startTimeDayjs)
+  const enableButton =
+    (team.maxParticipants >= team.currentParticipants && startTimeIsBeforeNow) ||
+    ('leaderMe' in team && team.leaderMe) ||
+    forceEnableButton
 
   return (
     <button
       onClick={onClick}
-      disabled={!isJoinAllowed}
+      disabled={!enableButton}
       className={cn(
         'overflow-hidden rounded-lg bg-white shadow-md',
-        !isJoinAllowed && '!cursor-not-allowed bg-[#d9d9d9]',
+        !enableButton && '!cursor-not-allowed bg-[#d9d9d9]',
       )}
     >
       <div className="flex flex-col gap-8 rounded-lg border border-gray-200 p-4">
@@ -61,6 +70,5 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({ team, onClick }: Team
     </button>
   )
 }
-const today = dayjs()
 
 export default TeamCard

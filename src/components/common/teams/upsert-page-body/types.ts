@@ -2,8 +2,8 @@ export interface FormState {
   id: number | null
   name: string
   date: Date | null
-  startAt: Date | null
-  endAt: Date | null
+  startTime: Date | null
+  endTime: Date | null
   address: {
     roadAddress: string
     roadnameCode: string
