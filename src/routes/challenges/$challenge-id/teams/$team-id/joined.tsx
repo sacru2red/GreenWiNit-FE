@@ -63,16 +63,16 @@ function ManageTeam() {
                     return
                   }
                   if (challengeDateDayjs.isSame(dayjs(), 'D')) {
-                    const challengeStartDateTime = dayjs(team.startTime, 'HH:mm:ss')
+                    const challengeEndDateTime = dayjs(team.endTime, 'HH:mm:ss')
                       .year(challengeDateDayjs.year())
                       .month(challengeDateDayjs.month())
                       .date(challengeDateDayjs.date())
-                    if (dayjs().isAfter(challengeStartDateTime)) {
+                    if (dayjs().isBefore(challengeEndDateTime)) {
                       toast.error(
-                        `팀 시간(${challengeStartDateTime.format('HH:mm')}~${dayjs(
+                        `팀 시간(${challengeEndDateTime.format('HH:mm')}~${dayjs(
                           team.endTime,
                           'HH:mm:ss',
-                        ).format('HH:mm')})이 안에서 인증을 할 수 있습니다.`,
+                        ).format('HH:mm')})이 이후부터 인증할 수 있습니다.`,
                       )
                       return
                     }
