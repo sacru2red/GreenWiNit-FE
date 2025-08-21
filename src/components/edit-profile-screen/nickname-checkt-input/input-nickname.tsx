@@ -2,6 +2,7 @@ import { usersApi } from '@/api/users'
 import Required from '@/components/common/required'
 import { ComponentPropsWithRef, useId } from 'react'
 import { toast } from 'sonner'
+import { useMutation } from '@tanstack/react-query'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
@@ -22,7 +23,23 @@ const InputNickname = ({ mode = 'new', setIsNicknameDuplicated, ...props }: Inpu
       </>
     )
 
-  const handleClick = async () => {
+  const { mutate: checkDuplicated } = useMutation({
+    mutationFn: usersApi.checkNicknameDuplicate,
+    onSuccess: (data) => {
+      if (data.success && data.available) {
+        setIsNicknameDuplicated(false)
+        toast.success('사용 가능한 닉네임입니다.')
+      } else {
+        setIsNicknameDuplicated(true)
+        toast.error('중복된 닉네임이 존재합니다.')
+      }
+    },
+    onError: () => {
+      toast.error('닉네임 중복 확인 중 오류가 발생했습니다.')
+    },
+  })
+
+  const handleClick = () => {
     const nickname = props.value as string
 
     // 1. 빈값 검사
@@ -49,15 +66,13 @@ const InputNickname = ({ mode = 'new', setIsNicknameDuplicated, ...props }: Inpu
       return
     }
 
-    const res = await usersApi.checkNicknameDuplicate(nickname)
-
-    if ('nickname' in res && res.available) {
-      setIsNicknameDuplicated(false)
-      toast.success('사용 가능한 닉네임입니다.')
-    } else {
-      setIsNicknameDuplicated(true)
-      toast.error('중복된 닉네임이 존재합니다.')
+    // 5. 한글, 영어, 숫자만 사용 검사
+    if (!/^[가-힣a-zA-Z0-9]+$/.test(nickname)) {
+      toast.error('한글, 영어, 숫자만 사용할 수 있습니다.')
+      return
     }
+
+    checkDuplicated(nickname)
   }
 
   return (

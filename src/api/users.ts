@@ -126,13 +126,20 @@ type PutUserProfileResponse = ApiResponse<{
 
 type CheckNicknameDuplicateReponse =
   | {
+      success: boolean
+      message: string
       nickname: string
       available: boolean
-      message: string
     }
   | {
-      error: string
+      success: false
       message: string
+      errors: [
+        {
+          fieldName: string
+          message: string
+        },
+      ]
     }
 
 const usersMeKey = createQueryKeys('users/me', {
