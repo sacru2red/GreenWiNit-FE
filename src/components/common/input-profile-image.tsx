@@ -1,5 +1,5 @@
 import { ComponentProps, useRef, useState } from 'react'
-import LogoIcon from '@/components/common/logo-icon'
+import LogoIcon from '@/components/common/profile-icon'
 import { cn, mergeRefs } from '@/lib/utils'
 import InputImage from './form/input-image'
 

@@ -4,7 +4,7 @@ import {
   challengesQueryKeys,
   TeamDetailResponse,
 } from '@/api/challenges'
-import LogoIcon from '../logo-icon'
+import LogoIcon from '../profile-icon'
 import { Ellipsis as MoreHorizIcon } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/popover'
 import { Separator } from '@/components/shadcn/separator'

@@ -1,6 +1,6 @@
 import { useUserStatus } from '@/hooks/use-user-status'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
-import LogoIcon from './logo-icon'
+import LogoIcon from './profile-icon'
 import { Separator } from '@/components/shadcn/separator'
 import useUserName from '@/hooks/use-user-name'
 import { authStore } from '@/store/auth-store'

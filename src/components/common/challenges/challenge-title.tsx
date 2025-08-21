@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/common/logo-icon'
+import LogoIcon from '@/components/common/profile-icon'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { ChallengeType } from '@/types/challenge'
 
