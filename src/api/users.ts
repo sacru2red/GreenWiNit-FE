@@ -66,6 +66,20 @@ export const usersApi = {
         'Content-Type': 'application/json',
       },
     })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => {
+        return res.json() as Promise<
+          | {
+              accessToken: string
+              memberKey: string
+              userName: string
+            }
+          | {
+              success: false
+              message: string
+            }
+        >
+      })
   },
   withdraw: async ({ reasonTypes, customReason }: WithDrawnFormState) => {
     return fetch(`${API_URL}/members/withdraw`, {
