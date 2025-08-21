@@ -108,6 +108,7 @@ function ProductDetail() {
             availablePoint={availablePoint}
             deductPoint={deductPoint}
             handleClick={handleExchangeButton}
+            remainingQuantity={product?.stockQuantity}
           />
           <ConfirmDialog
             isOpen={showConfirmDialog}
