@@ -57,7 +57,7 @@ export const usersApi = {
   }: {
     tempToken: string
     nickname: string
-    profileImageUrl: string
+    profileImageUrl: string | null
   }) => {
     return fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
@@ -126,13 +126,20 @@ type PutUserProfileResponse = ApiResponse<{
 
 type CheckNicknameDuplicateReponse =
   | {
+      success: boolean
+      message: string
       nickname: string
       available: boolean
-      message: string
     }
   | {
-      error: string
+      success: false
       message: string
+      errors: [
+        {
+          fieldName: string
+          message: string
+        },
+      ]
     }
 
 const usersMeKey = createQueryKeys('users/me', {

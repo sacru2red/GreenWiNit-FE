@@ -21,7 +21,10 @@ export const Route = createFileRoute('/signup')({
 })
 
 function Signup() {
+  // @TODO change to form state
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
+  // @TODO change to form state
+  const [hasTriedDuplicateCheck, setHasTriedDuplicateCheck] = useState(false)
   const search = Route.useSearch()
   const tempToken = search?.tempToken
 
@@ -42,7 +45,15 @@ function Signup() {
       return
     }
 
-    if (!isNicknameDuplicated) {
+    if (isNicknameDuplicated) {
+      // diabled로 설정되어 form 제출 불가능
+      toast.error(
+        '(정상적인 접근이 아닙니다.) 닉네임이 중복되었습니다. 새 닉네임을 입력하고 중복확인해보세요.',
+      )
+      return
+    }
+
+    if (hasTriedDuplicateCheck) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
@@ -51,7 +62,7 @@ function Signup() {
       .signup({
         tempToken,
         nickname: data.nickname,
-        profileImageUrl: data.profileImage ?? 'https://www.greenwinit.store/img/logo-icon.png',
+        profileImageUrl: data.profileImage,
       })
       .then(() => {
         initHistoryAndLocation()
@@ -90,16 +101,18 @@ function Signup() {
                   value={field.value ?? ''}
                   onChange={(e) => {
                     field.onChange(e)
-                    setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                    // 입력 바뀌면 중복확인 다시 하도록 유도
+                    setHasTriedDuplicateCheck(false)
                   }}
                   setIsNicknameDuplicated={setIsNicknameDuplicated}
+                  setHasTriedDuplicateCheck={setHasTriedDuplicateCheck}
                 />
               )}
-            ></Controller>
+            />
             <Button
               type="submit"
               className="mt-auto"
-              variant={isNicknameDuplicated ? 'disabled' : null}
+              variant={!hasTriedDuplicateCheck || isNicknameDuplicated ? 'disabled' : undefined}
             >
               제출
             </Button>

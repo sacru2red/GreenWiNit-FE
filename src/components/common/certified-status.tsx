@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { CertificationStatus } from '@/types/certification'
 
-const statusBadge = cva('text-center w-fit rounded-sm', {
+const certifiedStatusVariants = cva('text-center w-fit rounded-sm', {
   variants: {
     tone: {
       paid: 'text-mountain_meadow bg-[#E1F8F1]',
@@ -21,7 +21,7 @@ const statusBadge = cva('text-center w-fit rounded-sm', {
 
 interface CertifiedStatusProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof statusBadge> {
+    VariantProps<typeof certifiedStatusVariants> {
   status: CertificationStatus
 }
 
@@ -32,7 +32,10 @@ const statusToTone: Record<CertificationStatus, 'paid' | 'unpaid'> = {
 
 function CertifiedStatus({ status, className, ...props }: CertifiedStatusProps) {
   return (
-    <span className={cn(statusBadge({ tone: statusToTone[status] }), className)} {...props}>
+    <span
+      className={cn(certifiedStatusVariants({ tone: statusToTone[status] }), className)}
+      {...props}
+    >
       {status}
     </span>
   )

@@ -18,6 +18,7 @@ export interface FormState {
 function EditProfileForm() {
   const [pendingData, setPendingData] = useState<FormState | null>(null)
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false)
+  const [hasTriedDuplicateCheck, setHasTriedDuplicateCheck] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const { data: me } = useUserMe({ refetchOnWindowFocus: false, refetchOnMount: false })
   const userNickname = me?.result?.nickname ?? null
@@ -28,7 +29,7 @@ function EditProfileForm() {
       profileImage: null,
     },
   })
-  const isNicknameValid = formState.dirtyFields.nickname && isNicknameDuplicated
+  const isNicknameValid = hasTriedDuplicateCheck && !isNicknameDuplicated
   const isImageValid = formState.dirtyFields.profileImage
 
   useEffect(() => {
@@ -46,7 +47,15 @@ function EditProfileForm() {
       return
     }
 
-    if (formState.dirtyFields.nickname && !isNicknameDuplicated) {
+    if (isNicknameDuplicated) {
+      // diabled로 설정되어 form 제출 불가능
+      toast.error(
+        '(정상적인 접근이 아닙니다.) 닉네임이 중복되었습니다. 새 닉네임을 입력하고 중복확인해보세요.',
+      )
+      return
+    }
+
+    if (hasTriedDuplicateCheck) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
@@ -107,9 +116,11 @@ function EditProfileForm() {
                   value={field.value ?? ''}
                   onChange={(e) => {
                     field.onChange(e)
-                    setIsNicknameDuplicated(false) // 입력 바뀌면 중복확인 다시 하도록 유도
+                    // 입력 바뀌면 중복확인 다시 하도록 유도
+                    setHasTriedDuplicateCheck(false)
                   }}
                   setIsNicknameDuplicated={setIsNicknameDuplicated}
+                  setHasTriedDuplicateCheck={setHasTriedDuplicateCheck}
                 />
               )}
             ></Controller>

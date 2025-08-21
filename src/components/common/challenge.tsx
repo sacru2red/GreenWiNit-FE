@@ -26,7 +26,7 @@ const Challenge = ({ challenge, onClick, className }: ChallengeProps) => {
       'certifiedDate' in challenge
         ? dayjs(challenge.certifiedDate).format('YY.MM.DD')
         : `${challenge.currentParticipant}명 / ${dayjs(challenge.beginDate).format('YY.MM.DD')} ~ ${dayjs(challenge.endDate).format('MM.DD')}`,
-    certifiedStatus: 'certifiedDate' in challenge ? challenge.certificationStatus : undefined,
+    certifiedStatus: 'certifiedDate' in challenge ? challenge.certificationStatus : null,
   }
 
   return (
