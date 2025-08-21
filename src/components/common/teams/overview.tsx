@@ -19,6 +19,8 @@ import {
   DialogHeader,
 } from '@/components/common/modal/dialog'
 import { Button } from '@/components/common/button'
+import dayjs from '@/constant/globals'
+import { toast } from 'sonner'
 
 interface OverviewProps {
   team: TeamDetailResponse
@@ -73,7 +75,19 @@ const Overview = ({ team, allowManage = false, challengeId }: OverviewProps) => 
               <Separator orientation="horizontal" />
               <button
                 className="px-4 py-1 text-sm focus-visible:outline-0"
-                onClick={() => setShowConfirmDeletingDialog(true)}
+                onClick={() => {
+                  const challengeDateDayjs = dayjs(team.challengeDate)
+                  const startDateTime = dayjs(team.startTime, 'HH:mm:ss')
+                    .year(challengeDateDayjs.year())
+                    .month(challengeDateDayjs.month())
+                    .date(challengeDateDayjs.date())
+
+                  if (dayjs().isAfter(startDateTime)) {
+                    toast.error(`활동 시작시간 이후 팀을 삭제할 수 없습니다.`)
+                    return
+                  }
+                  setShowConfirmDeletingDialog(true)
+                }}
               >
                 삭제하기
               </button>
