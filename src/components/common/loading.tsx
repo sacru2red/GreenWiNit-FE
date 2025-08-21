@@ -21,7 +21,7 @@ const GradientSpinner = ({ className, size = 'md' }: SpinnerProps) => {
 
 function Loading({ className = '', size = 'md' }: SpinnerProps) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4">
+    <div className="cn-loading flex h-full w-full flex-col items-center justify-center gap-4 p-4">
       <GradientSpinner className={className} size={size} />
       <p className="font-bold">로딩 중...</p>
     </div>
