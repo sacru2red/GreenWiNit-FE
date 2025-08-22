@@ -8,6 +8,7 @@ import { initHistoryAndLocation } from './lib/utils.ts'
 import { routeTree } from './routeTree.gen'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
+import { authApi } from './api/auth.ts'
 
 // Create a new router instance
 const router = createRouter({
@@ -33,9 +34,55 @@ if (!rootElement.innerHTML) {
   )
 }
 
+let isRefreshing = false
+function parseJwt(token: string) {
+  const base64Url = token.split('.')[1]
+  if (!base64Url) {
+    return null
+  }
+
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  const jsonPayload = decodeURIComponent(
+    window
+      .atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      })
+      .join(''),
+  )
+
+  try {
+    return JSON.parse(jsonPayload)
+  } catch (_e) {
+    return null
+  }
+}
+
 fetchIntercept.register({
   request: function (url: string, config: RequestInit) {
     const accessToken = authStore.getState().accessToken
+    if (accessToken) {
+      const jwt = parseJwt(accessToken)
+      if (jwt && typeof jwt === 'object') {
+        const expSeconds = Number(jwt.exp)
+        const expMillis = expSeconds * 1000
+        const remainTimeMillis = expMillis - Date.now()
+        const remainTimeSeconds = remainTimeMillis / 1000
+
+        // 2분 미만으로 남았을 때 refresh 시도
+        if (remainTimeSeconds < 60 * 2 && !isRefreshing) {
+          isRefreshing = true
+          void authApi.refreshAccessToken().then((res) => {
+            if (res.success) {
+              authStore.getState().setAccessToken(res.result.accessToken)
+              isRefreshing = false
+            }
+          })
+        }
+      }
+    }
+
     if (url.startsWith(API_URL) && accessToken) {
       const nextConfig = {
         ...config,
