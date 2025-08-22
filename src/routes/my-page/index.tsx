@@ -59,7 +59,9 @@ function MyPage() {
         {
           title: '로그아웃',
           action: async () => {
-            await usersApi.logout()
+            if (authStore.getState().accessToken) {
+              await usersApi.logout()
+            }
             authStore.getState().initAccessToken()
             queryClient.clear()
             initHistoryAndLocation()
