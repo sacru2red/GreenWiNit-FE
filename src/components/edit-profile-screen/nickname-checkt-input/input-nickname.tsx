@@ -61,8 +61,8 @@ const InputNickname = ({
     }
 
     // 3. 길이 제한 검사
-    if (nickname.length > 20) {
-      toast.error('닉네임은 20자 이내로 입력해주세요.')
+    if (nickname.length < 2 || nickname.length > 20) {
+      toast.error('닉네임은 2~20자 이내로 입력해주세요.')
       return
     }
 
@@ -94,6 +94,12 @@ const InputNickname = ({
           type="text"
           placeholder="새 닉네임을 입력해주세요."
           className="flex-1 px-3 py-4 text-sm focus:outline-none"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              handleClick()
+            }
+          }}
           {...props}
         />
         <button
