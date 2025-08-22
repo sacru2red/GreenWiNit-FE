@@ -45,44 +45,46 @@ function ManageTeam() {
           <PageTitle>팀 정보</PageTitle>
         </PageLayOut.HeaderSection>
         <PageLayOut.BodySection bg="form" padding="zero" className="m-0">
-          {/* @TODO apply https://github.com/GreenWiNit/backend/issues/274 */}
           <Overview team={team} allowManage challengeId={challengeId} />
           <div className="flex flex-1 flex-col gap-4 p-4">
             <MemberCount team={team} />
             <Description team={team} />
             <PropertyList team={team} />
             <div className="mt-auto flex w-full">
-              <Button
-                size="flex"
-                onClick={() => {
-                  const challengeDateDayjs = dayjs(team.challengeDate)
-                  if (challengeDateDayjs.isAfter(dayjs())) {
-                    toast.error(
-                      `팀 챌린지 날짜(${challengeDateDayjs.format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
-                    )
-                    return
-                  }
-                  if (challengeDateDayjs.isSame(dayjs(), 'D')) {
-                    const challengeEndDateTime = dayjs(team.endTime, 'HH:mm:ss')
-                      .year(challengeDateDayjs.year())
-                      .month(challengeDateDayjs.month())
-                      .date(challengeDateDayjs.date())
-                    console.log(
-                      'challengeEndDateTime',
-                      challengeEndDateTime.format('YYYY-MM-DD HH:mm'),
-                    )
-                    if (dayjs().isBefore(challengeEndDateTime)) {
+              {team.certified ? (
+                <Button size="flex" variant="disabled">
+                  인증완료
+                </Button>
+              ) : (
+                <Button
+                  size="flex"
+                  onClick={() => {
+                    const challengeDateDayjs = dayjs(team.challengeDate)
+                    if (challengeDateDayjs.isAfter(dayjs())) {
                       toast.error(
-                        `팀 활동 종료시간(${challengeEndDateTime.format('HH:mm')}) 이후부터 인증할 수 있습니다.`,
+                        `팀 챌린지 날짜(${challengeDateDayjs.format('YYYY-MM-DD')})부터 인증할 수 있습니다.`,
                       )
                       return
                     }
-                  }
-                  navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
-                }}
-              >
-                챌린지 인증하기
-              </Button>
+                    if (challengeDateDayjs.isSame(dayjs(), 'D')) {
+                      const challengeEndDateTime = dayjs(team.endTime, 'HH:mm:ss')
+                        .year(challengeDateDayjs.year())
+                        .month(challengeDateDayjs.month())
+                        .date(challengeDateDayjs.date())
+
+                      if (dayjs().isBefore(challengeEndDateTime)) {
+                        toast.error(
+                          `팀 활동 종료시간(${challengeEndDateTime.format('HH:mm')}) 이후부터 인증할 수 있습니다.`,
+                        )
+                        return
+                      }
+                    }
+                    navigate({ to: `/challenges/${challengeId}/submit/team/${teamId}` })
+                  }}
+                >
+                  챌린지 인증하기
+                </Button>
+              )}
             </div>
           </div>
         </PageLayOut.BodySection>

@@ -74,7 +74,9 @@ export const challengesApi = {
       `${API_URL}/challenges/${challengeId}/groups/me?${stringify({ cursor, pageSize })}`,
     )
     return response.json() as Promise<
-      CursorPaginatedResponse<ChallengeTeamsCommonElement & { leaderMe: boolean }>
+      CursorPaginatedResponse<
+        ChallengeTeamsCommonElement & { leaderMe: boolean; certified: boolean }
+      >
     >
   },
   joinTeam: async (_challengeId: number, teamId: number) => {
@@ -290,6 +292,7 @@ export interface TeamDetailResponse {
   openChatUrl: string
   participating: boolean
   leaderMe: boolean
+  certified: boolean
 }
 
 export interface GetCertifiedChallengesMineElement {
