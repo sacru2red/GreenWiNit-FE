@@ -6,6 +6,7 @@ import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { authStore } from '@/store/auth-store'
 import { useNavigate } from '@tanstack/react-router'
 import { createFileRoute } from '@tanstack/react-router'
+import { queryClient } from '@/constant/globals'
 
 export const Route = createFileRoute('/my-page/')({
   component: MyPage,
@@ -60,6 +61,7 @@ function MyPage() {
           action: async () => {
             await usersApi.logout()
             authStore.getState().initAccessToken()
+            queryClient.clear()
             initHistoryAndLocation()
           },
         },
