@@ -5,6 +5,7 @@ import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { throwResponseStatusThenChaining } from '@/lib/network'
+import { showMessageIfExists } from '@/lib/error'
 
 export const usersApi = {
   getUserStatus: async () => {
@@ -91,6 +92,7 @@ export const usersApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<PostWithdrawResponse>)
+      .catch(showMessageIfExists)
   },
   getUserMe: async () => {
     const response = await fetch(`${API_URL}/members/me`)

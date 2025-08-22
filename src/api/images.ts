@@ -1,4 +1,6 @@
 import { API_URL } from '@/constant/network'
+import { showMessageIfExists } from '@/lib/error'
+import { throwResponseStatusThenChaining } from '@/lib/network'
 import { ApiResponse } from '@/types/api'
 
 export const imagesApi = {
@@ -8,10 +10,12 @@ export const imagesApi = {
   ) => {
     const formData = new FormData()
     formData.append('imageFile', file)
-    const response = await fetch(`${API_URL}/images?purpose=${purpose}`, {
+    return fetch(`${API_URL}/images?purpose=${purpose}`, {
       method: 'POST',
       body: formData,
     })
-    return response.json() as Promise<ApiResponse>
+      .then(throwResponseStatusThenChaining)
+      .then((res) => res.json() as Promise<ApiResponse>)
+      .catch(showMessageIfExists)
   },
 }

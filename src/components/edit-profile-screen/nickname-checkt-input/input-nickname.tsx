@@ -3,6 +3,7 @@ import Required from '@/components/common/required'
 import { ComponentPropsWithRef, useId } from 'react'
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
+import { showMessageIfExists } from '@/lib/error'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
@@ -40,8 +41,8 @@ const InputNickname = ({
         toast.error('중복된 닉네임이 존재합니다.')
       }
     },
-    onError: () => {
-      toast.error('닉네임 중복 확인 중 오류가 발생했습니다.')
+    onError: (error) => {
+      showMessageIfExists(error)
     },
   })
 
