@@ -131,24 +131,18 @@ type GetMyPointsHistoryResponse = ApiResponse<{
   content: PointHistory[]
 }>
 
-type PostWithdrawResponse = ApiResponse<undefined>
+type PostWithdrawResponse = ApiResponse<null>
 
 type PutUserProfileResponse = ApiResponse<{
   nickname: string
   profileImageUrl: string
 }>
 
-type CheckNicknameDuplicateReponse =
-  | {
-      message: string
-      nickname: string
-      available: true
-    }
-  | {
-      nickname: string
-      message: string
-      available: false
-    }
+type CheckNicknameDuplicateReponse = ApiResponse<{
+  nickname: string
+  available: true
+  message: '사용 가능한 닉네임입니다.'
+}>
 
 const usersMeKey = createQueryKeys('users/me', {
   member: ['member'],

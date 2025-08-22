@@ -32,7 +32,7 @@ const InputNickname = ({
     mutationFn: usersApi.checkNicknameDuplicate,
     onSuccess: (data) => {
       setHasTriedDuplicateCheck(true)
-      if (data.available) {
+      if (data.result?.available) {
         setIsNicknameDuplicated(false)
         toast.success('사용 가능한 닉네임입니다.')
       } else {
