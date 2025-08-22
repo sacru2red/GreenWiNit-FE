@@ -52,6 +52,7 @@ function Posts() {
                   onClick={() => {
                     if (!isLoggedIn) {
                       setIsModalOpen(true)
+                      return
                     }
                     navigate({
                       to: '/posts/$id',

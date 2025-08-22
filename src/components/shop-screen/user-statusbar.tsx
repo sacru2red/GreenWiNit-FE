@@ -1,11 +1,11 @@
 import { useNavigate } from '@tanstack/react-router'
 
 interface UserStatusbarProps {
-  point: number
+  accumulatedPoint: number
   availablePoint: number
 }
 
-const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
+const UserStatusbar = ({ accumulatedPoint, availablePoint }: UserStatusbarProps) => {
   const navigate = useNavigate()
 
   const handleButtonClick = () => {
@@ -17,7 +17,7 @@ const UserStatusbar = ({ point, availablePoint }: UserStatusbarProps) => {
       <div className="flex w-full items-center justify-between px-4 pt-4">
         <div className="flex flex-col items-baseline">
           <p className="mb-1 text-xs text-gray-500">총 누적 포인트</p>
-          <p className="text-2xl font-semibold text-black">{point}</p>
+          <p className="text-2xl font-semibold text-black">{accumulatedPoint}</p>
         </div>
         <button
           className="text-md rounded-lg bg-[#E8F5E9] px-4 py-2 text-green-700 md:text-base"
