@@ -36,7 +36,7 @@ export const usersApi = {
       .then((res) => res.json() as Promise<PutUserProfileResponse>)
   },
   checkNicknameDuplicate: async (nickname: string) => {
-    return await fetch(`${API_URL}/members/nickname-check`, {
+    return await fetch(`${API_URL}/members/v2/nickname-check`, {
       method: 'POST',
       body: JSON.stringify({ nickname }),
       headers: {
@@ -47,9 +47,13 @@ export const usersApi = {
       .then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
   },
   logout: async () => {
-    return fetch(`${API_URL}/auth/logout`, {
+    return fetch(`${API_URL}/auth/v2/logout`, {
       method: 'POST',
     })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => {
+        return res.json() as Promise<ApiResponse<null>>
+      })
   },
   signup: async ({
     tempToken,
@@ -60,7 +64,7 @@ export const usersApi = {
     nickname: string
     profileImageUrl: string | null
   }) => {
-    return fetch(`${API_URL}/auth/signup`, {
+    return fetch(`${API_URL}/auth/v2/signup`, {
       method: 'POST',
       body: JSON.stringify({ tempToken, nickname, profileImageUrl }),
       headers: {
@@ -70,20 +74,16 @@ export const usersApi = {
       .then(throwResponseStatusThenChaining)
       .then((res) => {
         return res.json() as Promise<
-          | {
-              accessToken: string
-              memberKey: string
-              userName: string
-            }
-          | {
-              success: false
-              message: string
-            }
+          ApiResponse<{
+            accessToken: string
+            memberKey: string
+            userName: string
+          }>
         >
       })
   },
   withdraw: async ({ reasonTypes, customReason }: WithDrawnFormState) => {
-    return fetch(`${API_URL}/members/withdraw`, {
+    return fetch(`${API_URL}/members/v2/withdraw`, {
       method: 'POST',
       body: JSON.stringify({ reasonTypes, customReason }),
       headers: {
