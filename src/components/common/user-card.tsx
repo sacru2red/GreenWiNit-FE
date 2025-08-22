@@ -1,12 +1,12 @@
 import { useUserStatus } from '@/hooks/use-user-status'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
-import ProfileIcon from '@/components/common/profile-icon'
 import { Separator } from '@/components/shadcn/separator'
 import useUserName from '@/hooks/use-user-name'
 import { authStore } from '@/store/auth-store'
 import useUserEmail from '@/hooks/use-user-email'
 import useUserProfileImageUrl from '@/hooks/use-user-profile-image-url'
 import ProfileImage from '@/components/common/profile-image'
+import ImageIcon from '@/components/common/image-icon'
 
 const UserCard = () => {
   const navigate = useNavigate()
@@ -48,7 +48,7 @@ const UserCard = () => {
         {userProfileImageUrl ? (
           <ProfileImage imageUrl={userProfileImageUrl} />
         ) : (
-          <ProfileIcon size="large" />
+          <ImageIcon size="large" type="profile" />
         )}
         {!userName ? (
           <button onClick={handleLoginClick} className="text-start text-lg font-bold">

@@ -1,4 +1,4 @@
-import ProfileIcon from '@/components/common/profile-icon'
+import ImageIcon from '@/components/common/image-icon'
 import useChallenge from '@/hooks/challenge/use-challenge'
 import { ChallengeType } from '@/types/challenge'
 
@@ -12,7 +12,7 @@ const ChallengeTitle = ({ challengeId, challengeType }: ChallengeTitleProps) => 
 
   return (
     <div className="flex flex-row items-center justify-start gap-1.5">
-      <ProfileIcon size="small" className="border-none bg-transparent" />
+      <ImageIcon size="small" className="border-none bg-transparent" type="logo" />
       <h2 className="truncate text-xl font-bold">{challenge?.challengeName}</h2>
     </div>
   )

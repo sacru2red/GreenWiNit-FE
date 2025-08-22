@@ -1,4 +1,4 @@
-import LogoAndName from '@/components/my-page-screen/logo-and-name'
+import ProfileAndName from '@/components/my-page-screen/logo-and-name'
 import PointHistoryContainer from '@/components/my-page-screen/point-history-container'
 import PointOverview from '@/components/my-page-screen/point-overview'
 import useUserName from '@/hooks/use-user-name'
@@ -20,7 +20,7 @@ function MyPoints() {
 
   return (
     <MyPageLayout title="포인트 현황" background="green" className="p-0">
-      <LogoAndName name={userName ?? '이름없음'} />
+      <ProfileAndName name={userName ?? '이름없음'} />
       <PointOverview points={points} />
       <PointHistoryContainer />
     </MyPageLayout>
