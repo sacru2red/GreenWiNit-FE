@@ -1,11 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { usersApi } from '@/api/users'
 import AppTitle from '@/components/common/app-title'
 import InputProfileImage from '@/components/common/input-profile-image'
 import PageLayOut from '@/components/common/page-layout'
 import InputNickname from '@/components/edit-profile-screen/nickname-checkt-input/input-nickname'
 import { Button } from '@/components/common/button'
-import { initHistoryAndLocation } from '@/lib/utils'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -30,6 +29,7 @@ function Signup() {
   const search = Route.useSearch()
   const tempToken = search?.tempToken
   const setAccessToken = authStore((s) => s.setAccessToken)
+  const navigate = useNavigate()
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')
@@ -42,7 +42,7 @@ function Signup() {
     },
   })
 
-  const onSubmit: SubmitHandler<FormState> = (data) => {
+  const onSubmit: SubmitHandler<FormState> = async (data) => {
     if (!data.nickname) {
       toast.error('닉네임을 입력해주세요.')
       return
@@ -61,7 +61,7 @@ function Signup() {
       return
     }
 
-    usersApi
+    await usersApi
       .signup({
         tempToken,
         nickname: data.nickname,
@@ -75,7 +75,7 @@ function Signup() {
         }
       })
       .then(() => {
-        initHistoryAndLocation()
+        navigate({ to: '/' })
       })
       .catch((err) => {
         showMessageIfExists(err)

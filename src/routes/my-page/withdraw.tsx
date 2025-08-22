@@ -7,10 +7,9 @@ import ConfirmDialog from '@/components/common/modal/confirm-dialog'
 import { useRef, useState } from 'react'
 import ResultNoticeDialog from '@/components/common/modal/notice-dialog'
 import { usersApi } from '@/api/users'
-import { initHistoryAndLocation } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Button } from '@/components/common/button'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { WithDrawnFormState } from '@/types/withdraw'
 import { useMutation } from '@tanstack/react-query'
 import { showMessageIfExists } from '@/lib/error'
@@ -24,6 +23,7 @@ function WithDraw() {
   const [showNoticeModal, setShowNoticeModal] = useState(false)
   const [cautionIsChecked, setCautionIsChecked] = useState(false)
   const dataRef = useRef<WithDrawnFormState | null>(null)
+  const navigate = useNavigate()
 
   const { register, handleSubmit } = useForm<WithDrawnFormState>()
 
@@ -91,7 +91,7 @@ function WithDraw() {
           setIsOpen={setShowNoticeModal}
           description={`회원 탈퇴가\n정상적으로 완료되었습니다.`}
           onConfirm={() => {
-            initHistoryAndLocation()
+            navigate({ to: '/' })
             setShowNoticeModal(false)
           }}
         />
