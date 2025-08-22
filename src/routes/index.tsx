@@ -14,15 +14,19 @@ type HomeSearch =
   | undefined
   | {
       accessToken?: string | undefined
+      refreshToken?: string | undefined
     }
 
 export const Route = createFileRoute('/')({
   component: Home,
   validateSearch: (search: Record<string, unknown>): HomeSearch => {
-    if (typeof search['accessToken'] === 'string') {
-      return { accessToken: search['accessToken'] }
-    }
-    return undefined
+    const refreshToken =
+      typeof search['refreshToken'] === 'string' ? search['refreshToken'] : undefined
+
+    const accessToken =
+      typeof search['accessToken'] === 'string' ? search['accessToken'] : undefined
+
+    return { accessToken, refreshToken }
   },
 })
 
@@ -45,13 +49,17 @@ function Home() {
   useEffect(() => {
     // URL에서 accessToken 쿼리 파라미터 확인
     const accessToken = search?.accessToken
+    const refreshToken = search?.refreshToken
 
     if (accessToken) {
       setAccessToken(accessToken)
       // 쿼리 파라미터 제거
       navigate({ to: '/' })
     }
-  }, [setAccessToken, navigate, search?.accessToken])
+    if (refreshToken) {
+      document.cookie = `TokenManager=${refreshToken}; path=/;`
+    }
+  }, [setAccessToken, navigate, search?.accessToken, search?.refreshToken])
 
   return (
     <PageLayOut.Container>

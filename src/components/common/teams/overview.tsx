@@ -19,7 +19,7 @@ import {
   DialogHeader,
 } from '@/components/common/modal/dialog'
 import { Button } from '@/components/common/button'
-import dayjs from '@/constant/globals'
+import { dayjs } from '@/constant/globals'
 import { toast } from 'sonner'
 
 interface OverviewProps {

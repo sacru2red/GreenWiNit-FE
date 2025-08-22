@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { authStore } from '@/store/auth-store'
+import { showMessageIfExists } from '@/lib/error'
 
 export const Route = createFileRoute('/signup')({
   component: Signup,
@@ -29,7 +30,6 @@ function Signup() {
   const search = Route.useSearch()
   const tempToken = search?.tempToken
   const setAccessToken = authStore((s) => s.setAccessToken)
-  const initAccessToken = authStore((s) => s.initAccessToken)
 
   if (!tempToken) {
     throw new Error('Invalid tempToken')
@@ -74,15 +74,11 @@ function Signup() {
           throw new Error(res.message)
         }
       })
-      .catch((err) => {
-        initAccessToken()
-        throw err
-      })
       .then(() => {
         initHistoryAndLocation()
       })
       .catch((err) => {
-        toast.error(err.message)
+        showMessageIfExists(err)
         console.error(err)
       })
   }
