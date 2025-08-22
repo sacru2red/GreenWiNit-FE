@@ -5,6 +5,7 @@ import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { throwResponseStatusThenChaining } from '@/lib/network'
+import { showMessageIfExists } from '@/lib/error'
 
 export const usersApi = {
   getUserStatus: async () => {
@@ -91,6 +92,7 @@ export const usersApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<PostWithdrawResponse>)
+      .catch(showMessageIfExists)
   },
   getUserMe: async () => {
     const response = await fetch(`${API_URL}/members/me`)
@@ -131,24 +133,18 @@ type GetMyPointsHistoryResponse = ApiResponse<{
   content: PointHistory[]
 }>
 
-type PostWithdrawResponse = ApiResponse<undefined>
+type PostWithdrawResponse = ApiResponse<null>
 
 type PutUserProfileResponse = ApiResponse<{
   nickname: string
   profileImageUrl: string
 }>
 
-type CheckNicknameDuplicateReponse =
-  | {
-      message: string
-      nickname: string
-      available: true
-    }
-  | {
-      nickname: string
-      message: string
-      available: false
-    }
+type CheckNicknameDuplicateReponse = ApiResponse<{
+  nickname: string
+  available: true
+  message: '사용 가능한 닉네임입니다.'
+}>
 
 const usersMeKey = createQueryKeys('users/me', {
   member: ['member'],

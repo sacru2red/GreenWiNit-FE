@@ -24,6 +24,7 @@ function InputImage({
       onChangePreview?.(processingObjectURL)
       imagesApi.uploadImage(purpose, file).then((res) => {
         URL.revokeObjectURL(processingObjectURL)
+        if (!res) return // void 방어
         if (!res.success) {
           toast.error(res.message)
           return
