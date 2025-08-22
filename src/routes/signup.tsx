@@ -68,7 +68,7 @@ function Signup() {
         profileImageUrl: data.profileImage,
       })
       .then((res) => {
-        if ('accessToken' in res) {
+        if ('accessToken' in res && typeof res.accessToken === 'string') {
           setAccessToken(res.accessToken)
         } else {
           throw new Error(res.message)
