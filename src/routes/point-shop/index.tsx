@@ -22,7 +22,10 @@ function PointShop() {
           <PageTitle>포인트상점</PageTitle>
         </PageLayOut.HeaderSection>
         <PageLayOut.BodySection className="p-0">
-          <UserStatusbar accumulatedPoint={totalEarnedPoints} availablePoint={currentPoints} />
+          <UserStatusbar
+            accumulatedPoint={totalEarnedPoints ?? 0}
+            availablePoint={currentPoints ?? 0}
+          />
           <ProductList />
         </PageLayOut.BodySection>
       </PageLayOut.ScrollableContent>

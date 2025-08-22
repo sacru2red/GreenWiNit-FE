@@ -8,7 +8,7 @@ import PageLayOut from '@/components/common/page-layout'
 import PageTitle from '@/components/common/page-title'
 import { CircleAlert } from 'lucide-react'
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
-import WarnNotLoggedIn from '@/components/home-screen/warn-not-logged-in'
+import WarnNotLoggedIn from '@/components/common/warn-not-logged-in'
 import Loading from '@/components/common/loading'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
@@ -23,7 +23,7 @@ function Posts() {
   const isLoggedIn = useIsLoggedIn()
   const { isLoading, data: posts } = usePostsArrayOnly()
   const [activeTab, setActiveTab] = useState<TabType>('전체')
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
   const navigate = useNavigate()
 
   const filteredPosts =
@@ -51,7 +51,7 @@ function Posts() {
                   thumbnailUrl={item.imageurl}
                   onClick={() => {
                     if (!isLoggedIn) {
-                      setIsModalOpen(true)
+                      setIsWarnNotLoggedInDialogOpen(true)
                       return
                     }
                     navigate({
@@ -74,11 +74,9 @@ function Posts() {
         <BottomNavigation />
       </PageLayOut.FooterSection>
       <WarnNotLoggedIn
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        message={`로그인 후,\n정보공유를 확인할 수 있어요.`}
-        infoMessageAfterRedirecting="정보공유를 확인하기위해 로그인 해주세요."
-        backButtonAction="close"
+        isOpen={isWarnNotLoggedInDialogOpen}
+        onOpenChange={setIsWarnNotLoggedInDialogOpen}
+        content="정보공유"
       />
     </PageLayOut.Container>
   )

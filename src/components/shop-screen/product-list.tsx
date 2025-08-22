@@ -2,11 +2,20 @@ import useProducts from '@/hooks/product/use-products'
 import { CircleAlert } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import Loading from '../common/loading'
+import useIsLoggedIn from '@/hooks/use-is-logged-in'
+import { useState } from 'react'
+import WarnNotLoggedIn from '../common/warn-not-logged-in'
 
 const ProductList = () => {
   const navigate = useNavigate()
+  const isLoggedIn = useIsLoggedIn()
+  const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState(false)
 
   const handleProductClick = (productId: number) => {
+    if (!isLoggedIn) {
+      setIsWarnNotLoggedInDialogOpen(true)
+      return
+    }
     navigate({ to: `/point-shop/products/${productId}/detail` })
   }
 
@@ -49,6 +58,11 @@ const ProductList = () => {
           </div>
         )
       })}
+      <WarnNotLoggedIn
+        isOpen={isWarnNotLoggedInDialogOpen}
+        onOpenChange={setIsWarnNotLoggedInDialogOpen}
+        content="포인트 상점"
+      />
     </div>
   )
 }
