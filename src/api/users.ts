@@ -5,6 +5,7 @@ import { ApiResponse } from '@/types/api'
 import { PointFilterType, PointHistory } from '@/types/points'
 import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 import { throwResponseStatusThenChaining } from '@/lib/network'
+import { showMessageIfExists } from '@/lib/error'
 
 export const usersApi = {
   getUserStatus: async () => {
@@ -35,7 +36,7 @@ export const usersApi = {
       .then((res) => res.json() as Promise<PutUserProfileResponse>)
   },
   checkNicknameDuplicate: async (nickname: string) => {
-    return await fetch(`${API_URL}/members/nickname-check`, {
+    return await fetch(`${API_URL}/members/v2/nickname-check`, {
       method: 'POST',
       body: JSON.stringify({ nickname }),
       headers: {
@@ -46,9 +47,13 @@ export const usersApi = {
       .then((res) => res.json() as Promise<CheckNicknameDuplicateReponse>)
   },
   logout: async () => {
-    return fetch(`${API_URL}/auth/logout`, {
+    return fetch(`${API_URL}/auth/v2/logout`, {
       method: 'POST',
     })
+      .then(throwResponseStatusThenChaining)
+      .then((res) => {
+        return res.json() as Promise<ApiResponse<null>>
+      })
   },
   signup: async ({
     tempToken,
@@ -59,7 +64,7 @@ export const usersApi = {
     nickname: string
     profileImageUrl: string | null
   }) => {
-    return fetch(`${API_URL}/auth/signup`, {
+    return fetch(`${API_URL}/auth/v2/signup`, {
       method: 'POST',
       body: JSON.stringify({ tempToken, nickname, profileImageUrl }),
       headers: {
@@ -69,20 +74,16 @@ export const usersApi = {
       .then(throwResponseStatusThenChaining)
       .then((res) => {
         return res.json() as Promise<
-          | {
-              accessToken: string
-              memberKey: string
-              userName: string
-            }
-          | {
-              success: false
-              message: string
-            }
+          ApiResponse<{
+            accessToken: string
+            memberKey: string
+            userName: string
+          }>
         >
       })
   },
   withdraw: async ({ reasonTypes, customReason }: WithDrawnFormState) => {
-    return fetch(`${API_URL}/members/withdraw`, {
+    return fetch(`${API_URL}/members/v2/withdraw`, {
       method: 'POST',
       body: JSON.stringify({ reasonTypes, customReason }),
       headers: {
@@ -91,6 +92,7 @@ export const usersApi = {
     })
       .then(throwResponseStatusThenChaining)
       .then((res) => res.json() as Promise<PostWithdrawResponse>)
+      .catch(showMessageIfExists)
   },
   getUserMe: async () => {
     const response = await fetch(`${API_URL}/members/me`)
@@ -131,24 +133,18 @@ type GetMyPointsHistoryResponse = ApiResponse<{
   content: PointHistory[]
 }>
 
-type PostWithdrawResponse = ApiResponse<undefined>
+type PostWithdrawResponse = ApiResponse<null>
 
 type PutUserProfileResponse = ApiResponse<{
   nickname: string
   profileImageUrl: string
 }>
 
-type CheckNicknameDuplicateReponse =
-  | {
-      message: string
-      nickname: string
-      available: true
-    }
-  | {
-      nickname: string
-      message: string
-      available: false
-    }
+type CheckNicknameDuplicateReponse = ApiResponse<{
+  nickname: string
+  available: true
+  message: '사용 가능한 닉네임입니다.'
+}>
 
 const usersMeKey = createQueryKeys('users/me', {
   member: ['member'],

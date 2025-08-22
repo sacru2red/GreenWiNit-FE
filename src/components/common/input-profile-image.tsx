@@ -1,7 +1,7 @@
 import { ComponentProps, useRef, useState } from 'react'
-import LogoIcon from '@/components/common/logo-icon'
 import { cn, mergeRefs } from '@/lib/utils'
 import InputImage from './form/input-image'
+import ImageIcon from '@/components/common/image-icon'
 
 interface InputProfileImageProps
   extends Omit<ComponentProps<'input'>, 'src' | 'value' | 'onChange'> {
@@ -34,7 +34,7 @@ function InputProfileImage({
         {hasRemoteImage && source ? (
           <img src={source} alt="프로필 이미지" className="h-full w-full object-scale-down" />
         ) : !preview ? (
-          <LogoIcon size="large" className="cursor-pointer" />
+          <ImageIcon size="large" className="cursor-pointer" type="profile" />
         ) : (
           <img
             src={preview}

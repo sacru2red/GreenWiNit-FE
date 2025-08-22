@@ -172,7 +172,15 @@ function EnrollAddress() {
           {isModalOpen && (
             <NoticeDialog
               isOpen={isModalOpen}
-              description="배송지 저장이 완료되었습니다.\n이제 상품을 교환할 수 있습니다!"
+              description={
+                <div className="p-2 text-center">
+                  <p>
+                    배송지 저장이 완료되었습니다.
+                    <br />
+                    이제 상품을 교환할 수 있습니다!
+                  </p>
+                </div>
+              }
               setIsOpen={setIsModalOpen}
               onConfirm={handleConfirm}
             />

@@ -3,6 +3,7 @@ import Required from '@/components/common/required'
 import { ComponentPropsWithRef, useId } from 'react'
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
+import { showMessageIfExists } from '@/lib/error'
 
 type InputNicknameProps = {
   mode?: 'new' | 'edit'
@@ -32,7 +33,7 @@ const InputNickname = ({
     mutationFn: usersApi.checkNicknameDuplicate,
     onSuccess: (data) => {
       setHasTriedDuplicateCheck(true)
-      if (data.available) {
+      if (data.result?.available) {
         setIsNicknameDuplicated(false)
         toast.success('사용 가능한 닉네임입니다.')
       } else {
@@ -40,12 +41,12 @@ const InputNickname = ({
         toast.error('중복된 닉네임이 존재합니다.')
       }
     },
-    onError: () => {
-      toast.error('닉네임 중복 확인 중 오류가 발생했습니다.')
+    onError: (error) => {
+      showMessageIfExists(error)
     },
   })
 
-  const handleClick = () => {
+  const validateNickname = () => {
     const nickname = props.value as string
 
     // 1. 빈값 검사
@@ -61,8 +62,8 @@ const InputNickname = ({
     }
 
     // 3. 길이 제한 검사
-    if (nickname.length > 20) {
-      toast.error('닉네임은 20자 이내로 입력해주세요.')
+    if (nickname.length < 2 || nickname.length > 20) {
+      toast.error('닉네임은 2~20자 이내로 입력해주세요.')
       return
     }
 
@@ -94,11 +95,17 @@ const InputNickname = ({
           type="text"
           placeholder="새 닉네임을 입력해주세요."
           className="flex-1 px-3 py-4 text-sm focus:outline-none"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              validateNickname()
+            }
+          }}
           {...props}
         />
         <button
           type="button"
-          onClick={handleClick}
+          onClick={validateNickname}
           className="hover:bg-mountain_meadow/80 bg-mountain_meadow rounded-r-md px-8 text-sm text-white"
         >
           중복 확인

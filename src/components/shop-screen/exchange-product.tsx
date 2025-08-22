@@ -4,11 +4,17 @@ import { Button } from '@/components/common/button'
 interface ExchangeProductProps {
   availablePoint: number
   deductPoint: number
+  remainingQuantity: number | undefined
   handleClick: () => void
 }
 
-const ExchangeProduct = ({ availablePoint, deductPoint, handleClick }: ExchangeProductProps) => {
-  const isDisabled = availablePoint < deductPoint
+const ExchangeProduct = ({
+  availablePoint,
+  deductPoint,
+  remainingQuantity,
+  handleClick,
+}: ExchangeProductProps) => {
+  const isDisabled = availablePoint < deductPoint || remainingQuantity === 0
 
   return (
     <div className="w-full">
