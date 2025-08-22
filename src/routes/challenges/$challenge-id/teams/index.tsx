@@ -52,6 +52,7 @@ function ChallengesTeam() {
                   }
                   // 내가 이미 조인한 팀이어서 팀의 정보를 보고자 함
                   forceEnableButton
+                  isCertified={team.certified}
                 />
               ))}
             </div>

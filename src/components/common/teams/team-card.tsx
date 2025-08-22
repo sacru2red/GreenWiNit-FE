@@ -35,7 +35,7 @@ const TeamCard = <T extends ChallengeTeamsCommonElement>({
         !enableButton && '!cursor-not-allowed bg-[#d9d9d9]',
       )}
     >
-      <div className="flex flex-col gap-6 rounded-lg border border-gray-200 p-4">
+      <div className="flex flex-col gap-4 rounded-lg border border-gray-200 p-4">
         <div className="flex w-full flex-col items-center justify-between">
           <div className="flex w-full flex-row items-center justify-between gap-1">
             <span className="text-title-smaller truncate text-lg font-bold">{team.groupName}</span>
