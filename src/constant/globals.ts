@@ -13,4 +13,3 @@ _dayjs.locale(ko)
 export const queryClient = new QueryClient()
 
 export const dayjs = _dayjs
-export default dayjs

@@ -1,6 +1,6 @@
 import { ChallengeTeamsCommonElement } from '@/api/challenges'
 import { cn } from '@/lib/utils'
-import dayjs from '@/constant/globals'
+import { dayjs } from '@/constant/globals'
 
 interface TeamCardProps<T extends ChallengeTeamsCommonElement> {
   team: T
