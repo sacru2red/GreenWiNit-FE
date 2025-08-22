@@ -45,7 +45,7 @@ const InputNickname = ({
     },
   })
 
-  const handleClick = () => {
+  const validateNickname = () => {
     const nickname = props.value as string
 
     // 1. 빈값 검사
@@ -97,14 +97,14 @@ const InputNickname = ({
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault()
-              handleClick()
+              validateNickname()
             }
           }}
           {...props}
         />
         <button
           type="button"
-          onClick={handleClick}
+          onClick={validateNickname}
           className="hover:bg-mountain_meadow/80 bg-mountain_meadow rounded-r-md px-8 text-sm text-white"
         >
           중복 확인
