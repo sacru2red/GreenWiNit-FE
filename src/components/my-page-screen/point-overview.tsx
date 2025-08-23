@@ -1,9 +1,12 @@
 interface PointOverviewProps {
-  points: {
-    currentBalance: number
-    totalEarned: number
-    totalSpent: number
-  }
+  points:
+    | {
+        currentBalance: number
+        totalEarned: number
+        totalSpent: number
+      }
+    | null
+    | undefined
 }
 
 function PointOverview({ points }: PointOverviewProps) {

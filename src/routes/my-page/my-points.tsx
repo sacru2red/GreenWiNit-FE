@@ -13,10 +13,12 @@ export const Route = createFileRoute('/my-page/my-points')({
 
 function MyPoints() {
   const userName = useUserName()
-  const { data: getPointsReponse } = useUserPoints()
+  const { data: getPointsReponse, isLoading } = useUserPoints()
   const points = getPointsReponse?.result
 
-  if (!points) return <Loading />
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <MyPageLayout title="포인트 현황" background="green" className="p-0">
