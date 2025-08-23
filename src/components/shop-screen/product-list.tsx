@@ -50,11 +50,9 @@ const ProductList = () => {
                 alt={product?.name}
               />
             </div>
-            <p className="text-md font-bold whitespace-nowrap text-black md:text-base">
-              {product?.name}
-            </p>
-            <p className="md:text-md text-xs text-gray-500">{product?.sellingStatus}</p>
-            <p className="text-mountain_meadow text-lg font-bold md:text-xl">{product?.price}p</p>
+            <p className="text-sm font-bold whitespace-nowrap text-black">{product?.name}</p>
+            <p className="text-xs text-gray-500">{product?.sellingStatus}</p>
+            <p className="text-mountain_meadow font-bold">{product?.price}p</p>
           </div>
         )
       })}
