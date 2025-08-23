@@ -23,7 +23,7 @@ const UserStatusbar = ({ accumulatedPoint, availablePoint }: UserStatusbarProps)
           className="text-md rounded-lg bg-[#E8F5E9] px-4 py-2 text-green-700 md:text-base"
           onClick={handleButtonClick}
         >
-          포인트 내역
+          포인트 현황
         </button>
       </div>
       <div className="self-start px-4 py-2 text-start">

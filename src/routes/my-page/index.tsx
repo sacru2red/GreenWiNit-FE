@@ -6,6 +6,9 @@ import { authStore } from '@/store/auth-store'
 import { useNavigate } from '@tanstack/react-router'
 import { createFileRoute } from '@tanstack/react-router'
 import { queryClient } from '@/constant/globals'
+import useIsLoggedIn from '@/hooks/use-is-logged-in'
+import WarnNotLoggedIn from '@/components/common/warn-not-logged-in'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/my-page/')({
   component: MyPage,
@@ -13,6 +16,8 @@ export const Route = createFileRoute('/my-page/')({
 
 function MyPage() {
   const navigate = useNavigate()
+  const isLoggedIn = useIsLoggedIn()
+  const [isWarnNotLoggedInDialogOpen, setIsWarnNotLoggedInDialogOpen] = useState<boolean>(false)
 
   const CARD_ITEMS = [
     {
@@ -70,6 +75,14 @@ function MyPage() {
     },
   ]
 
+  const handleClickItemButton = (action: (() => Promise<void>) | (() => Window | null)) => {
+    if (!isLoggedIn) {
+      setIsWarnNotLoggedInDialogOpen(true)
+      return
+    }
+    action()
+  }
+
   return (
     <MyPageLayout title="마이페이지" showBottomNavigation={true}>
       <div className="flex flex-col gap-8">
@@ -85,7 +98,7 @@ function MyPage() {
                   {el.category}
                 </button>
                 {el.items.map((item, j) => (
-                  <button onClick={item.action} key={j}>
+                  <button onClick={() => handleClickItemButton(item.action)} key={j}>
                     <CardAction className="flex w-full flex-row items-center border-t-[1px] border-t-[9E9E9E] p-4">
                       <span className="text-title-smaller text-4">{item.title}</span>
                       <svg
@@ -106,6 +119,11 @@ function MyPage() {
           )
         })}
       </div>
+      <WarnNotLoggedIn
+        isOpen={isWarnNotLoggedInDialogOpen}
+        onOpenChange={setIsWarnNotLoggedInDialogOpen}
+        content="마이페이지"
+      />
     </MyPageLayout>
   )
 }

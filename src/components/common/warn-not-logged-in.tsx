@@ -10,16 +10,14 @@ import { useNavigate, useRouter } from '@tanstack/react-router'
 interface WarnNotLoggedInProps {
   isOpen: boolean
   onOpenChange(open: boolean): void
-  message?: string
-  infoMessageAfterRedirecting?: string
+  content?: string
   backButtonAction?: 'close' | 'back'
 }
 
 const WarnNotLoggedIn = ({
   isOpen,
   onOpenChange,
-  message = `로그인 후,\n챌린지에 참여할 수 있어요.`,
-  infoMessageAfterRedirecting: infoMessageAfterRedirecting,
+  content = '챌린지',
   backButtonAction = 'close',
 }: WarnNotLoggedInProps) => {
   const navigate = useNavigate()
@@ -28,8 +26,9 @@ const WarnNotLoggedIn = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogDescription className="text-center whitespace-pre text-black">
-          {message}
+        <DialogDescription className="gap-2 text-center whitespace-pre text-black">
+          <p className="m-4">{`서비스를 이용하기 위해\n 로그인이 필요합니다.`}</p>
+          <p>로그인하시겠습니까?</p>
         </DialogDescription>
         <DialogFooter className="flex flex-row gap-6 sm:justify-center">
           <Button
@@ -47,7 +46,10 @@ const WarnNotLoggedIn = ({
           <Button
             size="flex"
             onClick={() =>
-              navigate({ to: '/login', search: { message: infoMessageAfterRedirecting } })
+              navigate({
+                to: '/login',
+                search: { message: `${content}를 확인하기 위해 로그인해주세요.` },
+              })
             }
           >
             확인
