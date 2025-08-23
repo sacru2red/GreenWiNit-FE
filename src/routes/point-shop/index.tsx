@@ -12,8 +12,11 @@ export const Route = createFileRoute('/point-shop/')({
 
 function PointShop() {
   const { data: points } = useUserPoints()
-  const totalEarnedPoints = points?.result?.totalEarned ?? 0
-  const currentPoints = points?.result?.currentBalance ?? 0
+
+  const { currentBalance = 0, totalEarned = 0 } = points?.result || {}
+
+  const totalEarnedPoints = totalEarned
+  const currentPoints = currentBalance
 
   return (
     <PageLayOut.Container>
@@ -22,10 +25,7 @@ function PointShop() {
           <PageTitle>포인트상점</PageTitle>
         </PageLayOut.HeaderSection>
         <PageLayOut.BodySection className="p-0">
-          <UserStatusbar
-            accumulatedPoint={totalEarnedPoints ?? 0}
-            availablePoint={currentPoints ?? 0}
-          />
+          <UserStatusbar accumulatedPoint={totalEarnedPoints} availablePoint={currentPoints} />
           <ProductList />
         </PageLayOut.BodySection>
       </PageLayOut.ScrollableContent>
