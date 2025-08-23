@@ -7,8 +7,9 @@ import { dayjs } from '@/constant/globals'
 import UpsertPageBody from '@/components/common/teams/upsert-page-body'
 import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert-page-body/types'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import { omit } from 'es-toolkit'
+import Loading from '@/components/common/loading'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/modify')({
   component: TeamModify,
@@ -67,12 +68,11 @@ function TeamModify() {
   })
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (team == null) {
-    // @TODO redirect to 500 page
-    return <div>Server Error</div>
+    return <Navigate to="/404" />
   }
 
   const onSubmit: UpsertPageBodyProps['onSubmit'] = (data) => {
