@@ -12,8 +12,11 @@ export const Route = createFileRoute('/point-shop/')({
 
 function PointShop() {
   const { data: points } = useUserPoints()
-  const totalEarnedPoints = points?.result?.totalEarned ?? 0
-  const currentPoints = points?.result?.currentBalance ?? 0
+
+  const { currentBalance = 0, totalEarned = 0 } = points?.result || {}
+
+  const totalEarnedPoints = totalEarned
+  const currentPoints = currentBalance
 
   return (
     <PageLayOut.Container>
