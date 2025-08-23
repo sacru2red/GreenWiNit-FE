@@ -11,7 +11,7 @@ import { showMessageIfExists } from '@/lib/error'
 import { Dialog, DialogContent, DialogDescription } from '@/components/common/modal/dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import Loading from '@/components/common/loading'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/')({
@@ -56,8 +56,7 @@ function TeamDetail() {
   }
 
   if (team == null) {
-    // @TODO redirect to 404 page
-    return <div>Service Unavailable</div>
+    return <Navigate to="/404" />
   }
 
   return (

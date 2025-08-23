@@ -7,7 +7,7 @@ import PropertyList from '@/components/common/teams/property-list'
 import { Button } from '@/components/common/button'
 import { dayjs } from '@/constant/globals'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import Loading from '@/components/common/loading'
 
@@ -34,8 +34,7 @@ function ManageTeam() {
   }
 
   if (team == null) {
-    // @TODO redirect to 404 page
-    return <div>Service Unavailable</div>
+    return <Navigate to="/404" />
   }
 
   return (
