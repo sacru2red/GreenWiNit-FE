@@ -9,6 +9,7 @@ import { FormState, UpsertPageBodyProps } from '@/components/common/teams/upsert
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { omit } from 'es-toolkit'
+import Loading from '@/components/common/loading'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/modify')({
   component: TeamModify,
@@ -67,7 +68,7 @@ function TeamModify() {
   })
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (team == null) {

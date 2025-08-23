@@ -9,6 +9,7 @@ import { dayjs } from '@/constant/globals'
 import useChallengesTeam from '@/hooks/challenge/use-challenges-team'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { toast } from 'sonner'
+import Loading from '@/components/common/loading'
 
 export const Route = createFileRoute('/challenges/$challenge-id/teams/$team-id/joined')({
   component: ManageTeam,
@@ -29,7 +30,7 @@ function ManageTeam() {
   const team = data?.result
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (team == null) {
