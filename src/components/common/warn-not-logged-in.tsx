@@ -26,8 +26,8 @@ const WarnNotLoggedIn = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogDescription className="text-center whitespace-pre text-black">
-          <p className="mb-2">{`로그인 후,\n${content}에 참여할 수 있어요`}</p>
+        <DialogDescription className="gap-2 text-center whitespace-pre text-black">
+          <p className="m-4">{`서비스를 이용하기 위해\n 로그인이 필요합니다.`}</p>
           <p>로그인하시겠습니까?</p>
         </DialogDescription>
         <DialogFooter className="flex flex-row gap-6 sm:justify-center">
