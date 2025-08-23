@@ -5,13 +5,10 @@ import MyPageLayout from '@/components/my-page-screen/my-page-layout'
 import { authStore } from '@/store/auth-store'
 import { useNavigate } from '@tanstack/react-router'
 import { createFileRoute } from '@tanstack/react-router'
-<<<<<<< HEAD
 import { queryClient } from '@/constant/globals'
-=======
 import useIsLoggedIn from '@/hooks/use-is-logged-in'
 import WarnNotLoggedIn from '@/components/common/warn-not-logged-in'
 import { useState } from 'react'
->>>>>>> 8966993 (fix: apply warn-not-logged-in (point-shop 제외))
 
 export const Route = createFileRoute('/my-page/')({
   component: MyPage,
