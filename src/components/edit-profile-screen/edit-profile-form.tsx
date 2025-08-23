@@ -42,11 +42,13 @@ function EditProfileForm() {
   }, [me, reset])
 
   const onSubmit: SubmitHandler<FormState> = (data) => {
+    // 1. 보낼 데이터가 없는 경우
     if (!data.profileImage && !data.nickname) {
       toast.error('닉네임을 입력해 주세요.')
       return
     }
 
+    // 2. 닉네임 중복된 경우
     if (isNicknameDuplicated) {
       // diabled로 설정되어 form 제출 불가능
       toast.error(
@@ -55,7 +57,8 @@ function EditProfileForm() {
       return
     }
 
-    if (!hasTriedDuplicateCheck) {
+    // 3. 닉네임 input을 건드렸으나, 중복확인을 안한 경우 -> 이미지만 변경 가능하게 하기 위함
+    if (formState.dirtyFields.nickname && !hasTriedDuplicateCheck) {
       toast.error('닉네임 중복확인을 해주세요')
       return
     }
